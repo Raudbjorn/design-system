@@ -8,6 +8,7 @@
 
   let { brand, children }: Props = $props();
   let open = $state(false);
+  const linksId = $props.id();
 </script>
 
 <nav aria-label="Primary" data-sv="navbar">
@@ -17,10 +18,10 @@
     class="toggle"
     aria-label="Menu"
     aria-expanded={open}
-    aria-controls="sv-navlinks"
+    aria-controls={linksId}
     onclick={() => (open = !open)}
   >≡</button>
-  <div id="sv-navlinks" class="links" data-open={open}>
+  <div id={linksId} class="links" data-open={open}>
     {@render children()}
   </div>
 </nav>

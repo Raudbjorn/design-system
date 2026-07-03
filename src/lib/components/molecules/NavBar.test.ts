@@ -19,4 +19,18 @@ describe('NavBar', () => {
     await Promise.resolve();
     expect(toggle).toHaveAttribute('aria-expanded', 'true');
   });
+  it('gives each instance a unique aria-controls id', () => {
+    render(NavBar, { children: snip('Home') });
+    render(NavBar, { children: snip('About') });
+    const toggles = screen.getAllByRole('button', { name: /menu/i });
+    expect(toggles).toHaveLength(2);
+    const [a, b] = toggles;
+    const idA = a?.getAttribute('aria-controls');
+    const idB = b?.getAttribute('aria-controls');
+    expect(idA).toBeTruthy();
+    expect(idB).toBeTruthy();
+    expect(idA).not.toBe(idB);
+    expect(document.getElementById(idA as string)).not.toBeNull();
+    expect(document.getElementById(idB as string)).not.toBeNull();
+  });
 });
