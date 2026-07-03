@@ -6,10 +6,13 @@
     showLineNumbers?: boolean;
   }
 
-  // showLineNumbers: reserved styling hook, surfaced as data-numbered below.
-  // v1 renders no gutter — the prop reserves the interface for a future line-number treatment.
   let { code, html, filename, showLineNumbers = false }: Props = $props();
   let copied = $state(false);
+
+  // Gutter rows count from `code` (the copy source), not `html` — build-time
+  // highlighters preserve line count per the documented contract. One trailing
+  // newline is ignored so 'a\nb\n' numbers 2 lines.
+  const lines = $derived(code.replace(/\n$/, '').split('\n'));
 
   async function copy() {
     await navigator.clipboard.writeText(code);
@@ -18,7 +21,6 @@
   }
 </script>
 
-<!-- data-numbered: reserved styling hook; no gutter rendered in v1 -->
 <figure data-sv="codeblock" data-numbered={showLineNumbers}>
   <figcaption>
     <span class="name">{filename ?? ''}</span>
@@ -26,7 +28,14 @@
       {copied ? 'Copied' : 'Copy'}
     </button>
   </figcaption>
-  <pre><code>{#if html}{@html html}{:else}{code}{/if}</code></pre>
+  <div class="body">
+    {#if showLineNumbers}
+      <div class="gutter" aria-hidden="true">
+        {#each lines as _, i}<span>{i + 1}</span>{/each}
+      </div>
+    {/if}
+    <pre><code>{#if html}{@html html}{:else}{code}{/if}</code></pre>
+  </div>
 </figure>
 
 <style>
@@ -58,7 +67,23 @@
   }
   figcaption button:hover { color: var(--sv-accent); border-color: var(--sv-accent); }
   figcaption button:focus-visible { outline: 2px solid var(--sv-accent); outline-offset: 2px; }
+  .body { display: flex; }
+  /* Gutter font metrics must match pre exactly so rows align 1:1. */
+  .gutter {
+    flex-shrink: 0;
+    padding: var(--sv-space-4) var(--sv-space-2) var(--sv-space-4) var(--sv-space-3);
+    border-right: 1px solid var(--sv-border);
+    font-family: var(--sv-font-mono);
+    font-size: var(--sv-fs-sm);
+    line-height: var(--sv-lh-relaxed);
+    color: var(--sv-text-faint);
+    text-align: right;
+    user-select: none;
+  }
+  .gutter span { display: block; }
   pre {
+    flex: 1;
+    min-width: 0;
     margin: 0;
     padding: var(--sv-space-4);
     overflow-x: auto;
@@ -67,6 +92,10 @@
     line-height: var(--sv-lh-relaxed);
     color: var(--sv-text);
   }
+  /* UA stylesheets set `code { font-family: monospace }`, which beats
+     inheritance and swaps in the system mono — wrong face AND taller line
+     boxes that drift out of alignment with the gutter. */
+  pre code { font: inherit; }
   /* Token classes emitted by the build-time highlighter map onto syntax tokens. */
   :global([data-sv='codeblock'] .tok-keyword) { color: var(--sv-syn-keyword); }
   :global([data-sv='codeblock'] .tok-string) { color: var(--sv-syn-string); }
