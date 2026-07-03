@@ -47,6 +47,16 @@ describe('CodeBlock', () => {
     expect(container.querySelectorAll('.gutter span')).toHaveLength(2);
   });
 
+  it('renders no gutter for empty code even when showLineNumbers is set', () => {
+    const { container } = render(CodeBlock, { code: '', showLineNumbers: true });
+    expect(container.querySelector('[data-sv="codeblock"] .gutter')).toBeNull();
+  });
+
+  it('counts CRLF line endings correctly', () => {
+    const { container } = render(CodeBlock, { code: 'a\r\nb\r\n', showLineNumbers: true });
+    expect(container.querySelectorAll('.gutter span')).toHaveLength(2);
+  });
+
   it('copies only the code source when the gutter is shown', () => {
     render(CodeBlock, { code: 'a\nb', showLineNumbers: true });
     screen.getByRole('button', { name: /copy/i }).click();

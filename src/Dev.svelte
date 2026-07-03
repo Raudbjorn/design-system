@@ -83,7 +83,7 @@
         <div class="chip-row">
           {#each colorChips as chip (chip)}
             <div class="chip">
-              <div class="swatch" style="background: var(--sv-{chip})"></div>
+              <div class="swatch" style:background={`var(--sv-${chip})`}></div>
               <span class="chip-label">{chip}</span>
             </div>
           {/each}
@@ -91,7 +91,7 @@
         <div class="chip-row">
           {#each neutralChips as chip (chip)}
             <div class="chip">
-              <div class="swatch" style="background: var(--sv-{chip})"></div>
+              <div class="swatch" style:background={`var(--sv-${chip})`}></div>
               <span class="chip-label">{chip}</span>
             </div>
           {/each}
