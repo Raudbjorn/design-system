@@ -49,8 +49,17 @@ All tokens are CSS custom properties under the `--sv-` namespace, defined for da
 | `--sv-accent-2` | `#e06c75` | Secondary (coral) — emphasis, second data series, one callout |
 | `--sv-accent-rust` | `#ce9178` | Warm variant (shared with syntax string color) |
 
-Hover/active derivations are computed by `color-mix(in oklab, …)` off the base so
-there is a single source per accent.
+**Light-theme accent tuning (required).** Teal `#4ec9b0` and coral `#e06c75` do not
+clear WCAG AA against white/`#f5f5f5`. The light theme overrides them with darker,
+more saturated variants: `--sv-accent` → `#2b8a77` (teal), `--sv-accent-2` →
+`#c0505a` (coral). Exact values validated for AA (≥ 4.5:1 for text use) in
+implementation. Dark-theme accents are unchanged.
+
+**Hover/active derivations** use `color-mix(in oklab, var(--sv-accent),
+var(--sv-mix-target) N%)` off the base, so there is a single source per accent.
+`--sv-mix-target` is theme-scoped: **`#ffffff` in dark** (mix toward white to
+lighten on hover), **`#000000` in light** (mix toward black to darken). This makes
+the same hover formula correct in both themes.
 
 ### 2.2 Neutral ramp (dark values; light theme mirrors)
 
@@ -64,7 +73,7 @@ there is a single source per accent.
 | `--sv-text` | `#d4d4d4` | Body text |
 | `--sv-text-strong` | `#f5f5f5` | Headings, emphasis |
 | `--sv-text-muted` | `#9a9a9a` | Captions, metadata |
-| `--sv-text-faint` | `#6a6a6a` | Disabled, placeholder |
+| `--sv-text-faint` | `#767676` | Disabled, placeholder (AA-safe ≈ 4.5:1 on `--sv-bg`) |
 
 Light theme mirror (informative; finalized in implementation):
 `--sv-bg #ffffff`, `--sv-surface-1 #f5f5f5`, `--sv-surface-3 #ececec`,
@@ -97,7 +106,19 @@ Light theme mirror (informative; finalized in implementation):
 - **Type scale:** `--sv-fs-{xs,sm,base,lg,xl,2xl,3xl}` on a ~1.2 modular scale,
   base `1rem`. `--sv-lh-{tight,normal,relaxed}`.
 - **Shadow:** `--sv-shadow-{sm,md}` (subtle; dark UIs lean on borders over shadow).
-- **Focus:** `--sv-focus-ring` = `0 0 0 2px color-mix(in oklab, var(--sv-accent) 60%, transparent)`.
+- **Z-index:** `--sv-z-{base,elevated,sticky,dropdown,overlay}` = `0 / 10 / 100 / 1000 / 2000`.
+  Present in v1 even though modals are deferred — NavBar collapse/dropdown and sticky
+  headers need a predictable ramp.
+- **Breakpoints:** `--sv-bp-{sm,md,lg}` = `640px / 768px / 1024px`, mobile-first
+  (`min-width`). Exposed as tokens *and* documented so consumers use the same values;
+  component media queries reference these numbers (CSS custom props can't be used
+  inside `@media` conditions, so the tokens are the canonical reference, not the
+  literal query source).
+- **Focus:** components apply focus styling via **`:focus-visible`** (not `:focus`),
+  so mouse clicks stay clean while keyboard nav is served. `--sv-focus-ring` uses an
+  offset outline for a guaranteed background gap:
+  `outline: 2px solid var(--sv-accent); outline-offset: 2px;` — this reads clearly
+  even when the element itself is accent-colored.
 
 ## 3 · Typography
 
@@ -105,9 +126,15 @@ Light theme mirror (informative; finalized in implementation):
   (already present in `../inter/`). `font-feature-settings` for `cv05`/`ss03`
   decided in implementation.
 - **Iosevka Nerd Font** — code, data, tabular numerics. The source `.ttf` files are
-  ~13 MB each; implementation **converts to woff2 and subsets** (Latin + digits +
-  needed Nerd-Font glyph ranges) to keep the package small. Target: one regular +
-  one bold woff2, ideally < 400 KB total.
+  ~13 MB each; implementation **converts to woff2 and subsets** via `pyftsubset`
+  (fonttools), stripping hinting. Achievable target: ~100–150 KB per weight, one
+  regular + one bold, well under the 400 KB budget.
+  - **PUA preservation is mandatory.** Subset must explicitly keep the Nerd-Font
+    Private Use Area blocks (`U+E000–U+F8FF`, `U+F0000–U+FFFFD`) that hold the icon
+    glyphs, in addition to Latin-1 + punctuation + digits. Subsetting to Latin only
+    would make `<Icon>` render empty boxes. Scope the PUA to the glyph ranges the
+    `Icon` component actually ships, not the entire Nerd-Font set (which is huge).
+- **All `@font-face` declarations use `font-display: swap`** to avoid blocking render.
 - `@font-face` declarations live in `tokens/fonts.css`, imported by the token entry.
 - Families exposed as `--sv-font-sans` and `--sv-font-mono`.
 
@@ -130,12 +157,22 @@ styled only via tokens in a scoped `<style>` block, no hardcoded colors.
 
 ### Molecules
 - **Card** — surface container; `padding`, `elevated`, optional header/footer snippets.
-- **CodeBlock** — *signature component.* Syntax-highlighted (build-time or
-  Shiki/highlight at runtime — decided in plan), line numbers optional, filename
-  header optional, copy-to-clipboard, uses `--sv-syn-*` + `--sv-surface-3`.
+- **CodeBlock** — *signature component.* **Build-time highlighting** (Shiki
+  server-side / mdsvex), zero client-side highlighter JS. The component accepts
+  **pre-tokenized HTML** whose token classes map to the `--sv-syn-*` variables;
+  generating that HTML (Shiki with a theme mapped to our syntax tokens) is the
+  consumer/app's job (e.g. `+page.server.ts` or markdown preprocessing). Component
+  owns: `--sv-surface-3` background, optional line numbers, optional filename header,
+  copy-to-clipboard. This keeps the UI library free of a WASM highlighting engine.
 - **NavBar** — top navigation; brand slot, links, responsive collapse.
 - **StatCard** — labeled figure (key number in accent, caption muted); for
   dashboards/portfolio.
+
+### Layout
+- **Stack** — the one structural primitive. Props: `direction` (`column | row`,
+  default `column`), `gap` (maps to `--sv-space-*`), `align`, `justify`, `wrap`.
+  Renders a flex container so pages compose without inline flexbox. Covers both
+  vertical stacks and horizontal rows/clusters; no separate `Flex`/`Row` in v1.
 
 ### API conventions
 - Svelte 5 runes (`$props`, `$state`, `$derived`, `$bindable`).
@@ -192,9 +229,26 @@ pursued, it runs the package-shape converter against this `dist/` — no restruc
 
 ## 8 · Open items (resolve in planning, not blocking)
 
-1. **Iosevka subsetting** — exact glyph ranges + tool (`fonttools`/`glyphhanger`);
-   confirm the < 400 KB target is achievable with needed Nerd-Font glyphs.
-2. **Syntax highlighting engine** for `CodeBlock` — build-time (Shiki, richer,
-   heavier) vs. lightweight runtime highlighter. Default lean: prebuilt tokens.
-3. **Light-theme values** — the §2.2 mirror is provisional; finalize contrast (WCAG AA).
-4. **Package name** — `@svnbjrn/design` working name; confirm before publish.
+1. **Iosevka subsetting** — `pyftsubset`, strip hinting, keep Latin-1 + punctuation +
+   digits **+ scoped Nerd-Font PUA ranges** (§3). Verify the ~100–150 KB/weight
+   target on the actual glyph set the `Icon` component ships.
+2. **Light-theme values** — §2.2 mirror + tuned light accents (`#2b8a77` / `#c0505a`,
+   §2.1) are provisional; validate every text/accent pairing at WCAG AA in
+   implementation.
+3. **npm scope** — confirm `@svnbjrn` scope is registered/available to the user on
+   npm **before** wiring import paths, so the package name doesn't churn later.
+   (Local dev doesn't require publish; this only gates a future release.)
+
+### Decisions locked by spec review (2026-07-03)
+
+- **Contrast:** `--sv-text-faint` raised to `#767676`; light-theme accents tuned
+  darker (§2.1). No essential text on sub-AA colors.
+- **color-mix:** theme-scoped `--sv-mix-target` (white in dark, black in light) so
+  one hover/active formula works in both themes (§2.1).
+- **Focus:** `:focus-visible` + offset outline (§2.5) — not `:focus`, not an inset
+  semi-transparent ring.
+- **New scale tokens:** z-index and breakpoint ramps added (§2.5).
+- **CodeBlock:** build-time highlighting, component takes pre-tokenized HTML; no
+  client highlighter (§4).
+- **Layout:** a single `Stack` primitive added to v1 (§4).
+- **Fonts:** `font-display: swap`; mandatory PUA preservation when subsetting (§3).
