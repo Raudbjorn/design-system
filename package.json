@@ -1,0 +1,36 @@
+{
+  "name": "@svnbjrn/design",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "files": ["dist"],
+  "svelte": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "svelte": "./dist/index.js" },
+    "./styles.css": "./dist/tokens/index.css"
+  },
+  "scripts": {
+    "dev": "vite dev",
+    "build": "pnpm run tokens && pnpm run fonts && svelte-package && publint",
+    "tokens": "node scripts/build-tokens.mjs",
+    "fonts": "node scripts/build-fonts.mjs",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": { "svelte": "^5.0.0" },
+  "devDependencies": {
+    "@sveltejs/package": "^2.3.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@testing-library/svelte": "^5.2.0",
+    "jsdom": "^25.0.0",
+    "publint": "^0.2.0",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.0.0",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.0"
+  }
+}
