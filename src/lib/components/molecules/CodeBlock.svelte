@@ -6,6 +6,8 @@
     showLineNumbers?: boolean;
   }
 
+  // showLineNumbers: reserved styling hook, surfaced as data-numbered below.
+  // v1 renders no gutter — the prop reserves the interface for a future line-number treatment.
   let { code, html, filename, showLineNumbers = false }: Props = $props();
   let copied = $state(false);
 
@@ -16,6 +18,7 @@
   }
 </script>
 
+<!-- data-numbered: reserved styling hook; no gutter rendered in v1 -->
 <figure data-sv="codeblock" data-numbered={showLineNumbers}>
   <figcaption>
     <span class="name">{filename ?? ''}</span>

@@ -24,4 +24,18 @@ describe('CodeBlock', () => {
     screen.getByRole('button', { name: /copy/i }).click();
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('copy me');
   });
+
+  it('renders tokenized html and still copies the code source, not the html', () => {
+    const { container } = render(CodeBlock, {
+      code: 'const x',
+      html: '<span class="tok-keyword">const</span> x'
+    });
+
+    const token = container.querySelector('[data-sv="codeblock"] .tok-keyword');
+    expect(token).not.toBeNull();
+    expect(token).toHaveTextContent('const');
+
+    screen.getByRole('button', { name: /copy/i }).click();
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('const x');
+  });
 });
