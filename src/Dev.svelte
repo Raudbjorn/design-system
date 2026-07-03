@@ -32,6 +32,11 @@
     <Text>Body text in the card.</Text>
   </Card>
   <CodeBlock code={'const x = 1;\nconsole.log(x);'} filename="demo.ts" />
+  <CodeBlock
+    code={'function greet(name: string) {\n  return `hi ${name}`;\n}\n\ngreet("svnbjrn");'}
+    filename="numbered.ts"
+    showLineNumbers
+  />
 </Stack>
 
 <style>

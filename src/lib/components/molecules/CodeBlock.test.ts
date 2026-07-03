@@ -25,6 +25,34 @@ describe('CodeBlock', () => {
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('copy me');
   });
 
+  it('renders no gutter by default', () => {
+    const { container } = render(CodeBlock, { code: 'a\nb' });
+    expect(container.querySelector('[data-sv="codeblock"] .gutter')).toBeNull();
+  });
+
+  it('renders an aria-hidden line-number gutter when showLineNumbers is set', () => {
+    const { container } = render(CodeBlock, { code: 'a\nb\nc', showLineNumbers: true });
+    const gutter = container.querySelector('[data-sv="codeblock"] .gutter');
+    expect(gutter).not.toBeNull();
+    expect(gutter).toHaveAttribute('aria-hidden', 'true');
+    expect([...gutter!.querySelectorAll('span')].map((s) => s.textContent)).toEqual([
+      '1',
+      '2',
+      '3'
+    ]);
+  });
+
+  it('ignores a single trailing newline when numbering', () => {
+    const { container } = render(CodeBlock, { code: 'a\nb\n', showLineNumbers: true });
+    expect(container.querySelectorAll('.gutter span')).toHaveLength(2);
+  });
+
+  it('copies only the code source when the gutter is shown', () => {
+    render(CodeBlock, { code: 'a\nb', showLineNumbers: true });
+    screen.getByRole('button', { name: /copy/i }).click();
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('a\nb');
+  });
+
   it('renders tokenized html and still copies the code source, not the html', () => {
     const { container } = render(CodeBlock, {
       code: 'const x',

@@ -56,7 +56,7 @@ Everything is a token — override any `--sv-*` custom property to re-skin.
 `CodeBlock` renders **pre-tokenized** highlight HTML (from a build-time
 highlighter such as Shiki, with token classes mapping to `--sv-syn-*`); it
 ships no client-side highlighter. Copy-to-clipboard always copies the raw
-`code`.
+`code`. `showLineNumbers` renders a line-number gutter, numbered from `code`.
 
 ## Develop
 
