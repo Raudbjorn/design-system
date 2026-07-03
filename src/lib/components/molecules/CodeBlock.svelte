@@ -11,8 +11,8 @@
 
   // Gutter rows count from `code` (the copy source), not `html` — build-time
   // highlighters preserve line count per the documented contract. One trailing
-  // newline is ignored so 'a\nb\n' numbers 2 lines.
-  const lines = $derived(code.replace(/\n$/, '').split('\n'));
+  // newline is ignored so 'a\nb\n' numbers 2 lines; empty code gets no gutter.
+  const lines = $derived(code === '' ? [] : code.replace(/\r?\n$/, '').split(/\r?\n/));
 
   async function copy() {
     await navigator.clipboard.writeText(code);
@@ -29,7 +29,7 @@
     </button>
   </figcaption>
   <div class="body">
-    {#if showLineNumbers}
+    {#if showLineNumbers && lines.length > 0}
       <div class="gutter" aria-hidden="true">
         {#each lines as _, i}<span>{i + 1}</span>{/each}
       </div>
