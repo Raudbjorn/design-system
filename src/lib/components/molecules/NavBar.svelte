@@ -38,7 +38,7 @@
     top: 0;
     z-index: var(--sv-z-sticky);
   }
-  .brand { font-family: var(--sv-font-sans); font-weight: 650; color: var(--sv-text-strong); }
+  .brand { font-family: var(--sv-font-sans); font-weight: var(--sv-font-weight-bold); color: var(--sv-text-strong); }
   .links { display: flex; gap: var(--sv-space-4); margin-inline-start: auto; }
   .toggle {
     display: none;

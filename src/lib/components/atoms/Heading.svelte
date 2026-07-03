@@ -20,7 +20,7 @@
     font-family: var(--sv-font-sans);
     color: var(--sv-text-strong);
     line-height: var(--sv-lh-tight);
-    font-weight: 650;
+    font-weight: var(--sv-font-weight-bold);
   }
   [data-level='1'] { font-size: var(--sv-fs-3xl); }
   [data-level='2'] { font-size: var(--sv-fs-2xl); }
