@@ -1,0 +1,44 @@
+:root {
+  --sv-font-sans: 'Inter', system-ui, sans-serif;
+  --sv-font-mono: 'Iosevka', ui-monospace, 'Courier New', monospace;
+
+  --sv-space-0: 0;
+  --sv-space-1: 0.25rem;
+  --sv-space-2: 0.5rem;
+  --sv-space-3: 0.75rem;
+  --sv-space-4: 1rem;
+  --sv-space-6: 1.5rem;
+  --sv-space-8: 2rem;
+  --sv-space-12: 3rem;
+
+  --sv-radius-sm: 4px;
+  --sv-radius-md: 6px;
+  --sv-radius-lg: 10px;
+
+  --sv-fs-xs: 0.75rem;
+  --sv-fs-sm: 0.875rem;
+  --sv-fs-base: 1rem;
+  --sv-fs-lg: 1.2rem;
+  --sv-fs-xl: 1.44rem;
+  --sv-fs-2xl: 1.728rem;
+  --sv-fs-3xl: 2.074rem;
+
+  --sv-lh-tight: 1.2;
+  --sv-lh-normal: 1.5;
+  --sv-lh-relaxed: 1.7;
+
+  --sv-z-base: 0;
+  --sv-z-elevated: 10;
+  --sv-z-sticky: 100;
+  --sv-z-dropdown: 1000;
+  --sv-z-overlay: 2000;
+
+  /* Breakpoints — canonical reference. CSS vars cannot be used inside @media
+     conditions, so component queries hardcode these px values verbatim. */
+  --sv-bp-sm: 640px;
+  --sv-bp-md: 768px;
+  --sv-bp-lg: 1024px;
+
+  --sv-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+  --sv-shadow-md: 0 4px 12px rgb(0 0 0 / 0.35);
+}
