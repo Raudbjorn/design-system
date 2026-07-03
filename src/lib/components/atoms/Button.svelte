@@ -57,7 +57,7 @@
     justify-content: center;
     gap: var(--sv-space-2);
     font-family: var(--sv-font-sans);
-    font-weight: 550;
+    font-weight: var(--sv-font-weight-medium);
     border: 1px solid transparent;
     border-radius: var(--sv-radius-md);
     cursor: pointer;

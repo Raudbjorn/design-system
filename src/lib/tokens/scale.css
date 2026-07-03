@@ -2,6 +2,13 @@
   --sv-font-sans: 'Inter', system-ui, sans-serif;
   --sv-font-mono: 'Iosevka', ui-monospace, 'Courier New', monospace;
 
+  /* Weight ramp tuned for Inter Variable (100–900 axis); names are roles on
+     this ramp, not CSS keywords — bold is 650, lighter than the 700 keyword. */
+  --sv-font-weight-normal: 400;
+  --sv-font-weight-medium: 550;
+  --sv-font-weight-semibold: 600;
+  --sv-font-weight-bold: 650;
+
   --sv-space-0: 0;
   --sv-space-1: 0.25rem;
   --sv-space-2: 0.5rem;

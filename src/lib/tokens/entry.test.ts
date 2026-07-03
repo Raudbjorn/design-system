@@ -14,9 +14,16 @@ describe('token entry', () => {
     expect(css).toContain("@import './scale.css'");
   });
 
-  it('scale defines the font-family + z + breakpoint tokens', () => {
+  it('scale defines the font-family + weight + z + breakpoint tokens', () => {
     const css = read('scale.css');
-    for (const t of ['--sv-font-mono', '--sv-z-dropdown', '--sv-bp-md', '--sv-space-4']) {
+    for (const t of [
+      '--sv-font-mono',
+      '--sv-font-weight-medium',
+      '--sv-font-weight-bold',
+      '--sv-z-dropdown',
+      '--sv-bp-md',
+      '--sv-space-4'
+    ]) {
       expect(css).toContain(t);
     }
   });

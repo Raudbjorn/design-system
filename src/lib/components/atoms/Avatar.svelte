@@ -33,7 +33,7 @@
     background: var(--sv-surface-3);
     color: var(--sv-text-strong);
     font-family: var(--sv-font-sans);
-    font-weight: 600;
+    font-weight: var(--sv-font-weight-semibold);
     overflow: hidden;
   }
   [data-size='sm'] { width: 1.75rem; height: 1.75rem; font-size: var(--sv-fs-xs); }
