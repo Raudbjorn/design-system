@@ -19,10 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-The MIT license above covers the source code of @svnbjrn/design ONLY.
-The bundled font files (Inter and Iosevka, in assets/fonts-src/ and the
-generated dist/fonts/) are licensed separately under the SIL Open Font
-License 1.1 — see THIRD_PARTY_NOTICES.md.
