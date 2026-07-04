@@ -40,7 +40,11 @@ const loadGenerator = async () => {
 };
 
 try {
+  // pnpm forwards a literal `--` separator (`pnpm generate -- --seeds …`).
+  const args = process.argv.slice(2);
+  if (args[0] === '--') args.shift();
   const { values } = parseArgs({
+    args,
     options: {
       seeds: { type: 'string' },
       name: { type: 'string' },

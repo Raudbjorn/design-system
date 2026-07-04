@@ -8,7 +8,7 @@
       docs: {
         description: {
           component:
-            'Every color is a `--sv-*` custom property generated from `src/lib/tokens/palette.ts`. ' +
+            'Every color is a `--sv-*` custom property generated from the DTCG token source (`src/lib/tokens/*.tokens.json`). ' +
             'The chips read the **computed** values off the document root — switch the toolbar ' +
             'theme and watch them diverge from the dark excerpt in the code block.'
         }
