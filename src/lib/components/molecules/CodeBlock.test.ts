@@ -35,7 +35,7 @@ describe('CodeBlock', () => {
     const gutter = container.querySelector('[data-sv="codeblock"] .gutter');
     expect(gutter).not.toBeNull();
     expect(gutter).toHaveAttribute('aria-hidden', 'true');
-    expect([...gutter!.querySelectorAll('span')].map((s) => s.textContent)).toEqual([
+    expect([...gutter!.querySelectorAll('li')].map((s) => s.textContent)).toEqual([
       '1',
       '2',
       '3'
@@ -44,7 +44,7 @@ describe('CodeBlock', () => {
 
   it('ignores a single trailing newline when numbering', () => {
     const { container } = render(CodeBlock, { code: 'a\nb\n', showLineNumbers: true });
-    expect(container.querySelectorAll('.gutter span')).toHaveLength(2);
+    expect(container.querySelectorAll('.gutter li')).toHaveLength(2);
   });
 
   it('renders no gutter for empty code even when showLineNumbers is set', () => {
@@ -54,7 +54,7 @@ describe('CodeBlock', () => {
 
   it('counts CRLF line endings correctly', () => {
     const { container } = render(CodeBlock, { code: 'a\r\nb\r\n', showLineNumbers: true });
-    expect(container.querySelectorAll('.gutter span')).toHaveLength(2);
+    expect(container.querySelectorAll('.gutter li')).toHaveLength(2);
   });
 
   it('copies only the code source when the gutter is shown', () => {

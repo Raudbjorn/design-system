@@ -13,6 +13,7 @@
   // highlighters preserve line count per the documented contract. One trailing
   // newline is ignored so 'a\nb\n' numbers 2 lines; empty code gets no gutter.
   const lines = $derived(code === '' ? [] : code.replace(/\r?\n$/, '').split(/\r?\n/));
+  const numbered = $derived(showLineNumbers && lines.length > 0);
 
   async function copy() {
     await navigator.clipboard.writeText(code);
@@ -28,11 +29,11 @@
       {copied ? 'Copied' : 'Copy'}
     </button>
   </figcaption>
-  <div class="body">
-    {#if showLineNumbers && lines.length > 0}
-      <div class="gutter" aria-hidden="true">
-        {#each lines as _, i}<span>{i + 1}</span>{/each}
-      </div>
+  <div class="body" class:numbered>
+    {#if numbered}
+      <ol class="gutter" aria-hidden="true">
+        {#each lines as _, i}<li>{i + 1}</li>{/each}
+      </ol>
     {/if}
     <pre><code>{#if html}{@html html}{:else}{code}{/if}</code></pre>
   </div>
@@ -68,19 +69,28 @@
   figcaption button:hover { color: var(--sv-accent); border-color: var(--sv-accent); }
   figcaption button:focus-visible { outline: 2px solid var(--sv-accent); outline-offset: 2px; }
   .body { display: flex; }
-  /* Gutter font metrics must match pre exactly so rows align 1:1. */
+  .body.numbered {
+    /* Two-column grid: gutter | code, so long lines wrap inside the code column only. */
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+  /* Semantic ordered list for the numbers; gutter font metrics must match `pre`
+     exactly so rows align 1:1. */
   .gutter {
-    flex-shrink: 0;
+    margin: 0;
     padding: var(--sv-space-4) var(--sv-space-2) var(--sv-space-4) var(--sv-space-3);
-    border-right: 1px solid var(--sv-border);
+    list-style: none;
+    text-align: right;
     font-family: var(--sv-font-mono);
     font-size: var(--sv-fs-sm);
     line-height: var(--sv-lh-relaxed);
     color: var(--sv-text-faint);
-    text-align: right;
+    background: var(--sv-surface-2);
+    border-right: 1px solid var(--sv-border);
     user-select: none;
   }
-  .gutter span { display: block; }
+  /* min-width keeps single- and double-digit numbers on the same right edge. */
+  .gutter li { min-width: 2ch; }
   pre {
     flex: 1;
     min-width: 0;
