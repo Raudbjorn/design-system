@@ -25,21 +25,33 @@ const repo = resolve(here, '..', '..');
 const reactDist = join(repo, '.design-sync', 'react-dist');
 
 function ensureLink(linkPath, target) {
+  // Junction targets are stored absolute on Windows, so idempotency is
+  // checked on resolved paths, not raw link text.
+  const desired = resolve(dirname(linkPath), target);
   try {
     const st = lstatSync(linkPath);
     if (st.isSymbolicLink()) {
-      if (readlinkSync(linkPath) === target) return; // already correct
+      if (resolve(dirname(linkPath), readlinkSync(linkPath)) === desired) return; // already correct
       unlinkSync(linkPath);
     } else if (st.isFile()) {
       unlinkSync(linkPath);
     } else {
-      return console.error(`  ! ${linkPath} exists and is a real directory — leaving it alone`);
+      // A real directory here means the converter would silently resolve
+      // through the wrong tree (usually residue of an npm/pnpm install run
+      // inside .design-sync/). Continuing produces baffling downstream
+      // type/token-resolution failures — fail loudly instead.
+      console.error(`! ${linkPath} exists and is a real directory — expected a symlink to ${target}.`);
+      console.error(`  Remove it and re-run: rm -rf '${linkPath}'`);
+      process.exit(1);
     }
   } catch {
     /* absent — create below */
   }
   mkdirSync(dirname(linkPath), { recursive: true });
-  symlinkSync(target, linkPath);
+  // 'junction' lets directory links work on Windows without admin rights /
+  // Developer Mode; the type argument is ignored on POSIX. Both call sites
+  // link directories, so 'junction' is always the right type here.
+  symlinkSync(target, linkPath, 'junction');
   console.error(`  link: ${linkPath} -> ${target}`);
 }
 
