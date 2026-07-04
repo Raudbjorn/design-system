@@ -172,6 +172,12 @@ export const applyWorldTheme = (
 
   const scopeEl = opts.scope;
   const uidAttr = scoped ? selector.slice('[data-sv-world="'.length, -2) : null;
+  // A scope element may carry its own explicit data-theme (the library's
+  // public theming contract) before a world is applied — remove() must put
+  // that back, not strip it. Captured once at handle creation: repeat applies
+  // reuse this handle via the registry, so the pre-world value survives
+  // update() churn.
+  const originalScopeTheme = scoped ? opts.scope!.getAttribute('data-theme') : null;
   let removed = false;
   let wroteCache = false;
   let currentTheme = theme;
@@ -216,7 +222,8 @@ export const applyWorldTheme = (
       target.remove();
       if (scopeEl && uidAttr !== null && scopeEl.getAttribute('data-sv-world') === uidAttr) {
         scopeEl.removeAttribute('data-sv-world');
-        scopeEl.removeAttribute('data-theme');
+        if (originalScopeTheme !== null) scopeEl.setAttribute('data-theme', originalScopeTheme);
+        else scopeEl.removeAttribute('data-theme');
       }
       if (wroteCache) {
         try {
@@ -267,9 +274,27 @@ export const switchWorldTheme = async (
 
   const mutate = (): Result<WorldThemeHandle | null, ThemeIssue> => {
     if (next === null) {
+      const hadWorld = current !== null;
       current?.remove();
       try {
-        storageOf(doc)?.removeItem(THEME_STORAGE.worldCss);
+        const storage = storageOf(doc);
+        storage?.removeItem(THEME_STORAGE.worldCss);
+        // The world pinned document data-theme to its `extends`; clearing
+        // must hand the document back to the user's persisted mode — or drop
+        // the attribute entirely so `system` (prefers-color-scheme) rules
+        // again. Read storage directly: getThemeMode prefers the attribute,
+        // which still carries the world's mode at this point. Restoration
+        // lives HERE, not in handle.remove() — mid-switch the old handle is
+        // removed AFTER the next world renders, and a restoring remove()
+        // would clobber the incoming theme's data-theme.
+        if (hadWorld) {
+          const stored = storage?.getItem(THEME_STORAGE.mode);
+          if (stored === 'dark' || stored === 'light') {
+            doc.documentElement.setAttribute('data-theme', stored);
+          } else {
+            doc.documentElement.removeAttribute('data-theme');
+          }
+        }
       } catch {
         /* ignore */
       }
