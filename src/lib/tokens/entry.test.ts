@@ -7,11 +7,19 @@ const here = dirname(fileURLToPath(import.meta.url));
 const read = (f: string) => readFileSync(join(here, f), 'utf8');
 
 describe('token entry', () => {
-  it('index.css imports fonts, colors, and scale', () => {
+  it('index.css declares the layer order before importing fonts, colors, and scale', () => {
     const css = read('index.css');
-    expect(css).toContain("@import './fonts.css'");
-    expect(css).toContain("@import './colors.css'");
-    expect(css).toContain("@import './scale.css'");
+    const layerStatement = css.indexOf('@layer sv.base, sv.theme, sv.world, sv.user;');
+    expect(layerStatement).toBeGreaterThanOrEqual(0);
+    for (const imported of ['./fonts.css', './colors.css', './scale.css']) {
+      const at = css.indexOf(`@import '${imported}'`);
+      expect(at, `${imported} imported after the layer statement`).toBeGreaterThan(layerStatement);
+    }
+  });
+
+  it('generated CSS registers the expected layers', () => {
+    expect(read('scale.css')).toContain('@layer sv.base {');
+    expect(read('colors.css')).toContain('@layer sv.theme {');
   });
 
   it('scale defines the font-family + weight + z + breakpoint tokens', () => {

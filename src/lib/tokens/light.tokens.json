@@ -1,0 +1,31 @@
+{
+  "$description": "Built-in light theme — soft pale-yellow \"paper\". The bg is held below full brightness and the ramp warmed toward its hue so it reads as ink-on-paper, not glare-white. Ink is eased off pure black (strong ~12:1, was 16:1) and the syntax palette is desaturated + warmed so the code panel isn't a stab of primary blue/red. All body text + accents verified AA in palette.test.ts.",
+  "color": {
+    "$type": "color",
+    "bg": { "$value": "{primitive.color.paper-100}" },
+    "surface-1": { "$value": "{primitive.color.paper-200}" },
+    "surface-2": { "$value": "{primitive.color.paper-300}" },
+    "surface-3": { "$value": "{primitive.color.paper-400}" },
+    "border": { "$value": "{primitive.color.paper-600}" },
+    "text": { "$value": "{primitive.color.ink-800}" },
+    "text-strong": { "$value": "{primitive.color.ink-900}" },
+    "text-muted": { "$value": "{primitive.color.ink-600}" },
+    "text-faint": { "$value": "{primitive.color.ink-550}" },
+    "accent": { "$value": "{primitive.color.teal-600}" },
+    "accent-2": { "$value": "{primitive.color.coral-600}" },
+    "accent-rust": { "$value": "{primitive.color.rust-600}" },
+    "mix-target": {
+      "$value": "{primitive.color.black}",
+      "$description": "hover darkens in light"
+    },
+    "success": { "$value": "{primitive.color.green-600}" },
+    "error": { "$value": "{primitive.color.red-600}" },
+    "warning": { "$value": "{primitive.color.orange-700}" },
+    "syn-keyword": { "$value": "{primitive.color.blue-800}" },
+    "syn-string": { "$value": "{primitive.color.rust-700}" },
+    "syn-var": { "$value": "{primitive.color.indigo-800}" },
+    "syn-func": { "$value": "{primitive.color.olive-700}" },
+    "syn-comment": { "$value": "{primitive.color.olive-600}" },
+    "syn-number": { "$value": "{primitive.color.pine-700}" }
+  }
+}

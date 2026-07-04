@@ -226,7 +226,7 @@ describe('resolveTokens (typed values)', () => {
     expect(v('s1')).toMatchObject({
       kind: 'shadow',
       layers: [
-        { color: '#00000059', spread: '0px', inset: false },
+        { color: '#00000059', spread: '0', inset: false },
         { color: '#00000030', spread: '1px', inset: true }
       ]
     });
@@ -268,10 +268,24 @@ describe('serialization', () => {
       toCss({
         kind: 'shadow',
         layers: [
-          { color: '#00000059', offsetX: '0px', offsetY: '1px', blur: '2px', spread: '0px', inset: false }
+          { color: '#00000059', offsetX: '0', offsetY: '1px', blur: '2px', spread: '0', inset: false }
         ]
       })
-    ).toBe('0px 1px 2px 0px #00000059');
+    ).toBe('0 1px 2px #00000059');
+  });
+
+  it('shadows round-trip the hand-authored scale.css form byte-exact', () => {
+    const result = resolveTokens(
+      doc({
+        'shadow-sm': {
+          $type: 'shadow',
+          $value: { color: 'rgb(0 0 0 / 0.3)', offsetX: '0px', offsetY: '1px', blur: '2px' }
+        }
+      })
+    );
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(toCss(result.value.get('shadow-sm')!.value)).toBe('0 1px 2px rgb(0 0 0 / 0.3)');
   });
 
   it('toQt flattens rem to px at 16px/rem and double-quotes families', () => {

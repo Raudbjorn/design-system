@@ -1,0 +1,72 @@
+{
+  "$description": "Theme-agnostic scale: typography, spacing, radius, layering, breakpoints, shadows. Emitted into @layer sv.base at :root. The themeable subset (radius, font families, font weights) may be overridden per theme/world; z-index and breakpoints are locked (worlds restyle color/type/shape, never stacking contexts or layout thresholds).",
+  "scale": {
+    "font-sans": {
+      "$type": "fontFamily",
+      "$value": ["Inter", "system-ui", "sans-serif"]
+    },
+    "font-mono": {
+      "$type": "fontFamily",
+      "$value": ["Iosevka", "ui-monospace", "Courier New", "monospace"]
+    },
+    "font-weight-normal": {
+      "$type": "fontWeight",
+      "$value": 400,
+      "$description": "Weight ramp tuned for Inter Variable (100–900 axis); names are roles on this ramp, not CSS keywords — bold is 650, lighter than the 700 keyword."
+    },
+    "font-weight-medium": { "$type": "fontWeight", "$value": 550 },
+    "font-weight-semibold": { "$type": "fontWeight", "$value": 600 },
+    "font-weight-bold": { "$type": "fontWeight", "$value": 650 },
+    "space-0": { "$type": "dimension", "$value": { "value": 0, "unit": "px" } },
+    "space-1": { "$type": "dimension", "$value": { "value": 0.25, "unit": "rem" } },
+    "space-2": { "$type": "dimension", "$value": { "value": 0.5, "unit": "rem" } },
+    "space-3": { "$type": "dimension", "$value": { "value": 0.75, "unit": "rem" } },
+    "space-4": { "$type": "dimension", "$value": { "value": 1, "unit": "rem" } },
+    "space-6": { "$type": "dimension", "$value": { "value": 1.5, "unit": "rem" } },
+    "space-8": { "$type": "dimension", "$value": { "value": 2, "unit": "rem" } },
+    "space-12": { "$type": "dimension", "$value": { "value": 3, "unit": "rem" } },
+    "radius-sm": { "$type": "dimension", "$value": { "value": 4, "unit": "px" } },
+    "radius-md": { "$type": "dimension", "$value": { "value": 6, "unit": "px" } },
+    "radius-lg": { "$type": "dimension", "$value": { "value": 10, "unit": "px" } },
+    "fs-xs": { "$type": "dimension", "$value": { "value": 0.75, "unit": "rem" } },
+    "fs-sm": { "$type": "dimension", "$value": { "value": 0.875, "unit": "rem" } },
+    "fs-base": { "$type": "dimension", "$value": { "value": 1, "unit": "rem" } },
+    "fs-lg": { "$type": "dimension", "$value": { "value": 1.2, "unit": "rem" } },
+    "fs-xl": { "$type": "dimension", "$value": { "value": 1.44, "unit": "rem" } },
+    "fs-2xl": { "$type": "dimension", "$value": { "value": 1.728, "unit": "rem" } },
+    "fs-3xl": { "$type": "dimension", "$value": { "value": 2.074, "unit": "rem" } },
+    "lh-tight": { "$type": "number", "$value": 1.2 },
+    "lh-normal": { "$type": "number", "$value": 1.5 },
+    "lh-relaxed": { "$type": "number", "$value": 1.7 },
+    "z-base": { "$type": "number", "$value": 0 },
+    "z-elevated": { "$type": "number", "$value": 10 },
+    "z-sticky": { "$type": "number", "$value": 100 },
+    "z-dropdown": { "$type": "number", "$value": 1000 },
+    "z-overlay": { "$type": "number", "$value": 2000 },
+    "bp-sm": {
+      "$type": "dimension",
+      "$value": { "value": 640, "unit": "px" },
+      "$description": "Breakpoints — canonical reference. CSS vars cannot be used inside @media conditions, so component queries hardcode these px values verbatim."
+    },
+    "bp-md": { "$type": "dimension", "$value": { "value": 768, "unit": "px" } },
+    "bp-lg": { "$type": "dimension", "$value": { "value": 1024, "unit": "px" } },
+    "shadow-sm": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgb(0 0 0 / 0.3)",
+        "offsetX": "0px",
+        "offsetY": "1px",
+        "blur": "2px"
+      }
+    },
+    "shadow-md": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgb(0 0 0 / 0.35)",
+        "offsetX": "0px",
+        "offsetY": "4px",
+        "blur": "12px"
+      }
+    }
+  }
+}

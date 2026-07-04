@@ -1,0 +1,31 @@
+{
+  "$description": "Built-in dark theme (the default, emitted at :root). Values hand-verified for WCAG AA where noted on their primitives; the full contract lives in internal/invariants.ts and is enforced by palette.test.ts.",
+  "color": {
+    "$type": "color",
+    "bg": { "$value": "{primitive.color.gray-900}" },
+    "surface-1": { "$value": "{primitive.color.gray-850}" },
+    "surface-2": { "$value": "{primitive.color.gray-800}" },
+    "surface-3": { "$value": "{primitive.color.gray-750}" },
+    "border": { "$value": "{primitive.color.gray-600}" },
+    "text": { "$value": "{primitive.color.gray-300}" },
+    "text-strong": { "$value": "{primitive.color.gray-100}" },
+    "text-muted": { "$value": "{primitive.color.gray-400}" },
+    "text-faint": { "$value": "{primitive.color.gray-450}" },
+    "accent": { "$value": "{primitive.color.teal-300}" },
+    "accent-2": { "$value": "{primitive.color.coral-300}" },
+    "accent-rust": { "$value": "{primitive.color.rust-300}" },
+    "mix-target": {
+      "$value": "{primitive.color.white}",
+      "$description": "hover lightens in dark"
+    },
+    "success": { "$value": "{primitive.color.green-600}" },
+    "error": { "$value": "{primitive.color.red-400}" },
+    "warning": { "$value": "{primitive.color.orange-400}" },
+    "syn-keyword": { "$value": "{primitive.color.blue-300}" },
+    "syn-string": { "$value": "{primitive.color.rust-300}" },
+    "syn-var": { "$value": "{primitive.color.lightblue-200}" },
+    "syn-func": { "$value": "{primitive.color.yellow-200}" },
+    "syn-comment": { "$value": "{primitive.color.green-350}" },
+    "syn-number": { "$value": "{primitive.color.sage-300}" }
+  }
+}
