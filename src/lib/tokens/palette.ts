@@ -26,17 +26,19 @@ export const dark: Palette = {
   'syn-number': '#b5cea8'
 };
 
-// Light theme mirror. Accents darkened to clear AA on white.
+// Light theme mirror — pale-yellow "paper": the neutral ramp is warmed toward
+// the background hue so ink-on-paper reads intentional, not gray on white.
+// Accents darkened to clear AA on the paper (verified in palette.test.ts).
 export const light: Palette = {
-  bg: '#ffffff',
-  'surface-1': '#f5f5f5',
-  'surface-2': '#ececec',
-  'surface-3': '#e4e4e4',
-  border: '#d4d4d4',
-  text: '#333333',
-  'text-strong': '#191919',
-  'text-muted': '#6a6a6a',
-  'text-faint': '#767676', // AA on #ffffff
+  bg: '#fbf3d0',
+  'surface-1': '#f5eecb',
+  'surface-2': '#eee5bd',
+  'surface-3': '#e7ddad',
+  border: '#d6c795',
+  text: '#332f26',
+  'text-strong': '#1b1810',
+  'text-muted': '#67624f',
+  'text-faint': '#6d6852', // AA (>=4.5:1) on the #fbf3d0 paper, not white
   accent: '#2b8a77',
   'accent-2': '#c0505a',
   'accent-rust': '#b26a45',
