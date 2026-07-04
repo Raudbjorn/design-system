@@ -80,6 +80,10 @@
         return `unknown token "${issue.token}" — not in the --sv-* allowlist`;
       case 'invalid-color':
         return `invalid color for "${issue.token}": ${issue.value} — only 6-digit hex passes`;
+      case 'invalid-layer':
+        return `layer ${issue.index} is not an object — every layer must be a token map`;
+      case 'missing-token':
+        return `custom base is missing "${issue.token}" — a base palette must be complete`;
       case 'contrast':
         return `contrast ${issue.fg}/${issue.bg} is ${issue.ratio.toFixed(2)}:1 — needs ${issue.min}:1`;
     }

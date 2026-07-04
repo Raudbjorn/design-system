@@ -264,3 +264,58 @@ describe('swapTheme', () => {
     await expect(swapTheme(themeA.theme)).rejects.toThrow();
   });
 });
+
+describe('zero-trust input hardening', () => {
+  it('rejects null/non-object overrides and layers as issues, never throwing', () => {
+    const nullResult = defineTheme(null as never);
+    expect(nullResult.ok).toBe(false);
+    if (!nullResult.ok) {
+      expect(nullResult.issues).toEqual([{ kind: 'invalid-layer', index: 0 }]);
+    }
+
+    // One junk layer poisons the result but not the parse of its siblings.
+    const mixed = defineTheme([{ accent: '#ff0000' }, 'junk' as never, 42 as never]);
+    expect(mixed.ok).toBe(false);
+    if (!mixed.ok) {
+      expect(mixed.issues).toEqual([
+        { kind: 'invalid-layer', index: 1 },
+        { kind: 'invalid-layer', index: 2 }
+      ]);
+    }
+  });
+
+  it('rejects non-string token values as invalid-color instead of crashing on toLowerCase', () => {
+    const result = defineTheme({ accent: 42 as never, bg: { toString: () => '#111111' } as never });
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.issues).toContainEqual({ kind: 'invalid-color', token: 'accent', value: '42' });
+      expect(result.issues.some((i) => i.kind === 'invalid-color' && i.token === 'bg')).toBe(true);
+    }
+  });
+
+  it('rejects a sparse custom base with missing-token issues instead of gating blind', () => {
+    const result = defineTheme({ accent: '#4ec9b0' }, { base: { bg: '#101010', text: '#e0e0e0' } });
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      const missing = result.issues.filter((i) => i.kind === 'missing-token');
+      expect(missing.length).toBeGreaterThan(0);
+      expect(result.issues.some((i) => i.kind === 'missing-token' && i.token === 'accent')).toBe(true);
+    }
+  });
+
+  it('applyTheme and swapTheme name the misuse when handed a non-Theme', async () => {
+    expect(() => applyTheme(undefined as never)).toThrow(/check result.ok/);
+    await expect(swapTheme(null as never)).rejects.toThrow(/check result.ok/);
+  });
+
+  it('applyTheme falls back to documentElement when doc.head is null', () => {
+    const bare = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null);
+    const result = defineTheme({ accent: '#ff0000' });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const dispose = applyTheme(result.theme, { target: bare as unknown as Document });
+    expect(bare.documentElement.querySelector('style[data-sv-theme]')).not.toBeNull();
+    dispose();
+    expect(bare.documentElement.querySelector('style[data-sv-theme]')).toBeNull();
+  });
+});
