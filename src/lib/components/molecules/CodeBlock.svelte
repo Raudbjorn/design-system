@@ -25,6 +25,7 @@
       dev &&
       html &&
       showLineNumbers &&
+      lines.length > 0 &&
       html.replace(/\r?\n$/, '').split(/\r?\n/).length !== lines.length
     ) {
       console.warn('[CodeBlock] `html` line count differs from `code`; gutter numbers may misalign.');
