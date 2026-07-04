@@ -5,8 +5,12 @@
   "license": "MIT",
   "files": [
     "dist",
+    "bin",
     "!dist/**/*.test.*"
   ],
+  "bin": {
+    "design-generate": "./bin/design-generate.mjs"
+  },
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -29,6 +33,10 @@
       "types": "./dist/theme/svelte.svelte.d.ts",
       "svelte": "./dist/theme/svelte.svelte.js",
       "default": "./dist/theme/svelte.svelte.js"
+    },
+    "./generate": {
+      "types": "./dist/generate/index.d.ts",
+      "default": "./dist/generate/index.js"
     }
   },
   "scripts": {
@@ -36,6 +44,7 @@
     "build": "pnpm run tokens && pnpm run fonts && svelte-package && publint",
     "tokens": "node scripts/build-tokens.mjs",
     "fonts": "node scripts/build-fonts.mjs",
+    "generate": "node bin/design-generate.mjs",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
