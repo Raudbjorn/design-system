@@ -36,7 +36,7 @@ const preview: Preview = {
       storySort: {
         order: [
           'Foundations',
-          ['Overview', 'Colors', 'Typography', 'Spacing & Radius'],
+          ['Overview', 'Colors', 'Typography', 'Spacing & Radius', 'Theming'],
           'Atoms',
           'Layout',
           'Molecules'

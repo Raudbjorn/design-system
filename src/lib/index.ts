@@ -11,3 +11,17 @@ export { default as Card } from './components/molecules/Card.svelte';
 export { default as CodeBlock } from './components/molecules/CodeBlock.svelte';
 export { default as NavBar } from './components/molecules/NavBar.svelte';
 export { default as StatCard } from './components/molecules/StatCard.svelte';
+
+export { applyTheme, contrastGates, defineTheme, swapTheme, themeCss } from './theme/theme.js';
+export type {
+  ApplyThemeOptions,
+  DefineThemeOptions,
+  SwapThemeOptions,
+  Theme,
+  ThemeIssue,
+  ThemeResult
+} from './theme/theme.js';
+export type { Vernacular } from './theme/vernacular.js';
+export { contrastRatio } from './internal/contrast.js';
+export { dark, light } from './tokens/palette.js';
+export type { Palette, TokenName } from './tokens/palette.js';

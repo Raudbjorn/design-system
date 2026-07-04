@@ -35,4 +35,5 @@ describe('token entry', () => {
       expect(css).toContain(t);
     }
   });
+
 });
