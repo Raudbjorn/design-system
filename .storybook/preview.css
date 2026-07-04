@@ -1,0 +1,14 @@
+/* The preview canvas is a consumer of the system: token background, token
+   text, token fonts. Stories inherit the theme instead of a hardcoded white. */
+body {
+  background: var(--sv-bg);
+  color: var(--sv-text);
+  font-family: var(--sv-font-sans);
+}
+
+/* Docs pages ride the same tokens so autodocs don't flash default-white
+   around dark component canvases. */
+.sbdocs.sbdocs-wrapper {
+  background: var(--sv-bg);
+  color: var(--sv-text);
+}

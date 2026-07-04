@@ -3,11 +3,17 @@
   "version": "0.0.0",
   "type": "module",
   "license": "MIT",
-  "files": ["dist", "!dist/**/*.test.*"],
+  "files": [
+    "dist",
+    "!dist/**/*.test.*"
+  ],
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "svelte": "./dist/index.js" },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js"
+    },
     "./styles.css": "./dist/tokens/index.css"
   },
   "scripts": {
@@ -17,10 +23,19 @@
     "fonts": "node scripts/build-fonts.mjs",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
-  "peerDependencies": { "svelte": "^5.0.0" },
+  "peerDependencies": {
+    "svelte": "^5.0.0"
+  },
   "devDependencies": {
+    "@storybook/addon-a11y": "^10.4.6",
+    "@storybook/addon-docs": "^10.4.6",
+    "@storybook/addon-svelte-csf": "^5.1.2",
+    "@storybook/addon-themes": "^10.4.6",
+    "@storybook/svelte-vite": "^10.4.6",
     "@sveltejs/package": "^2.3.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "@testing-library/jest-dom": "^6.6.0",
@@ -28,6 +43,7 @@
     "@types/node": "^24.0.0",
     "jsdom": "^25.0.0",
     "publint": "^0.2.0",
+    "storybook": "^10.4.6",
     "svelte": "^5.0.0",
     "svelte-check": "^4.0.0",
     "typescript": "^5.6.0",
