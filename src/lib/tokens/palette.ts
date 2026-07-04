@@ -22,7 +22,7 @@ export const dark: Palette = {
   'syn-string': '#ce9178',
   'syn-var': '#9cdcfe',
   'syn-func': '#dcdcaa',
-  'syn-comment': '#6a9955',
+  'syn-comment': '#74a55e', // AA (>=4.5:1) on surface-3, the CodeBlock bg; VS Code's #6a9955 only hit 4.13
   'syn-number': '#b5cea8'
 };
 
@@ -52,6 +52,6 @@ export const light: Palette = {
   'syn-string': '#8a4326',
   'syn-var': '#2f3f6e',
   'syn-func': '#6a531f',
-  'syn-comment': '#5a6a3d',
+  'syn-comment': '#525f36', // AA (>=4.5:1) on surface-3, the CodeBlock bg; #5a6a3d only hit 4.00
   'syn-number': '#2f5f45'
 };
