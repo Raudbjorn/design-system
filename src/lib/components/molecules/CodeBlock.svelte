@@ -15,6 +15,22 @@
   const lines = $derived(!code ? [] : code.replace(/\r?\n$/, '').split(/\r?\n/));
   const numbered = $derived(showLineNumbers && lines.length > 0);
 
+  // Dev-only guard on the documented contract: `html` must preserve `code`'s
+  // line count, or the gutter numbers drift off the rendered lines.
+  // Runtime lookup (not `import.meta.env.DEV` directly): svelte-package ships
+  // this source untransformed, so non-Vite consumers must resolve to undefined.
+  const dev = (import.meta as { env?: { DEV?: boolean } }).env?.DEV ?? false;
+  $effect(() => {
+    if (
+      dev &&
+      html &&
+      showLineNumbers &&
+      html.replace(/\r?\n$/, '').split(/\r?\n/).length !== lines.length
+    ) {
+      console.warn('[CodeBlock] `html` line count differs from `code`; gutter numbers may misalign.');
+    }
+  });
+
   async function copy() {
     // Clipboard API is unavailable outside secure contexts (plain-HTTP staging,
     // some webviews); guard so the copy button never throws on click.

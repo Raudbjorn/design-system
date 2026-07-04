@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
+import { flushSync } from 'svelte';
 import CodeBlock from './CodeBlock.svelte';
 
 describe('CodeBlock', () => {
@@ -69,6 +70,17 @@ describe('CodeBlock', () => {
   it('counts CRLF line endings correctly', () => {
     const { container } = render(CodeBlock, { code: 'a\r\nb\r\n', showLineNumbers: true });
     expect(container.querySelectorAll('.gutter li')).toHaveLength(2);
+  });
+
+  it('warns in dev only when a numbered html block breaks line parity with code', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(CodeBlock, { code: 'a\nb', html: 'a\nb', showLineNumbers: true });
+    flushSync();
+    expect(warn).not.toHaveBeenCalled();
+    render(CodeBlock, { code: 'a\nb', html: 'one line only', showLineNumbers: true });
+    flushSync();
+    expect(warn).toHaveBeenCalledOnce();
+    warn.mockRestore();
   });
 
   it('copies only the code source when the gutter is shown', () => {
