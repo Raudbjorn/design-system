@@ -46,6 +46,56 @@ element:
 ```
 
 Everything is a token — override any `--sv-*` custom property to re-skin.
+Token declarations live in cascade layers ordered
+`sv.base < sv.theme < sv.world < sv.user`; your own **unlayered** overrides
+beat all of them (that keeps existing consumers working). To override tokens
+that a runtime world theme should still be able to beat, write into
+`@layer sv.base`; to beat world themes, use `@layer sv.user` or stay
+unlayered.
+
+### World theming (runtime theme packages)
+
+Themes are also **data**: a world-theme package is a JSON manifest plus
+sparse DTCG token overrides (see `docs/theme-packages.md`). The runtime
+engine validates every value against a strict grammar, contrast-gates the
+result against WCAG AA on the effective palette, and applies it in
+`@layer sv.world`:
+
+```ts
+import { parseWorldTheme, switchWorldTheme, themeBootScript } from '@svnbjrn/design/theme';
+
+const parsed = parseWorldTheme(packageJson); // Result<WorldTheme, ThemeIssue[]>
+if (parsed.ok) await switchWorldTheme(parsed.value); // View Transitions when available
+```
+
+- Scoped previews: `applyWorldTheme(theme, { scope: element })` themes a
+  subtree via `data-sv-world`; multiple previews coexist.
+- FOUC: paste `themeBootScript` into an inline `<script>` in `app.html`
+  **before** stylesheet links — it restores the persisted mode and the
+  validated, localStorage-cached world CSS pre-paint. For SSR-known themes
+  render `worldThemeToCss(theme)` into `<svelte:head>` instead.
+- Svelte wrapper: `createWorldTheme()` from `@svnbjrn/design/theme/svelte`.
+
+### Generating themes from content
+
+`@svnbjrn/design/generate` turns extracted seed colors (e.g. K-Means
+dominants from uploaded art) into a complete package whose every pairing
+meets WCAG AA **by construction** — contrast targets are inputs to the
+solver, not an audit afterward:
+
+```bash
+pnpm generate -- --seeds "#c9a227,#b5473a" --name grimdark-hive --hints grimdark
+```
+
+The same API runs in the browser (see the Storybook **Theme Lab** story).
+
+### Qt / QSS
+
+The token build also emits per-theme Qt Style Sheets and flat resolved token
+maps for non-web consumers: `@svnbjrn/design/qss/dark.qss` (apply via
+`QApplication.setStyleSheet`) and `@svnbjrn/design/tokens/dark.json`
+(css+qt values plus precomputed hover/pressed states). See
+`docs/bones-integration.md`.
 
 ## Components
 
@@ -68,9 +118,12 @@ pnpm check      # svelte-check (strict)
 pnpm build      # regenerate tokens + fonts, then svelte-package -> dist/
 ```
 
-Design tokens are generated from a single source (`src/lib/tokens/palette.ts`)
-via `pnpm run tokens`; fonts are subset from `assets/fonts-src/` via
-`pnpm run fonts`.
+Design tokens are generated from a single DTCG source
+(`src/lib/tokens/*.tokens.json` + the `themes.ts` registry) via
+`pnpm run tokens` — outputs (`colors.css`, `scale.css`, `palette.ts`,
+`resolved/*.tokens.json`, `qss/*.qss`) are committed and drift-guarded by
+tests. Adding a built-in theme is one token file plus one registry entry.
+Fonts are subset from `assets/fonts-src/` via `pnpm run fonts`.
 
 ## License
 
