@@ -25,7 +25,7 @@
 <Story name="External" args={{ href: 'https://sveinbjorn.dev', external: true }}>
   {#snippet template({ children: _, ...args })}
     <Text>
-      External links get the arrow and <Text as="span" mono size="sm">rel="noopener"</Text>:
+      External links get the arrow and <Text as="span" mono size="sm">rel="noopener noreferrer"</Text>:
       <Link {...args}>sveinbjorn.dev</Link>
     </Text>
   {/snippet}

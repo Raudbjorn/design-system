@@ -108,7 +108,9 @@
     font-family: var(--sv-font-mono);
     font-size: var(--sv-fs-sm);
     line-height: var(--sv-lh-relaxed);
-    color: var(--sv-text-faint);
+    /* muted, not faint — faint only clears AA against bg, and the gutter
+       sits on surface-2 (faint there is ~3.9:1, below the 4.5:1 AA bar). */
+    color: var(--sv-text-muted);
     background: var(--sv-surface-2);
     border-right: 1px solid var(--sv-border);
     user-select: none;

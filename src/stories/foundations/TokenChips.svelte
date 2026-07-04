@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Eyebrow from './Eyebrow.svelte';
+
   interface Props {
     /** Token suffixes, e.g. 'accent' for --sv-accent. */
     names: string[];
@@ -25,8 +27,8 @@
   });
 </script>
 
-<div class="group">
-  {#if title}<h3 class="eyebrow">{title}</h3>{/if}
+<div>
+  {#if title}<Eyebrow>{title}</Eyebrow>{/if}
   <div class="row">
     {#each names as n (n)}
       <div class="chip">
@@ -39,20 +41,6 @@
 </div>
 
 <style>
-  .group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sv-space-3);
-  }
-  .eyebrow {
-    margin: 0;
-    font-family: var(--sv-font-mono);
-    font-size: var(--sv-fs-xs);
-    font-weight: var(--sv-font-weight-normal);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--sv-text-muted);
-  }
   .row {
     display: flex;
     flex-wrap: wrap;
@@ -81,6 +69,7 @@
   .hex {
     font-family: var(--sv-font-mono);
     font-size: var(--sv-fs-xs);
-    color: var(--sv-text-faint);
+    /* muted, not faint — faint only clears AA on bg, and chips sit on surface-1 */
+    color: var(--sv-text-muted);
   }
 </style>
