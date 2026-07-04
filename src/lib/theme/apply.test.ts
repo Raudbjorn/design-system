@@ -120,6 +120,22 @@ describe('scoped application', () => {
     b.remove();
   });
 
+  it('remove() restores a pre-existing data-theme on the scope element instead of stripping it', () => {
+    const pane = document.createElement('div');
+    pane.setAttribute('data-theme', 'light');
+    document.body.appendChild(pane);
+    const result = applyWorldTheme(grim, { scope: pane });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    // The world's `extends` wins while applied…
+    expect(pane.getAttribute('data-theme')).toBe('dark');
+    result.value.remove();
+    // …and the pane's own explicit mode comes back when it is removed.
+    expect(pane.getAttribute('data-theme')).toBe('light');
+    expect(pane.hasAttribute('data-sv-world')).toBe(false);
+    pane.remove();
+  });
+
   it('re-applying to the same scope element updates in place instead of leaking a second sheet', () => {
     const pane = document.createElement('div');
     document.body.appendChild(pane);
@@ -152,6 +168,30 @@ describe('switchWorldTheme', () => {
     if (cleared.ok) expect(cleared.value).toBeNull();
     expect(styleEls()).toHaveLength(0);
     expect(window.localStorage.getItem(THEME_STORAGE.worldCss)).toBeNull();
+  });
+
+  it('clearing with null restores the persisted mode — or drops data-theme for system', async () => {
+    // Persisted user mode survives a world visit.
+    window.localStorage.setItem(THEME_STORAGE.mode, 'light');
+    await switchWorldTheme(grim, { transition: false });
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    await switchWorldTheme(null, { transition: false });
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+
+    // No persisted mode (`system`): the attribute goes away entirely so
+    // prefers-color-scheme rules again.
+    window.localStorage.removeItem(THEME_STORAGE.mode);
+    await switchWorldTheme(grim, { transition: false });
+    await switchWorldTheme(null, { transition: false });
+    expect(document.documentElement.hasAttribute('data-theme')).toBe(false);
+  });
+
+  it('clearing with no active world leaves a page-set data-theme alone', async () => {
+    // An app may set data-theme directly (SSR, static markup) without going
+    // through setThemeMode — a no-op clear must not strip it.
+    document.documentElement.setAttribute('data-theme', 'light');
+    await switchWorldTheme(null, { transition: false });
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
   });
 
   it('uses startViewTransition when present and survives its absence', async () => {

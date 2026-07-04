@@ -79,6 +79,9 @@ export function createWorldTheme(opts: SwitchWorldThemeOptions = {}): WorldTheme
       current = null;
       issues = [];
       status = 'idle';
+      // switchWorldTheme(null) restored data-theme to the persisted mode (or
+      // dropped it for `system`) — resync the reactive mirror, as load() does.
+      mode = getThemeMode(opts.document);
     }
   };
 }

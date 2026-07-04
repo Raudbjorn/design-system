@@ -31,6 +31,18 @@ describe('createWorldTheme', () => {
     expect(state.current).toBeNull();
   });
 
+  it('clear() resyncs mode with the document state the clear restored', async () => {
+    window.localStorage.setItem(THEME_STORAGE.mode, 'light');
+    const state = createWorldTheme({ transition: false });
+    await state.load(grimdark);
+    // A world pins data-theme to its `extends` — the mirror reflects that.
+    expect(state.mode).toBe('dark');
+    await state.clear();
+    // The clear restored the persisted mode; the mirror must follow.
+    expect(state.mode).toBe('light');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+  });
+
   it('clear() returns to idle and removes the sheet', async () => {
     const state = createWorldTheme({ transition: false });
     await state.load(grimdark);
