@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "type": "module",
   "license": "MIT",
+  "packageManager": "pnpm@11.3.0",
+  "engines": {
+    "node": ">=22"
+  },
   "files": [
     "dist",
     "bin",
@@ -46,8 +50,9 @@
     "fonts": "node scripts/build-fonts.mjs",
     "generate": "node bin/design-generate.mjs",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --project=unit",
+    "test:watch": "vitest --project=unit",
+    "test:visual": "vitest run --project=storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -55,10 +60,13 @@
     "svelte": "^5.0.0"
   },
   "devDependencies": {
+    "@argos-ci/cli": "^6.1.0",
+    "@argos-ci/storybook": "^6.0.16",
     "@storybook/addon-a11y": "^10.4.6",
     "@storybook/addon-docs": "^10.4.6",
     "@storybook/addon-svelte-csf": "^5.1.2",
     "@storybook/addon-themes": "^10.4.6",
+    "@storybook/addon-vitest": "^10.4.6",
     "@storybook/svelte-vite": "^10.4.6",
     "@sveltejs/package": "^2.3.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
@@ -66,8 +74,10 @@
     "@testing-library/svelte": "^5.2.0",
     "@types/culori": "^4.0.1",
     "@types/node": "^24.0.0",
+    "@vitest/browser-playwright": "^4.1.9",
     "culori": "^4.0.2",
     "jsdom": "^25.0.0",
+    "playwright": "^1.61.1",
     "publint": "^0.2.0",
     "storybook": "^10.4.6",
     "svelte": "^5.0.0",

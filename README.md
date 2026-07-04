@@ -1,5 +1,7 @@
 # @svnbjrn/design
 
+[![Covered by Argos Visual Testing](https://argos-ci.com/badge.svg)](https://app.argos-ci.com/argos-ci-2/design-system/reference)
+
 A dark-first, developer-native **Svelte 5** component library — design tokens,
 self-hosted fonts, and 13 components. Restrained by design: one primary accent
 (teal `#4ec9b0`), one secondary (coral `#e06c75`), a near-black neutral ramp,
@@ -112,11 +114,16 @@ ships no client-side highlighter. Copy-to-clipboard always copies the raw
 
 ```bash
 pnpm install
-pnpm dev        # standalone Vite preview page (all components, dark/light)
-pnpm test       # Vitest + @testing-library/svelte
-pnpm check      # svelte-check (strict)
-pnpm build      # regenerate tokens + fonts, then svelte-package -> dist/
+pnpm dev          # standalone Vite preview page (all components, dark/light)
+pnpm test         # Vitest + @testing-library/svelte (unit, jsdom)
+pnpm test:visual  # Storybook visual tests (Chromium screenshots, Argos)
+pnpm check        # svelte-check (strict)
+pnpm build        # regenerate tokens + fonts, then svelte-package -> dist/
 ```
+
+Visual testing is documented in [docs/visual-testing.md](docs/visual-testing.md):
+every story is screenshotted in both themes and diffed on each PR via
+[Argos](https://app.argos-ci.com/argos-ci-2/design-system).
 
 Design tokens are generated from a single DTCG source
 (`src/lib/tokens/*.tokens.json` + the `themes.ts` registry) via

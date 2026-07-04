@@ -1,3 +1,7 @@
 packages: []
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - '@argos-ci/browser@6.4.0'
+  - '@argos-ci/playwright@7.3.0'
+  - '@argos-ci/storybook@6.0.16'
