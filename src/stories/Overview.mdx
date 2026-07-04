@@ -1,0 +1,48 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Overview" />
+
+# @svnbjrn/design
+
+A personal, dark-first developer design system for **Svelte 5** — two accents, a
+near-black neutral ramp, and Iosevka as a feature. Every value is a `--sv-*`
+token; override any of them to re-skin.
+
+**v0.0.0 · 13 components · Svelte 5 · MIT**
+
+## The contract
+
+- **Dark is the default.** Light is the soft pale-yellow "paper" theme, activated
+  by `prefers-color-scheme` or forced with `data-theme="light"` on a root element.
+  The toolbar toggle in this Storybook sets exactly that attribute — nothing else.
+- **One primary accent** (teal `#4ec9b0`) for everything interactive, **one
+  secondary** (coral `#e06c75`) for at most one emphasis per view.
+- **Code is first-class.** `CodeBlock` renders pre-tokenized highlight HTML from a
+  build-time highlighter; it ships no client-side highlighter and always copies
+  the raw `code`.
+
+## Usage
+
+```svelte
+<script>
+  import '@svnbjrn/design/styles.css';
+  import { Button, Card, CodeBlock, StatCard, Stack } from '@svnbjrn/design';
+</script>
+
+<Stack gap={4}>
+  <Button variant="primary">Ship it</Button>
+  <StatCard value="128" label="Deploys" tone="accent-2" />
+  <CodeBlock code={`const x = 1;`} filename="demo.ts" />
+</Stack>
+```
+
+## Inventory
+
+| Tier          | Components                                                    |
+| ------------- | ------------------------------------------------------------- |
+| **Atoms**     | Text · Heading · Button · Link · Badge · Icon · Kbd · Avatar   |
+| **Layout**    | Stack                                                          |
+| **Molecules** | Card · CodeBlock · NavBar · StatCard                           |
+
+Start with **Foundations → Colors** for the palette, or jump straight into a
+component — every story reacts to the theme toolbar.

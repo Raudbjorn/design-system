@@ -4,3 +4,5 @@ node_modules/
 .claude/
 dist/
 .svelte-kit/
+storybook-static/
+*storybook.log
