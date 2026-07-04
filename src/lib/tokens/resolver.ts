@@ -20,8 +20,11 @@
 // Errors are values: every entry point returns Result<T, TokenError[]> and
 // collects all errors in a pass rather than bailing at the first.
 
-import { parseColor, toHex6, toHex8 } from '../internal/color';
-import type { Rgba } from '../internal/color';
+// Explicit .ts extension: this module runs under plain node (the token build
+// imports it directly with type stripping); svelte-package rewrites the
+// specifier to .js in dist.
+import { parseColor, toHex6, toHex8 } from '../internal/color.ts';
+import type { Rgba } from '../internal/color.ts';
 
 export type Result<T, E> = { ok: true; value: T } | { ok: false; error: E };
 
@@ -515,12 +518,19 @@ const parseFontWeightValue = (value: unknown): number | null => {
 const parseNumberValue = (value: unknown): number | null =>
   typeof value === 'number' && Number.isFinite(value) ? value : null;
 
+// CSS-idiomatic zero: lengths of 0 serialize unitless.
 const serializeDimension = (d: { value: number; unit: DimensionUnit }): string =>
-  `${d.value}${d.unit}`;
+  d.value === 0 ? '0' : `${d.value}${d.unit}`;
 
 const parseShadowLayer = (value: unknown): ShadowLayer | null => {
   if (!isRecord(value)) return null;
-  const color = parseColorValue(value.color);
+  // Shadow colors keep their authored string form (validated parseable) so
+  // hand-tuned notations like `rgb(0 0 0 / 0.3)` survive emission byte-exact;
+  // object-form colors normalize to hex.
+  const color =
+    typeof value.color === 'string' && parseColor(value.color) !== null
+      ? value.color.trim()
+      : parseColorValue(value.color);
   if (color === null) return null;
   const offsetX = parseDimensionValue(value.offsetX);
   const offsetY = parseDimensionValue(value.offsetY);
@@ -653,8 +663,10 @@ const GENERIC_FAMILIES = new Set([
 const cssFamily = (name: string): string =>
   GENERIC_FAMILIES.has(name) ? name : `'${name}'`;
 
-const shadowLayerCss = (l: ShadowLayer): string =>
-  `${l.inset ? 'inset ' : ''}${l.offsetX} ${l.offsetY} ${l.blur} ${l.spread} ${l.color}`;
+const shadowLayerCss = (l: ShadowLayer): string => {
+  const spread = l.spread === '0' ? '' : ` ${l.spread}`;
+  return `${l.inset ? 'inset ' : ''}${l.offsetX} ${l.offsetY} ${l.blur}${spread} ${l.color}`;
+};
 
 /** Serialize a resolved value for CSS custom properties. */
 export const toCss = (v: TokenValue): string => {
@@ -662,7 +674,7 @@ export const toCss = (v: TokenValue): string => {
     case 'color':
       return v.hex;
     case 'dimension':
-      return `${v.value}${v.unit}`;
+      return serializeDimension(v);
     case 'fontFamily':
       return v.families.map(cssFamily).join(', ');
     case 'fontWeight':
@@ -678,7 +690,7 @@ export const toCss = (v: TokenValue): string => {
 export const QT_PX_PER_REM = 16;
 
 const qtLength = (value: number, unit: DimensionUnit): string =>
-  unit === 'rem' ? `${value * QT_PX_PER_REM}px` : `${value}px`;
+  value === 0 ? '0' : unit === 'rem' ? `${value * QT_PX_PER_REM}px` : `${value}px`;
 
 /** Serialize a resolved value for QSS / Qt consumers (rem flattened to px). */
 export const toQt = (v: TokenValue): string => {

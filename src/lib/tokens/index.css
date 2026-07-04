@@ -1,3 +1,8 @@
+/* Layer order for the whole system, declared before any styles land:
+   base scale < built-in themes < runtime world themes < user overrides.
+   Unlayered consumer CSS still beats all of these (CSS Cascade L5) — to
+   override tokens *below* a world theme, write into @layer sv.user. */
+@layer sv.base, sv.theme, sv.world, sv.user;
 @import './fonts.css';
 @import './colors.css';
 @import './scale.css';

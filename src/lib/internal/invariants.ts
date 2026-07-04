@@ -8,7 +8,7 @@
 // being adopted (see palette.test.ts), so they can never create a
 // built-in/world asymmetry.
 
-import { contrastRatio } from './contrast';
+import { contrastRatio } from './contrast.ts';
 
 export interface ContrastRule {
   /** Foreground token name (palette key, no --sv- prefix). */
