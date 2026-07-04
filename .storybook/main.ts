@@ -7,7 +7,8 @@ const config: StorybookConfig = {
     '@storybook/addon-svelte-csf',
     '@storybook/addon-docs',
     '@storybook/addon-a11y',
-    '@storybook/addon-themes'
+    '@storybook/addon-themes',
+    '@storybook/addon-vitest'
   ],
   // Serve the self-hosted fonts so manager-head.html can @font-face them —
   // the preview gets them for free through the tokens CSS import.

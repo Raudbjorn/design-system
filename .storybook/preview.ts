@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/svelte-vite';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import { allModes } from './modes';
 import theme from './theme';
 import '../src/lib/tokens/index.css';
 import './preview.css';
@@ -16,6 +17,13 @@ const preview: Preview = {
     })
   ],
   parameters: {
+    // Argos captures every story in both themes — each mode is its own baseline.
+    argos: {
+      modes: {
+        dark: allModes.dark,
+        light: allModes.light
+      }
+    },
     docs: { theme },
     backgrounds: { disable: true },
     controls: {

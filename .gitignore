@@ -6,3 +6,4 @@ dist/
 .svelte-kit/
 storybook-static/
 *storybook.log
+screenshots/

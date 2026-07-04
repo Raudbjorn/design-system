@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Unit tests & svelte-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4 # version from package.json "packageManager"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run check
+      - run: pnpm test
+
+  argos:
+    name: Visual tests & Storybook deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      # Renders every story in Chromium, captures dark+light screenshots,
+      # and uploads them to Argos (upload is CI-gated in vitest.config.ts).
+      - run: pnpm run test:visual
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+      # Deploy the built Storybook to Argos for a per-build preview URL.
+      - run: pnpm run build-storybook
+      - run: pnpm exec argos deploy ./storybook-static
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
