@@ -20,7 +20,16 @@
       "default": "./dist/tokens/index.js"
     },
     "./tokens/*.json": "./dist/tokens/resolved/*.json",
-    "./qss/*.qss": "./dist/qss/*.qss"
+    "./qss/*.qss": "./dist/qss/*.qss",
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "default": "./dist/theme/index.js"
+    },
+    "./theme/svelte": {
+      "types": "./dist/theme/svelte.svelte.d.ts",
+      "svelte": "./dist/theme/svelte.svelte.js",
+      "default": "./dist/theme/svelte.svelte.js"
+    }
   },
   "scripts": {
     "dev": "vite dev",
