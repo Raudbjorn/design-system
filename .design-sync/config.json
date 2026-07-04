@@ -1,0 +1,18 @@
+{
+  "projectId": "83edcd31-b2b4-4965-97aa-fa6b58f1ffaa",
+  "pkg": "@svnbjrn/design",
+  "globalName": "SvnbjrnDesign",
+  "shape": "storybook",
+  "storybookConfigDir": ".storybook",
+  "storybookStatic": ".design-sync/sb-reference",
+  "buildCmd": "pnpm run build && node .design-sync/react-adapter/build.mjs",
+  "entry": ".design-sync/react-dist/index.js",
+  "cssEntry": "index.css",
+  "tokensPkg": "@svnbjrn/design",
+  "tokensGlob": "dist/tokens/*.css",
+  "extraFonts": ["../../dist/tokens/fonts.css"],
+  "provider": { "component": "ThemeRoot", "props": { "theme": "dark" } },
+  "overrides": { "Text": { "cardMode": "column" } },
+  "titleMap": { "Colors": null, "Typography": null, "Spacing&Radius": null },
+  "readmeHeader": ".design-sync/conventions.md"
+}

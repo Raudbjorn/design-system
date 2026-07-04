@@ -7,3 +7,14 @@ dist/
 storybook-static/
 *storybook.log
 screenshots/
+
+# design-sync (claude.ai/design) — transient state; the durable set
+# (.design-sync/{config.json,NOTES.md,conventions.md,previews/,react-adapter/})
+# is committed.
+.design-sync/sb-reference/
+.design-sync/learnings/
+.design-sync/.cache/
+.design-sync/node_modules
+.design-sync/react-dist/
+.ds-sync/
+ds-bundle/
