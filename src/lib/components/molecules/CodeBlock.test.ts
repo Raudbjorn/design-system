@@ -53,6 +53,46 @@ describe('CodeBlock', () => {
     expect(container.querySelector('[data-sv="codeblock"] .gutter')).toBeNull();
   });
 
+  it('renders a single-row gutter for single-line code with no trailing newline', () => {
+    const { container } = render(CodeBlock, { code: 'const x = 1;', showLineNumbers: true });
+    const gutter = container.querySelector('[data-sv="codeblock"] .gutter');
+    expect(gutter).not.toBeNull();
+    expect([...gutter!.querySelectorAll('li')].map((s) => s.textContent)).toEqual(['1']);
+  });
+
+  it('only strips one trailing newline, so extra trailing newlines count as a blank line', () => {
+    const { container } = render(CodeBlock, { code: 'a\nb\n\n', showLineNumbers: true });
+    const gutter = container.querySelector('[data-sv="codeblock"] .gutter');
+    expect([...gutter!.querySelectorAll('li')].map((s) => s.textContent)).toEqual(['1', '2', '3']);
+  });
+
+  it('numbers double-digit line counts in order without gaps or duplicates', () => {
+    const code = Array.from({ length: 12 }, (_, i) => `line${i + 1}`).join('\n');
+    const { container } = render(CodeBlock, { code, showLineNumbers: true });
+    const gutter = container.querySelector('[data-sv="codeblock"] .gutter');
+    expect([...gutter!.querySelectorAll('li')].map((s) => s.textContent)).toEqual(
+      Array.from({ length: 12 }, (_, i) => String(i + 1))
+    );
+  });
+
+  it('applies the numbered class to the body only when the gutter actually renders', () => {
+    const { container } = render(CodeBlock, { code: 'a\nb', showLineNumbers: true });
+    expect(container.querySelector('[data-sv="codeblock"] .body')).toHaveClass('numbered');
+
+    const { container: noGutterContainer } = render(CodeBlock, { code: '', showLineNumbers: true });
+    expect(noGutterContainer.querySelector('[data-sv="codeblock"] .body')).not.toHaveClass(
+      'numbered'
+    );
+  });
+
+  it('leaves data-numbered false when showLineNumbers is off, even for multi-line code', () => {
+    const { container } = render(CodeBlock, { code: 'a\nb\nc' });
+    expect(container.querySelector('[data-sv="codeblock"]')).toHaveAttribute(
+      'data-numbered',
+      'false'
+    );
+  });
+
   it('data-numbered matches the actual gutter state, not the raw prop', () => {
     const withGutter = render(CodeBlock, { code: 'a\nb', showLineNumbers: true });
     expect(withGutter.container.querySelector('[data-sv="codeblock"]')).toHaveAttribute(
@@ -86,6 +126,14 @@ describe('CodeBlock', () => {
   it('does not warn for empty code even when html is non-empty', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     render(CodeBlock, { code: '', html: 'stale highlighter output', showLineNumbers: true });
+    flushSync();
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
+
+  it('does not warn about line-count mismatch when showLineNumbers is off', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(CodeBlock, { code: 'a\nb', html: 'one line only' });
     flushSync();
     expect(warn).not.toHaveBeenCalled();
     warn.mockRestore();
