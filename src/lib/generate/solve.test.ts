@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { solveLightness } from './solve';
-import { hexToOklch } from '../internal/color';
+import { hexToOklch, oklchToHex } from '../internal/color';
 import { contrastRatio } from '../internal/contrast';
 
 describe('solveLightness', () => {
@@ -13,17 +13,11 @@ describe('solveLightness', () => {
       direction: 'lighter'
     });
     expect(result.achieved).toBeGreaterThanOrEqual(11.5);
-    // Minimality: one visible step darker falls below the target.
-    const darker = hexToOklch(result.hex)!;
-    const stepped = solveLightness({
-      c: 0.01,
-      h: 94,
-      against: '#191919',
-      target: 11.5,
-      direction: 'lighter'
-    });
-    expect(contrastRatio(stepped.hex, '#191919')).toBeLessThan(result.achieved + 1.2);
-    expect(darker.l).toBeLessThan(1);
+    // Minimality: nudging one 8-bit step back toward the background drops
+    // below the target — the solver didn't overshoot further than needed.
+    const l = hexToOklch(result.hex)!.l;
+    const oneStepDarker = oklchToHex({ l: l - 1 / 255, c: 0.01, h: 94 });
+    expect(contrastRatio(oneStepDarker, '#191919')).toBeLessThan(11.5);
   });
 
   it('reproduces the hand text ladder within a couple of 8-bit steps', () => {

@@ -27,6 +27,26 @@ describe('input and manifest', () => {
     expect(result.ok).toBe(true);
   });
 
+  it('measures the input-size budget in real UTF-8 bytes, not UTF-16 length', () => {
+    // Each CJK char is 1 UTF-16 unit but 3 UTF-8 bytes: length stays under
+    // the 256KB budget while the real encoded size is ~3x over it.
+    const oversized = 'あ'.repeat(90000);
+    const result = parseWorldTheme(oversized);
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(codes(result.error)).toContain('E_INPUT');
+  });
+
+  it('does not throw when previewing non-JSON-safe values (circular refs, BigInt)', () => {
+    const circular: Record<string, unknown> = {};
+    circular.self = circular;
+    expect(() =>
+      parseWorldTheme(pkg({ accent: { $value: '#c9a227' } }, { extends: circular }))
+    ).not.toThrow();
+    expect(() =>
+      parseWorldTheme(pkg({ accent: { $value: '#c9a227' } }, { extends: 10n }))
+    ).not.toThrow();
+  });
+
   it('collects all manifest errors at once', () => {
     const result = parseWorldTheme({ name: 'Bad Name!', version: 'one', extends: 'sepia' });
     expect(result.ok).toBe(false);

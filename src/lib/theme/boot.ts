@@ -84,10 +84,11 @@ export const themeBootScript: string = `(function () { try {
   var env = null;
   try { env = JSON.parse(raw); } catch (pe) { ls.removeItem('${THEME_STORAGE.worldCss}'); return; }
   var css = env && env.v === 1 ? String(env.css) : '';
+  var lower = css.toLowerCase();
   var ok = css.lastIndexOf('/*sv-world*/@layer ', 0) === 0 &&
     css.length < ${MAX_CACHED_CSS} &&
     css.indexOf('<') < 0 && css.indexOf('\\\\') < 0 &&
-    css.indexOf('@import') < 0 && css.indexOf('url(') < 0;
+    lower.indexOf('@import') < 0 && lower.indexOf('url(') < 0;
   if (ok) {
     if (!m && (env.extends === 'dark' || env.extends === 'light')) {
       d.setAttribute('data-theme', env.extends);

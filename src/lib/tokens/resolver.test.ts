@@ -226,8 +226,8 @@ describe('resolveTokens (typed values)', () => {
     expect(v('s1')).toMatchObject({
       kind: 'shadow',
       layers: [
-        { color: '#00000059', spread: '0', inset: false },
-        { color: '#00000030', spread: '1px', inset: true }
+        { color: '#00000059', spread: { value: 0, unit: 'px' }, inset: false },
+        { color: '#00000030', spread: { value: 1, unit: 'px' }, inset: true }
       ]
     });
   });
@@ -268,7 +268,14 @@ describe('serialization', () => {
       toCss({
         kind: 'shadow',
         layers: [
-          { color: '#00000059', offsetX: '0', offsetY: '1px', blur: '2px', spread: '0', inset: false }
+          {
+            color: '#00000059',
+            offsetX: { value: 0, unit: 'px' },
+            offsetY: { value: 1, unit: 'px' },
+            blur: { value: 2, unit: 'px' },
+            spread: { value: 0, unit: 'px' },
+            inset: false
+          }
         ]
       })
     ).toBe('0 1px 2px #00000059');
@@ -293,5 +300,24 @@ describe('serialization', () => {
     expect(toQt({ kind: 'dimension', value: 6, unit: 'px' })).toBe('6px');
     expect(toQt({ kind: 'fontFamily', families: ['Inter', 'sans-serif'] })).toBe('"Inter", sans-serif');
     expect(toQt({ kind: 'color', hex: '#4ec9b0' })).toBe('#4ec9b0');
+  });
+
+  it('toQt also flattens rem inside shadow layers (QSS has no rem)', () => {
+    const shadow: Parameters<typeof toQt>[0] = {
+      kind: 'shadow',
+      layers: [
+        {
+          color: '#00000059',
+          offsetX: { value: 0, unit: 'px' },
+          offsetY: { value: 0.125, unit: 'rem' },
+          blur: { value: 0.25, unit: 'rem' },
+          spread: { value: 0.0625, unit: 'rem' },
+          inset: false
+        }
+      ]
+    };
+    expect(toQt(shadow)).toBe('0 2px 4px 1px #00000059');
+    // toCss must keep the authored rem units — only toQt flattens.
+    expect(toCss(shadow)).toBe('0 0.125rem 0.25rem 0.0625rem #00000059');
   });
 });

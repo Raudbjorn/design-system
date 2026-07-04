@@ -78,13 +78,17 @@ export interface TokenDocument {
 
 export type DimensionUnit = 'px' | 'rem';
 
+/** Kept raw (not pre-serialized) so toCss/toQt can each apply their own
+ * unit rules — a rem offset must flatten to px for Qt but stay rem in CSS. */
+export type ShadowDimension = { value: number; unit: DimensionUnit };
+
 export interface ShadowLayer {
   /** Normalized #rrggbb / #rrggbbaa. */
   color: string;
-  offsetX: string;
-  offsetY: string;
-  blur: string;
-  spread: string;
+  offsetX: ShadowDimension;
+  offsetY: ShadowDimension;
+  blur: ShadowDimension;
+  spread: ShadowDimension;
   inset: boolean;
 }
 
@@ -542,10 +546,10 @@ const parseShadowLayer = (value: unknown): ShadowLayer | null => {
   if (typeof inset !== 'boolean') return null;
   return {
     color,
-    offsetX: serializeDimension(offsetX),
-    offsetY: serializeDimension(offsetY),
-    blur: serializeDimension(blur),
-    spread: serializeDimension(spread),
+    offsetX,
+    offsetY,
+    blur,
+    spread,
     inset
   };
 };
@@ -664,8 +668,9 @@ const cssFamily = (name: string): string =>
   GENERIC_FAMILIES.has(name) ? name : `'${name}'`;
 
 const shadowLayerCss = (l: ShadowLayer): string => {
-  const spread = l.spread === '0' ? '' : ` ${l.spread}`;
-  return `${l.inset ? 'inset ' : ''}${l.offsetX} ${l.offsetY} ${l.blur}${spread} ${l.color}`;
+  const spreadCss = serializeDimension(l.spread);
+  const spread = spreadCss === '0' ? '' : ` ${spreadCss}`;
+  return `${l.inset ? 'inset ' : ''}${serializeDimension(l.offsetX)} ${serializeDimension(l.offsetY)} ${serializeDimension(l.blur)}${spread} ${l.color}`;
 };
 
 /** Serialize a resolved value for CSS custom properties. */
@@ -692,6 +697,12 @@ export const QT_PX_PER_REM = 16;
 const qtLength = (value: number, unit: DimensionUnit): string =>
   value === 0 ? '0' : unit === 'rem' ? `${value * QT_PX_PER_REM}px` : `${value}px`;
 
+const shadowLayerQt = (l: ShadowLayer): string => {
+  const spreadQt = qtLength(l.spread.value, l.spread.unit);
+  const spread = spreadQt === '0' ? '' : ` ${spreadQt}`;
+  return `${l.inset ? 'inset ' : ''}${qtLength(l.offsetX.value, l.offsetX.unit)} ${qtLength(l.offsetY.value, l.offsetY.unit)} ${qtLength(l.blur.value, l.blur.unit)}${spread} ${l.color}`;
+};
+
 /** Serialize a resolved value for QSS / Qt consumers (rem flattened to px). */
 export const toQt = (v: TokenValue): string => {
   switch (v.kind) {
@@ -699,6 +710,8 @@ export const toQt = (v: TokenValue): string => {
       return qtLength(v.value, v.unit);
     case 'fontFamily':
       return v.families.map((f) => (GENERIC_FAMILIES.has(f) ? f : `"${f}"`)).join(', ');
+    case 'shadow':
+      return v.layers.map(shadowLayerQt).join(', ');
     default:
       return toCss(v);
   }

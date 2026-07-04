@@ -112,7 +112,8 @@ describe('fixture: house seeds reproduce the house architecture', () => {
     const teal = hexToOklch('#4ec9b0')!;
     const dh = Math.abs(((accent.h - teal.h + 540) % 360) - 180);
     expect(dh).toBeLessThan(10);
-    // teal is the highest-chroma seed → accent role
+    // teal is the first chromatic seed (dominance order) → accent role;
+    // it is not the highest-chroma seed (coral out-chromas it — see assign.ts)
     const roles = Object.fromEntries(result.value.report.seedUsage.map((s) => [s.seed, s.role]));
     expect(roles['#4ec9b0']).toBe('accent');
   });

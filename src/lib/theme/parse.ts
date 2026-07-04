@@ -30,8 +30,16 @@ const isRecord = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
 
 const preview = (value: unknown): string => {
-  const json = JSON.stringify(value);
-  const text = json === undefined ? String(value) : json;
+  // `input` need not have come through JSON.parse — callers may pass an
+  // already-built object directly, so a circular reference or a BigInt
+  // anywhere inside it would otherwise throw out of this error-message path.
+  let text: string;
+  try {
+    const json = JSON.stringify(value);
+    text = json === undefined ? String(value) : json;
+  } catch {
+    text = String(value);
+  }
   return text.length > 64 ? `${text.slice(0, 64)}…` : text;
 };
 
@@ -48,7 +56,9 @@ export const parseWorldTheme = (
   // ── input ────────────────────────────────────────────────────────────
   let raw: unknown = input;
   if (typeof input === 'string') {
-    if (input.length > MAX_INPUT_BYTES) {
+    // `.length` counts UTF-16 code units, not bytes — a CJK-heavy payload
+    // can be up to ~3x MAX_INPUT_BYTES in real (UTF-8) size and still pass.
+    if (new TextEncoder().encode(input).length > MAX_INPUT_BYTES) {
       issues.push({
         severity: 'error',
         code: 'E_INPUT',

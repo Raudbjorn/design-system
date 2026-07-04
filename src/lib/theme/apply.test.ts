@@ -84,7 +84,7 @@ describe('applyWorldTheme (element strategy in jsdom)', () => {
 });
 
 describe('scoped application', () => {
-  it('themes a subtree via data-sv-world without touching data-theme or the cache', () => {
+  it('themes a subtree via data-sv-world without touching the document data-theme or the cache', () => {
     const pane = document.createElement('div');
     document.body.appendChild(pane);
     const result = applyWorldTheme(grim, { scope: pane });
@@ -93,10 +93,15 @@ describe('scoped application', () => {
     const uid = pane.getAttribute('data-sv-world');
     expect(uid).toMatch(/^w\d+$/);
     expect(styleEls()[0]?.textContent).toContain(`[data-sv-world="${uid}"] {`);
+    // Scoped panes get their own data-theme (per grim's `extends`) so
+    // non-overridden tokens fall back to the right built-in palette instead
+    // of inheriting whatever mode the page happens to be in.
+    expect(pane.getAttribute('data-theme')).toBe('dark');
     expect(document.documentElement.hasAttribute('data-theme')).toBe(false);
     expect(window.localStorage.getItem(THEME_STORAGE.worldCss)).toBeNull();
     result.value.remove();
     expect(pane.hasAttribute('data-sv-world')).toBe(false);
+    expect(pane.hasAttribute('data-theme')).toBe(false);
     pane.remove();
   });
 
@@ -113,6 +118,24 @@ describe('scoped application', () => {
     if (rb.ok) rb.value.remove();
     a.remove();
     b.remove();
+  });
+
+  it('re-applying to the same scope element updates in place instead of leaking a second sheet', () => {
+    const pane = document.createElement('div');
+    document.body.appendChild(pane);
+    const first = applyWorldTheme(grim, { scope: pane });
+    const second = applyWorldTheme(other, { scope: pane });
+    expect(first.ok && second.ok).toBe(true);
+    if (!first.ok || !second.ok) return;
+    expect(second.value).toBe(first.value);
+    expect(styleEls()).toHaveLength(1);
+    const uid = pane.getAttribute('data-sv-world');
+    expect(styleEls()[0]?.textContent).toContain(`[data-sv-world="${uid}"] {`);
+    expect(styleEls()[0]?.textContent).toContain('--sv-accent: #2b6a5e;');
+    expect(pane.getAttribute('data-theme')).toBe('light');
+    first.value.remove();
+    expect(styleEls()).toHaveLength(0);
+    pane.remove();
   });
 });
 
