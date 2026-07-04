@@ -25,8 +25,15 @@
     copyAriaLabel
   }: Props = $props();
 
-  const copyAria = $derived(copyAriaLabel ?? (copyLabel === 'Copy' ? 'Copy code' : copyLabel));
   let copied = $state(false);
+  // The accessible name must track the VISIBLE label through the copied
+  // window (label-in-name, WCAG 2.5.3) — and the name change is what tells a
+  // focused screen-reader user the copy landed. copiedLabel verbatim keeps
+  // name === label under any vernacular override; copyAriaLabel governs the
+  // idle name only.
+  const copyAria = $derived(
+    copied ? copiedLabel : (copyAriaLabel ?? (copyLabel === 'Copy' ? 'Copy code' : copyLabel))
+  );
 
   // Gutter rows count from `code` (the copy source), not `html` — build-time
   // highlighters preserve line count per the documented contract. One trailing
