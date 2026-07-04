@@ -19,6 +19,8 @@
 
 <script lang="ts">
   import { Stack, Text } from '../../lib/index';
+  import Eyebrow from './Eyebrow.svelte';
+  import SpecRow from './SpecRow.svelte';
 
   const steps = [0, 1, 2, 3, 4, 6, 8, 12] as const;
   const radii = ['sm', 'md', 'lg'] as const;
@@ -28,34 +30,33 @@
 <Story name="Scale" asChild>
   <Stack gap={12}>
     <section>
-      <h3 class="eyebrow">--sv-space-* · 0.25rem base</h3>
+      <Eyebrow>--sv-space-* · 0.25rem base</Eyebrow>
       <Stack gap={3}>
         {#each steps as s (s)}
-          <div class="row">
-            <span class="label">--sv-space-{s}</span>
+          <SpecRow label="--sv-space-{s}" labelWidth="8rem" align="center">
             <div class="bar" style:width={`var(--sv-space-${s})`}></div>
-          </div>
+          </SpecRow>
         {/each}
       </Stack>
     </section>
 
     <section>
-      <h3 class="eyebrow">--sv-radius-*</h3>
+      <Eyebrow>--sv-radius-*</Eyebrow>
       <div class="swatch-row">
         {#each radii as r (r)}
           <div class="radius-card" style:border-radius={`var(--sv-radius-${r})`}>
-            <span class="label">{r}</span>
+            <Text size="xs" tone="muted" mono as="span">{r}</Text>
           </div>
         {/each}
       </div>
     </section>
 
     <section>
-      <h3 class="eyebrow">--sv-shadow-*</h3>
+      <Eyebrow>--sv-shadow-*</Eyebrow>
       <div class="swatch-row">
         {#each shadows as s (s)}
           <div class="shadow-card" style:box-shadow={`var(--sv-shadow-${s})`}>
-            <span class="label">{s}</span>
+            <Text size="xs" tone="muted" mono as="span">{s}</Text>
           </div>
         {/each}
       </div>
@@ -67,26 +68,6 @@
 </Story>
 
 <style>
-  .eyebrow {
-    margin: 0 0 var(--sv-space-4);
-    font-family: var(--sv-font-mono);
-    font-size: var(--sv-fs-xs);
-    font-weight: var(--sv-font-weight-normal);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--sv-text-muted);
-  }
-  .row {
-    display: grid;
-    grid-template-columns: 8rem 1fr;
-    align-items: center;
-    gap: var(--sv-space-4);
-  }
-  .label {
-    font-family: var(--sv-font-mono);
-    font-size: var(--sv-fs-xs);
-    color: var(--sv-text-faint);
-  }
   .bar {
     height: var(--sv-space-4);
     min-width: 1px;

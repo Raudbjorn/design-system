@@ -19,6 +19,8 @@
 
 <script lang="ts">
   import { Heading, Kbd, Stack, Text } from '../../lib/index';
+  import Eyebrow from './Eyebrow.svelte';
+  import SpecRow from './SpecRow.svelte';
 
   const headingRamp = [
     { token: '--sv-fs-3xl / h1', level: 1, sample: 'Sveinbjörn' },
@@ -40,62 +42,58 @@
   // Icelandic pangram — every accented glyph the Inter subset must keep.
   const pangram = 'Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa.';
 
-  // Nerd-Font PUA glyphs the Iosevka subset keeps (U+F000–F2FF).
+  // Nerd-Font PUA glyph (U+F120 terminal) the Iosevka subset keeps.
   const monoSample = '\uf120 git push origin main --force-with-lease';
 </script>
 
 <Story name="Specimen" asChild>
   <Stack gap={12}>
     <section>
-      <h3 class="eyebrow">--sv-fs-* · heading ramp</h3>
+      <Eyebrow>--sv-fs-* · heading ramp</Eyebrow>
       <Stack gap={4}>
         {#each headingRamp as row (row.level)}
-          <div class="ramp-row">
-            <span class="ramp-label">{row.token}</span>
+          <SpecRow label={row.token}>
             <Heading level={row.level}>{row.sample}</Heading>
-          </div>
+          </SpecRow>
         {/each}
       </Stack>
     </section>
 
     <section>
-      <h3 class="eyebrow">text sizes · Inter</h3>
+      <Eyebrow>text sizes · Inter</Eyebrow>
       <Stack gap={3}>
         {#each textSizes as size (size)}
-          <div class="ramp-row">
-            <span class="ramp-label">{size}</span>
+          <SpecRow label={size}>
             <Text {size}>{pangram}</Text>
-          </div>
+          </SpecRow>
         {/each}
       </Stack>
     </section>
 
     <section>
-      <h3 class="eyebrow">tones</h3>
+      <Eyebrow>tones</Eyebrow>
       <Stack gap={3}>
         {#each tones as tone (tone)}
-          <div class="ramp-row">
-            <span class="ramp-label">{tone}</span>
+          <SpecRow label={tone}>
             <Text {tone}>The quieter the tone, the further from the reader it sits.</Text>
-          </div>
+          </SpecRow>
         {/each}
       </Stack>
     </section>
 
     <section>
-      <h3 class="eyebrow">weight ramp · roles, not CSS keywords</h3>
+      <Eyebrow>weight ramp · roles, not CSS keywords</Eyebrow>
       <Stack gap={3}>
         {#each weights as w (w.value)}
-          <div class="ramp-row">
-            <span class="ramp-label">{w.token}</span>
+          <SpecRow label={w.token}>
             <span class="weight-sample" style:font-weight={w.value}>{w.value} · {w.note}</span>
-          </div>
+          </SpecRow>
         {/each}
       </Stack>
     </section>
 
     <section>
-      <h3 class="eyebrow">mono · Iosevka, with Nerd-Font glyphs</h3>
+      <Eyebrow>mono · Iosevka, with Nerd-Font glyphs</Eyebrow>
       <Stack gap={3}>
         <Text mono>{monoSample}</Text>
         <Text mono size="sm" tone="muted"
@@ -112,26 +110,6 @@
 </Story>
 
 <style>
-  .eyebrow {
-    margin: 0 0 var(--sv-space-4);
-    font-family: var(--sv-font-mono);
-    font-size: var(--sv-fs-xs);
-    font-weight: var(--sv-font-weight-normal);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--sv-text-muted);
-  }
-  .ramp-row {
-    display: grid;
-    grid-template-columns: 12rem 1fr;
-    align-items: baseline;
-    gap: var(--sv-space-4);
-  }
-  .ramp-label {
-    font-family: var(--sv-font-mono);
-    font-size: var(--sv-fs-xs);
-    color: var(--sv-text-faint);
-  }
   .weight-sample {
     font-family: var(--sv-font-sans);
     font-size: var(--sv-fs-base);
