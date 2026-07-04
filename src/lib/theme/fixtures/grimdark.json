@@ -1,0 +1,29 @@
+{
+  "$schema": "https://svnbjrn.dev/schemas/world-theme.v1.json",
+  "name": "grimdark-hive",
+  "version": "1.0.0",
+  "extends": "dark",
+  "meta": {
+    "title": "Hive Primus",
+    "mood": "grimdark",
+    "source": "The Ashes of Armageddon (user upload)",
+    "generator": "bones-palette-extractor@0.3.0"
+  },
+  "tokens": {
+    "bg": { "$value": "#141210" },
+    "surface-1": { "$value": "#1a1714" },
+    "surface-2": { "$value": "#211d18" },
+    "surface-3": { "$value": "#282319" },
+    "border": { "$value": "#453c2f" },
+    "accent": { "$value": "#c9a227" },
+    "accent-2": { "$value": "#b5473a" },
+    "accent-rust": { "$value": "{accent-2}" },
+    "syn": {
+      "$type": "color",
+      "comment": { "$value": "#99916c" },
+      "string": { "$value": "oklch(0.72 0.11 75)" }
+    },
+    "radius-lg": { "$type": "dimension", "$value": "6px" },
+    "font-sans": { "$type": "fontFamily", "$value": ["Alegreya", "Georgia", "serif"] }
+  }
+}
