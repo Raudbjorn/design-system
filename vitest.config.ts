@@ -21,10 +21,18 @@ export default defineConfig({
           environment: 'jsdom',
           globals: true,
           setupFiles: ['./vitest-setup.ts'],
-          include: ['src/**/*.test.ts'],
+          // scripts/ carries the token-build drift guard and the CLI contract
+          // tests (added alongside src tests in the world-theming work) — an
+          // src-only include would silently drop them from the suite.
+          include: ['src/**/*.test.ts', 'scripts/**/*.test.mjs'],
           exclude: [
             '**/node_modules/**',
             '**/dist/**',
+            // Session worktrees are full repo checkouts; without this a stale
+            // (possibly red) copy of the whole suite runs alongside this tree's.
+            // The anchored includes above don't reach them today — this guards
+            // any future include widening.
+            '**/.claude/**',
             '**/.svelte-kit/**',
             '**/cypress/**',
             '**/.{idea,git,cache,output,temp}/**',
