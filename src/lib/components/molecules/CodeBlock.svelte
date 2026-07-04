@@ -1,12 +1,31 @@
 <script lang="ts">
+  import { DEV } from 'esm-env';
+
   interface Props {
     code: string;
     html?: string;
     filename?: string;
     showLineNumbers?: boolean;
+    /** Visible copy-button label — override for world-flavored vernacular. */
+    copyLabel?: string;
+    /** Visible label while the 1.5s "copied" confirmation shows. */
+    copiedLabel?: string;
+    /** Accessible name of the copy button; defaults to tracking the visible
+     * label so a vernacular override never violates label-in-name. */
+    copyAriaLabel?: string;
   }
 
-  let { code, html, filename, showLineNumbers = false }: Props = $props();
+  let {
+    code,
+    html,
+    filename,
+    showLineNumbers = false,
+    copyLabel = 'Copy',
+    copiedLabel = 'Copied',
+    copyAriaLabel
+  }: Props = $props();
+
+  const copyAria = $derived(copyAriaLabel ?? (copyLabel === 'Copy' ? 'Copy code' : copyLabel));
   let copied = $state(false);
 
   // Gutter rows count from `code` (the copy source), not `html` — build-time
@@ -17,12 +36,9 @@
 
   // Dev-only guard on the documented contract: `html` must preserve `code`'s
   // line count, or the gutter numbers drift off the rendered lines.
-  // Runtime lookup (not `import.meta.env.DEV` directly): svelte-package ships
-  // this source untransformed, so non-Vite consumers must resolve to undefined.
-  const dev = (import.meta as { env?: { DEV?: boolean } }).env?.DEV ?? false;
   $effect(() => {
     if (
-      dev &&
+      DEV &&
       html &&
       showLineNumbers &&
       lines.length > 0 &&
@@ -49,8 +65,8 @@
 <figure data-sv="codeblock" data-numbered={numbered}>
   <figcaption>
     <span class="name">{filename ?? ''}</span>
-    <button type="button" onclick={copy} aria-label="Copy code">
-      {copied ? 'Copied' : 'Copy'}
+    <button type="button" onclick={copy} aria-label={copyAria}>
+      {copied ? copiedLabel : copyLabel}
     </button>
   </figcaption>
   <div class="body" class:numbered>

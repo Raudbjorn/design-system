@@ -55,6 +55,34 @@ that a runtime world theme should still be able to beat, write into
 `@layer sv.base`; to beat world themes, use `@layer sv.user` or stay
 unlayered.
 
+### Theming as data (programmatic overrides)
+
+For quick programmatic re-skins — hand-written presets or palettes extracted
+from source material — build the override as data and let the library gate it:
+
+```ts
+import { applyTheme, defineTheme } from '@svnbjrn/design';
+
+const result = defineTheme(
+  { bg: '#16120c', text: '#e0d3bd', accent: '#ff9d45' },
+  { base: 'dark' } // the palette it will layer over
+);
+
+if (result.ok) {
+  const dispose = applyTheme(result.theme); // reversible; scoped via { selector }
+} else {
+  // Errors as values: unknown tokens, non-hex colors (CSS-injection guard),
+  // and WCAG failures (AA 4.5:1 text, 3:1 UI — the same gates the built-in
+  // palettes pass). Drop the named tokens and retry to clamp to the base.
+  console.warn(result.issues);
+}
+```
+
+`defineTheme` also takes an ordered array of layers — later layers win per
+token, giving the strict `base → world → activity → user-override` precedence
+— and `swapTheme` applies a theme through the View Transitions API when
+available (instant fallback otherwise), resolving to the next disposer.
+
 ### World theming (runtime theme packages)
 
 Themes are also **data**: a world-theme package is a JSON manifest plus

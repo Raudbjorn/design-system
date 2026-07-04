@@ -4,19 +4,23 @@
   interface Props {
     brand?: Snippet;
     children: Snippet;
+    /** Accessible name of the nav landmark — override for vernacular. */
+    navLabel?: string;
+    /** Accessible name of the collapsed-menu toggle. */
+    menuLabel?: string;
   }
 
-  let { brand, children }: Props = $props();
+  let { brand, children, navLabel = 'Primary', menuLabel = 'Menu' }: Props = $props();
   let open = $state(false);
   const linksId = $props.id();
 </script>
 
-<nav aria-label="Primary" data-sv="navbar">
+<nav aria-label={navLabel} data-sv="navbar">
   <div class="brand">{#if brand}{@render brand()}{/if}</div>
   <button
     type="button"
     class="toggle"
-    aria-label="Menu"
+    aria-label={menuLabel}
     aria-expanded={open}
     aria-controls={linksId}
     onclick={() => (open = !open)}

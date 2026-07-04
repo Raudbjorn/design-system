@@ -4,7 +4,7 @@ import { createRawSnippet } from 'svelte';
 import Kbd from './Kbd.svelte';
 
 const kids = (t: string) =>
-  createRawSnippet(() => ({ render: () => `${t}` }));
+  createRawSnippet(() => ({ render: () => `<span>${t}</span>` }));
 
 describe('Kbd', () => {
   it('renders a <kbd> element', () => {
