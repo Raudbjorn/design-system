@@ -27,6 +27,9 @@ export function createWorldTheme(opts: SwitchWorldThemeOptions = {}): WorldTheme
   let issues = $state<readonly ThemeIssue[]>([]);
   let status = $state<WorldThemeState['status']>('idle');
   let mode = $state<ThemeMode>(getThemeMode(opts.document));
+  // Guards against out-of-order completion: an older load()/clear() call
+  // resolving after a newer one must not clobber the newer call's state.
+  let generation = 0;
 
   return {
     get current() {
@@ -46,14 +49,17 @@ export function createWorldTheme(opts: SwitchWorldThemeOptions = {}): WorldTheme
       setThemeMode(next, opts.document);
     },
     async load(json: unknown, parseOpts?: ParseWorldThemeOptions): Promise<boolean> {
+      const gen = ++generation;
       const parsed = parseWorldTheme(json, parseOpts);
       if (!parsed.ok) {
+        if (gen !== generation) return false;
         issues = parsed.error;
         status = 'failed';
         return false;
       }
       status = 'applying';
       const applied = await switchWorldTheme(parsed.value, opts);
+      if (gen !== generation) return applied.ok;
       if (!applied.ok) {
         issues = [...parsed.value.issues, applied.error];
         status = 'failed';
@@ -67,7 +73,9 @@ export function createWorldTheme(opts: SwitchWorldThemeOptions = {}): WorldTheme
       return true;
     },
     async clear(): Promise<void> {
+      const gen = ++generation;
       await switchWorldTheme(null, opts);
+      if (gen !== generation) return;
       current = null;
       issues = [];
       status = 'idle';

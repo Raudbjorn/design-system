@@ -40,6 +40,47 @@ describe('createWorldTheme', () => {
     expect(document.head.querySelector('style[data-sv-theme]')).toBeNull();
   });
 
+  it('an older load() resolving after a newer one does not clobber the newer state', async () => {
+    const other = {
+      name: 'other-world',
+      version: '1.0.0',
+      extends: 'light',
+      tokens: { accent: { $value: '#2b6a5e' } }
+    };
+    // Route switchWorldTheme through the View Transition path so each call's
+    // completion can be released independently and out of order.
+    const docAny = document as unknown as Record<string, unknown>;
+    const release: Record<number, () => void> = {};
+    let call = 0;
+    docAny.startViewTransition = (cb: () => void) => {
+      const mine = ++call;
+      return {
+        finished: new Promise<void>((resolve) => {
+          release[mine] = () => {
+            cb();
+            resolve();
+          };
+        })
+      };
+    };
+
+    const state = createWorldTheme();
+    const p1 = state.load(grimdark); // call 1 (stale)
+    const p2 = state.load(other); // call 2 (latest)
+
+    // Resolve the newer call first, then the stale one — simulating
+    // out-of-order completion.
+    release[2]?.();
+    await p2;
+    release[1]?.();
+    await p1;
+
+    expect(state.current?.manifest.name).toBe('other-world');
+    expect(state.status).toBe('active');
+
+    delete docAny.startViewTransition;
+  });
+
   it('mode setter flips data-theme and persists', () => {
     const state = createWorldTheme();
     state.mode = 'light';

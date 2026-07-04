@@ -93,7 +93,7 @@ The same API runs in the browser (see the Storybook **Theme Lab** story).
 
 The token build also emits per-theme Qt Style Sheets and flat resolved token
 maps for non-web consumers: `@svnbjrn/design/qss/dark.qss` (apply via
-`QApplication.setStyleSheet`) and `@svnbjrn/design/tokens/dark.json`
+`QApplication.setStyleSheet`) and `@svnbjrn/design/tokens/dark.tokens.json`
 (css+qt values plus precomputed hover/pressed states). See
 `docs/bones-integration.md`.
 

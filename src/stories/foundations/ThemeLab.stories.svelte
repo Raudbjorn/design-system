@@ -41,6 +41,20 @@
   let pane = $state<HTMLElement | null>(null);
   let handle: WorldThemeHandle | null = null;
 
+  // Mount/unmount only: depends solely on `pane`, so its cleanup doesn't run
+  // on every theme change and clobber `handle` before the update effect
+  // below can reuse it.
+  $effect(() => {
+    if (!pane) return;
+    return () => {
+      handle?.remove();
+      handle = null;
+    };
+  });
+
+  // Reactive update: creates the handle on first successful generation,
+  // then calls handle.update() on every subsequent change. No cleanup here
+  // — `handle` must survive across re-runs for the update path to matter.
   $effect(() => {
     if (!pane || !generated.ok) return;
     const parsed = parseWorldTheme(generated.value.theme);
@@ -51,10 +65,6 @@
       const applied = applyWorldTheme(parsed.value, { scope: pane });
       handle = applied.ok ? applied.value : null;
     }
-    return () => {
-      handle?.remove();
-      handle = null;
-    };
   });
 
   const addSeed = () => {

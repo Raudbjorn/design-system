@@ -109,7 +109,21 @@ interface InternalHandle extends WorldThemeHandle {
   theme: WorldTheme;
 }
 
-let scopeUid = 0;
+// Per-scope-element uid, stable across repeat applyWorldTheme calls on the
+// same element — a plain incrementing counter would mint a fresh id (and
+// registry entry) every call, so the "same-id re-apply updates in place"
+// path below could never trigger for scoped applies, leaking a stylesheet
+// per repeat call.
+const scopeUids = new WeakMap<Element, number>();
+let scopeUidCounter = 0;
+const uidFor = (el: Element): number => {
+  let uid = scopeUids.get(el);
+  if (uid === undefined) {
+    uid = ++scopeUidCounter;
+    scopeUids.set(el, uid);
+  }
+  return uid;
+};
 
 const err = (code: 'E_NO_DOM' | 'E_BAD_SCOPE', message: string): { ok: false; error: ThemeIssue } => ({
   ok: false,
@@ -135,9 +149,10 @@ export const applyWorldTheme = (
   let selector: string;
   let id: string;
   if (scoped) {
-    id = `${layer}:scope:${++scopeUid}`;
-    selector = `[data-sv-world="w${scopeUid}"]`;
-    opts.scope!.setAttribute('data-sv-world', `w${scopeUid}`);
+    const uid = uidFor(opts.scope!);
+    id = `${layer}:scope:${uid}`;
+    selector = `[data-sv-world="w${uid}"]`;
+    opts.scope!.setAttribute('data-sv-world', `w${uid}`);
   } else {
     id = `${layer}:document`;
     selector = ':root';
@@ -164,8 +179,12 @@ export const applyWorldTheme = (
   const render = (t: WorldTheme): void => {
     const css = worldThemeToCss(t, { selector, layer });
     target.setCss(css);
+    // Non-overridden tokens fall back to the built-in palette via the CSS
+    // cascade on [data-theme]; scoped panes need this set on the scope
+    // element itself, or they'd inherit whichever mode the surrounding page
+    // happens to be in instead of this theme's own `extends` (see header).
+    (scoped ? scopeEl! : doc.documentElement).setAttribute('data-theme', t.manifest.extends);
     if (!scoped) {
-      doc.documentElement.setAttribute('data-theme', t.manifest.extends);
       doc.getElementById(BOOT_STYLE_ID)?.remove();
       if (writeCache) {
         try {
@@ -197,6 +216,7 @@ export const applyWorldTheme = (
       target.remove();
       if (scopeEl && uidAttr !== null && scopeEl.getAttribute('data-sv-world') === uidAttr) {
         scopeEl.removeAttribute('data-sv-world');
+        scopeEl.removeAttribute('data-theme');
       }
       if (wroteCache) {
         try {
@@ -214,7 +234,7 @@ export const applyWorldTheme = (
   return { ok: true, value: handle };
 };
 
-export interface SwitchWorldThemeOptions extends ApplyWorldThemeOptions {
+export interface SwitchWorldThemeOptions extends Omit<ApplyWorldThemeOptions, 'scope'> {
   /** Animate via the View Transitions API when available (default true;
    * skipped under prefers-reduced-motion). */
   transition?: boolean;
@@ -255,8 +275,9 @@ export const switchWorldTheme = async (
       }
       return { ok: true, value: null };
     }
-    // Same handle id — applyWorldTheme updates in place.
-    return applyWorldTheme(next, { ...opts, scope: undefined });
+    // Same handle id — applyWorldTheme updates in place. `opts` has no
+    // `scope` field to leak here (SwitchWorldThemeOptions omits it).
+    return applyWorldTheme(next, opts);
   };
 
   const startViewTransition = (doc as Document & {

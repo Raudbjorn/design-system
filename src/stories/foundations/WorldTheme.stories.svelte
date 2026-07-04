@@ -22,7 +22,7 @@
 </script>
 
 <script lang="ts">
-  import { Badge, Button, Card, CodeBlock, Heading, Stack, StatCard, Text } from '../../lib/index';
+  import { Badge, Button, CodeBlock, Heading, Stack, StatCard, Text } from '../../lib/index';
   import { parseWorldTheme, applyWorldTheme } from '../../lib/theme/index';
   import type { WorldThemeHandle } from '../../lib/theme/index';
   import grimdark from '../../lib/theme/fixtures/grimdark.json';

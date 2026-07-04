@@ -60,6 +60,10 @@ describe('themeBootScript', () => {
       { v: 1, css: validCss.replace('/*sv-world*/', '') },
       { v: 1, css: `/*sv-world*/@layer x;@import "evil.css";` },
       { v: 1, css: `/*sv-world*/@layer x;:root{background:url(//evil)}` },
+      // Both @import and url( are case-insensitive CSS keywords; the guard
+      // must not be bypassable by varying case.
+      { v: 1, css: `/*sv-world*/@layer x;@IMPORT "evil.css";` },
+      { v: 1, css: `/*sv-world*/@layer x;:root{background:URL(//evil)}` },
       { v: 1, css: `/*sv-world*/@layer x;:root{--x:\\75rl}` },
       { v: 1, css: `/*sv-world*/@layer ${'x'.repeat(40000)}` }
     ];

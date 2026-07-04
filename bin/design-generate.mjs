@@ -20,9 +20,14 @@ const USAGE = `usage: design-generate --seeds "#hex,#hex" --name <world-id>
        [--mode dark|light|auto] [--hints a,b] [--out file]
        [--theme-only] [--pretty] [--strict]`;
 
+// Sets exitCode rather than calling process.exit(): stdout/stderr are pipes
+// under BONES's subprocess invocation, and a write past the OS pipe buffer
+// (64KB on Linux) is asynchronous — exiting immediately after writing can
+// truncate it before the kernel drains the pipe. Letting Node exit naturally
+// once the event loop empties guarantees the write completes first.
 const fail = (code, payload) => {
   process.stderr.write(`${typeof payload === 'string' ? payload : JSON.stringify(payload)}\n`);
-  process.exit(code);
+  process.exitCode = code;
 };
 
 const loadGenerator = async () => {
@@ -39,7 +44,7 @@ const loadGenerator = async () => {
   return import('../src/lib/generate/index.ts');
 };
 
-try {
+const main = async () => {
   // pnpm forwards a literal `--` separator (`pnpm generate -- --seeds …`).
   const args = process.argv.slice(2);
   if (args[0] === '--') args.shift();
@@ -60,6 +65,7 @@ try {
 
   if (values.help || !values.seeds || !values.name) {
     fail(values.help ? 0 : 2, USAGE);
+    return;
   }
 
   const { generateTheme } = await loadGenerator();
@@ -70,7 +76,10 @@ try {
     hints: values.hints ? values.hints.split(',').map((h) => h.trim()).filter((h) => h.length > 0) : []
   });
 
-  if (!result.ok) fail(2, result.error);
+  if (!result.ok) {
+    fail(2, result.error);
+    return;
+  }
 
   const { theme, report } = result.value;
   const payload = values['theme-only'] ? theme : { theme, report };
@@ -84,8 +93,10 @@ try {
 
   if (values.strict && report.warnings.length > 0) {
     process.stderr.write(`${report.warnings.length} warning(s) under --strict\n`);
-    process.exit(3);
+    process.exitCode = 3;
   }
-} catch (error) {
+};
+
+main().catch((error) => {
   fail(1, error instanceof Error ? (error.stack ?? error.message) : String(error));
-}
+});
