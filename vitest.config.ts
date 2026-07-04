@@ -34,7 +34,10 @@ export default defineConfig({
       },
       // Storybook visual tests: every story renders in real Chromium; Argos
       // captures one screenshot per story per mode (dark/light) into
-      // ./screenshots and uploads them from CI (ARGOS_TOKEN via env).
+      // ./screenshots and uploads them from CI. Auth: ARGOS_TOKEN env when
+      // present; on fork PRs (where GitHub withholds secrets) the SDK falls
+      // back to tokenless GitHub Actions auth automatically — public repo, so
+      // uploads still work. Do NOT gate uploadToArgos on ARGOS_TOKEN presence.
       {
         plugins: [
           // The svelte-vite framework does NOT bring vite-plugin-svelte itself —
@@ -63,8 +66,6 @@ export default defineConfig({
             // configured in .storybook/vitest.setup.ts for test runs only.
             instances: [{ browser: 'chromium' }]
           }
-          // No setupFiles: Storybook ≥10.3 applies preview annotations
-          // (preview.ts + addon /preview exports) automatically.
         }
       }
     ]
