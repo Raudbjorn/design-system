@@ -64,7 +64,7 @@ svnbjrn-ds/
 - Consumes: nothing (first task).
 - Produces: working `pnpm test`, `pnpm check`, `pnpm build` scripts; jsdom + `@testing-library/svelte` render environment for all later tasks.
 
-- [ ] **Step 1: Create `package.json`**
+- [x] **Step 1: Create `package.json`**
 
 ```json
 {
@@ -105,12 +105,12 @@ svnbjrn-ds/
 }
 ```
 
-- [ ] **Step 2: Install**
+- [x] **Step 2: Install**
 
 Run: `pnpm install`
 Expected: lockfile created, no errors.
 
-- [ ] **Step 3: Create config files**
+- [x] **Step 3: Create config files**
 
 `tsconfig.json`:
 ```json
@@ -168,7 +168,7 @@ export default defineConfig({
 import '@testing-library/jest-dom/vitest';
 ```
 
-- [ ] **Step 4: Write a smoke test**
+- [x] **Step 4: Write a smoke test**
 
 `src/lib/internal/smoke.ts`:
 ```ts
@@ -187,12 +187,12 @@ describe('harness', () => {
 });
 ```
 
-- [ ] **Step 5: Run test — verify pass**
+- [x] **Step 5: Run test — verify pass**
 
 Run: `pnpm test`
 Expected: 1 passed.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add -A
@@ -218,7 +218,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
   - `palette.ts` exports `dark: Palette`, `light: Palette` where `type Palette = Record<string, string>` keyed by token name **without** the `--sv-` prefix (e.g. `bg`, `accent`, `syn-keyword`).
   - `src/lib/tokens/colors.css` defining `--sv-*` color vars for dark (default) + light.
 
-- [ ] **Step 1: Write the failing contrast test**
+- [x] **Step 1: Write the failing contrast test**
 
 `src/lib/internal/contrast.test.ts`:
 ```ts
@@ -241,12 +241,12 @@ describe('contrastRatio', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/internal/contrast.test.ts`
 Expected: FAIL — cannot find `./contrast`.
 
-- [ ] **Step 3: Implement contrast util**
+- [x] **Step 3: Implement contrast util**
 
 `src/lib/internal/contrast.ts`:
 ```ts
@@ -272,12 +272,12 @@ export const contrastRatio = (a: string, b: string): number => {
 };
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/internal/contrast.test.ts`
 Expected: 3 passed.
 
-- [ ] **Step 5: Create the palette single-source**
+- [x] **Step 5: Create the palette single-source**
 
 `src/lib/tokens/palette.ts`:
 ```ts
@@ -336,7 +336,7 @@ export const light: Palette = {
 };
 ```
 
-- [ ] **Step 6: Write the failing palette-contrast test**
+- [x] **Step 6: Write the failing palette-contrast test**
 
 `src/lib/tokens/palette.test.ts`:
 ```ts
@@ -372,12 +372,12 @@ describe('palette accessibility', () => {
 });
 ```
 
-- [ ] **Step 7: Run — verify pass**
+- [x] **Step 7: Run — verify pass**
 
 Run: `pnpm test src/lib/tokens/palette.test.ts`
 Expected: 4 passed. (If any assertion fails, the hex is wrong — fix the value, not the threshold.)
 
-- [ ] **Step 8: Write the token generator**
+- [x] **Step 8: Write the token generator**
 
 `scripts/build-tokens.mjs`:
 ```js
@@ -411,14 +411,14 @@ console.log('wrote', out);
 
 Note: Node 24 imports `.ts` via its native type-stripping. If the runner errors on the `.ts` import, run `node --experimental-strip-types scripts/build-tokens.mjs`.
 
-- [ ] **Step 9: Generate and verify**
+- [x] **Step 9: Generate and verify**
 
 Run: `pnpm run tokens`
 Expected: `wrote .../colors.css`.
 Run: `grep -c -- '--sv-accent:' src/lib/tokens/colors.css`
 Expected: `3` (root, light, dark blocks).
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add -A
@@ -441,7 +441,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 - Consumes: source fonts at `../inter/InterVariable*.woff2` and `../IosevkaNerdFont-{Regular,Bold}.ttf` (relative to `svnbjrn-ds/`).
 - Produces: `src/lib/fonts/{InterVariable,InterVariable-Italic,Iosevka-Regular,Iosevka-Bold}.woff2` and `fonts.css` declaring families `Inter` and `Iosevka` with `font-display: swap`.
 
-- [ ] **Step 1: Write the font build script**
+- [x] **Step 1: Write the font build script**
 
 `scripts/build-fonts.mjs`:
 ```js
@@ -490,12 +490,12 @@ for (const f of ['Iosevka-Regular.woff2', 'Iosevka-Bold.woff2']) {
 console.log('fonts built');
 ```
 
-- [ ] **Step 2: Run the font build**
+- [x] **Step 2: Run the font build**
 
 Run: `pnpm run fonts`
 Expected: `fonts built`, and `src/lib/fonts/` holds 4 woff2 files.
 
-- [ ] **Step 3: Write the failing font-budget + PUA test**
+- [x] **Step 3: Write the failing font-budget + PUA test**
 
 `src/lib/tokens/fonts.test.ts`:
 ```ts
@@ -524,12 +524,12 @@ describe('fonts', () => {
 });
 ```
 
-- [ ] **Step 4: Run — verify fail**
+- [x] **Step 4: Run — verify fail**
 
 Run: `pnpm test src/lib/tokens/fonts.test.ts`
 Expected: FAIL — `fonts.css` missing.
 
-- [ ] **Step 5: Write `fonts.css`**
+- [x] **Step 5: Write `fonts.css`**
 
 `src/lib/tokens/fonts.css`:
 ```css
@@ -563,12 +563,12 @@ Expected: FAIL — `fonts.css` missing.
 }
 ```
 
-- [ ] **Step 6: Run — verify pass**
+- [x] **Step 6: Run — verify pass**
 
 Run: `pnpm test src/lib/tokens/fonts.test.ts`
 Expected: 2 passed. (If the size test fails, tighten the `unicodes` ranges in the build script — do not raise the budget.)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add -A
@@ -589,7 +589,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 - Consumes: `fonts.css`, `colors.css` (Tasks 2–3).
 - Produces: `src/lib/tokens/index.css` — the single public stylesheet (`@svnbjrn/design/styles.css`). Defines font-family, spacing, radius, type, z-index, breakpoint, shadow, and mix-target-adjacent scale tokens.
 
-- [ ] **Step 1: Write `scale.css`**
+- [x] **Step 1: Write `scale.css`**
 
 `src/lib/tokens/scale.css`:
 ```css
@@ -639,7 +639,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 }
 ```
 
-- [ ] **Step 2: Write `index.css`**
+- [x] **Step 2: Write `index.css`**
 
 `src/lib/tokens/index.css`:
 ```css
@@ -648,7 +648,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 @import './scale.css';
 ```
 
-- [ ] **Step 3: Write the import-closure test**
+- [x] **Step 3: Write the import-closure test**
 
 `src/lib/tokens/entry.test.ts`:
 ```ts
@@ -677,12 +677,12 @@ describe('token entry', () => {
 });
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/tokens/entry.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -705,7 +705,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
   - `Text` props: `{ size?: 'xs'|'sm'|'base'|'lg'; tone?: 'default'|'strong'|'muted'|'faint'; mono?: boolean; as?: 'p'|'span'|'div'; children: Snippet }`
   - `Heading` props: `{ level?: 1|2|3|4; children: Snippet }` — renders `<h{level}>` with matching type size.
 
-- [ ] **Step 1: Write failing Text test**
+- [x] **Step 1: Write failing Text test**
 
 `src/lib/components/atoms/Text.test.ts`:
 ```ts
@@ -733,12 +733,12 @@ describe('Text', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/atoms/Text.test.ts`
 Expected: FAIL — no `Text.svelte`.
 
-- [ ] **Step 3: Implement `Text.svelte`**
+- [x] **Step 3: Implement `Text.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -783,12 +783,12 @@ Expected: FAIL — no `Text.svelte`.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/atoms/Text.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 5: Write failing Heading test**
+- [x] **Step 5: Write failing Heading test**
 
 `src/lib/components/atoms/Heading.test.ts`:
 ```ts
@@ -812,7 +812,7 @@ describe('Heading', () => {
 });
 ```
 
-- [ ] **Step 6: Implement `Heading.svelte`**
+- [x] **Step 6: Implement `Heading.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -846,12 +846,12 @@ describe('Heading', () => {
 </style>
 ```
 
-- [ ] **Step 7: Run — verify pass**
+- [x] **Step 7: Run — verify pass**
 
 Run: `pnpm test src/lib/components/atoms/Heading.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add -A
@@ -871,7 +871,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 - Consumes: tokens.
 - Produces: `Button` props `{ variant?: 'primary'|'secondary'|'ghost'|'danger'; size?: 'sm'|'md'|'lg'; href?: string; type?: 'button'|'submit'; disabled?: boolean; loading?: boolean; onclick?: (e: MouseEvent) => void; children: Snippet }`. Renders `<a>` when `href` set, else `<button>`.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/atoms/Button.test.ts`:
 ```ts
@@ -911,12 +911,12 @@ describe('Button', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/atoms/Button.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `Button.svelte`**
+- [x] **Step 3: Implement `Button.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1018,12 +1018,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/atoms/Button.test.ts`
 Expected: 4 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1042,7 +1042,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `Link` props `{ href: string; external?: boolean; children: Snippet }`. When `external`, sets `target="_blank" rel="noopener noreferrer"` and appends an external affordance.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/atoms/Link.test.ts`:
 ```ts
@@ -1068,12 +1068,12 @@ describe('Link', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/atoms/Link.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `Link.svelte`**
+- [x] **Step 3: Implement `Link.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1115,12 +1115,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/atoms/Link.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1139,7 +1139,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `Badge` props `{ tone?: 'neutral'|'success'|'error'|'warning'|'accent'; children: Snippet }`.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/atoms/Badge.test.ts`:
 ```ts
@@ -1169,12 +1169,12 @@ describe('Badge', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/atoms/Badge.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `Badge.svelte`**
+- [x] **Step 3: Implement `Badge.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1210,12 +1210,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/atoms/Badge.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1234,7 +1234,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `Icon` props `{ glyph: string; label?: string; size?: 'sm'|'md'|'lg' }`. Renders a mono-font span holding the Nerd-Font PUA `glyph`. With `label` → `role="img"` + `aria-label`; without → `aria-hidden="true"` (decorative).
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/atoms/Icon.test.ts`:
 ```ts
@@ -1256,12 +1256,12 @@ describe('Icon', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/atoms/Icon.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `Icon.svelte`**
+- [x] **Step 3: Implement `Icon.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1294,12 +1294,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/atoms/Icon.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1318,7 +1318,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `Kbd` props `{ children: Snippet }`. Renders a `<kbd>` in mono.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/atoms/Kbd.test.ts`:
 ```ts
@@ -1340,12 +1340,12 @@ describe('Kbd', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/atoms/Kbd.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `Kbd.svelte`**
+- [x] **Step 3: Implement `Kbd.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1370,12 +1370,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/atoms/Kbd.test.ts`
 Expected: 1 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1394,7 +1394,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `Avatar` props `{ src?: string; alt: string; size?: 'sm'|'md'|'lg' }`. With `src` → `<img>`; without → initials fallback derived from `alt`, `role="img"` + `aria-label={alt}`.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/atoms/Avatar.test.ts`:
 ```ts
@@ -1415,12 +1415,12 @@ describe('Avatar', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/atoms/Avatar.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `Avatar.svelte`**
+- [x] **Step 3: Implement `Avatar.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1467,12 +1467,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/atoms/Avatar.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1491,7 +1491,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `Stack` props `{ direction?: 'column'|'row'; gap?: 0|1|2|3|4|6|8|12; align?: 'start'|'center'|'end'|'stretch'; justify?: 'start'|'center'|'end'|'between'; wrap?: boolean; children: Snippet }`. Renders a flex container; `gap` maps to `--sv-space-{gap}`.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/layout/Stack.test.ts`:
 ```ts
@@ -1517,12 +1517,12 @@ describe('Stack', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/layout/Stack.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `Stack.svelte`**
+- [x] **Step 3: Implement `Stack.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1566,12 +1566,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/layout/Stack.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1590,7 +1590,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `Card` props `{ padding?: 'sm'|'md'|'lg'; elevated?: boolean; header?: Snippet; footer?: Snippet; children: Snippet }`.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/molecules/Card.test.ts`:
 ```ts
@@ -1622,12 +1622,12 @@ describe('Card', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/molecules/Card.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `Card.svelte`**
+- [x] **Step 3: Implement `Card.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1672,12 +1672,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/molecules/Card.test.ts`
 Expected: 3 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1698,7 +1698,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
   - `html` = pre-tokenized markup (from a build-time highlighter whose token classes map to `--sv-syn-*`). When present it is rendered via `{@html}`; **the caller is responsible for producing trusted, highlighter-generated HTML** (documented contract). When absent, `code` renders as plain text.
   - `code` is always the copy-to-clipboard source of truth.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/molecules/CodeBlock.test.ts`:
 ```ts
@@ -1731,12 +1731,12 @@ describe('CodeBlock', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/molecules/CodeBlock.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `CodeBlock.svelte`**
+- [x] **Step 3: Implement `CodeBlock.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1815,12 +1815,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/molecules/CodeBlock.test.ts`
 Expected: 3 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1839,7 +1839,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `NavBar` props `{ brand?: Snippet; children: Snippet }`. Renders `<nav aria-label="Primary">` with a brand slot and a links region that collapses under a toggle below `--sv-bp-md` (768px). Toggle button has `aria-expanded` + `aria-controls`.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/molecules/NavBar.test.ts`:
 ```ts
@@ -1867,12 +1867,12 @@ describe('NavBar', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/molecules/NavBar.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `NavBar.svelte`**
+- [x] **Step 3: Implement `NavBar.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -1948,12 +1948,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/molecules/NavBar.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1972,7 +1972,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `StatCard` props `{ value: string; label: string; tone?: 'accent'|'accent-2'|'default' }`. Value rendered large in mono; label muted.
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 `src/lib/components/molecules/StatCard.test.ts`:
 ```ts
@@ -1996,12 +1996,12 @@ describe('StatCard', () => {
 });
 ```
 
-- [ ] **Step 2: Run — verify fail**
+- [x] **Step 2: Run — verify fail**
 
 Run: `pnpm test src/lib/components/molecules/StatCard.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `StatCard.svelte`**
+- [x] **Step 3: Implement `StatCard.svelte`**
 
 ```svelte
 <script lang="ts">
@@ -2046,12 +2046,12 @@ Expected: FAIL.
 </style>
 ```
 
-- [ ] **Step 4: Run — verify pass**
+- [x] **Step 4: Run — verify pass**
 
 Run: `pnpm test src/lib/components/molecules/StatCard.test.ts`
 Expected: 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -2076,7 +2076,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 
 Note: This library uses plain `@sveltejs/vite-plugin-svelte`, not SvelteKit. The "dev page" is a standalone Vite entry, not a SvelteKit route. Use `index.html` + `src/dev.ts` mounting a `Dev.svelte`, avoiding a SvelteKit dependency.
 
-- [ ] **Step 1: Write the barrel**
+- [x] **Step 1: Write the barrel**
 
 `src/lib/index.ts`:
 ```ts
@@ -2095,7 +2095,7 @@ export { default as NavBar } from './components/molecules/NavBar.svelte';
 export { default as StatCard } from './components/molecules/StatCard.svelte';
 ```
 
-- [ ] **Step 2: Write a barrel smoke test**
+- [x] **Step 2: Write a barrel smoke test**
 
 `src/lib/index.test.ts`:
 ```ts
@@ -2113,12 +2113,12 @@ describe('barrel', () => {
 });
 ```
 
-- [ ] **Step 3: Run — verify pass**
+- [x] **Step 3: Run — verify pass**
 
 Run: `pnpm test src/lib/index.test.ts`
 Expected: 1 passed.
 
-- [ ] **Step 4: Create the dev preview entry**
+- [x] **Step 4: Create the dev preview entry**
 
 `index.html`:
 ```html
@@ -2181,13 +2181,13 @@ mount(Dev, { target: document.getElementById('app')! });
 </style>
 ```
 
-- [ ] **Step 5: Verify dev page + check**
+- [x] **Step 5: Verify dev page + check**
 
 Run: `pnpm check`
 Expected: `svelte-check found 0 errors`.
 Run: `pnpm dev` then open the printed URL; confirm components render and "Toggle theme" flips dark/light. Ctrl-C to stop.
 
-- [ ] **Step 6: Build the package**
+- [x] **Step 6: Build the package**
 
 Add to `.gitignore`: `dist/`.
 Run: `pnpm build`
@@ -2195,12 +2195,12 @@ Expected: `svelte-package` writes `dist/` with `index.js`, `index.d.ts`, `tokens
 Run: `test -f dist/tokens/index.css && test -f dist/index.d.ts && echo OK`
 Expected: `OK`.
 
-- [ ] **Step 7: Run the full suite**
+- [x] **Step 7: Run the full suite**
 
 Run: `pnpm test`
 Expected: all tests pass (13 component suites + tokens + fonts + contrast + barrel).
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add -A
@@ -2229,3 +2229,28 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 **Type consistency:** `contrastRatio(a,b)` used identically in Tasks 2–3 tests. `Palette` keys (no `--sv-` prefix) consumed by generator with `--sv-${k}`. Component `Props` names match their `.test.ts` prop usage and the barrel export names in Task 17 (13 components). `data-sv` attribute convention consistent across components and tests. ✓
 
 **Known follow-ups (documented, not gaps):** publish-time npm scope check; optional real Shiki integration example for consumers (out of v1 scope — component contract is defined and tested).
+
+---
+
+## Completion Record — 2026-07-04
+
+**Status: COMPLETE.** All 17 tasks implemented on `main` (HEAD `7507e70`), commit-per-task as prescribed, then evolved through review-driven follow-ups (PRs #9/#15 et al.).
+
+**Gates (verified 2026-07-04):**
+- `pnpm test` — 36 files, 236/236 passed (vitest 4.1.9, `--project=unit`).
+- `pnpm check` — 0 errors, 0 warnings (642 files).
+- `pnpm build` — svelte-package emitted `dist/`; publint: All good!; regenerated token outputs byte-identical to committed files.
+- Font budget — Iosevka-Regular.woff2 179 336 B, Iosevka-Bold.woff2 179 160 B (< 400 KB each), Nerd-Font PUA ranges preserved by `scripts/build-fonts.mjs`.
+
+**Deliberate drift from this plan (superseding, review-driven — not gaps):**
+
+| Plan | Actual |
+| --- | --- |
+| Dev preview at `src/routes/+page.svelte` | Plain-Vite dev page: `index.html` + `src/dev.ts` + `src/Dev.svelte` (specimen page) |
+| Hand-written `palette.ts` as color single-source | DTCG sources (`src/lib/tokens/*.tokens.json` + `themes.ts`); `palette.ts` is now a **generated** compat view; emitters in `scripts/emitters/` also produce resolved JSON + QSS |
+| Flat `colors.css` blocks | Cascade-layered output: `sv.base < sv.theme < sv.world < sv.user` |
+| vitest ^2.1, `pnpm test` = `vitest run` | vitest 4.1.9 with projects; `pnpm test` = `vitest run --project=unit`, `test:visual` = storybook project |
+| `exports`: `.` + `./styles.css` | Additionally `./tokens`, `./tokens/*.json`, `./qss/*.qss`, `./theme`, `./theme/svelte`, `./generate`; `bin/design-generate.mjs` |
+| Hardcoded font weights in components | `--sv-font-weight-*` token ramp (d4cf805) |
+
+**Beyond plan scope (post-plan features, listed for provenance):** themed Storybook + Argos visual testing, runtime world-theme engine (`@svnbjrn/design/theme`), contrast-gated theme generation CLI, design-sync React adapter.
