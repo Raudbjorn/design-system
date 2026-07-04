@@ -26,6 +26,37 @@ describe('CodeBlock', () => {
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('copy me');
   });
 
+  it('accessible name follows the visible label through the copied window', async () => {
+    vi.useFakeTimers();
+    try {
+      render(CodeBlock, { code: 'x', copyLabel: 'Scribe', copiedLabel: 'Scribed!' });
+      const button = screen.getByRole('button', { name: 'Scribe' });
+      button.click();
+      await vi.waitFor(() => {
+        flushSync();
+        // Visible text and accessible name flip together (label-in-name).
+        expect(button).toHaveTextContent('Scribed!');
+        expect(button).toHaveAccessibleName('Scribed!');
+      });
+      vi.advanceTimersByTime(1500);
+      flushSync();
+      expect(button).toHaveTextContent('Scribe');
+      expect(button).toHaveAccessibleName('Scribe');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('an explicit copyAriaLabel governs the idle name but yields during the copied window', async () => {
+    render(CodeBlock, { code: 'x', copyAriaLabel: 'Copy the incantation' });
+    const button = screen.getByRole('button', { name: 'Copy the incantation' });
+    button.click();
+    await vi.waitFor(() => {
+      flushSync();
+      expect(button).toHaveAccessibleName('Copied');
+    });
+  });
+
   it('renders no gutter by default', () => {
     const { container } = render(CodeBlock, { code: 'a\nb' });
     expect(container.querySelector('[data-sv="codeblock"] .gutter')).toBeNull();
