@@ -133,10 +133,13 @@ describe('CodeBlock', () => {
 
   it('does not warn about line-count mismatch when showLineNumbers is off', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    render(CodeBlock, { code: 'a\nb', html: 'one line only' });
-    flushSync();
-    expect(warn).not.toHaveBeenCalled();
-    warn.mockRestore();
+    try {
+      render(CodeBlock, { code: 'a\nb', html: 'one line only' });
+      flushSync();
+      expect(warn).not.toHaveBeenCalled();
+    } finally {
+      warn.mockRestore();
+    }
   });
 
   it('copies only the code source when the gutter is shown', () => {
