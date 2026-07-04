@@ -83,6 +83,14 @@ describe('CodeBlock', () => {
     warn.mockRestore();
   });
 
+  it('does not warn for empty code even when html is non-empty', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(CodeBlock, { code: '', html: 'stale highlighter output', showLineNumbers: true });
+    flushSync();
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
+
   it('copies only the code source when the gutter is shown', () => {
     render(CodeBlock, { code: 'a\nb', showLineNumbers: true });
     screen.getByRole('button', { name: /copy/i }).click();
