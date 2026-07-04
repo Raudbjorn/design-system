@@ -52,6 +52,20 @@ describe('CodeBlock', () => {
     expect(container.querySelector('[data-sv="codeblock"] .gutter')).toBeNull();
   });
 
+  it('data-numbered matches the actual gutter state, not the raw prop', () => {
+    const withGutter = render(CodeBlock, { code: 'a\nb', showLineNumbers: true });
+    expect(withGutter.container.querySelector('[data-sv="codeblock"]')).toHaveAttribute(
+      'data-numbered',
+      'true'
+    );
+    // empty code renders no gutter, so the attribute must not claim otherwise
+    const noGutter = render(CodeBlock, { code: '', showLineNumbers: true });
+    expect(noGutter.container.querySelector('[data-sv="codeblock"]')).toHaveAttribute(
+      'data-numbered',
+      'false'
+    );
+  });
+
   it('counts CRLF line endings correctly', () => {
     const { container } = render(CodeBlock, { code: 'a\r\nb\r\n', showLineNumbers: true });
     expect(container.querySelectorAll('.gutter li')).toHaveLength(2);

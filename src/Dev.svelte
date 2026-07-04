@@ -205,7 +205,7 @@
         </Text>
         {#snippet footer()}
           <Stack direction="row" gap={2}>
-            <Badge tone="success">tests 50/50</Badge>
+            <Badge tone="success">tests 51/51</Badge>
             <Badge>svelte-check clean</Badge>
           </Stack>
         {/snippet}

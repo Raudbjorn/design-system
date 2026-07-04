@@ -11,18 +11,25 @@
 
   // Gutter rows count from `code` (the copy source), not `html` — build-time
   // highlighters preserve line count per the documented contract. One trailing
-  // newline is ignored so 'a\nb\n' numbers 2 lines; empty code gets no gutter.
-  const lines = $derived(code === '' ? [] : code.replace(/\r?\n$/, '').split(/\r?\n/));
+  // newline is ignored so 'a\nb\n' numbers 2 lines; empty/undefined code gets no gutter.
+  const lines = $derived(!code ? [] : code.replace(/\r?\n$/, '').split(/\r?\n/));
   const numbered = $derived(showLineNumbers && lines.length > 0);
 
   async function copy() {
-    await navigator.clipboard.writeText(code);
-    copied = true;
-    setTimeout(() => (copied = false), 1500);
+    // Clipboard API is unavailable outside secure contexts (plain-HTTP staging,
+    // some webviews); guard so the copy button never throws on click.
+    if (!navigator.clipboard) return;
+    try {
+      await navigator.clipboard.writeText(code);
+      copied = true;
+      setTimeout(() => (copied = false), 1500);
+    } catch {
+      // Clipboard write can reject on permission denial; leave the label unchanged.
+    }
   }
 </script>
 
-<figure data-sv="codeblock" data-numbered={showLineNumbers}>
+<figure data-sv="codeblock" data-numbered={numbered}>
   <figcaption>
     <span class="name">{filename ?? ''}</span>
     <button type="button" onclick={copy} aria-label="Copy code">
