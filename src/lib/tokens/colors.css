@@ -20,7 +20,7 @@
   --sv-syn-string: #ce9178;
   --sv-syn-var: #9cdcfe;
   --sv-syn-func: #dcdcaa;
-  --sv-syn-comment: #6a9955;
+  --sv-syn-comment: #74a55e;
   --sv-syn-number: #b5cea8;
 }
 @media (prefers-color-scheme: light) {
@@ -45,7 +45,7 @@
   --sv-syn-string: #8a4326;
   --sv-syn-var: #2f3f6e;
   --sv-syn-func: #6a531f;
-  --sv-syn-comment: #5a6a3d;
+  --sv-syn-comment: #525f36;
   --sv-syn-number: #2f5f45;
 }
 }
@@ -70,7 +70,7 @@
   --sv-syn-string: #8a4326;
   --sv-syn-var: #2f3f6e;
   --sv-syn-func: #6a531f;
-  --sv-syn-comment: #5a6a3d;
+  --sv-syn-comment: #525f36;
   --sv-syn-number: #2f5f45;
 }
 [data-theme="dark"] {
@@ -94,6 +94,6 @@
   --sv-syn-string: #ce9178;
   --sv-syn-var: #9cdcfe;
   --sv-syn-func: #dcdcaa;
-  --sv-syn-comment: #6a9955;
+  --sv-syn-comment: #74a55e;
   --sv-syn-number: #b5cea8;
 }

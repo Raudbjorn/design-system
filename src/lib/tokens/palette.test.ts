@@ -24,6 +24,22 @@ describe('palette accessibility', () => {
     }
   });
 
+  const synTokens = [
+    'syn-keyword',
+    'syn-string',
+    'syn-var',
+    'syn-func',
+    'syn-comment',
+    'syn-number'
+  ] as const;
+
+  it('syntax tokens clear AA on surface-3, the CodeBlock background', () => {
+    for (const t of synTokens) {
+      expect(contrastRatio(dark[t]!, dark['surface-3']!)).toBeGreaterThanOrEqual(4.5);
+      expect(contrastRatio(light[t]!, light['surface-3']!)).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
   it('dark and light define the same token keys', () => {
     expect(Object.keys(dark).sort()).toEqual(Object.keys(light).sort());
   });
