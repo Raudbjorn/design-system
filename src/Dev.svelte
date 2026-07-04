@@ -15,8 +15,20 @@
     Text
   } from './lib/index';
 
+  const colorChips = ['accent', 'accent-2', 'success', 'warning', 'error'];
+  const neutralChips = ['bg', 'surface-1', 'surface-2', 'surface-3', 'border'];
+
   let theme = $state<'dark' | 'light'>('dark');
-  $effect(() => document.documentElement.setAttribute('data-theme', theme));
+  // Chips display what the active theme actually computes — under light they
+  // diverge from the dark :root excerpt above, and that divergence is the point.
+  let hex = $state<Record<string, string>>({});
+  $effect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    const cs = getComputedStyle(document.documentElement);
+    hex = Object.fromEntries(
+      [...colorChips, ...neutralChips].map((c) => [c, cs.getPropertyValue(`--sv-${c}`).trim()])
+    );
+  });
 
   // The dark palette from tokens/palette.ts, shown through the system's own
   // signature component. `code` is the copy source; `html` is the same text
@@ -43,9 +55,6 @@
   <span class="tok-var">--sv-warning</span>: <span class="tok-string">#ffa500</span>;
   <span class="tok-var">--sv-error</span>: <span class="tok-string">#f44430</span>;
 }`;
-
-  const colorChips = ['accent', 'accent-2', 'success', 'warning', 'error'];
-  const neutralChips = ['bg', 'surface-1', 'surface-2', 'surface-3', 'border'];
 
   const headingRamp = [
     { token: '--sv-fs-3xl / h1', level: 1, sample: 'Sveinbjörn' },
@@ -85,6 +94,7 @@
             <div class="chip">
               <div class="swatch" style:background={`var(--sv-${chip})`}></div>
               <span class="chip-label">{chip}</span>
+              <span class="chip-hex">{hex[chip]}</span>
             </div>
           {/each}
         </div>
@@ -93,10 +103,10 @@
             <div class="chip">
               <div class="swatch" style:background={`var(--sv-${chip})`}></div>
               <span class="chip-label">{chip}</span>
+              <span class="chip-hex">{hex[chip]}</span>
             </div>
           {/each}
         </div>
-        <p class="chip-note">Swatches follow the active theme; :root above is the dark default.</p>
       </Stack>
     </section>
 
@@ -165,19 +175,19 @@
     </section>
 
     <section class="spec-section">
+      <h2 class="eyebrow">
+        [data-sv="link"] · [data-sv="kbd"] · [data-sv="icon"] · [data-sv="avatar"]
+      </h2>
       <div class="parts">
         <div class="cell">
-          <span class="cell-label">[data-sv="link"]</span>
           <Text size="sm">
             <Link href="#type">Type ramp</Link> · <Link href="https://github.com/Raudbjorn/design-system" external>Source</Link>
           </Text>
         </div>
         <div class="cell">
-          <span class="cell-label">[data-sv="kbd"]</span>
           <Text size="sm"><Kbd>Ctrl</Kbd> + <Kbd>K</Kbd></Text>
         </div>
         <div class="cell">
-          <span class="cell-label">[data-sv="icon"]</span>
           <Stack direction="row" gap={3} align="center">
             <Icon glyph={glyphs.terminal} label="Terminal" size="lg" />
             <Icon glyph={glyphs.code} label="Code" size="lg" />
@@ -185,7 +195,6 @@
           </Stack>
         </div>
         <div class="cell">
-          <span class="cell-label">[data-sv="avatar"]</span>
           <Stack direction="row" gap={2} align="center">
             <Avatar alt="Sveinbjörn Geirsson" size="sm" />
             <Avatar alt="Sveinbjörn Geirsson" />
@@ -323,10 +332,9 @@
   .chip-label {
     font-family: var(--sv-font-mono);
     font-size: var(--sv-fs-xs);
-    color: var(--sv-text-faint);
+    color: var(--sv-text-muted);
   }
-  .chip-note {
-    margin: 0;
+  .chip-hex {
     font-family: var(--sv-font-mono);
     font-size: var(--sv-fs-xs);
     color: var(--sv-text-faint);
@@ -353,11 +361,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--sv-space-3);
-  }
-  .cell-label {
-    font-family: var(--sv-font-mono);
-    font-size: var(--sv-fs-xs);
-    color: var(--sv-text-muted);
   }
 
   .theme {
