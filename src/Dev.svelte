@@ -67,7 +67,7 @@
 
 <main>
   <header class="hero">
-    <h1><span class="at">@</span>svnbjrn/design</h1>
+    <h1><span class="at">@</span>svnbjrn/design<span class="caret" aria-hidden="true"></span></h1>
     <p class="deck">
       A personal, dark-first developer design system: two accents, a near-black ramp, and
       Iosevka as a feature — every value a <code>--sv-*</code> token.
@@ -200,11 +200,12 @@
       <Card>
         {#snippet header()}<Text size="xs" tone="muted" mono as="span">changelog · unreleased</Text>{/snippet}
         <Text>
-          Line-number gutter on CodeBlock, a font-weight ramp, and a cleaner npm tarball.
+          A semantic font-weight ramp, line numbers on CodeBlock, this self-documenting
+          specimen page, and a leaner npm tarball.
         </Text>
         {#snippet footer()}
           <Stack direction="row" gap={2}>
-            <Badge tone="success">tests 48/48</Badge>
+            <Badge tone="success">tests 50/50</Badge>
             <Badge>svelte-check clean</Badge>
           </Stack>
         {/snippet}
@@ -243,6 +244,36 @@
     color: var(--sv-text-strong);
   }
   .hero .at { color: var(--sv-accent); }
+  /* Terminal caret: the title reads as a shell line, the system's own vernacular. */
+  .caret {
+    display: inline-block;
+    width: 0.5ch;
+    height: 1.05em;
+    margin-left: 0.12em;
+    vertical-align: -0.14em;
+    background: var(--sv-accent);
+    animation: sv-blink 1.15s ease-in-out infinite;
+  }
+  @keyframes sv-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* One orchestrated page-load reveal: hero, then sections stagger in. */
+  @keyframes sv-rise {
+    from { opacity: 0; transform: translateY(0.75rem); }
+    to { opacity: 1; transform: none; }
+  }
+  .hero,
+  .spec-section {
+    animation: sv-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .spec-section:nth-of-type(1) { animation-delay: 0.06s; }
+  .spec-section:nth-of-type(2) { animation-delay: 0.12s; }
+  .spec-section:nth-of-type(3) { animation-delay: 0.18s; }
+  .spec-section:nth-of-type(4) { animation-delay: 0.24s; }
+  .spec-section:nth-of-type(5) { animation-delay: 0.30s; }
+  .spec-section:nth-of-type(6) { animation-delay: 0.36s; }
   .deck {
     margin: var(--sv-space-3) 0 0;
     max-width: 55ch;
@@ -360,5 +391,11 @@
   @media (max-width: 640px) {
     .hero h1 { font-size: var(--sv-fs-2xl); }
     .ramp-row { grid-template-columns: 1fr; gap: var(--sv-space-1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero,
+    .spec-section { animation: none; }
+    .caret { animation: none; }
   }
 </style>
