@@ -25,15 +25,15 @@
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-  --sv-bg: #fbf3d0;
-  --sv-surface-1: #f5eecb;
-  --sv-surface-2: #eee5bd;
-  --sv-surface-3: #e7ddad;
-  --sv-border: #d6c795;
-  --sv-text: #332f26;
-  --sv-text-strong: #1b1810;
-  --sv-text-muted: #67624f;
-  --sv-text-faint: #6d6852;
+  --sv-bg: #f1e7c4;
+  --sv-surface-1: #ece1b8;
+  --sv-surface-2: #e6dcb2;
+  --sv-surface-3: #e0d5a8;
+  --sv-border: #c7ba85;
+  --sv-text: #3a3527;
+  --sv-text-strong: #2a2617;
+  --sv-text-muted: #605b47;
+  --sv-text-faint: #65604b;
   --sv-accent: #2b8a77;
   --sv-accent-2: #c0505a;
   --sv-accent-rust: #b26a45;
@@ -41,24 +41,24 @@
   --sv-success: #0c9138;
   --sv-error: #d13b2a;
   --sv-warning: #b26a00;
-  --sv-syn-keyword: #0000ff;
-  --sv-syn-string: #a31515;
-  --sv-syn-var: #001080;
-  --sv-syn-func: #795e26;
-  --sv-syn-comment: #008000;
-  --sv-syn-number: #098658;
+  --sv-syn-keyword: #274a86;
+  --sv-syn-string: #8a4326;
+  --sv-syn-var: #2f3f6e;
+  --sv-syn-func: #6a531f;
+  --sv-syn-comment: #5a6a3d;
+  --sv-syn-number: #2f5f45;
 }
 }
 [data-theme="light"] {
-  --sv-bg: #fbf3d0;
-  --sv-surface-1: #f5eecb;
-  --sv-surface-2: #eee5bd;
-  --sv-surface-3: #e7ddad;
-  --sv-border: #d6c795;
-  --sv-text: #332f26;
-  --sv-text-strong: #1b1810;
-  --sv-text-muted: #67624f;
-  --sv-text-faint: #6d6852;
+  --sv-bg: #f1e7c4;
+  --sv-surface-1: #ece1b8;
+  --sv-surface-2: #e6dcb2;
+  --sv-surface-3: #e0d5a8;
+  --sv-border: #c7ba85;
+  --sv-text: #3a3527;
+  --sv-text-strong: #2a2617;
+  --sv-text-muted: #605b47;
+  --sv-text-faint: #65604b;
   --sv-accent: #2b8a77;
   --sv-accent-2: #c0505a;
   --sv-accent-rust: #b26a45;
@@ -66,12 +66,12 @@
   --sv-success: #0c9138;
   --sv-error: #d13b2a;
   --sv-warning: #b26a00;
-  --sv-syn-keyword: #0000ff;
-  --sv-syn-string: #a31515;
-  --sv-syn-var: #001080;
-  --sv-syn-func: #795e26;
-  --sv-syn-comment: #008000;
-  --sv-syn-number: #098658;
+  --sv-syn-keyword: #274a86;
+  --sv-syn-string: #8a4326;
+  --sv-syn-var: #2f3f6e;
+  --sv-syn-func: #6a531f;
+  --sv-syn-comment: #5a6a3d;
+  --sv-syn-number: #2f5f45;
 }
 [data-theme="dark"] {
   --sv-bg: #191919;
