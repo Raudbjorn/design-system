@@ -1,0 +1,126 @@
+// React adapter core for @svnbjrn/design (a Svelte 5 library).
+//
+// wrap(name, SvelteComponent, snippetProps) returns a React component that
+// mounts the library's REAL compiled Svelte component (from dist/) via
+// Svelte 5's mount(). Scalar/callback props pass through 1:1. Snippet props
+// (children, header, footer, brand) accept React nodes: the wrapper renders
+// them through a React portal into a persistent display:contents container
+// element, and hands Svelte a raw snippet that adopts that container — so
+// React keeps ownership of its subtree while Svelte owns its placement.
+//
+// react/react-dom stay EXTERNAL here (the design-sync bundle shims them to
+// window.React / window.ReactDOM); the svelte runtime is bundled in.
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { createRawSnippet, mount, unmount } from 'svelte';
+import Host from './host.svelte';
+import { createBag } from './state.svelte.js';
+
+function shallowEq(a, b) {
+  if (a === b) return true;
+  if (!a || !b) return false;
+  const ka = Object.keys(a);
+  const kb = Object.keys(b);
+  if (ka.length !== kb.length) return false;
+  for (const k of ka) if (a[k] !== b[k]) return false;
+  return true;
+}
+
+export function wrap(name, SvelteComponent, snippetProps = []) {
+  function Wrapper(props) {
+    const hostRef = React.useRef(null);
+    const st = React.useRef(null);
+    if (!st.current) {
+      st.current = { containers: new Map(), snippets: new Map(), app: null, bag: null, last: null };
+    }
+    const s = st.current;
+
+    const svelteProps = {};
+    const portals = [];
+    for (const [k, v] of Object.entries(props)) {
+      if (snippetProps.includes(k)) continue;
+      svelteProps[k] = v;
+    }
+    // Forgiving alias: React muscle memory writes onClick; the real Svelte 5
+    // prop is onclick. Documented API stays onclick — this only prevents a
+    // silently dead handler.
+    if (svelteProps['onClick'] && !svelteProps['onclick']) {
+      svelteProps['onclick'] = svelteProps['onClick'];
+      delete svelteProps['onClick'];
+    }
+    for (const k of snippetProps) {
+      const node = props[k];
+      if (node == null || node === false) continue;
+      let el = s.containers.get(k);
+      if (!el) {
+        el = document.createElement('ds-slot');
+        el.style.display = 'contents';
+        s.containers.set(k, el);
+      }
+      let snip = s.snippets.get(k);
+      if (!snip) {
+        snip = createRawSnippet(() => ({
+          render: () => '<ds-slot style="display:contents"></ds-slot>',
+          setup(target) {
+            target.appendChild(el);
+            return () => {
+              if (el.parentNode === target) target.removeChild(el);
+            };
+          },
+        }));
+        s.snippets.set(k, snip);
+      }
+      svelteProps[k] = snip;
+      portals.push(ReactDOM.createPortal(node, el, `ds-${k}`));
+    }
+
+    React.useLayoutEffect(() => {
+      s.bag = createBag(svelteProps);
+      s.last = svelteProps;
+      s.app = mount(Host, { target: hostRef.current, props: { component: SvelteComponent, bag: s.bag } });
+      return () => {
+        const app = s.app;
+        s.app = null;
+        s.bag = null;
+        s.last = null;
+        if (app) unmount(app);
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    React.useLayoutEffect(() => {
+      if (s.app && s.bag && !shallowEq(s.last, svelteProps)) {
+        s.bag.v = svelteProps;
+        s.last = svelteProps;
+      }
+    });
+
+    return React.createElement(
+      React.Fragment,
+      null,
+      React.createElement('ds-host', { ref: hostRef, style: { display: 'contents' } }),
+      portals,
+    );
+  }
+  Wrapper.displayName = name;
+  return Wrapper;
+}
+
+// Theme frame — the library's real theming contract (data-theme on an
+// ancestor; see tokens/colors.css) plus the same token canvas the repo's own
+// Storybook paints (.storybook/preview.css: token background/text/font).
+export function ThemeRoot(props) {
+  const theme = props.theme || 'dark';
+  return React.createElement(
+    'div',
+    {
+      'data-theme': theme,
+      style: {
+        background: 'var(--sv-bg)',
+        color: 'var(--sv-text)',
+        fontFamily: 'var(--sv-font-sans)',
+        padding: '20px',
+      },
+    },
+    props.children,
+  );
+}
