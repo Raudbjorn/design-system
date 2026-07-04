@@ -36,6 +36,8 @@ export const contrastGates: ReadonlyArray<{ fg: TokenName; bg: TokenName; min: n
 export type ThemeIssue =
   | { kind: 'unknown-token'; token: string }
   | { kind: 'invalid-color'; token: TokenName; value: string }
+  | { kind: 'invalid-layer'; index: number }
+  | { kind: 'missing-token'; token: TokenName }
   | { kind: 'contrast'; fg: TokenName; bg: TokenName; ratio: number; min: number };
 
 export interface Theme {
@@ -74,23 +76,38 @@ export function defineTheme(
   overrides: Record<string, string> | ReadonlyArray<Record<string, string>>,
   options: DefineThemeOptions = {}
 ): ThemeResult {
-  const layers: ReadonlyArray<Record<string, string>> = Array.isArray(overrides) ? overrides : [overrides];
+  // Zero-trust all the way down: overrides often arrive from LLMs or
+  // external pipelines, so even the CONTAINER shapes are unproven at runtime
+  // — a null layer or a non-string value must become an issue, not a throw.
+  const rawLayers: ReadonlyArray<unknown> = Array.isArray(overrides) ? overrides : [overrides];
   const base =
     options.base === 'light' ? light : options.base === undefined || options.base === 'dark' ? dark : options.base;
 
   const issues: ThemeIssue[] = [];
+  // A custom base must satisfy the full TokenName contract the type system
+  // can no longer promise (the generated Palette is an open Record) — a
+  // sparse base would leave contrast gates silently unenforceable.
+  if (typeof options.base === 'object' && options.base !== null) {
+    for (const token of Object.keys(dark) as TokenName[]) {
+      if (!Object.hasOwn(options.base, token)) issues.push({ kind: 'missing-token', token });
+    }
+  }
   // Plain Record: Partial<Palette> would widen every read to
   // `string | undefined` now that the generated Palette is an open
   // Record<string, string> — the hasOwn gate above is what bounds the keys.
   const accepted: Record<string, string> = {};
-  for (const layer of layers) {
+  for (const [index, layer] of rawLayers.entries()) {
+    if (layer === null || typeof layer !== 'object' || Array.isArray(layer)) {
+      issues.push({ kind: 'invalid-layer', index });
+      continue;
+    }
     for (const [token, value] of Object.entries(layer)) {
       if (!Object.hasOwn(dark, token)) {
         issues.push({ kind: 'unknown-token', token });
         continue;
       }
-      if (!HEX.test(value)) {
-        issues.push({ kind: 'invalid-color', token: token as TokenName, value });
+      if (typeof value !== 'string' || !HEX.test(value)) {
+        issues.push({ kind: 'invalid-color', token: token as TokenName, value: String(value) });
         continue;
       }
       accepted[token] = value.toLowerCase();
@@ -135,7 +152,8 @@ export interface ApplyThemeOptions {
  * Apply a theme to a document and return a disposer that removes it —
  * every adaptation stays reversible. Uses a constructable stylesheet where
  * supported, a `<style>` element otherwise. Either way the injected CSS is
- * unlayered, so it beats the library's `sv.tokens` cascade layer.
+ * unlayered, so it beats every library cascade layer
+ * (`sv.base < sv.theme < sv.world < sv.user`).
  *
  * DOM-only: call client-side (e.g. inside `onMount`/`$effect`).
  */
@@ -143,6 +161,12 @@ export function applyTheme(theme: Theme, options: ApplyThemeOptions = {}): () =>
   const doc = options.target ?? (typeof document === 'undefined' ? undefined : document);
   if (!doc) {
     throw new Error('applyTheme needs a DOM document — call it client-side or pass options.target.');
+  }
+  // Dev misuse (data errors are values, but a missing Theme is a bug): the
+  // classic slip is using result.theme off a failed defineTheme without
+  // checking result.ok — fail with a message that says so, not a TypeError.
+  if (!theme || typeof theme !== 'object' || !theme.overrides) {
+    throw new Error('applyTheme: a valid Theme is required — check result.ok before using result.theme.');
   }
   const css = themeCss(theme, options.selector);
 
@@ -163,7 +187,9 @@ export function applyTheme(theme: Theme, options: ApplyThemeOptions = {}): () =>
   const el = doc.createElement('style');
   el.setAttribute('data-sv-theme', '');
   el.textContent = css;
-  doc.head.appendChild(el);
+  // doc.head can be null in bare synthetic documents (createHTMLDocument
+  // variants, some SSR shims) — the root element always exists.
+  (doc.head ?? doc.documentElement).appendChild(el);
   return () => el.remove();
 }
 
@@ -186,7 +212,13 @@ export async function swapTheme(theme: Theme, options: SwapThemeOptions = {}): P
   if (!doc) {
     throw new Error('swapTheme needs a DOM document — call it client-side or pass options.target.');
   }
-  let next: (() => void) | undefined;
+  if (!theme || typeof theme !== 'object' || !theme.overrides) {
+    throw new Error('swapTheme: a valid Theme is required — check result.ok before using result.theme.');
+  }
+  // No-op init instead of a non-null assertion: the disposer stays safe to
+  // call even if an exotic View Transitions implementation resolves without
+  // running the update callback.
+  let next: () => void = () => {};
   const mutate = () => {
     options.dispose?.();
     next = applyTheme(theme, options);
@@ -197,5 +229,5 @@ export async function swapTheme(theme: Theme, options: SwapThemeOptions = {}): P
   } else {
     mutate();
   }
-  return next!;
+  return next;
 }
