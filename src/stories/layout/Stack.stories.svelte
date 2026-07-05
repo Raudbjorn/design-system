@@ -2,6 +2,10 @@
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import { Stack } from '../../lib/index';
 
+  // Single source for the gap scale — drives both the control and the
+  // "Gap scale" story, so they can't drift apart.
+  const steps = [0, 1, 2, 3, 4, 6, 8, 12] as const;
+
   const { Story } = defineMeta({
     title: 'Layout/Stack',
     component: Stack,
@@ -9,10 +13,22 @@
     argTypes: {
       as: {
         control: 'select',
-        options: ['div', 'section', 'article', 'nav', 'header', 'footer', 'ul', 'ol']
+        options: [
+          'div',
+          'section',
+          'article',
+          'nav',
+          'header',
+          'footer',
+          'main',
+          'aside',
+          'form',
+          'ul',
+          'ol'
+        ]
       },
       direction: { control: 'inline-radio', options: ['column', 'row'] },
-      gap: { control: 'select', options: [0, 1, 2, 3, 4, 6, 8, 12] },
+      gap: { control: 'select', options: [...steps] },
       align: { control: 'select', options: ['start', 'center', 'end', 'stretch', 'baseline'] },
       justify: { control: 'inline-radio', options: ['start', 'center', 'end', 'between'] },
       wrap: { control: 'boolean' },
@@ -36,8 +52,6 @@
 <script lang="ts">
   import { Avatar, Badge, Button, Kbd, StatCard, Text } from '../../lib/index';
   import SpecRow from '../foundations/SpecRow.svelte';
-
-  const steps = [0, 1, 2, 3, 4, 6, 8, 12] as const;
 </script>
 
 <!-- Four children with strongly different intrinsic sizes, so every knob

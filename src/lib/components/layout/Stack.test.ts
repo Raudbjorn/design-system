@@ -58,7 +58,8 @@ describe('Stack', () => {
   it.each([
     [undefined, 'DIV'],
     ['ul', 'UL'],
-    ['nav', 'NAV']
+    ['nav', 'NAV'],
+    ['form', 'FORM']
   ] as const)('renders as=%s as a %s element', (as, tagName) => {
     const { container } = render(Stack, { ...(as ? { as } : {}), children: kids });
     const el = getStack(container);
