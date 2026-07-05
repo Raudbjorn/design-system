@@ -1,0 +1,20 @@
+{
+  "$schema": "https://svnbjrn.dev/schemas/world-theme.v1.json",
+  "name": "vermis",
+  "version": "1.0.0",
+  "extends": "dark",
+  "meta": {
+    "title": "Vermis",
+    "mood": "occult-ornate",
+    "source": "layform pattern language (Vermis I/II, Plurabelle Comix)"
+  },
+  "tokens": {
+    "accent": { "$value": "#c0432c" },
+    "accent-2": { "$value": "#c9b458" },
+    "accent-rust": { "$value": "#8b6f47" },
+    "success": { "$value": "#7a8a3a" },
+    "error": { "$value": "#d9532b" },
+    "radius-lg": { "$type": "dimension", "$value": "8px" },
+    "font-sans": { "$type": "fontFamily", "$value": ["Inter Variable", "Inter", "sans-serif"] }
+  }
+}

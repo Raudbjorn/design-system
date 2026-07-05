@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { parseWorldTheme } from './parse';
 import type { ThemeIssueCode } from './types';
 import grimdark from './fixtures/grimdark.json';
+import vermis from './fixtures/vermis.json';
 
 const pkg = (tokens: Record<string, unknown>, extra: Record<string, unknown> = {}) => ({
   name: 'test-world',
@@ -194,5 +195,28 @@ describe('grimdark fixture', () => {
     expect(result.value.tokens.get('syn-string')).toBe('#cd9a50'); // via oklch()
     expect(result.value.tokens.get('radius-lg')).toBe('6px');
     expect(result.value.tokens.get('font-sans')).toBe("'Alegreya', 'Georgia', serif");
+  });
+});
+
+describe('vermis fixture', () => {
+  it('parses clean: no errors, no contrast issues, expected overrides', () => {
+    const result = parseWorldTheme(vermis);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const severities = result.value.issues.map((i) => i.severity);
+    expect(severities).not.toContain('error');
+    expect(codes(result.value.issues)).not.toContain('W_CONTRAST_REVERTED');
+    expect(result.value.manifest).toMatchObject({
+      name: 'vermis',
+      version: '1.0.0',
+      extends: 'dark'
+    });
+    expect(result.value.tokens.get('accent')).toBe('#c0432c');
+    expect(result.value.tokens.get('accent-2')).toBe('#c9b458');
+    expect(result.value.tokens.get('accent-rust')).toBe('#8b6f47');
+    expect(result.value.tokens.get('success')).toBe('#7a8a3a');
+    expect(result.value.tokens.get('error')).toBe('#d9532b');
+    expect(result.value.tokens.get('radius-lg')).toBe('8px');
+    expect(result.value.tokens.get('font-sans')).toBe("'Inter Variable', 'Inter', sans-serif");
   });
 });
