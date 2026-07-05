@@ -137,6 +137,12 @@ export interface CodeBlockProps {
   filename?: string;
   /** Line-number gutter, numbered from code. */
   showLineNumbers?: boolean;
+  /** Visible copy-button label — override for world-flavored vernacular. */
+  copyLabel?: string;
+  /** Visible label while the 1.5s "copied" confirmation shows. */
+  copiedLabel?: string;
+  /** Accessible name of the copy button; defaults to tracking the visible label. */
+  copyAriaLabel?: string;
 }
 export declare const CodeBlock: React.FC<CodeBlockProps>;
 
@@ -149,6 +155,10 @@ export interface NavBarProps {
   brand?: React.ReactNode;
   /** Links / actions (right side; typically Link and Badge). */
   children: React.ReactNode;
+  /** Accessible name of the nav landmark — override for vernacular. */
+  navLabel?: string;
+  /** Accessible name of the collapsed-menu toggle. */
+  menuLabel?: string;
 }
 export declare const NavBar: React.FC<NavBarProps>;
 
@@ -173,3 +183,83 @@ export interface ThemeRootProps {
   children?: React.ReactNode;
 }
 export declare const ThemeRoot: React.FC<ThemeRootProps>;
+
+// ── Theme-as-data API ──────────────────────────────────────────────────
+// The library's real compiled theme spine, passed through unwrapped.
+// Themes are data: defineTheme validates, themeCss/applyTheme render.
+
+/** Full token palette — token name → 6-digit hex. */
+export type Palette = Record<string, string>;
+export type TokenName =
+  | 'bg' | 'surface-1' | 'surface-2' | 'surface-3' | 'border'
+  | 'text' | 'text-strong' | 'text-muted' | 'text-faint'
+  | 'accent' | 'accent-2' | 'accent-rust' | 'mix-target'
+  | 'success' | 'error' | 'warning'
+  | 'syn-keyword' | 'syn-string' | 'syn-var' | 'syn-func' | 'syn-comment' | 'syn-number';
+
+/** The built-in palettes — the data behind ThemeRoot's dark/light. */
+export declare const dark: Palette;
+export declare const light: Palette;
+
+export type ThemeIssue =
+  | { kind: 'unknown-token'; token: string }
+  | { kind: 'invalid-color'; token: TokenName; value: string }
+  | { kind: 'invalid-layer'; index: number }
+  | { kind: 'missing-token'; token: TokenName }
+  | { kind: 'contrast'; fg: TokenName; bg: TokenName; ratio: number; min: number };
+
+export interface Theme {
+  /** The accepted overrides only — what themeCss emits. */
+  overrides: Partial<Palette>;
+  /** The full merged palette (base + overrides) the gates were checked on. */
+  palette: Palette;
+}
+export type ThemeResult = { ok: true; theme: Theme } | { ok: false; issues: ThemeIssue[] };
+
+export interface DefineThemeOptions {
+  /** Base palette for contrast gating: 'dark' (default), 'light', or a full custom palette. */
+  base?: 'dark' | 'light' | Palette;
+}
+/**
+ * Validate a partial palette override into a Theme. Accepts one override
+ * record or an ordered layer array (later wins: base → world → activity →
+ * user-override). Collects every issue instead of failing fast; only 6-digit
+ * hex on known token names passes, and every WCAG pairing the base palettes
+ * guarantee is re-checked. Rejections come back as an issue list, never CSS.
+ */
+export declare function defineTheme(
+  overrides: Record<string, string> | ReadonlyArray<Record<string, string>>,
+  options?: DefineThemeOptions
+): ThemeResult;
+/** Render a theme as a CSS custom-property block (deterministic; `--sv-*: #rrggbb;` only). */
+export declare function themeCss(theme: Theme, selector?: string): string;
+
+export interface ApplyThemeOptions {
+  /** Scope for the overrides; defaults to `:root`. */
+  selector?: string;
+  /** Document to style; defaults to the global one. */
+  target?: Document;
+}
+/** Apply a theme document-wide; returns a disposer. DOM-only — call in an effect. */
+export declare function applyTheme(theme: Theme, options?: ApplyThemeOptions): () => void;
+
+export interface SwapThemeOptions extends ApplyThemeOptions {
+  /** Disposer from a previous applyTheme/swapTheme, removed inside the same transition frame. */
+  dispose?: () => void;
+}
+/** Swap themes with a View Transitions crossfade where available. DOM-only. */
+export declare function swapTheme(theme: Theme, options?: SwapThemeOptions): Promise<() => void>;
+
+/** The WCAG pairings every palette must satisfy (4.5:1 normal text, 3:1 UI). */
+export declare const contrastGates: ReadonlyArray<{ fg: TokenName; bg: TokenName; min: number }>;
+/** WCAG contrast ratio between two hex colors. */
+export declare const contrastRatio: (a: string, b: string) => number;
+
+/**
+ * World vernacular — per-world label overrides for component chrome.
+ * Spread into the matching component: `<CodeBlock {...vernacular.codeBlock} …/>`.
+ */
+export interface Vernacular {
+  codeBlock?: Pick<CodeBlockProps, 'copyLabel' | 'copiedLabel' | 'copyAriaLabel'>;
+  navBar?: Pick<NavBarProps, 'navLabel' | 'menuLabel'>;
+}

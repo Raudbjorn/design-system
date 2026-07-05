@@ -18,6 +18,26 @@ follows the viewer's OS preference instead of your design's intent.
 </ThemeRoot>
 ```
 
+## Custom themes — themes are data
+
+Beyond ThemeRoot's dark/light, the theme API ships on the same global:
+`defineTheme(overrides)` validates a partial palette (keys are the token
+names from the table below minus the `--sv-` prefix, e.g. `accent`, `bg`,
+`surface-1`; values 6-digit hex only) against the WCAG contrast gates and returns
+`{ok: true, theme}` or `{ok: false, issues}` — never unchecked CSS. It also
+takes an ordered array of override layers (later wins: base → world →
+activity → user-override). Render an accepted theme with
+`themeCss(theme, '.scope')` in a `<style>` tag, or `applyTheme(theme)`
+document-wide (returns a disposer; call client-side). `swapTheme` is
+`applyTheme` with a View Transitions crossfade. `dark`/`light` export the
+built-in palettes as data; `contrastGates`/`contrastRatio` expose the checker.
+
+```jsx
+const world = defineTheme({ accent: '#ff9d45', 'accent-2': '#d96c5f' }); // ok over the dark base
+{world.ok && <style>{themeCss(world.theme, '.ember')}</style>}
+<div className="ember">…this subtree wears the world palette…</div>
+```
+
 ## Styling idiom — tokens and props, never CSS classes
 
 There is **no utility-class vocabulary**. Components style themselves via
@@ -45,6 +65,9 @@ Gotchas that matter:
   count or the `showLineNumbers` gutter drifts. No client-side highlighter exists.
 - `Icon` is glyph-as-text (Nerd-Font PUA range U+F000–F2FF via the bundled
   Iosevka); pass the character as `glyph`, add `label` unless decorative.
+- **Vernacular labels**: NavBar (`navLabel`, `menuLabel`) and CodeBlock
+  (`copyLabel`, `copiedLabel`, `copyAriaLabel`) take string overrides for
+  world-flavored chrome; accessible names track the visible labels.
 
 ## Where the truth lives
 

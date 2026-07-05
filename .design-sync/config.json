@@ -13,6 +13,6 @@
   "extraFonts": ["../../dist/tokens/fonts.css"],
   "provider": { "component": "ThemeRoot", "props": { "theme": "dark" } },
   "overrides": { "Text": { "cardMode": "column" } },
-  "titleMap": { "Colors": null, "Typography": null, "Spacing&Radius": null },
+  "titleMap": { "Colors": null, "Typography": null, "Spacing&Radius": null, "Theming": null, "ThemeLab": null, "WorldTheme": null },
   "readmeHeader": ".design-sync/conventions.md"
 }
