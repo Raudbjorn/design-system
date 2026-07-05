@@ -86,6 +86,16 @@ describe('string processing', () => {
     expect(codes(r.value.issues)).toContain('E_VERN_TYPE');
   });
 
+  it('warns when a key is given in both dotted and nested form (last wins)', () => {
+    const r = parseVernacular(
+      pkg({ 'codeBlock.copyLabel': 'A', codeBlock: { copyLabel: 'B' } })
+    );
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(codes(r.value.issues)).toContain('W_VERN_DUPLICATE_KEY');
+    expect(r.value.strings.get('codeBlock.copyLabel')).toBe('B'); // later wins
+  });
+
   it('warns on an all-skipped (empty) catalog', () => {
     const r = parseVernacular(pkg({ 'unknown.key': 'x' }));
     expect(r.ok).toBe(true);

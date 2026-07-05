@@ -39,6 +39,7 @@ export type VernacularIssueCode =
   | 'E_VERN_EMPTY' // blank after trim — would erase the accessible name
   | 'E_VERN_PLACEHOLDER' // {name} set differs from the slot's required set
   // advisory
+  | 'W_VERN_DUPLICATE_KEY' // same key given in both dotted and nested form (last wins)
   | 'W_VERN_UNKNOWN_KEY' // skipped: not a known key (unknownKeys: 'skip', default)
   | 'W_VERN_EMPTY_CATALOG' // parsed fine but zero surviving strings — resolve is a no-op
   | 'W_VERN_TERM_MISSING' // terminology coverage gap (checkTerminology)

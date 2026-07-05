@@ -44,22 +44,31 @@ const preview = (value: unknown): string => {
  * intermediate is a typed value error, not a throw. */
 const flatten = (
   strings: Record<string, unknown>
-): { entries: Array<[string, unknown]>; badShape: string[] } => {
+): { entries: Array<[string, unknown]>; badShape: string[]; duplicates: string[] } => {
   const entries: Array<[string, unknown]> = [];
   const badShape: string[] = [];
+  const seen = new Set<string>();
+  const duplicates: string[] = [];
+  const record = (flatKey: string, value: unknown): void => {
+    // The same key given in both dotted and nested form is ambiguous in an
+    // untrusted catalog — flag it rather than silently last-wins.
+    if (seen.has(flatKey)) duplicates.push(flatKey);
+    seen.add(flatKey);
+    entries.push([flatKey, value]);
+  };
   for (const [key, value] of Object.entries(strings)) {
     if (key.includes('.')) {
-      entries.push([key, value]);
+      record(key, value);
     } else if (isRecord(value)) {
       for (const [prop, leaf] of Object.entries(value)) {
-        entries.push([`${key}.${prop}`, leaf]);
+        record(`${key}.${prop}`, leaf);
       }
     } else {
       // A bare non-record under a component name is malformed shape.
       badShape.push(key);
     }
   }
-  return { entries, badShape };
+  return { entries, badShape, duplicates };
 };
 
 export const parseVernacular = (
@@ -132,9 +141,12 @@ export const parseVernacular = (
   const manifest: VernacularManifest = meta ? { name, version, meta } : { name, version };
 
   // ── strings ──────────────────────────────────────────────────────────────
-  const { entries, badShape } = flatten(raw.strings);
+  const { entries, badShape, duplicates } = flatten(raw.strings);
   for (const key of badShape) {
     issues.push({ severity: 'error', code: 'E_VERN_TYPE', key, message: `"${key}" must be a string or a { prop: string } group` });
+  }
+  for (const key of duplicates) {
+    issues.push({ severity: 'warning', code: 'W_VERN_DUPLICATE_KEY', key, message: `"${key}" is given in both dotted and nested form — the later value wins` });
   }
 
   const strings = new Map<string, string>();
