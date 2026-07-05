@@ -127,6 +127,29 @@ maps for non-web consumers: `@svnbjrn/design/qss/dark.qss` (apply via
 (css+qt values plus precomputed hover/pressed states). See
 `docs/bones-integration.md`.
 
+### Vernacular (world-flavored UI strings)
+
+`@svnbjrn/design/vernacular` ingests an **untrusted** per-world string catalog
+(machine/LLM-generated), parses it like hostile input (NFC, rejects control /
+bidirectional-override / invisible-format characters, length-caps per slot),
+and resolves it into component props with a world → English → key fallback and
+a plain-language toggle. Producer/CI helpers: `checkTerminology` (coverage /
+drift), `pseudoLocalize`, and `vernacularToJson({ escape: 'html' })` for Qt /
+non-Svelte sinks. A single world bundle may carry both `tokens` and `strings`;
+each parser reads its own half.
+
+### Verified non-goals
+
+From the 2026 world-theming research pass:
+
+- **APCA / WCAG 3 contrast** — APCA was pulled from the WCAG 3 draft (2023) and
+  is still not the standard as of April 2026. The gate stays **WCAG 2 AA**; no
+  APCA gate is added.
+- **View Transitions API** — ~89% global support; the existing `swapTheme` /
+  `switchWorldTheme` transition is used as-is, no fallback shim needed.
+- **OKLCH gamut mapping** uses CSS Color 4 **MINDE** (`gamutMapOklch`), matching
+  what browsers paint for out-of-gamut extracted seeds.
+
 ## Components
 
 **Atoms:** Text, Heading, Button, Link, Badge, Icon, Kbd, Avatar
