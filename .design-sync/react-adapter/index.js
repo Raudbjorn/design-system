@@ -34,3 +34,9 @@ export const Card = wrap('Card', SvCard, ['children', 'header', 'footer']);
 export const CodeBlock = wrap('CodeBlock', SvCodeBlock, []);
 export const NavBar = wrap('NavBar', SvNavBar, ['children', 'brand']);
 export const StatCard = wrap('StatCard', SvStatCard, []);
+
+// Theme-as-data spine — pure pass-through of the library's real compiled
+// theme API (plain functions and palette data; nothing to wrap).
+export { applyTheme, contrastGates, defineTheme, swapTheme, themeCss } from '../../dist/theme/theme.js';
+export { contrastRatio } from '../../dist/internal/contrast.js';
+export { dark, light } from '../../dist/tokens/palette.js';
