@@ -24,7 +24,10 @@ const MAX_INPUT_BYTES = 256 * 1024;
 const MAX_META_ENTRIES = 32;
 const MAX_META_VALUE_LENGTH = 256;
 const MAX_UNKNOWN_REPORTS = 20;
-const KNOWN_TOP_LEVEL = new Set(['$schema', 'name', 'version', 'extends', 'meta', 'tokens']);
+// 'strings' is tolerated (not warned) so a single world bundle can carry both
+// `tokens` (this engine) and `strings` (@svnbjrn/design/vernacular) — each
+// parser reads its own half and ignores the other's.
+const KNOWN_TOP_LEVEL = new Set(['$schema', 'name', 'version', 'extends', 'meta', 'tokens', 'strings']);
 
 const isRecord = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
