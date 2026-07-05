@@ -41,11 +41,14 @@ export interface TerminologyReport {
 const globToRe = (glob: string): RegExp =>
   new RegExp('^' + glob.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$');
 
-// Word-boundary-ish token match, NFC-normalized. Compiled once per term/rule.
+// Token match with a UNICODE-aware boundary (letters/numbers/underscore), so
+// non-Latin or accented glossary terms aren't matched inside longer words —
+// ASCII `\W` treats every CJK/accented char as a boundary and skews coverage.
+// NFC-normalized; compiled once per term/rule.
 const makeContainsRe = (needle: string, caseSensitive: boolean): RegExp => {
-  const n = needle.normalize('NFC');
+  const n = needle.normalize('NFC').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const flags = caseSensitive ? 'u' : 'iu';
-  return new RegExp(`(^|\\W)${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\W|$)`, flags);
+  return new RegExp(`(?<![\\p{L}\\p{N}_])${n}(?![\\p{L}\\p{N}_])`, flags);
 };
 
 /** Measure a catalog against a glossary. Pure; safe to run in CI. */

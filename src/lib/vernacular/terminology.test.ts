@@ -40,6 +40,16 @@ describe('checkTerminology', () => {
     expect(report.issues.map((i) => i.code)).toContain('W_VERN_TERM_DRIFT');
   });
 
+  it('uses a Unicode-aware boundary (accented / CJK terms are not matched mid-word)', () => {
+    // "café" must not match inside "cafééclair"; "字" must not match inside "漢字".
+    const accented = catalog({ 'navBar.navLabel': 'cafééclair' });
+    expect(checkTerminology(accented, { terms: [{ id: 'c', required: 'café' }] }).coverage).toBe(0);
+    const whole = catalog({ 'navBar.navLabel': 'a café here' });
+    expect(checkTerminology(whole, { terms: [{ id: 'c', required: 'café' }] }).coverage).toBe(1);
+    const cjk = catalog({ 'navBar.navLabel': '漢字' });
+    expect(checkTerminology(cjk, { terms: [{ id: 'j', required: '字' }] }).coverage).toBe(0);
+  });
+
   it('honours case sensitivity', () => {
     const cat = catalog({ 'navBar.navLabel': 'ways' });
     const insensitive = checkTerminology(cat, { terms: [{ id: 't', required: 'Ways' }] });
