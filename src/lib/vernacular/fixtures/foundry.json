@@ -1,0 +1,20 @@
+{
+  "$schema": "https://svnbjrn.dev/schemas/vernacular.v1.json",
+  "name": "foundry-terms",
+  "version": "1.0.0",
+  "meta": {
+    "world": "The Ashen Foundry",
+    "generator": "bones-vernacular@0.1"
+  },
+  "strings": {
+    "codeBlock": {
+      "copyLabel": "Transcribe",
+      "copiedLabel": "Transcribed",
+      "copyAriaLabel": "Transcribe the incantation"
+    },
+    "navBar": {
+      "navLabel": "Ways",
+      "menuLabel": "Waypoints"
+    }
+  }
+}

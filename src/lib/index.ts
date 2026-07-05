@@ -21,7 +21,26 @@ export type {
   ThemeIssue,
   ThemeResult
 } from './theme/theme.js';
-export type { Vernacular } from './theme/vernacular.js';
+export {
+  parseVernacular,
+  resolveVernacular,
+  pseudoLocalize,
+  checkTerminology,
+  vernacularToJson,
+  VERNACULAR_REGISTRY
+} from './vernacular/index.js';
+export type {
+  Vernacular,
+  VernacularCatalog,
+  VernacularIssue,
+  VernacularIssueCode,
+  VernacularManifest,
+  VernacularPackage,
+  ParseVernacularOptions,
+  Glossary,
+  TermRule,
+  TerminologyReport
+} from './vernacular/index.js';
 export { contrastRatio } from './internal/contrast.js';
 export { dark, light } from './tokens/palette.js';
 export type { Palette, TokenName } from './tokens/palette.js';

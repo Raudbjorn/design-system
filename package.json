@@ -41,6 +41,15 @@
     "./generate": {
       "types": "./dist/generate/index.d.ts",
       "default": "./dist/generate/index.js"
+    },
+    "./vernacular": {
+      "types": "./dist/vernacular/index.d.ts",
+      "default": "./dist/vernacular/index.js"
+    },
+    "./vernacular/svelte": {
+      "types": "./dist/vernacular/svelte.svelte.d.ts",
+      "svelte": "./dist/vernacular/svelte.svelte.js",
+      "default": "./dist/vernacular/svelte.svelte.js"
     }
   },
   "scripts": {
