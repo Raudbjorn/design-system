@@ -6,7 +6,18 @@
   // snippet stays required.
   interface Props extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
     /** Semantic element for the flex container. Lists lose their chrome. */
-    as?: 'div' | 'section' | 'article' | 'nav' | 'header' | 'footer' | 'ul' | 'ol';
+    as?:
+      | 'div'
+      | 'section'
+      | 'article'
+      | 'nav'
+      | 'header'
+      | 'footer'
+      | 'main'
+      | 'aside'
+      | 'form'
+      | 'ul'
+      | 'ol';
     direction?: 'column' | 'row';
     gap?: 0 | 1 | 2 | 3 | 4 | 6 | 8 | 12;
     align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
