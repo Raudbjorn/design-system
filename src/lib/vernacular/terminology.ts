@@ -41,16 +41,11 @@ export interface TerminologyReport {
 const globToRe = (glob: string): RegExp =>
   new RegExp('^' + glob.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$');
 
-const applies = (key: string, globs: readonly string[] | undefined): boolean =>
-  globs === undefined || globs.some((g) => globToRe(g).test(key));
-
-const contains = (haystack: string, needle: string, caseSensitive: boolean): boolean => {
-  // Word-boundary-ish: match the term as a token, NFC-normalized.
-  const h = haystack.normalize('NFC');
+// Word-boundary-ish token match, NFC-normalized. Compiled once per term/rule.
+const makeContainsRe = (needle: string, caseSensitive: boolean): RegExp => {
   const n = needle.normalize('NFC');
   const flags = caseSensitive ? 'u' : 'iu';
-  const re = new RegExp(`(^|\\W)${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\W|$)`, flags);
-  return re.test(h);
+  return new RegExp(`(^|\\W)${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\W|$)`, flags);
 };
 
 /** Measure a catalog against a glossary. Pure; safe to run in CI. */
@@ -62,14 +57,19 @@ export const checkTerminology = (catalog: VernacularCatalog, glossary: Glossary)
 
   const perTerm = glossary.terms.map((rule) => {
     const cs = rule.caseSensitive ?? false;
-    const applicable = slots.filter(([key]) => applies(key, rule.appliesTo));
+    // Compile the glob + term/forbidden matchers once per rule, not per slot.
+    const globRes = rule.appliesTo?.map(globToRe);
+    const requiredRe = makeContainsRe(rule.required, cs);
+    const forbiddenRes = rule.forbidden?.map((f) => makeContainsRe(f, cs));
+    const applicable = slots.filter(([key]) => globRes === undefined || globRes.some((re) => re.test(key)));
     const missesIn: string[] = [];
     const driftIn: string[] = [];
     let covered = 0;
     for (const [key, value] of applicable) {
-      if (contains(value, rule.required, cs)) covered++;
+      const normalized = value.normalize('NFC');
+      if (requiredRe.test(normalized)) covered++;
       else missesIn.push(key);
-      if (rule.forbidden?.some((f) => contains(value, f, cs))) driftIn.push(key);
+      if (forbiddenRes?.some((re) => re.test(normalized))) driftIn.push(key);
     }
     coveredSlots += covered;
     totalSlots += applicable.length;
