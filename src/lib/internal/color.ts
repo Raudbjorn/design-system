@@ -86,6 +86,10 @@ const inGamut = (lin: { r: number; g: number; b: number }): boolean =>
  * Largest chroma at this (l, h) that stays inside sRGB — chroma bisection at
  * fixed lightness and hue, so clamping never shifts a color's perceived
  * lightness (contrast ratios solved upstream keep holding downstream).
+ *
+ * This is the strict-L/H-preserving variant. `gamutMapOklch` is the default
+ * MINDE gamut map used by `oklchToRgb`; it trades up to a JND of L/H for a
+ * little more chroma. Use this one only when exact L/H must be preserved.
  */
 export const clampChromaToGamut = (color: Oklch): Oklch => {
   const l = Math.min(1, Math.max(0, color.l));
@@ -106,9 +110,55 @@ const clamp01 = (u: number): number => Math.min(1, Math.max(0, u));
 
 const linearToChannel = (u: number): number => Math.round(clamp01(linearToSrgb(clamp01(u))) * 255);
 
-/** OKLCH → sRGB, gamut-clamped (chroma bisection) and rounded to 8-bit. */
+/** ΔEok — Euclidean distance in Oklab. Equals CSS Color 4's deltaEOK and
+ * culori's differenceEuclidean('oklch'). */
+const deltaEOK = (a: Lab, b: Lab): number => Math.hypot(a.l - b.l, a.a - b.a, a.b - b.b);
+
+/** CSS "clip to sRGB": clamp linear channels to [0, 1] (monotonicity makes
+ * this identical to clamping gamma channels), returned in Oklab. Continuous —
+ * NOT 8-bit rounded, because the ΔE test must run pre-rounding to match the
+ * browser / culori. */
+const clipToSrgbLab = (lab: Lab): Lab => {
+  const lin = oklabToLinearSrgb(lab);
+  return linearSrgbToOklab(clamp01(lin.r), clamp01(lin.g), clamp01(lin.b));
+};
+
+/**
+ * CSS Color 4 / colorjs.io MINDE gamut map (minimum delta-E): binary-search
+ * chroma in OKLCH at fixed L/H; accept the sRGB-clipped candidate once it is
+ * within the JND of the reduced-chroma candidate — retaining marginally more
+ * chroma than pure reduction. Mirrors culori's toGamut('rgb', 'oklch').
+ */
+export const gamutMapOklch = (color: Oklch): Oklch => {
+  const l = clamp01(color.l);
+  const h = ((color.h % 360) + 360) % 360;
+  const c0 = Math.max(0, color.c);
+  if (l >= 1) return { l: 1, c: 0, h }; // white pole (culori parity)
+  if (l <= 0) return { l: 0, c: 0, h }; // black pole
+  if (inGamut(oklabToLinearSrgb(lchToLab({ l, c: c0, h })))) return { l, c: c0, h };
+
+  const JND = 0.02;
+  const EPSILON = 0.0001; // (0.4 - 0) / 4000, culori's oklch chroma step
+  let start = 0;
+  let end = c0;
+  let mid = c0;
+  let clippedLab: Lab = clipToSrgbLab(lchToLab({ l, c: c0, h }));
+  while (end - start > EPSILON) {
+    mid = (start + end) / 2;
+    const candLab = lchToLab({ l, c: mid, h });
+    const inG = inGamut(oklabToLinearSrgb(candLab));
+    clippedLab = clipToSrgbLab(candLab);
+    if (inG || deltaEOK(candLab, clippedLab) <= JND) start = mid;
+    else end = mid;
+  }
+  return inGamut(oklabToLinearSrgb(lchToLab({ l, c: mid, h })))
+    ? { l, c: mid, h }
+    : labToLch(clippedLab);
+};
+
+/** OKLCH → sRGB, MINDE gamut-mapped and rounded to 8-bit. */
 export const oklchToRgb = (color: Oklch): Rgb => {
-  const lin = oklabToLinearSrgb(lchToLab(clampChromaToGamut(color)));
+  const lin = oklabToLinearSrgb(lchToLab(gamutMapOklch(color)));
   return { r: linearToChannel(lin.r), g: linearToChannel(lin.g), b: linearToChannel(lin.b) };
 };
 

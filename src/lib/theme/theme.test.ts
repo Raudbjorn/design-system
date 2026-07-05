@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { applyTheme, defineTheme, swapTheme, themeCss } from './theme';
 import type { ThemeIssue } from './theme';
-import { dark, light } from '../tokens/palette';
+import { dark } from '../tokens/palette';
 import type { Palette } from '../tokens/palette';
 
 function findInjectedCss(): { styleText: string; sheetText: string } {
@@ -133,6 +133,56 @@ describe('defineTheme', () => {
     if (!result.ok) return;
     expect(result.theme.overrides).toEqual({});
     expect(result.theme.palette).toEqual(dark);
+  });
+});
+
+// A user-selected activity mode (combat/exploration/social) is just a sparse
+// override layer composed ON TOP of the world layer via the array form —
+// `defineTheme([...world, activityLayer])`. These lock the composition
+// properties the ActivityModes story relies on.
+describe('activity-mode layer composition', () => {
+  const world = { accent: '#c9a227', 'surface-1': '#1a1714' };
+  const combat = { accent: '#e06c75' };
+  const social = { accent: '#4ec9b0' };
+
+  it('an activity layer overrides only its own keys, leaving the rest of the world intact', () => {
+    const withActivity = defineTheme([world, combat]);
+    expect(withActivity.ok).toBe(true);
+    if (!withActivity.ok) return;
+    // combat only touched accent…
+    expect(withActivity.theme.palette.accent).toBe('#e06c75');
+    // …world's other override and every base token are untouched.
+    expect(withActivity.theme.palette['surface-1']).toBe('#1a1714');
+    expect(withActivity.theme.palette.bg).toBe(dark.bg);
+    expect(withActivity.theme.overrides).toEqual({ accent: '#e06c75', 'surface-1': '#1a1714' });
+  });
+
+  it('dropping the activity layer restores the world palette exactly (reversible "Default")', () => {
+    const withActivity = defineTheme([world, combat]);
+    const worldOnly = defineTheme([world]);
+    expect(withActivity.ok && worldOnly.ok).toBe(true);
+    if (!withActivity.ok || !worldOnly.ok) return;
+    // The only difference between mode-on and mode-off is combat's keys.
+    expect(worldOnly.theme.palette).toEqual({ ...dark, ...world });
+    expect(worldOnly.theme.palette).toEqual({ ...withActivity.theme.palette, accent: world.accent });
+  });
+
+  it('a later activity layer wins over an earlier one for a shared token', () => {
+    const result = defineTheme([world, combat, social]);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.theme.palette.accent).toBe('#4ec9b0'); // social, applied last
+  });
+
+  it('the contrast gate governs mode selection — an illegible activity mode is not a theme', () => {
+    // A mode that drives text to near-invisibility on the dark bg is rejected;
+    // the UI can never enter an unreadable mode.
+    const result = defineTheme([world, { text: '#333333' }]);
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.issues).toContainEqual(
+      expect.objectContaining({ kind: 'contrast', fg: 'text', bg: 'bg' })
+    );
   });
 });
 
