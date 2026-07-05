@@ -29,6 +29,8 @@ export interface VernacularJsonOptions {
 }
 
 const toFlatEntries = (source: VernacularCatalog | Vernacular): Array<[string, string]> => {
+  // Public API: don't throw on null/primitive misuse — return an empty map.
+  if (!source || typeof source !== 'object') return [];
   // A parsed catalog already carries dotted keys.
   if ('strings' in source && source.strings instanceof Map) {
     return [...source.strings.entries()];

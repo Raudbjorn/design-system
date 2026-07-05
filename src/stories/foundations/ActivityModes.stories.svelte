@@ -50,21 +50,34 @@
 
   let active = $state<string | null>(null);
   let dispose: (() => void) | null = null;
+  let mounted = false;
 
   // User-driven ONLY: called from click handlers, never a timer/observer/telemetry.
   async function select(mode: string | null): Promise<void> {
     const layers = mode ? [world, modes[mode]!] : [world];
     const result = defineTheme(layers, { base });
     if (!result.ok) return; // gate governs — an illegible mode never applies
-    dispose = await swapTheme(result.theme, { selector: SELECTOR, dispose: dispose ?? undefined });
+    const next = await swapTheme(result.theme, { selector: SELECTOR, dispose: dispose ?? undefined });
+    // If we were unmounted while swapTheme was in flight, dispose the orphan
+    // sheet immediately rather than leaking it (the disposer would otherwise
+    // never be reached).
+    if (!mounted) {
+      next();
+      return;
+    }
+    dispose = next;
     active = mode;
   }
 
   // Initialise the pane with the world (no activity) on mount; dispose on unmount
   // so the demo leaves no stylesheet behind — every application stays reversible.
   $effect(() => {
+    mounted = true;
     void select(null);
-    return () => dispose?.();
+    return () => {
+      mounted = false;
+      dispose?.();
+    };
   });
 </script>
 

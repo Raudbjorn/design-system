@@ -43,7 +43,7 @@ export const pseudoLocalizeString = (text: string): string => {
   const baseLen = [...accented].length;
   const target = Math.ceil(baseLen * 1.4);
   const padCount = Math.max(0, target - baseLen);
-  const pad = padCount > 0 ? ' ' + 'ơ'.repeat(padCount - 1 > 0 ? padCount - 1 : 0) : '';
+  const pad = padCount > 0 ? ' ' + 'ơ'.repeat(padCount - 1) : '';
   return `[[${accented}${pad}]]`;
 };
 

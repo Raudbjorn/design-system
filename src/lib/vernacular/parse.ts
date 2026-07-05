@@ -73,7 +73,9 @@ export const parseVernacular = (
   // ── input ──────────────────────────────────────────────────────────────
   let raw: unknown = input;
   if (typeof input === 'string') {
-    if (new TextEncoder().encode(input).length > MAX_INPUT_BYTES) {
+    // UTF-8 byte length is always >= UTF-16 code-unit length, so a cheap
+    // .length check short-circuits the TextEncoder allocation for huge inputs.
+    if (input.length > MAX_INPUT_BYTES || new TextEncoder().encode(input).length > MAX_INPUT_BYTES) {
       issues.push({ severity: 'error', code: 'E_VERN_INPUT', message: `catalog exceeds ${MAX_INPUT_BYTES} bytes` });
       return fail();
     }

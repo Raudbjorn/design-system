@@ -138,17 +138,21 @@ drift), `pseudoLocalize`, and `vernacularToJson({ escape: 'html' })` for Qt /
 non-Svelte sinks. A single world bundle may carry both `tokens` and `strings`;
 each parser reads its own half.
 
-### Verified non-goals
+### Verified decisions
 
 From the 2026 world-theming research pass:
+
+- **OKLCH gamut mapping** uses CSS Color 4 **MINDE** (`gamutMapOklch`), matching
+  what browsers paint for out-of-gamut extracted seeds (verified against
+  culori's `toGamut`).
+
+Non-goals confirmed by the same pass:
 
 - **APCA / WCAG 3 contrast** — APCA was pulled from the WCAG 3 draft (2023) and
   is still not the standard as of April 2026. The gate stays **WCAG 2 AA**; no
   APCA gate is added.
 - **View Transitions API** — ~89% global support; the existing `swapTheme` /
   `switchWorldTheme` transition is used as-is, no fallback shim needed.
-- **OKLCH gamut mapping** uses CSS Color 4 **MINDE** (`gamutMapOklch`), matching
-  what browsers paint for out-of-gamut extracted seeds.
 
 ## Components
 
