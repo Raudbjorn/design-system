@@ -2249,7 +2249,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 | Dev preview at `src/routes/+page.svelte` | Plain-Vite dev page: `index.html` + `src/dev.ts` + `src/Dev.svelte` (specimen page) |
 | Hand-written `palette.ts` as color single-source | DTCG sources (`src/lib/tokens/*.tokens.json` + `themes.ts`); `palette.ts` is now a **generated** compat view; emitters in `scripts/emitters/` also produce resolved JSON + QSS |
 | Flat `colors.css` blocks | Cascade-layered output: `sv.base < sv.theme < sv.world < sv.user` |
-| vitest ^2.1, `pnpm test` = `vitest run` | vitest 4.1.9 with projects; `pnpm test` = `vitest run --project=unit`, `test:visual` = storybook project |
+| vitest ^2.1, `pnpm test` = `vitest run` | vitest 4.1.9 with projects; `pnpm test` = `vitest run --project=unit`, `test:visual` = Storybook project |
 | `exports`: `.` + `./styles.css` | Additionally `./tokens`, `./tokens/*.json`, `./qss/*.qss`, `./theme`, `./theme/svelte`, `./generate`; `bin/design-generate.mjs` |
 | Hardcoded font weights in components | `--sv-font-weight-*` token ramp (d4cf805) |
 
