@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 400 300" width="400" height="300"
+     role="img" aria-labelledby="layform-frame-title layform-frame-desc">
+  <title id="layform-frame-title">layform ornate frame border</title>
+  <desc id="layform-frame-desc">
+    A reusable bordered-frame asset combining detail-tier Pattern 100 (flat masonry/mortar-grid
+    outer band) with detail-tier Pattern 104 (flat, hard-edged, stacked-layer bevel illusion,
+    no gradients). Wraps a 352x252 rectangular content window inset 24px from every edge of the
+    400x300 canvas. See the adjoining 7.3-ornate-frame-border.md for grounding and confidence.
+  </desc>
+
+  <defs>
+    <!--
+      Flat solid colors only, no linearGradient/radialGradient anywhere in this file, per
+      Pattern 104's "no-gradient" constraint. Every color below is a literal hex duplicate of a
+      layform custom property from assets/7.1-colors.css. The var() call lets the color track
+      the live token when this SVG is inlined into an HTML document that also loads
+      7.1-colors.css (custom properties inherit into inlined SVG); the literal hex after the
+      comma is the fallback used when this file is loaded standalone (<img src>, <object>, or a
+      bare file open), since an external SVG resource cannot see host-page custom properties.
+    -->
+    <style>
+      .lf-masonry-a    { fill: var(--layform-accent-tan-1, #c99a4a); stroke: var(--layform-ink-2, #1c1c1c); stroke-width: 1; }
+      .lf-masonry-b    { fill: var(--layform-accent-tan-3, #c9a876); stroke: var(--layform-ink-2, #1c1c1c); stroke-width: 1; }
+      .lf-masonry-quoin{ fill: var(--layform-accent-tan-2, #8b6f47); stroke: var(--layform-ink-2, #1c1c1c); stroke-width: 1; }
+      .lf-bevel-outer  { fill: var(--layform-ink-1, #0a0a0a); stroke: none; }
+      .lf-bevel-mid    { fill: var(--layform-parchment-2, #d8cfb8); stroke: none; }
+      .lf-bevel-inner  { fill: var(--layform-ink-2, #1c1c1c); stroke: none; }
+    </style>
+
+    <symbol id="layform-ornate-frame" viewBox="0 0 400 300">
+      <!-- ================= Pattern 100: masonry/mortar-grid outer band (thickness 14, 0-14) =================
+           Two-tone flat blocks (no shading/crosshatch within a block) with a single mortar-line
+           stroke color, per Pattern 100's "keep the structural pattern, drop the illustrative
+           rendering" resolution. Corner "quoin" blocks (a third, deeper tone) close the frame at
+           the four corners, a buildability addition not itself in the sampled evidence; see
+           the .md spec's honesty note. -->
+      <g id="lf-masonry-band">
+        <!-- corner quoins -->
+        <rect class="lf-masonry-quoin" x="0"   y="0"   width="14" height="14"/>
+        <rect class="lf-masonry-quoin" x="386" y="0"   width="14" height="14"/>
+        <rect class="lf-masonry-quoin" x="0"   y="286" width="14" height="14"/>
+        <rect class="lf-masonry-quoin" x="386" y="286" width="14" height="14"/>
+
+        <!-- top course (12 blocks x 31px, x=14..386) -->
+        <rect class="lf-masonry-a" x="14"  y="0" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="45"  y="0" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="76"  y="0" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="107" y="0" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="138" y="0" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="169" y="0" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="200" y="0" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="231" y="0" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="262" y="0" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="293" y="0" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="324" y="0" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="355" y="0" width="31" height="14"/>
+
+        <!-- bottom course, alternation flipped relative to top for a running-bond offset look -->
+        <rect class="lf-masonry-b" x="14"  y="286" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="45"  y="286" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="76"  y="286" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="107" y="286" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="138" y="286" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="169" y="286" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="200" y="286" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="231" y="286" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="262" y="286" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="293" y="286" width="31" height="14"/>
+        <rect class="lf-masonry-b" x="324" y="286" width="31" height="14"/>
+        <rect class="lf-masonry-a" x="355" y="286" width="31" height="14"/>
+
+        <!-- left course (8 blocks x 34px, y=14..286) -->
+        <rect class="lf-masonry-a" x="0" y="14"  width="14" height="34"/>
+        <rect class="lf-masonry-b" x="0" y="48"  width="14" height="34"/>
+        <rect class="lf-masonry-a" x="0" y="82"  width="14" height="34"/>
+        <rect class="lf-masonry-b" x="0" y="116" width="14" height="34"/>
+        <rect class="lf-masonry-a" x="0" y="150" width="14" height="34"/>
+        <rect class="lf-masonry-b" x="0" y="184" width="14" height="34"/>
+        <rect class="lf-masonry-a" x="0" y="218" width="14" height="34"/>
+        <rect class="lf-masonry-b" x="0" y="252" width="14" height="34"/>
+
+        <!-- right course, alternation flipped relative to left -->
+        <rect class="lf-masonry-b" x="386" y="14"  width="14" height="34"/>
+        <rect class="lf-masonry-a" x="386" y="48"  width="14" height="34"/>
+        <rect class="lf-masonry-b" x="386" y="82"  width="14" height="34"/>
+        <rect class="lf-masonry-a" x="386" y="116" width="14" height="34"/>
+        <rect class="lf-masonry-b" x="386" y="150" width="14" height="34"/>
+        <rect class="lf-masonry-a" x="386" y="184" width="14" height="34"/>
+        <rect class="lf-masonry-b" x="386" y="218" width="14" height="34"/>
+        <rect class="lf-masonry-a" x="386" y="252" width="14" height="34"/>
+      </g>
+
+      <!-- ================= Pattern 104: flat stacked-layer bevel, no gradient (thickness 10, 14-24) =================
+           Three concentric hard-edged rings, each a single flat fill (evenodd ring path, not a
+           stroke), stepping from the masonry band down to the content window:
+             outer dark line (2px, ink-1) -> lighter mid-tone step (6px, parchment-2) -> inner
+             dark line (2px, ink-2). No blur, glow, or linear-gradient anywhere. -->
+      <g id="lf-bevel-band">
+        <path class="lf-bevel-outer" fill-rule="evenodd"
+              d="M14,14 H386 V286 H14 Z M16,16 H384 V284 H16 Z"/>
+        <path class="lf-bevel-mid" fill-rule="evenodd"
+              d="M16,16 H384 V284 H16 Z M22,22 H378 V278 H22 Z"/>
+        <path class="lf-bevel-inner" fill-rule="evenodd"
+              d="M22,22 H378 V278 H22 Z M24,24 H376 V276 H24 Z"/>
+      </g>
+
+      <!-- Content window: (24,24)-(376,276), 352x252. Deliberately left undrawn/transparent so
+           arbitrary rectangular content can be composited behind this frame (e.g. via CSS
+           stacking or an <img>/<foreignObject> placed underneath). -->
+    </symbol>
+
+    <!-- ================= Pattern 98: corner flourish/rosette, radial-repeat construction =================
+         One authored petal/lobe path, repeated via 8 <use> references at 45deg rotational steps
+         around the (24,24) center of a fixed 48x48 canvas (element-tier Pattern 89's shared
+         fixed-viewBox discipline, even though this rosette is not itself a member of the icon
+         sprite family). Filled with the secondary accent per element-tier Pattern 87's
+         nested-context reservation: a rosette sits INSIDE a featured card, never as the card's
+         own frame. See the adjoining 7.3-ornate-frame-border.md "Rosette symbol" section for
+         grounding and confidence (Pattern 98: Low). -->
+    <symbol id="rosette" viewBox="0 0 48 48">
+      <defs>
+        <path id="lf-rosette-petal" d="M24,24 C19.5,17 19.5,8 24,2 C28.5,8 28.5,17 24,24 Z"/>
+      </defs>
+      <g class="lf-rosette-petal-fill" fill="var(--layform-accent-secondary, #1f3d1f)">
+        <use href="#lf-rosette-petal" xlink:href="#lf-rosette-petal" transform="rotate(0 24 24)"/>
+        <use href="#lf-rosette-petal" xlink:href="#lf-rosette-petal" transform="rotate(45 24 24)"/>
+        <use href="#lf-rosette-petal" xlink:href="#lf-rosette-petal" transform="rotate(90 24 24)"/>
+        <use href="#lf-rosette-petal" xlink:href="#lf-rosette-petal" transform="rotate(135 24 24)"/>
+        <use href="#lf-rosette-petal" xlink:href="#lf-rosette-petal" transform="rotate(180 24 24)"/>
+        <use href="#lf-rosette-petal" xlink:href="#lf-rosette-petal" transform="rotate(225 24 24)"/>
+        <use href="#lf-rosette-petal" xlink:href="#lf-rosette-petal" transform="rotate(270 24 24)"/>
+        <use href="#lf-rosette-petal" xlink:href="#lf-rosette-petal" transform="rotate(315 24 24)"/>
+      </g>
+    </symbol>
+  </defs>
+
+  <use href="#layform-ornate-frame" xlink:href="#layform-ornate-frame" width="400" height="300"/>
+</svg>

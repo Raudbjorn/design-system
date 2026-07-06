@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  layform — Border Techniques (7.7)
+  Implements detail-tier Pattern 99 (Braided/Rope-Motif Border — Two-Strand
+  Interleave Tile), Pattern 101 (Crack/Scratch Linework — Margin-Confined
+  Distress Accent), and Pattern 102 (Scalloped/Organic-Node Border —
+  Repeating Bump Contour). See the adjoining 7.7-border-techniques.md for
+  full grounding citations, confidence rationale, and Pattern 102's
+  perimeter-repeat construction algorithm (this file ships only one worked
+  static segment, not an auto-tiling border).
+
+  Three independent techniques bundled in one file, matching the bundling
+  precedent already set by 7.3-ornate-frame-border.svg (masonry + bevel +
+  rosette in one file, each with its own construction/grounding):
+    #braid-tile        — Pattern 99, tileable <pattern>, two offset strokes
+                          with one masked at each crossing to suggest an
+                          over/under weave.
+    #distress-marks     — Pattern 101, a <symbol> of five pre-authored
+                          hairline crack/scratch segments, a margin-confined
+                          accent, never placed over content/text.
+    #scallop-segment    — Pattern 102, ONE worked static bump-node segment.
+                          A true perimeter scallop needs this segment
+                          repeated programmatically along an arbitrary path
+                          length — see the .md spec, this file does not
+                          auto-tile a full border.
+
+  Every fill/stroke color uses a var() reference to a layform custom
+  property, with a literal hex fallback copied verbatim from assets/7.1-colors.css, following 7.3/7.4's
+  own var()-with-fallback convention (custom properties inherit when this
+  file is inlined into a document that also loads 7.1-colors.css; the
+  literal hex fallback renders when loaded standalone via <img>/<object>).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200"
+     role="img" aria-labelledby="border-tech-title border-tech-desc">
+  <title id="border-tech-title">layform border techniques — braid, distress marks, scallop segment</title>
+  <desc id="border-tech-desc">
+    Three detail-tier border rendering techniques: a tileable braided-rope pattern (Pattern 99),
+    a set of pre-authored crack/scratch hairline marks (Pattern 101), and one worked scalloped
+    bump-node segment (Pattern 102). See the adjoining 7.7-border-techniques.md for grounding,
+    confidence, and usage notes.
+  </desc>
+
+  <defs>
+    <!-- ================= Pattern 99: braided/rope border tile =================
+         Two offset sine-like strokes (strand A / strand B) inside a 40x20
+         userSpaceOnUse tile. Strand B is hidden at each of the tile's three
+         crossing x-positions (0, 20, 40) via an SVG <mask>, so strand A
+         reads as passing over it there — a two-strand interleave illusion,
+         per Pattern 99's own "over/under" solution text. Colors reuse the
+         same tan/masonry family already used by 7.3-ornate-frame-border.svg,
+         since this is the same rare-accent register (document-tier
+         Pattern 4), not a distinct color story of its own. -->
+    <mask id="braid-crossing-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="20">
+      <rect x="0" y="0" width="40" height="20" fill="white"/>
+      <circle cx="0" cy="10" r="3.2" fill="black"/>
+      <circle cx="20" cy="10" r="3.2" fill="black"/>
+      <circle cx="40" cy="10" r="3.2" fill="black"/>
+    </mask>
+    <pattern id="braid-tile" patternUnits="userSpaceOnUse" width="40" height="20">
+      <path d="M0,10 Q10,-2 20,10 T40,10" fill="none"
+            stroke="var(--layform-accent-tan-1, #c99a4a)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M0,10 Q10,22 20,10 T40,10" fill="none"
+            stroke="var(--layform-accent-tan-3, #c9a876)" stroke-width="3" stroke-linecap="round"
+            mask="url(#braid-crossing-mask)"/>
+    </pattern>
+
+    <!-- ================= Pattern 101: crack/scratch linework =================
+         Five pre-authored irregular hairline segments, fill:none, stroke
+         weight bound to element-tier Pattern 94's hairline token (with a
+         literal 1px fallback, matching this file family's own var()-with-
+         fallback convention). An opt-in, margin-confined accent — never
+         drawn across a content/text-bearing surface. -->
+    <symbol id="distress-marks" viewBox="0 0 60 40">
+      <g fill="none" stroke="var(--layform-ink-2, #1c1c1c)" stroke-width="var(--layform-border-hairline, 1px)"
+         stroke-linecap="round">
+        <path d="M4,6 L9,15 L6,22 L11,31"/>
+        <path d="M18,3 L21,12 L17,19"/>
+        <path d="M30,8 L34,17 L29,24 L33,34"/>
+        <path d="M45,5 L42,14 L47,21"/>
+        <path d="M53,10 L57,20 L52,29"/>
+      </g>
+    </symbol>
+
+    <!-- ================= Pattern 102: scalloped/organic-node border segment =================
+         ONE worked static bump node at a fixed radius, flat single-weight
+         stroke, no internal stippling per Pattern 102's own resolution. A
+         real perimeter-following scallop repeats this same segment along an
+         arbitrary path length — see 7.7-border-techniques.md for the
+         documented repeat algorithm; this symbol alone does not auto-tile a
+         full border. -->
+    <symbol id="scallop-segment" viewBox="0 0 24 12">
+      <path d="M0,12 A12,12 0 0 1 24,12" fill="none"
+            stroke="var(--layform-ink-2, #1c1c1c)" stroke-width="var(--layform-border-thin, 2px)"/>
+    </symbol>
+  </defs>
+
+  <!-- canvas background -->
+  <rect x="0" y="0" width="400" height="200" fill="var(--layform-parchment-1, #f0e6d2)"/>
+
+  <text x="10" y="14" font-family="var(--layform-font-marginalia, ui-monospace, 'Iosevka', monospace)"
+        font-size="9" fill="var(--layform-ink-2, #1c1c1c)">Patterns 99 / 101 / 102 — border techniques</text>
+
+  <!-- Swatch 1: braid-tile -->
+  <g>
+    <rect x="10" y="24" width="110" height="90" fill="var(--layform-parchment-2, #d8cfb8)"/>
+    <rect x="10" y="24" width="110" height="90" fill="url(#braid-tile)"/>
+    <rect x="10" y="24" width="110" height="90" fill="none" stroke="var(--layform-ink-2, #1c1c1c)" stroke-width="1"/>
+    <text x="65" y="128" text-anchor="middle" font-family="var(--layform-font-marginalia, ui-monospace, 'Iosevka', monospace)"
+          font-size="8" fill="var(--layform-ink-2, #1c1c1c)">#braid-tile — Pattern 99</text>
+    <text x="65" y="140" text-anchor="middle" font-family="var(--layform-font-marginalia, ui-monospace, 'Iosevka', monospace)"
+          font-size="7" fill="var(--layform-ink-2, #1c1c1c)">40x20 tile, masked crossings</text>
+  </g>
+
+  <!-- Swatch 2: distress-marks -->
+  <g>
+    <rect x="135" y="24" width="110" height="90" fill="var(--layform-parchment-2, #d8cfb8)"/>
+    <use href="#distress-marks" x="145" y="49" width="90" height="40"/>
+    <rect x="135" y="24" width="110" height="90" fill="none" stroke="var(--layform-ink-2, #1c1c1c)" stroke-width="1"/>
+    <text x="190" y="128" text-anchor="middle" font-family="var(--layform-font-marginalia, ui-monospace, 'Iosevka', monospace)"
+          font-size="8" fill="var(--layform-ink-2, #1c1c1c)">#distress-marks — Pattern 101</text>
+    <text x="190" y="140" text-anchor="middle" font-family="var(--layform-font-marginalia, ui-monospace, 'Iosevka', monospace)"
+          font-size="7" fill="var(--layform-ink-2, #1c1c1c)">margin-confined, hairline weight</text>
+  </g>
+
+  <!-- Swatch 3: scallop-segment, repeated illustratively (NOT auto-tiled; see .md) -->
+  <g>
+    <rect x="260" y="24" width="130" height="90" fill="var(--layform-parchment-2, #d8cfb8)"/>
+    <use href="#scallop-segment" x="264" y="58" width="24" height="12"/>
+    <use href="#scallop-segment" x="288" y="58" width="24" height="12"/>
+    <use href="#scallop-segment" x="312" y="58" width="24" height="12"/>
+    <use href="#scallop-segment" x="336" y="58" width="24" height="12"/>
+    <use href="#scallop-segment" x="360" y="58" width="24" height="12"/>
+    <rect x="260" y="24" width="130" height="90" fill="none" stroke="var(--layform-ink-2, #1c1c1c)" stroke-width="1"/>
+    <text x="325" y="128" text-anchor="middle" font-family="var(--layform-font-marginalia, ui-monospace, 'Iosevka', monospace)"
+          font-size="8" fill="var(--layform-ink-2, #1c1c1c)">#scallop-segment — Pattern 102</text>
+    <text x="325" y="138" text-anchor="middle" font-family="var(--layform-font-marginalia, ui-monospace, 'Iosevka', monospace)"
+          font-size="7" fill="var(--layform-ink-2, #1c1c1c)">ONE segment, shown repeated for illustration —</text>
+    <text x="325" y="147" text-anchor="middle" font-family="var(--layform-font-marginalia, ui-monospace, 'Iosevka', monospace)"
+          font-size="7" fill="var(--layform-ink-2, #1c1c1c)">a real perimeter needs a programmatic repeat, see .md</text>
+  </g>
+
+  <text x="10" y="190" font-family="var(--layform-font-marginalia, ui-monospace, 'Iosevka', monospace)"
+        font-size="7" fill="var(--layform-ink-2, #1c1c1c)">See 7.7-border-techniques.md for grounding, confidence, and Pattern 102's perimeter-repeat algorithm.</text>
+</svg>

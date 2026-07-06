@@ -1,0 +1,64 @@
+/**
+ * vermis-design — Typography Utility Classes & Line-Height Tokens
+ *
+ * Not yet imported by `index.css` — a later integration step wires this in
+ * centrally once every consumer of `.layform-prose`/`.layform-caption` has
+ * landed. Covers four element-tier patterns with no dedicated component:
+ *
+ * - Pattern 76 (Inline Emphasis Convention): `<em>` stays italic at the
+ *   surrounding size/weight (style change only); `<strong>` steps one
+ *   weight heavier with no italic and no color change — both confidence
+ *   Low, since the source's only evidenced "secondary voice" is a
+ *   hand-lettered cursive register with no observed word-level inline
+ *   emphasis inside a running sentence (patterns/03-element-patterns.md,
+ *   Pattern 76). Scoped to `.layform-prose` so plain HTML `<em>`/`<strong>`
+ *   outside prose content is left alone.
+ * - Pattern 78 (Reading vs. Display Line-Height Split): confidence Low —
+ *   the open-column-vs-boxed-container distinction is structurally
+ *   evidenced, but neither numeric value has any source grounding; both
+ *   are standard digital-typography values layered on top of that
+ *   distinction, not a measurement (Pattern 78).
+ * - Pattern 75 (Caption Micro-Style): confidence Medium — one step smaller
+ *   than body text is corroborated on two pages; the italic
+ *   ("--narrative") vs. upright split is real but the source gives no
+ *   rule for which condition triggers which, so the modifier is offered
+ *   as an explicit opt-in, not a default (Pattern 75).
+ * - Pattern 80 (Single-Glyph Entry Marker Accent Style): a plain CSS class
+ *   only, per the pattern's own text specifying an inline `<span>`, not a
+ *   component with configurable behavior beyond the class itself.
+ *
+ * Read `patterns/{03-element,04-detail}-
+ * patterns.md` before changing any value below.
+ */
+
+.layform-prose em {
+  font-style: italic;
+}
+.layform-prose strong {
+  font-weight: var(--layform-weight-reading-strong);
+  font-style: normal;
+}
+
+:root {
+  --layform-line-height-reading: 1.55;
+  --layform-line-height-display: 1.15;
+}
+
+.layform-prose {
+  line-height: var(--layform-line-height-reading);
+}
+
+.layform-caption {
+  font-family: var(--layform-font-reading);
+  font-size: 0.9em;
+  font-style: normal;
+}
+.layform-caption--narrative {
+  font-style: italic;
+}
+
+.layform-entry-mark {
+  font-family: var(--layform-font-display);
+  font-size: 1.35em;
+  color: var(--layform-accent);
+}
