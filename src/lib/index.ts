@@ -44,3 +44,11 @@ export type {
 export { contrastRatio } from './internal/contrast.js';
 export { dark, light } from './tokens/palette.js';
 export type { Palette, TokenName } from './tokens/palette.js';
+
+// Vermis alternative design language — occult-ornate component set from the
+// layform pattern language (Vermis I/II). Consumes `--layform-*` tokens via
+// `@svnbjrn/design/vermis/styles.css`. Re-exported as a namespace so the
+// default `--sv-*` components stay the primary API and vermis is an explicit
+// opt-in: `import { vermis } from '@svnbjrn/design'` or
+// `import { VermisButton } from '@svnbjrn/design/vermis'`.
+export * as vermis from './vermis/index.js';

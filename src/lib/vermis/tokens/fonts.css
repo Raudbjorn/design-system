@@ -1,0 +1,101 @@
+/**
+ * vermis-design — Font Tokens
+ *
+ * Ported from layform's `assets/7.2-fonts.css` to this file's new home at
+ * `src/lib/tokens/fonts.css`, with two concrete edits versus the layform
+ * original: (a) `@font-face src` paths point at this repo's flat
+ * `src/lib/fonts/` directory (matching main-branch's own flat layout)
+ * instead of layform's never-built nested `assets/fonts/inter/` and
+ * `assets/fonts/iosevka/` layout; (b) the marginalia family is renamed from
+ * `"Iosevka Layform"` to plain `"Iosevka"` and its files from
+ * `IosevkaLayform-Regular/-Medium.woff2` to `Iosevka-Regular/-Medium.woff2`
+ * — the exact files `scripts/build-fonts.mjs` subsets from the host's
+ * system `ttc-iosevka` package (see that script's own header for why this
+ * is a plain, non-Nerd-Font build, unlike main-branch's Icon.svelte PUA
+ * glyph dependency).
+ *
+ * Recovered design-phase answer (layform's own, carried over unchanged):
+ * "Flexible fidelity strictness: font-pair discipline, Iosevka/Inter
+ * fallback." Self-hosted Iosevka (marginalia/code voice) + Inter
+ * (UI/display/reading voice), each with a full system-font fallback stack
+ * so the language degrades gracefully when neither webfont loads. Role
+ * assignment follows layform's document-tier Patterns 24-26 and
+ * element-tier Pattern 73 (heading ladder) / 78 (line-height split) — see
+ * those patterns before changing which family serves which role.
+ */
+
+/* ---- Inter: variable font, self-hosted, subset to latin + latin-ext ---- */
+@font-face {
+  font-family: "Inter Variable";
+  src: url("../fonts/InterVariable.woff2") format("woff2-variations"),
+       url("../fonts/InterVariable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2000-206F,
+    U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter Variable";
+  src: url("../fonts/InterVariable-Italic.woff2") format("woff2-variations"),
+       url("../fonts/InterVariable-Italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---- Iosevka: static weight files, subset from the host's system
+   ttc-iosevka package (plain, non-Nerd-Font — this system never renders
+   Nerd-Font PUA icon glyphs; all icons are SVG, per component-tier
+   Pattern 62). Only the two weights the marginalia/code roles actually use
+   are shipped, per element-tier Pattern 26's "one fixed small size" rule —
+   no need to ship a full 9-weight family for a role that never varies. ---- */
+@font-face {
+  font-family: "Iosevka";
+  src: url("../fonts/Iosevka-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Iosevka";
+  src: url("../fonts/Iosevka-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---- Base family stacks (webfont first, full system fallback last) ---- */
+  --layform-font-inter: "Inter Variable", "Inter", -apple-system,
+    "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --layform-font-iosevka: "Iosevka", "Iosevka Term",
+    ui-monospace, "SFMono-Regular", "Cascadia Code", "JetBrains Mono",
+    Consolas, "Liberation Mono", monospace;
+
+  /* ---- Semantic role bindings (document-tier Patterns 24-26) ----
+     Display voice: heavy/black Inter, wide tracking — title zones (Pattern
+     23), section banners/dividers (Patterns 5/6), heading ladder (elem
+     Pattern 73). Marginalia voice: Iosevka at one fixed small size — page
+     counters, doc IDs, timestamps, breadcrumb separators (Pattern 26),
+     footer waymark (Pattern 27), data figures (elem Pattern 77). Reading
+     voice: regular-weight Inter — everything Pattern 25's Reading-Voice
+     Lock governs (prose, captions, form labels per component Pattern 71). */
+  --layform-font-display: var(--layform-font-inter);
+  --layform-font-marginalia: var(--layform-font-iosevka);
+  --layform-font-reading: var(--layform-font-inter);
+
+  /* ---- Weight tokens consumed by element-tier Pattern 73's heading ladder ---- */
+  --layform-weight-display-h1: 800;
+  --layform-weight-display-h2: 700;
+  --layform-weight-display-h3: 600;
+  --layform-weight-display-h4: 600;
+  --layform-weight-reading-body: 400;
+  --layform-weight-reading-strong: 500; /* one step heavier, elem Pattern 76 */
+  --layform-weight-marginalia: 400;
+  --layform-weight-marginalia-emphasis: 500;
+}

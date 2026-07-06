@@ -1,0 +1,82 @@
+/**
+ * layform — Scale Tokens (7.6)
+ *
+ * Element-tier Patterns 92 (Icon Sizing Scale), 93 (Base Spacing Unit), 94
+ * (Border-Weight Scale), 95 (Corner-Radius Scale), and 96 (Z-Index/Layering
+ * Convention) each specify a *systemization requirement* — a small, finite,
+ * named set of steps other patterns and components must draw from — without
+ * shipping a corresponding asset file. Every numeric magnitude below is a
+ * digital-scope invention with the SAME Aliveness/Confidence status those
+ * five patterns' own verdicts already declare in `patterns/03-element-
+ * patterns.md:765-956` — read those patterns before changing any number
+ * here. This file does not upgrade any of their confidence levels; it only
+ * gives their already-decided concepts a concrete, reusable CSS form.
+ */
+
+:root {
+  /* Pattern 93 (Confidence: Low) — base spacing unit, using the pattern's
+     own "e.g. 8px" example. The *need* for a shared rhythm is Alive/
+     well-corroborated; the exact base-unit magnitude is Unsupported — no
+     print scan can be measured to a pixel-equivalent unit. */
+  --layform-space-0: 0;
+  --layform-space-1: 0.5rem;   /* 8px */
+  --layform-space-2: 1rem;     /* 16px */
+  --layform-space-3: 1.5rem;   /* 24px */
+  --layform-space-4: 2rem;     /* 32px */
+  --layform-space-6: 3rem;     /* 48px */
+  --layform-space-8: 4rem;     /* 64px */
+  --layform-space-12: 6rem;    /* 96px */
+
+  /* Pattern 94 (Confidence: High) — four discrete border-weight steps.
+     The four-step vocabulary itself (hairline/thin/medium/heavy) is the
+     most cross-corroborated evidence set in the corpus; the exact pixel
+     values below are still a systemization decision, not a measurement. */
+  --layform-border-hairline: 1px;
+  --layform-border-thin: 2px;
+  --layform-border-medium: 3px;
+  --layform-border-heavy: 5px;
+
+  /* Pattern 95 (Confidence: Medium) — binary radius distinction only, the
+     pattern's own evidence ceiling. A finer multi-step radius ladder beyond
+     this sharp/rounded binary is explicitly Unsupported. */
+  --layform-radius-none: 0;
+  --layform-radius-panel: 8px;
+
+  /* Pattern 92 (Confidence: Medium) — three icon display steps. `-md` is
+     tied 1:1 to element-tier Pattern 89's 24x24 icon construction canvas;
+     `-sm`/`-lg` are systemization choices around that fixed midpoint. */
+  --layform-icon-sm: 16px;
+  --layform-icon-md: 24px;
+  --layform-icon-lg: 32px;
+
+  /* Pattern 96 (Confidence: Medium) — four ornament-stacking tiers, LOCAL
+     to one component's own stacking context. Never meant to compete with a
+     consuming application's own modal/dropdown/toast z-index — this scale
+     has no relationship to any global z-index authority outside layform's
+     own ornamental-overlay components. */
+  --layform-z-base: 0;
+  --layform-z-frame: 1;
+  --layform-z-ornament: 2;
+  --layform-z-overlay: 3;
+
+  /* Pattern 73 (Confidence: Medium) — the four-step heading ladder's
+     (size, weight, tracking) triples. The existence and rough ordering of
+     at least three distinguishable heading levels is directly evidenced
+     (Vermis I p.1, p.45); the specific numeric scale below is a
+     systemization decision extrapolated from that pattern's own
+     qualitative "larger/smaller" language, not a reproduction of any
+     measured original scale — read patterns/03-element-patterns.md:16-56
+     before changing a value here. */
+  --layform-heading-1-size: 2.5rem;
+  --layform-heading-1-weight: 800;
+  --layform-heading-1-tracking: 0.02em;
+  --layform-heading-2-size: 1.875rem;
+  --layform-heading-2-weight: 700;
+  --layform-heading-2-tracking: 0.01em;
+  --layform-heading-3-size: 1.5rem;
+  --layform-heading-3-weight: 600;
+  --layform-heading-3-tracking: 0em;
+  --layform-heading-4-size: 1.125rem;
+  --layform-heading-4-weight: 600;
+  --layform-heading-4-tracking: 0em;
+}

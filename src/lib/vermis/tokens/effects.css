@@ -1,0 +1,116 @@
+/**
+ * layform — Effect Utilities (detail tier, Patterns 97/103/110/111)
+ *
+ * Four pure-CSS detail-tier techniques with no dedicated component, each
+ * carrying its own Aliveness/Confidence verdict from
+ * `patterns/04-detail-patterns.md` — this file
+ * does not upgrade any of them; it only gives their already-decided
+ * concepts a concrete, reusable CSS form, matching the same honesty-
+ * contract discipline `./colors.css` and `./scale.css` already follow.
+ *
+ * - Pattern 97 (Tapered-End Rule — Bare Divider with Pointed Terminals).
+ *   Aliveness: "Alive, with a role substitution" — the tapered-terminal
+ *   device is directly evidenced once (Vermis I p.45, a FILLED banded
+ *   treatment already owned by document-tier Pattern 5), extrapolated here
+ *   onto a lighter, unfilled line-only divider role no sampled page shows
+ *   directly. Confidence: Low.
+ *
+ * - Pattern 103 (Double-Line/Concentric-Rule Technique — Fixed-Gap Parallel
+ *   Strokes). Aliveness: Alive, four independent citations across both
+ *   volumes and both cover/interior pages — the strongest cross-
+ *   corroboration in this pattern range. Confidence: High (only the
+ *   specific numeric gap-to-stroke ratio below is a systemization choice
+ *   layered on top of that otherwise well-evidenced recurrence).
+ *
+ * - Pattern 110 (Texture-Opacity Ceiling Where Text Shares the Layer).
+ *   Aliveness: Dead — "unsupported as a directly observed technique... a
+ *   print scan carries no measurable contrast ratio and faced no digital
+ *   accessibility requirement; the entire quantitative mechanism here is an
+ *   engineering answer to a problem the source never had to solve."
+ *   Confidence: Low. The two tokens below exist purely as an accessibility
+ *   ceiling this system imposes on itself, not as a reproduction of
+ *   anything observed.
+ *
+ * - Pattern 111 (Aged-Vignette Edge — Soft Gradient, Not a Structural
+ *   Border Line). Aliveness: Alive — grounded in a single sampled page
+ *   (Vermis II p.150) with no second instance in either volume's 16-page
+ *   sample. Confidence: Low.
+ *
+ * Every numeric magnitude below (taper length, opacity ceilings, vignette
+ * gradient stops) is a digital-scope invention with no print-scan analog —
+ * consistent with every other asset in this family, this file does not
+ * claim stronger grounding for a specific number than the pattern's own
+ * Confidence verdict allows.
+ */
+
+:root {
+  /* Pattern 97 — fixed taper length for .layform-rule--tapered's clip-path. */
+  --layform-rule-taper-length: 2rem;
+
+  /* Pattern 110 — two ceilings, not one: a higher ceiling for texture with
+     no text descendant anywhere in its stacking context, and a materially
+     lower ceiling for texture sharing a layer with legible text (verified
+     against the darkest local excursion the texture can produce at that
+     opacity, not its average blended value, per the pattern's own
+     solution). Any `.layform-texture-*` class applied inside a text-bearing
+     container MUST use `--layform-texture-opacity-with-text`, never
+     `--layform-texture-opacity-edge-only` — no build-time lint enforces
+     this in this pass (see the plan's Assumptions); it is a manual
+     authoring rule until one is added. */
+  --layform-texture-opacity-edge-only: 0.35;
+  --layform-texture-opacity-with-text: 0.12;
+}
+
+/* Pattern 97: a lightweight, UNFILLED divider whose stroke narrows linearly
+   from full height at center to a point at each end over
+   --layform-rule-taper-length — a line only, no background fill, so it
+   stays visually lighter than document-tier Pattern 5's filled Section
+   Banner (which already owns the filled/banded tapered-end treatment). */
+.layform-rule--tapered {
+  clip-path: polygon(
+    0 50%,
+    var(--layform-rule-taper-length) 0,
+    calc(100% - var(--layform-rule-taper-length)) 0,
+    100% 50%,
+    calc(100% - var(--layform-rule-taper-length)) 100%,
+    var(--layform-rule-taper-length) 100%
+  );
+}
+
+/* Pattern 103: two concentric strokes separated by a fixed proportional gap
+   (outer stroke + inner stroke, gap equal to one hairline unit from
+   element-tier Pattern 94), rendered via a layered box-shadow so the
+   double-line effect composes with any existing Pattern 94 weight value on
+   the same element rather than requiring a bespoke two-element markup
+   structure. This is a distinct rendering TECHNIQUE layered on top of
+   Pattern 94's weight scale, not a fifth weight step within it — reserved
+   for boundary/divider contexts that specifically want that added weight
+   (a cover-level outer frame, a title-adjacent divider), not a default on
+   every bordered element. */
+.layform-frame--double,
+.layform-rule--double {
+  box-shadow:
+    0 0 0 var(--layform-border-hairline) var(--layform-ink),
+    0 0 0 calc(var(--layform-border-hairline) * 3) transparent,
+    0 0 0 calc(var(--layform-border-hairline) * 4) var(--layform-ink);
+}
+
+/* Pattern 111: a soft CSS radial-gradient vignette — deliberately a
+   gradient, not an SVG filter effect, per the pattern's own solution
+   ("a single flat CSS radial gradient is a clean, systematized effect").
+   Stays a distinct, lower z-index layer from document-tier Pattern 2's
+   crisp double-line outer border (Pattern 103 above): Pattern 2/103 signal
+   "the document starts/ends here" structurally, this signals "this object
+   has aged" atmospherically — the two may coexist, neither substitutes for
+   the other. May optionally be layered with Pattern 107's `#grain` filter
+   (`src/lib/assets/page-filters.svg#grain`) confined to the vignette's own
+   outer band only, never the full content area, to recover more of the
+   source's described "mottled" irregularity — that composition is left to
+   the consuming component, not baked into this utility class. */
+.layform-vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    color-mix(in oklab, var(--layform-parchment-3), var(--layform-ink-2) 30%) 100%
+  );
+}

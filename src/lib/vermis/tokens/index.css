@@ -1,0 +1,27 @@
+/**
+ * vermis-design — Token entry point.
+ *
+ * Token source-of-truth decision: these three files are hand-authored,
+ * statically-copied CSS ported from layform's `assets/7.1-colors.css`,
+ * `7.2-fonts.css`, and `7.6-scale.css` — this repo does NOT build
+ * main-branch's DTCG-JSON-plus-resolver-plus-emitter pipeline
+ * (`primitives.tokens.json` / `resolver.ts` / `scripts/emitters/*.mjs`,
+ * ~7 files). Reasoning: layform's token set is small (28 colors + ~15 scale
+ * values + a two-family font stack), fixed (no runtime theme-switching
+ * requirement — document-tier Pattern 32's "palette register" is a
+ * compile-time semantic-alias choice already baked into `colors.css`'s own
+ * `--layform-register-*` aliases, not a runtime-swappable theme), and
+ * already correct in its native CSS format. Building a DTCG resolver with
+ * zero consumers would be speculative infrastructure, contradicting this
+ * repo's own stated goal of reusing main-branch's architectural *pattern*
+ * (Svelte 5 + Vite + Storybook + Vitest/Argos toolchain), not its literal
+ * files.
+ *
+ * `./styles.css` in package.json's `exports` map resolves to this file
+ * after `svelte-package` copies `src/lib` → `dist`.
+ */
+@import './colors.css';
+@import './fonts.css';
+@import './scale.css';
+@import './typography.css';
+@import './effects.css';

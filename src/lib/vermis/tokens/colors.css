@@ -1,0 +1,115 @@
+/**
+ * vermis-design — Color Tokens
+ *
+ * Ported verbatim (values, names, and grounding citations unchanged) from
+ * layform's `assets/7.1-colors.css` to this file's new home at
+ * `src/lib/tokens/colors.css`. Every value below is a dominant or accent
+ * color recorded in layform's `.grounding/visual-notes.md` across the 16
+ * sampled Vermis I/II pages, deduplicated by approximate hex (RGB
+ * clustering, ~28-unit threshold) from 69 raw hex mentions down to 28
+ * distinct tokens. Naming follows `--layform-<role>-<n>` per layform's
+ * regeneration plan. Semantic aliases at the bottom bind these raw palette
+ * values to the roles established by layform's document-tier Pattern 32
+ * (Volume-Level Palette Register), element-tier Pattern 81 (Property-Bound
+ * Accent Intensity), Pattern 83 (Scale-Dependent Saturation), Pattern 85
+ * (Near-Black as Ink Role vs. Background Role), and Pattern 87
+ * (Secondary-Accent Reservation) — read those patterns
+ * (`patterns/`) before reassigning a semantic
+ * alias to a different raw token. Font-family custom properties referenced
+ * elsewhere in this system (`--layform-font-inter`, `--layform-font-
+ * iosevka`, etc.) are defined in this file's co-located `./fonts.css`, not
+ * layform's own nested `assets/fonts/` layout.
+ */
+
+:root {
+  /* ---- Parchment / warm-light background family ----
+     Cream/sepia grounding confirmed across a majority of sampled pages
+     (Vermis I p.5/p.12/p.30/p.45/p.60; Vermis II p.150). */
+  --layform-parchment-1: #f0e6d2; /* lightest cream — Vermis II p.150 */
+  --layform-parchment-2: #d8cfb8; /* mid sepia — Vermis I p.5 */
+  --layform-parchment-3: #c9bfa0; /* deeper sepia — Vermis I p.12 */
+
+  /* ---- Ink / threshold-background family ----
+     Near-black confirmed in TWO opposite roles (element-tier Pattern 85):
+     as reading ink over a light page, and as the dominant cover/threshold
+     background register (Vermis II p.1/p.95). Never use the same token as
+     both foreground and background in one context. */
+  --layform-ink-1: #0a0a0a; /* Vermis II p.1, p.95 cover/threshold register */
+  --layform-ink-2: #1c1c1c; /* Vermis I p.20 secondary dark tone */
+
+  /* ---- Primary accent family: red-orange/coral ----
+     The single most consistent accent hue across both volumes
+     (Vermis I p.1/p.20/p.67; Vermis II p.20/p.45/p.70/p.120/p.150/p.175). */
+  --layform-accent-primary-1: #c0432c; /* Vermis I p.1 border/title accent */
+  --layform-accent-primary-2: #d9532b; /* Vermis II p.20 sky/title accent */
+  --layform-accent-primary-3: #e8604f; /* Vermis II p.70 caption/border accent */
+  --layform-accent-primary-4: #8b3a2a; /* Vermis II p.120 darker banner tone */
+
+  /* ---- Crimson / deeper red-magenta accent ----
+     A distinct, darker red register from the primary orange-coral family
+     (Vermis I p.20 header bars; Vermis I p.67 back-cover caption). */
+  --layform-accent-crimson-1: #7a1f1f; /* Vermis I p.20 header bars */
+  --layform-accent-crimson-2: #a52a2a; /* Vermis I p.67 back-cover caption */
+
+  /* ---- Secondary accent family: forest/olive green ----
+     Confirmed as a subordinate, nested-context accent by element-tier
+     Pattern 87 (Vermis I p.1 nested title lettering; Vermis I p.5 sole-ink
+     exception spread). */
+  --layform-accent-secondary-1: #1f3d1f; /* Vermis I p.5 sole-ink spread */
+  --layform-accent-secondary-2: #3a4a2f; /* Vermis I p.20 illustration tone */
+  --layform-accent-secondary-3: #7a8a3a; /* Vermis I p.1 olive/moss title */
+  --layform-accent-secondary-4: #6b6b3a; /* Vermis II p.20 dark panel wraiths */
+
+  /* ---- Cool counterpoints (rare, single-page each) ---- */
+  --layform-accent-teal: #3fa89e;        /* Vermis I p.20 weapon glow */
+  --layform-accent-lavender: #9b8fc4;    /* Vermis II p.1 cover title/border */
+  --layform-accent-pale-blue: #cbd9dd;   /* Vermis II p.45 glowing archway */
+  --layform-accent-sickly-green: #7fbf3f;/* Vermis II p.1 "mirror" oval glow — rare, occult-adjacent */
+  --layform-accent-magenta-pink: #b03a5c;/* Vermis I p.60 top accent stripe */
+  --layform-accent-lavender-pink: #c98fbf; /* Vermis II p.1 textured stripe */
+
+  /* ---- Warm gold/mustard highlights ---- */
+  --layform-accent-gold-1: #c9b458; /* Vermis I p.30 title linework */
+  --layform-accent-gold-2: #c8d878; /* Vermis I p.45 water/light streak */
+  --layform-accent-gold-3: #a8c93c; /* Vermis II p.20 yellow-green sky */
+
+  /* ---- Tan / masonry family (rare accent, per document-tier Pattern 4) ---- */
+  --layform-accent-tan-1: #c99a4a; /* Vermis I p.1 illustration tone */
+  --layform-accent-tan-2: #8b6f47; /* Vermis II p.150 sepia illustration */
+  --layform-accent-tan-3: #c9a876; /* Vermis II p.45 masonry stone tone */
+
+  /* ---- Rare plum/maroon accent ---- */
+  --layform-accent-plum: #4a2530; /* Vermis II p.175 mottled border texture */
+
+  /* =====================================================================
+   * Semantic aliases — bind raw palette tokens above to the roles the
+   * finished pattern language actually specifies. Components MUST consume
+   * these, not the raw --layform-parchment-N or --layform-accent-N tokens
+   * directly, so a future re-palette only edits this block.
+   * ===================================================================== */
+
+  /* Document-tier Pattern 32: palette registers */
+  --layform-register-body: var(--layform-parchment-1);      /* body/interior register */
+  --layform-register-threshold: var(--layform-ink-1);       /* cover/section-opener register */
+
+  /* Element-tier Pattern 85: near-black ink vs. background role split */
+  --layform-ink: var(--layform-ink-2);            /* text/foreground use only, on light backgrounds */
+  --layform-threshold-bg: var(--layform-ink-1);   /* background use only, on Pattern 34/6 rare moments */
+
+  /* Element-tier Pattern 81/83: primary accent (property-bound, size-aware) */
+  --layform-accent: var(--layform-accent-primary-1);       /* full-saturation, small-element default */
+  --layform-accent-large: var(--layform-accent-primary-4); /* attenuated step for large-area fills — swapped from -primary-2, see CONTRAST.md */
+
+  /* Element-tier Pattern 87: secondary (subordinate, nested-context-only) accent */
+  --layform-accent-secondary: var(--layform-accent-secondary-1);
+
+  /* Component-tier Pattern 72: status accent tokens (validation) */
+  --layform-status-error: var(--layform-accent-crimson-2);
+  --layform-status-success: var(--layform-accent-secondary-2);
+
+  /* Component-tier Patterns 60/61: status-tag / category-chip semantic slots
+     (author populates one custom property per named status/category using
+     the raw families above; two starter examples per Pattern 60's own text) */
+  --layform-status-draft: var(--layform-accent-tan-2); /* swapped from -gold-1, see CONTRAST.md */
+  --layform-status-deprecated: var(--layform-accent-crimson-1);
+}

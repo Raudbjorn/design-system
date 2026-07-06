@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  layform — Divider Glyph Set (7.5)
+
+  Six occult/ornamental accent glyphs, each bound to exactly one named system
+  occasion by Patterns 44, 45, 114, 116, 117, 118, and 119 — see the adjoining
+  7.5-divider-glyph-set.md for the pattern-by-pattern citation of each symbol.
+
+  Construction discipline:
+  - Pattern 89 (Icon Construction Grid): every symbol shares one fixed
+    viewBox="0 0 24 24"; the eye-in-circle and (implicitly, per its own
+    keyline note) the crescent-moon symbol draw from the inscribed circular
+    keyline that same pattern reserves for the circular-frame glyph family.
+  - Pattern 90 (Icon Stroke-Weight & Line-Style Convention): every stroke is
+    flat and single-weight, fill="none" on every outline path, with no
+    stippling, cross-hatch, or gradient anywhere in this file. Stroke color
+    is deliberately left as `currentColor` rather than a hardcoded hex so a
+    consumer sets it via CSS `color` using any semantic token already defined
+    in 7.1-colors.css (e.g. layform-ink, layform-accent, layform-status-error
+    — written with the CSS custom-property prefix) per element-tier Patterns
+    81/83/85 — no new
+    color or stroke-width token is invented here.
+  - Pattern 91 (Glyph Corner Treatment): every glyph in this file is, per
+    Pattern 116/117/118/119, occult, dark-fantasy, nocturnal, or organic
+    subject matter — exactly the "rare glyph whose subject matter
+    specifically calls for a softer line" Pattern 91 names as its explicit
+    opt-in exception to the shared sprite's sharp-terminal default. All six
+    symbols therefore use the rounded-cap/rounded-join opt-in uniformly,
+    rather than the sprite's general butt/miter default.
+  - Small solid accents (pupil, eye-socket and nasal-cavity dots on the
+    skull tile) are filled with currentColor rather than stroked — a flat,
+    single-color fill is not the stippling/cross-hatch/gradient texture
+    Pattern 90 excludes; it is the minimum mark needed for those features to
+    read at icon scale.
+  - Pattern 62 (SVG Symbol Sprite as Shared Icon Substrate): each glyph is a
+    separately-named <symbol> for reference via <use href="#icon-...">,
+    never inlined per call site.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+
+    <!-- Pattern 114/116: pending/loading state — spiral sigil, rotated via
+         CSS @keyframes by the consuming component per Pattern 114; static
+         here. -->
+    <symbol id="icon-spiral-sigil" viewBox="0 0 24 24">
+      <path
+        d="M12,10.5 L12.75,10.43 L13.55,10.77 L14.16,11.51 L14.4,12.55 L14.11,13.68 L13.27,14.64 L12,15.18 L10.52,15.08 L9.14,14.28 L8.2,12.87 L7.97,11.08 L8.58,9.27 L10,7.85 L12,7.15 L14.21,7.41 L16.17,8.68 L17.43,10.76 L17.66,13.29 L16.73,15.77 L14.73,17.66 L12,18.52 L9.07,18.09 L6.52,16.37 L4.94,13.61 L4.71,10.34 L5.96,7.19 L8.55,4.83 L12,3.8"
+        fill="none" stroke="currentColor" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+
+    <!-- Pattern 44/116: empty-state accent — radiating-burst glyph, centered
+         alone in the empty state's negative-space field per Pattern 44. -->
+    <symbol id="icon-radiating-burst" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="1.6" fill="none" stroke="currentColor" stroke-width="1.5" />
+      <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="12" y1="9.8" x2="12" y2="2.5" />
+        <line x1="13.56" y1="10.44" x2="16.81" y2="7.19" />
+        <line x1="14.2" y1="12" x2="21.5" y2="12" />
+        <line x1="13.56" y1="13.56" x2="16.81" y2="16.81" />
+        <line x1="12" y1="14.2" x2="12" y2="21.5" />
+        <line x1="10.44" y1="13.56" x2="7.19" y2="16.81" />
+        <line x1="9.8" y1="12" x2="2.5" y2="12" />
+        <line x1="10.44" y1="10.44" x2="7.19" y2="7.19" />
+      </g>
+    </symbol>
+
+    <!-- Pattern 45/116: error/"Torn Page" state accent — eye-in-circle
+         glyph. Outer stroke is Pattern 89's inscribed circular keyline for
+         the circular-frame glyph family. -->
+    <symbol id="icon-eye-in-circle" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+      <path
+        d="M4.5,12 C4.5,12 8,7.5 12,7.5 C16,7.5 19.5,12 19.5,12 C19.5,12 16,16.5 12,16.5 C8,16.5 4.5,12 4.5,12 Z"
+        fill="none" stroke="currentColor" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="12" cy="12" r="2.3" fill="currentColor" stroke="none" />
+    </symbol>
+
+    <!-- Pattern 117: skull motif — one repeat unit of the border-strip
+         ornament tile, gated behind an explicit content-type flag and
+         applied only to document-tier Pattern 6's full-bleed Section
+         Divider per Pattern 117's solution; never a general-purpose icon. -->
+    <symbol id="icon-skull-border-tile" viewBox="0 0 24 24">
+      <path
+        d="M7,14 C7,8.5 9,4.5 12,4.5 C15,4.5 17,8.5 17,14 L17,15.5 C17,16.6 16.2,17.3 15,17.6 L15,19.5 C15,20.3 13.8,20.6 12,20.6 C10.2,20.6 9,20.3 9,19.5 L9,17.6 C7.8,17.3 7,16.6 7,15.5 Z"
+        fill="none" stroke="currentColor" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="9.6" cy="13" r="1.3" fill="currentColor" stroke="none" />
+      <circle cx="14.4" cy="13" r="1.3" fill="currentColor" stroke="none" />
+      <path d="M12,14.3 L11.1,16.3 L12.9,16.3 Z" fill="currentColor" stroke="none" />
+      <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="10" y1="17.8" x2="10" y2="19.2" />
+        <line x1="12" y1="17.9" x2="12" y2="19.4" />
+        <line x1="14" y1="17.8" x2="14" y2="19.2" />
+      </g>
+    </symbol>
+
+    <!-- Pattern 118: crescent-moon accent — single optional accent beside
+         element-tier Pattern 79's illuminated initial, nocturnal-content
+         only, never combined with the occult-sigil or skull glyphs. -->
+    <symbol id="icon-crescent-moon" viewBox="0 0 24 24">
+      <path
+        d="M15.53,4.6 A8.2,8.2 0 1,0 15.53,19.4 A7.4,7.4 0 0,1 15.53,4.6 Z"
+        fill="none" stroke="currentColor" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+
+    <!-- Pattern 119: organic/serpentine divider line — usable only as a
+         divider glyph within document-tier Pattern 5's Section Banner,
+         never a standalone creature/serpent icon. -->
+    <symbol id="icon-serpentine-divider" viewBox="0 0 24 24">
+      <path
+        d="M2,12 C5,4 9,4 12,12 C15,20 19,20 22,12"
+        fill="none" stroke="currentColor" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+
+  </defs>
+</svg>
