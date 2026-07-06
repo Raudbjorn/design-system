@@ -2,9 +2,8 @@
   Implements layform Pattern 34 (Full-Bleed Hero Frame — see
   patterns/01-document-patterns.md), Pattern 115
   (Illustration-Frame Scroll Reveal — Single-Stage, Observer-Gated), Pattern 15
-  (Mixed-Media Reconciliation — photo filter), Pattern 105 (Halftone-Dot Field) and
-  Pattern 106 (Cross-Hatch Shading) as optional overlay textures, Pattern 66
-  (Frame-and-Caption Compound). Detail-tier patterns (115, 105, 106) are in
+  (Mixed-Media Reconciliation — photo filter), Pattern 66
+  (Frame-and-Caption Compound). Detail-tier pattern 115 is in
   patterns/04-detail-patterns.md; direct worked CSS/markup
   precedent is templates/8.5-full-bleed-illustration-frame.md.
 
@@ -14,6 +13,13 @@
   line itself; the CONSUMING PAGE must declare a `full-bleed` column in its own
   grid-template-columns for this to take effect. Outside such a grid this rule is
   simply inert (Pattern 41's standard content-column context).
+
+  Halftone/cross-hatch texture overlays (Patterns 105/106) are NOT exposed in
+  this port: `texture-overlay.svg` defines its tile patterns as `<pattern>`
+  elements consumed via `fill="url(#…)"` on a shape, and the source
+  `textureOverlay` prop pointed CSS `background-image` at the same fragment,
+  which paints the SVG root (the demo swatch) instead of the tile. Re-introduce
+  the option with an inline-svg overlay element when a real consumer needs it.
 -->
 <script lang="ts">
   import type { Snippet } from 'svelte';
@@ -21,11 +27,10 @@
   interface Props {
     children: Snippet;
     kind?: 'illustration' | 'photo';
-    textureOverlay?: 'halftone-1' | 'halftone-2' | 'halftone-3' | 'hatch-medium';
     caption?: Snippet;
   }
 
-  let { children, kind = 'illustration', textureOverlay, caption }: Props = $props();
+  let { children, kind = 'illustration', caption }: Props = $props();
 
   // Pattern 115: single-stage, observer-gated, fire-once reveal.
   let visible = $state(false);
@@ -73,9 +78,6 @@
 <figure bind:this={root} data-sv="hero-frame" data-kind={kind} data-visible={visible}>
   <div data-sv="hero-frame-art">
     {@render children()}
-    {#if textureOverlay}
-      <div data-sv="hero-frame-texture" data-texture={textureOverlay} aria-hidden="true"></div>
-    {/if}
   </div>
   {#if caption}
     <figcaption data-sv="hero-frame-caption">
@@ -110,31 +112,6 @@
     filter: sepia(0.35) saturate(1.1) contrast(1.05);
     mix-blend-mode: multiply;
     background-color: var(--layform-parchment-2);
-  }
-
-  /* Patterns 105/106: at most one background-zone texture unit (Pattern 112's
-     budget), overlaid absolutely rather than baked into the illustration SVG
-     itself, so illustration and hatch/halftone assets stay independently
-     authored. Opacity matches the 8.5 template's own worked example. */
-  [data-sv='hero-frame-texture'] {
-    position: absolute;
-    inset: 0;
-    z-index: var(--layform-z-ornament);
-    pointer-events: none;
-    background-repeat: repeat;
-    opacity: 0.35;
-  }
-  [data-sv='hero-frame-texture'][data-texture='halftone-1'] {
-    background-image: url('../../assets/texture-overlay.svg#halftone-1');
-  }
-  [data-sv='hero-frame-texture'][data-texture='halftone-2'] {
-    background-image: url('../../assets/texture-overlay.svg#halftone-2');
-  }
-  [data-sv='hero-frame-texture'][data-texture='halftone-3'] {
-    background-image: url('../../assets/texture-overlay.svg#halftone-3');
-  }
-  [data-sv='hero-frame-texture'][data-texture='hatch-medium'] {
-    background-image: url('../../assets/texture-overlay.svg#hatch-medium');
   }
 
   /* Pattern 115: single-stage, observer-gated scroll reveal */

@@ -20,7 +20,8 @@
     media?: Snippet;
     heading?: Snippet;
     footer?: Snippet;
-    children: Snippet;
+    /** Optional — header/media-only cards are legal (see collapsible body guard). */
+    children?: Snippet;
   }
 
   let {
@@ -71,13 +72,10 @@
   {/if}
 
   {#if collapsible}
-    <!-- Edge case: collapsible with no body content — the trigger is disabled
-         rather than toggling an empty body. -->
     <button
       type="button"
       data-sv="card-trigger"
       aria-expanded={open}
-      disabled={!children}
       onclick={toggle}
     >
       {#if heading}<span data-sv="card-heading">{@render heading()}</span>{/if}
@@ -90,7 +88,7 @@
     </div>
   {:else}
     {#if heading}<h3 data-sv="card-heading">{@render heading()}</h3>{/if}
-    <div data-sv="card-body">{@render children()}</div>
+    {#if children}<div data-sv="card-body">{@render children()}</div>{/if}
     {#if footer}<footer data-sv="card-footer">{@render footer()}</footer>{/if}
   {/if}
 </article>

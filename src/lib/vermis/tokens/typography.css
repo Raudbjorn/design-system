@@ -1,9 +1,9 @@
 /**
  * vermis-design — Typography Utility Classes & Line-Height Tokens
  *
- * Not yet imported by `index.css` — a later integration step wires this in
- * centrally once every consumer of `.layform-prose`/`.layform-caption` has
- * landed. Covers four element-tier patterns with no dedicated component:
+ * Imported by `index.css` and shipped via
+ * `@svnbjrn/design/vermis/styles.css`. Covers four element-tier patterns
+ * with no dedicated component:
  *
  * - Pattern 76 (Inline Emphasis Convention): `<em>` stays italic at the
  *   surrounding size/weight (style change only); `<strong>` steps one
