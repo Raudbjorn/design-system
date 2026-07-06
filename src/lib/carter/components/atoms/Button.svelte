@@ -13,25 +13,21 @@
   type Variant = "default" | "primary" | "danger" | "ghost";
   type Size = "sm" | "md" | "lg";
 
-  interface Props {
+  // Extends button attributes so consumers can pass id/class/aria-*/data-*/…
+  // typed passthrough (…rest). href switches the render to an <a>.
+  interface Props extends Omit<HTMLButtonAttributes, "type"> {
     /** Visual weight / intent. */
     variant?: Variant;
     /** Control size. */
     size?: Size;
     /** Render an anchor instead of a button. */
     href?: string;
-    /** Disable the control (buttons only). */
-    disabled?: boolean;
     /** Show a busy state; sets aria-busy and blocks activation. */
     loading?: boolean;
     /** Native button type when rendering a <button>. */
     type?: "button" | "submit" | "reset";
-    /** Click handler. */
-    onclick?: (event: MouseEvent) => void;
     /** Label content. */
     children?: Snippet;
-    /** Passthrough attributes. */
-    rest?: HTMLButtonAttributes & HTMLAnchorAttributes;
   }
 
   let {
@@ -66,7 +62,7 @@
     aria-disabled={inert ? "true" : undefined}
     aria-busy={loading ? "true" : undefined}
     onclick={handle}
-    {...rest}
+    {...(rest as HTMLAnchorAttributes)}
   >
     <span class="label">{@render children?.()}</span>
   </a>
