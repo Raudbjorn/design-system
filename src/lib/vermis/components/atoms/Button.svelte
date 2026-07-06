@@ -35,13 +35,20 @@
 
 {#if href}
   <a
-    {href}
+    href={disabled ? undefined : href}
     data-sv="button"
     data-variant={variant}
     data-size={size}
     aria-disabled={disabled || undefined}
     aria-busy={loading || undefined}
-    {onclick}
+    tabindex={disabled ? -1 : undefined}
+    onclick={(e) => {
+      if (disabled) {
+        e.preventDefault();
+        return;
+      }
+      onclick?.(e);
+    }}
   >
     {@render children()}
   </a>

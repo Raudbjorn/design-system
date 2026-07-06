@@ -109,6 +109,7 @@
           shape="square"
           size="sm"
           emphasis={name === category ? 'active' : 'muted'}
+          ariaLabel={name}
         />
       {/each}
     </div>

@@ -2,17 +2,17 @@
  * vermis-design — Font Tokens
  *
  * Ported from layform's `assets/7.2-fonts.css` to this file's new home at
- * `src/lib/tokens/fonts.css`, with two concrete edits versus the layform
- * original: (a) `@font-face src` paths point at this repo's flat
- * `src/lib/fonts/` directory (matching main-branch's own flat layout)
- * instead of layform's never-built nested `assets/fonts/inter/` and
- * `assets/fonts/iosevka/` layout; (b) the marginalia family is renamed from
- * `"Iosevka Layform"` to plain `"Iosevka"` and its files from
- * `IosevkaLayform-Regular/-Medium.woff2` to `Iosevka-Regular/-Medium.woff2`
- * — the exact files `scripts/build-fonts.mjs` subsets from the host's
- * system `ttc-iosevka` package (see that script's own header for why this
- * is a plain, non-Nerd-Font build, unlike main-branch's Icon.svelte PUA
- * glyph dependency).
+ * `src/lib/vermis/tokens/fonts.css`, with two concrete edits versus the layform
+ * original: (a) `@font-face src` paths point at this package's
+ * `src/lib/vermis/fonts/` directory (sibling of this file, one level up) —
+ * the root `src/lib/fonts/` is a separate pipeline populated by
+ * `scripts/build-fonts.mjs` for the `--sv-*` system; the Vermis subsystem
+ * ships its own subset and must not share that directory; (b) the marginalia
+ * family is renamed from `"Iosevka Layform"` to plain `"Iosevka"` and its
+ * files from `IosevkaLayform-Regular/-Medium.woff2` to
+ * `Iosevka-Regular/-Medium.woff2`, the exact files this package ships
+ * (plain, non-Nerd-Font — this subsystem never renders Nerd-Font PUA icon
+ * glyphs; all icons are SVG, per component-tier Pattern 62).
  *
  * Recovered design-phase answer (layform's own, carried over unchanged):
  * "Flexible fidelity strictness: font-pair discipline, Iosevka/Inter

@@ -3,7 +3,8 @@
  *
  * Ported verbatim (values, names, and grounding citations unchanged) from
  * layform's `assets/7.1-colors.css` to this file's new home at
- * `src/lib/tokens/colors.css`. Every value below is a dominant or accent
+ * `src/lib/vermis/tokens/colors.css`.
+ * Every value below is a dominant or accent
  * color recorded in layform's `.grounding/visual-notes.md` across the 16
  * sampled Vermis I/II pages, deduplicated by approximate hex (RGB
  * clustering, ~28-unit threshold) from 69 raw hex mentions down to 28

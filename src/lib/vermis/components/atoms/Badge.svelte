@@ -25,9 +25,11 @@
     size?: 'sm' | 'md' | 'lg';
     emphasis?: 'active' | 'muted';
     label?: Snippet;
+    /** Required when no visible label is rendered; exposes the badge to AT. */
+    ariaLabel?: string;
   }
 
-  let { icon, shape = 'circle', size = 'md', emphasis = 'active', label }: Props = $props();
+  let { icon, shape = 'circle', size = 'md', emphasis = 'active', label, ariaLabel }: Props = $props();
 
   // Pattern 62: one shared sprite substrate per symbol family — the six real
   // divider-glyph-set IDs plus the ornate-frame-border rosette, referenced via
@@ -63,7 +65,15 @@
     <span data-sv="badge-label">{@render label()}</span>
   </span>
 {:else}
-  <svg data-sv="badge" data-shape={shape} data-size={size} data-emphasis={emphasis} aria-hidden="true">
+  <svg
+    data-sv="badge"
+    data-shape={shape}
+    data-size={size}
+    data-emphasis={emphasis}
+    aria-hidden={ariaLabel ? undefined : 'true'}
+    aria-label={ariaLabel}
+    role={ariaLabel ? 'img' : undefined}
+  >
     <use href={iconHref} />
   </svg>
 {/if}
