@@ -1,0 +1,119 @@
+/* ============================================================
+   CARTER — effect utilities
+   The physical vocabulary of a case file: redaction bars, torn
+   paper, adhesive tape, rubber-stamp frames, aged-paper grain,
+   CRT scanlines, vignette. Components apply these classes rather
+   than re-declaring the geometry inline.
+   ============================================================ */
+
+:root {
+  --carter-grain-opacity: 0.06;
+  --carter-scanline-opacity: 0.28;
+  --carter-tape-opacity: 0.55;
+  --carter-photo-rotate: -1.5deg;
+}
+
+/* Redaction bar — blacked-out span; the truth is still under there. */
+.carter-redaction {
+  color: var(--carter-classified);
+  background: var(--carter-classified);
+  border-radius: var(--carter-radius-sm);
+  padding: 0 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Torn bottom edge — apply to a block with padding-bottom to spare. */
+.carter-torn {
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 7px) no-repeat,
+    radial-gradient(6px 8px at 6px 0, transparent 96%, #000) bottom left / 12px 8px repeat-x;
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 7px) no-repeat,
+    radial-gradient(6px 8px at 6px 0, transparent 96%, #000) bottom left / 12px 8px repeat-x;
+}
+
+/* Adhesive tape strip — position over a corner/edge. */
+.carter-tape {
+  position: absolute;
+  width: 4.5rem;
+  height: 1.4rem;
+  background: color-mix(in srgb, var(--carter-paper-200) 70%, transparent);
+  opacity: var(--carter-tape-opacity);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  border-left: 1px dashed rgba(0, 0, 0, 0.15);
+  border-right: 1px dashed rgba(0, 0, 0, 0.15);
+}
+
+/* Distressed rubber-stamp frame — double-ruled, uneven ink. */
+.carter-stamp-frame {
+  border: var(--carter-border-heavy) solid currentColor;
+  border-radius: var(--carter-radius-sm);
+  box-shadow: inset 0 0 0 2px currentColor, 0 0 0 2px currentColor;
+  opacity: 0.85;
+  -webkit-mask-image: radial-gradient(120% 130% at 30% 20%, #000 78%, transparent 100%);
+  mask-image: radial-gradient(120% 130% at 30% 20%, #000 78%, transparent 100%);
+}
+
+/* Aged-paper grain overlay — add to a positioned element via ::after. */
+.carter-grain {
+  position: relative;
+}
+.carter-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--carter-grain-opacity);
+  background-image: radial-gradient(currentColor 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+}
+
+/* CRT scanlines — for terminal / screen surfaces. */
+.carter-scanline {
+  position: relative;
+}
+.carter-scanline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, var(--carter-scanline-opacity)) 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Vignette — darkened edges for full-bleed panels. */
+.carter-vignette {
+  position: relative;
+}
+.carter-vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 120% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Tapered rule — a hairline that fades at both ends. */
+.carter-rule-tapered {
+  height: var(--carter-border-hair);
+  border: 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--carter-border-strong) 15%,
+    var(--carter-border-strong) 85%,
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carter-scanline::before { opacity: 0.6; }
+}

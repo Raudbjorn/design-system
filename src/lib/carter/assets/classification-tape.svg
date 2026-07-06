@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CARTER — adhesive tape + evidence-seal strips as reusable symbols. -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <!-- Translucent tape strip (paper-toned, torn ends). -->
+    <symbol id="tape-strip" viewBox="0 0 96 28">
+      <path d="M2 4 94 2 92 26 4 24Z" fill="#e0dccf" fill-opacity="0.55"/>
+      <path d="M2 4 94 2" stroke="#000" stroke-opacity="0.12" stroke-dasharray="1 2"/>
+      <path d="M4 24 92 26" stroke="#000" stroke-opacity="0.12" stroke-dasharray="1 2"/>
+    </symbol>
+    <!-- Striped evidence seal. -->
+    <symbol id="evidence-seal" viewBox="0 0 160 20">
+      <rect width="160" height="20" fill="#984d40"/>
+      <path d="M0 20 20 0M20 20 40 0M40 20 60 0M60 20 80 0M80 20 100 0M100 20 120 0M120 20 140 0M140 20 160 0"
+        stroke="#f4f2ec" stroke-opacity="0.5" stroke-width="6"/>
+    </symbol>
+  </defs>
+</svg>

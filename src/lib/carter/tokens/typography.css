@@ -1,0 +1,57 @@
+/* ============================================================
+   CARTER — typography utilities
+   Reusable prose/label classes so documents read like a filed
+   record without every component re-declaring the voice.
+   ============================================================ */
+
+.carter-prose {
+  font-family: var(--carter-font-reading);
+  font-size: var(--carter-fs-md);
+  line-height: var(--carter-lh-body);
+  color: var(--carter-text);
+}
+.carter-prose p { margin: 0 0 var(--carter-space-4); }
+.carter-prose strong { font-weight: var(--carter-weight-strong); }
+.carter-prose em { font-family: var(--carter-font-serif); font-style: italic; }
+.carter-prose a { color: var(--carter-link); text-underline-offset: 2px; }
+
+/* Wide-tracked classification label — TOP SECRET, EYES ONLY */
+.carter-label {
+  font-family: var(--carter-font-mono);
+  font-weight: var(--carter-weight-strong);
+  font-size: var(--carter-fs-2xs);
+  letter-spacing: var(--carter-tracking-label);
+  text-transform: uppercase;
+  color: var(--carter-text-muted);
+}
+
+/* Caption — photo credits, footnotes, routing marks */
+.carter-caption {
+  font-family: var(--carter-font-mono);
+  font-size: var(--carter-fs-2xs);
+  line-height: var(--carter-lh-body);
+  color: var(--carter-text-faint);
+}
+
+/* Display headline in the stamp voice */
+.carter-display {
+  font-family: var(--carter-font-display);
+  font-weight: var(--carter-weight-display);
+  line-height: var(--carter-lh-tight);
+  letter-spacing: var(--carter-tracking-display);
+  text-transform: uppercase;
+  color: var(--carter-text);
+}
+
+/* Framing prose — literary asides, quotations */
+.carter-serif {
+  font-family: var(--carter-font-serif);
+  line-height: 1.6;
+  color: var(--carter-text);
+}
+
+/* Tabular figures for data readouts */
+.carter-tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}

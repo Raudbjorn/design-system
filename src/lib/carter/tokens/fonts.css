@@ -1,0 +1,75 @@
+/* ============================================================
+   CARTER — fonts
+   Self-hosted woff2 (built by scripts/build-fonts.mjs into
+   src/lib/fonts/). Three voices:
+     Anonymous Pro — the case file (mono body, data, labels)
+     Oswald        — the stamp / the headline (condensed display)
+     Spectral      — the framing prose (serif asides, quotations)
+   ============================================================ */
+
+@font-face {
+  font-family: "Anonymous Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/AnonymousPro-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Anonymous Pro";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/AnonymousPro-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Anonymous Pro";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/AnonymousPro-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/Oswald-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/Oswald-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/Spectral-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/Spectral-Italic.woff2") format("woff2");
+}
+
+:root {
+  /* family stacks */
+  --carter-font-mono: "Anonymous Pro", "Courier New", ui-monospace, "SFMono-Regular", monospace;
+  --carter-font-display: "Oswald", "Arial Narrow", system-ui, sans-serif;
+  --carter-font-serif: "Spectral", "Times New Roman", Times, serif;
+
+  /* semantic bindings */
+  --carter-font-reading: var(--carter-font-mono);
+  --carter-font-data: var(--carter-font-mono);
+
+  /* weights */
+  --carter-weight-body: 400;
+  --carter-weight-strong: 700;
+  --carter-weight-display: 700;
+  --carter-weight-display-medium: 500;
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CARTER — reusable SVG <filter>s for the aged-record surface. Reference by
+     id from CSS `filter: url(page-filters.svg#grain)` or an inline <filter>. -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <!-- Aged-paper grain: fine fractal noise, desaturated, low-opacity. -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix"
+        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+
+    <!-- Photocopy noise: high-frequency speckle for degraded-scan look. -->
+    <filter id="photocopy" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="turbulence" baseFrequency="0.18 0.02" numOctaves="1" seed="19" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="1.2"/>
+    </filter>
+
+    <!-- Eroded edge: roughen the alpha channel of a shape's border. -->
+    <filter id="eroded" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05 0.06" numOctaves="3" seed="3" result="e"/>
+      <feDisplacementMap in="SourceGraphic" in2="e" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- Ink bleed: slight blur + threshold for stamped/typed ink spread. -->
+    <filter id="ink-bleed" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="0.4" result="b"/>
+      <feComponentTransfer in="b">
+        <feFuncA type="discrete" tableValues="0 0.4 0.8 1"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+</svg>
