@@ -17,23 +17,25 @@
     error?: string;
     /** Marks the field required; shows a "*" plus visually-hidden "required". */
     required?: boolean;
-    /** Id shared with the consumer's control for label association. */
-    id?: string;
+    /**
+     * Id shared with the consumer's control for label association. REQUIRED:
+     * an auto-generated id would be invisible to the child control and would
+     * silently break the `<label for>` link, so the caller must supply it.
+     */
+    id: string;
     /** The control itself, e.g. an Input or native input/textarea. */
     children?: Snippet;
   }
 
   let { label, hint, error, required = false, id, children }: Props = $props();
 
-  const autoId = $props.id();
-  const fieldId = $derived(id ?? autoId);
   /** Wire the control's aria-describedby to whichever of these renders. */
-  const hintId = $derived(`${fieldId}-hint`);
-  const errorId = $derived(`${fieldId}-error`);
+  const hintId = $derived(`${id}-hint`);
+  const errorId = $derived(`${id}-error`);
 </script>
 
 <div class="field">
-  <label class="field-label carter-label" for={fieldId}>
+  <label class="field-label carter-label" for={id}>
     {label}
     {#if required}
       <span class="required-mark" aria-hidden="true">*</span>

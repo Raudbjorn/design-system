@@ -24,7 +24,7 @@
   let { columns = [], rows = [], caption }: Props = $props();
 </script>
 
-<div class="readout" role="region" aria-label={caption}>
+<div class="readout" role={caption ? "region" : undefined} aria-label={caption}>
   {#if caption}
     <div class="caption-bar carter-label">{caption}</div>
   {/if}

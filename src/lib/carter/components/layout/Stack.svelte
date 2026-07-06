@@ -4,6 +4,7 @@
 -->
 <script lang="ts">
   import type { Snippet } from "svelte";
+  import type { HTMLAttributes } from "svelte/elements";
 
   type Direction = "row" | "column";
   type Gap = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12;
@@ -24,7 +25,7 @@
     between: "space-between"
   };
 
-  interface Props {
+  interface Props extends HTMLAttributes<HTMLDivElement> {
     /** Flex direction. */
     direction?: Direction;
     /** Gap size, mapped to --carter-space-{gap}. */
@@ -45,7 +46,8 @@
     align,
     justify,
     wrap = false,
-    children
+    children,
+    ...rest
   }: Props = $props();
 
   const safeGap = $derived(GAPS.includes(gap) ? gap : 4);
@@ -63,6 +65,6 @@
   );
 </script>
 
-<div class="stack" data-direction={direction} style={style}>
+<div class="stack" data-direction={direction} style={style} {...rest}>
   {@render children?.()}
 </div>

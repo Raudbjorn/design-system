@@ -4,12 +4,13 @@
 -->
 <script lang="ts">
   import type { Snippet } from "svelte";
+  import type { HTMLAttributes } from "svelte/elements";
 
   type Gap = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12;
 
   const GAPS: Gap[] = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12];
 
-  interface Props {
+  interface Props extends HTMLAttributes<HTMLDivElement> {
     /** Number of grid columns, clamped to 1..6. */
     columns?: number;
     /** Gap size, mapped to --carter-space-{gap}. */
@@ -20,7 +21,7 @@
     children?: Snippet;
   }
 
-  let { columns = 1, gap = 5, padded = true, children }: Props = $props();
+  let { columns = 1, gap = 5, padded = true, children, ...rest }: Props = $props();
 
   const safeColumns = $derived(Math.min(6, Math.max(1, Math.round(columns) || 1)));
   const safeGap = $derived(GAPS.includes(gap) ? gap : 5);
@@ -30,6 +31,7 @@
   class="desk carter-grain"
   class:desk--padded={padded}
   style={`grid-template-columns: repeat(${safeColumns}, 1fr); gap: var(--carter-space-${safeGap})`}
+  {...rest}
 >
   {@render children?.()}
 </div>
