@@ -15,7 +15,7 @@
 
   // Extends button attributes so consumers can pass id/class/aria-*/data-*/…
   // typed passthrough (…rest). href switches the render to an <a>.
-  interface Props extends Omit<HTMLButtonAttributes, "type"> {
+  interface Props extends Omit<HTMLButtonAttributes, "type" | "onclick"> {
     /** Visual weight / intent. */
     variant?: Variant;
     /** Control size. */
@@ -26,6 +26,13 @@
     loading?: boolean;
     /** Native button type when rendering a <button>. */
     type?: "button" | "submit" | "reset";
+    /**
+     * Click handler. Typed as a plain `MouseEvent` handler (not the native
+     * element-specific `EventHandler`) because this component renders as
+     * either <a> or <button> depending on `href`, so `currentTarget` can't
+     * be pinned to a single element type.
+     */
+    onclick?: (event: MouseEvent) => void;
     /** Label content. */
     children?: Snippet;
   }

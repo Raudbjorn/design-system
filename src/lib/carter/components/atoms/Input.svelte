@@ -20,6 +20,12 @@
     hint?: string;
     /** Marks the field as invalid; recolors the rule and hint. */
     invalid?: boolean;
+    /** Disable the control. */
+    disabled?: boolean;
+    /** Make the control read-only. */
+    readonly?: boolean;
+    /** Mark the control required. */
+    required?: boolean;
     /** Element id; auto-generated and stable across SSR when omitted. */
     id?: string;
   }
@@ -33,16 +39,39 @@
     type = "text",
     hint,
     invalid = false,
-    id = `carter-input-${uid}`
+    disabled,
+    readonly,
+    required,
+    id = `carter-input-${uid}`,
+    ...rest
   }: Props = $props();
 </script>
 
 <div class="field">
   <label class="carter-label" for={id}>{label}</label>
   {#if type === "textarea"}
-    <textarea {id} {placeholder} aria-invalid={invalid ? "true" : undefined} bind:value></textarea>
+    <textarea
+      {id}
+      {placeholder}
+      {disabled}
+      {readonly}
+      {required}
+      aria-invalid={invalid ? "true" : undefined}
+      bind:value
+      {...rest}
+    ></textarea>
   {:else}
-    <input {id} {type} {placeholder} aria-invalid={invalid ? "true" : undefined} bind:value />
+    <input
+      {id}
+      {type}
+      {placeholder}
+      {disabled}
+      {readonly}
+      {required}
+      aria-invalid={invalid ? "true" : undefined}
+      bind:value
+      {...rest}
+    />
   {/if}
   {#if hint}
     <p class="hint" data-invalid={invalid ? "true" : undefined}>{hint}</p>

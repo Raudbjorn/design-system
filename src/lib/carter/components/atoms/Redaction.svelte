@@ -44,6 +44,7 @@
     class:open
     role="button"
     tabindex="0"
+    aria-expanded={open}
     aria-label={open ? undefined : "Redacted"}
     onmouseenter={show}
     onmouseleave={hide}

@@ -29,7 +29,7 @@
   const label = $derived(caveat ? `${level} // ${caveat}` : level);
 </script>
 
-<div class="banner" data-tone={tone} role="note" aria-label={label}>
+<div class="banner" data-tone={tone} role="note">
   <span class="rule" aria-hidden="true"></span>
   <span class="text">{label}</span>
   <span class="rule" aria-hidden="true"></span>

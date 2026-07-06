@@ -17,7 +17,9 @@
     "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
   ];
 
-  function toDate(input: Date | string | number): Date | null {
+  function toDate(input: Date | string | number | null | undefined): Date | null {
+    // Guard null/undefined/"" — new Date(null) coerces to the epoch, not NaN.
+    if (input === null || input === undefined || input === "") return null;
     const date = input instanceof Date ? input : new Date(input);
     return Number.isNaN(date.getTime()) ? null : date;
   }
