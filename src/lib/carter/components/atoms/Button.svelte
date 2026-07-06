@@ -5,87 +5,95 @@
 -->
 <script lang="ts">
   import type { Snippet } from "svelte";
-  import type {
-    HTMLButtonAttributes,
-    HTMLAnchorAttributes
-  } from "svelte/elements";
+  import type { HTMLButtonAttributes, HTMLAnchorAttributes } from "svelte/elements";
 
   type Variant = "default" | "primary" | "danger" | "ghost";
   type Size = "sm" | "md" | "lg";
 
-  // Extends button attributes so consumers can pass id/class/aria-*/data-*/…
-  // typed passthrough (…rest). href switches the render to an <a>.
-  interface Props extends Omit<HTMLButtonAttributes, "type" | "onclick"> {
+  interface SharedProps {
     /** Visual weight / intent. */
     variant?: Variant;
     /** Control size. */
     size?: Size;
-    /** Render an anchor instead of a button. */
-    href?: string;
+    /** Disable the control (buttons only; anchors get aria-disabled instead). */
+    disabled?: boolean;
     /** Show a busy state; sets aria-busy and blocks activation. */
     loading?: boolean;
-    /** Native button type when rendering a <button>. */
-    type?: "button" | "submit" | "reset";
     /**
-     * Click handler. Typed as a plain `MouseEvent` handler (not the native
-     * element-specific `EventHandler`) because this component renders as
-     * either <a> or <button> depending on `href`, so `currentTarget` can't
-     * be pinned to a single element type.
+     * Click handler. Typed as a plain `MouseEvent` because the component can
+     * render as either <a> or <button>, so currentTarget can't be pinned.
      */
     onclick?: (event: MouseEvent) => void;
     /** Label content. */
     children?: Snippet;
   }
 
-  let {
-    variant = "default",
-    size = "md",
-    href,
-    disabled = false,
-    loading = false,
-    type = "button",
-    onclick,
-    children,
-    ...rest
-  }: Props = $props();
+  // Discriminated on `href`: anchor branch gets the full native anchor attr set
+  // (target, rel, hreflang, ping, referrerpolicy, download); button branch
+  // gets the native button set (form, popovertarget, command, etc.).
+  type AnchorProps = SharedProps &
+    Omit<HTMLAnchorAttributes, "onclick" | "children" | "type"> & { href: string };
+  type ButtonProps = SharedProps &
+    Omit<HTMLButtonAttributes, "onclick" | "children"> & { href?: undefined };
 
-  const inert = $derived(disabled || loading);
+  type Props = AnchorProps | ButtonProps;
+
+  const props: Props = $props();
+
+  const inert = $derived((props.disabled ?? false) || (props.loading ?? false));
 
   function handle(event: MouseEvent) {
     if (inert) {
       event.preventDefault();
       return;
     }
-    onclick?.(event);
+    props.onclick?.(event);
   }
 </script>
 
-{#if href}
-  <a
-    class="btn"
-    data-variant={variant}
-    data-size={size}
-    href={inert ? undefined : href}
-    aria-disabled={inert ? "true" : undefined}
-    aria-busy={loading ? "true" : undefined}
-    onclick={handle}
-    {...(rest as HTMLAnchorAttributes)}
-  >
-    <span class="label">{@render children?.()}</span>
-  </a>
+{#if 'href' in props}
+{@const {
+  href,
+  children,
+  variant = "default",
+  size = "md",
+  loading = false,
+  ...rest
+} = props as AnchorProps}
+<a
+  class="btn"
+  data-variant={variant}
+  data-size={size}
+  href={inert ? undefined : href}
+  aria-disabled={inert ? "true" : undefined}
+  aria-busy={loading ? "true" : undefined}
+  onclick={handle}
+  {...rest}
+>
+  <span class="label">{@render children?.()}</span>
+</a>
 {:else}
-  <button
-    class="btn"
-    data-variant={variant}
-    data-size={size}
-    {type}
-    disabled={disabled}
-    aria-busy={loading ? "true" : undefined}
-    onclick={handle}
-    {...rest}
-  >
-    <span class="label">{@render children?.()}</span>
-  </button>
+{@const {
+  children,
+  variant = "default",
+  size = "md",
+  disabled = false,
+  loading = false,
+  type = "button",
+  ...rest
+} = props as ButtonProps}
+<button
+  class="btn"
+  data-variant={variant}
+  data-size={size}
+  {type}
+  disabled={disabled || loading}
+  aria-busy={loading ? "true" : undefined}
+  onclick={handle}
+  {...rest}
+>
+  <span class="label">{@render children?.()}</span>
+</button>
 {/if}
 
 <style>
