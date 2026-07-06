@@ -1,0 +1,125 @@
+/* ============================================================
+   CARTER — color
+   Sampled from the source covers and interior case-file pages:
+   ink on archival paper, the Delta teal of the forest art, stamp
+   amber, redaction oxblood, handler-night navy, terminal phosphor.
+
+   PRIMITIVES first (theme-independent scale), then SEMANTIC aliases
+   under each [data-carter-theme]. Components consume ONLY semantics.
+   ============================================================ */
+
+:root {
+  /* ---- Ink — typewriter black, cover shadow ---- */
+  --carter-ink-950: #0a0d0b;
+  --carter-ink-900: #0e1310;
+  --carter-ink-800: #14110f;
+  --carter-ink-700: #1c211d;
+  --carter-ink-600: #2b302a;
+
+  /* ---- Paper — archival document cream ---- */
+  --carter-paper-50:  #f4f2ec;
+  --carter-paper-100: #ecece7;
+  --carter-paper-200: #e0dccf;
+  --carter-paper-300: #cdc7b8;
+  --carter-paper-400: #b3ab98;
+
+  /* ---- Delta teal — the green of Delta Green ---- */
+  --carter-teal-900: #0c2422;
+  --carter-teal-700: #14403e;
+  --carter-teal-500: #2a6f6b;
+  --carter-teal-400: #3f8f8a;
+  --carter-teal-300: #6fb3ae;
+
+  /* ---- Amber — stamp ochre, warning light, sodium glow ---- */
+  --carter-amber-600: #a97f2c;
+  --carter-amber-500: #c79a3a;
+  --carter-amber-400: #e8b32d;
+  --carter-amber-300: #f2cf6b;
+
+  /* ---- Oxblood — redaction bleed, danger, the unnatural ---- */
+  --carter-blood-800: #3d1410;
+  --carter-blood-700: #5f2115;
+  --carter-blood-500: #984d40;
+  --carter-blood-400: #c0685a;
+
+  /* ---- Night navy — handler's after-dark ---- */
+  --carter-navy-900: #100e1a;
+  --carter-navy-800: #181624;
+  --carter-navy-600: #272b4d;
+
+  /* ---- Phosphor — X-Files CRT terminal ---- */
+  --carter-phosphor: #33ff9a;
+  --carter-phosphor-dim: #1f9d63;
+}
+
+/* ============================================================
+   THEME: field (dark — night ops, DEFAULT)
+   Applied at :root so a bare page with no data-attribute is dark.
+   ============================================================ */
+:root,
+[data-carter-theme="field"] {
+  color-scheme: dark;
+
+  --carter-bg:            var(--carter-ink-900);
+  --carter-bg-sunk:       var(--carter-ink-950);
+  --carter-surface:       var(--carter-ink-800);
+  --carter-surface-raise: var(--carter-ink-700);
+
+  --carter-text:          var(--carter-paper-100);
+  --carter-text-muted:    var(--carter-paper-400);
+  --carter-text-faint:    #857e6f;
+
+  --carter-border:        #3a3e33;
+  --carter-border-strong: #676c5b;
+
+  --carter-primary:       var(--carter-teal-500);
+  --carter-primary-ink:   var(--carter-paper-50);
+  --carter-primary-soft:  var(--carter-teal-900);
+
+  --carter-warning:       var(--carter-amber-400);
+  --carter-warning-ink:   var(--carter-ink-950);
+
+  --carter-danger:        var(--carter-blood-500);
+  --carter-danger-ink:    var(--carter-paper-50);
+
+  --carter-classified:    var(--carter-ink-950);
+  --carter-classified-ink: var(--carter-paper-50);
+  --carter-stamp:         var(--carter-blood-400);
+  --carter-link:          var(--carter-amber-300);
+  --carter-focus:         var(--carter-amber-400);
+}
+
+/* ============================================================
+   THEME: dossier (light — paper case file)
+   ============================================================ */
+[data-carter-theme="dossier"] {
+  color-scheme: light;
+
+  --carter-bg:            var(--carter-paper-100);
+  --carter-bg-sunk:       var(--carter-paper-200);
+  --carter-surface:       var(--carter-paper-50);
+  --carter-surface-raise: #fbfaf5;
+
+  --carter-text:          var(--carter-ink-800);
+  --carter-text-muted:    #514d43;
+  --carter-text-faint:    #7a7365;
+
+  --carter-border:        #c3bca9;
+  --carter-border-strong: #857d6c;
+
+  --carter-primary:       var(--carter-teal-700);
+  --carter-primary-ink:   var(--carter-paper-50);
+  --carter-primary-soft:  #d5ddd7;
+
+  --carter-warning:       var(--carter-amber-600);
+  --carter-warning-ink:   var(--carter-ink-950);
+
+  --carter-danger:        var(--carter-blood-700);
+  --carter-danger-ink:    var(--carter-paper-50);
+
+  --carter-classified:    var(--carter-ink-900);
+  --carter-classified-ink: var(--carter-paper-50);
+  --carter-stamp:         var(--carter-blood-700);
+  --carter-link:          var(--carter-blood-700);
+  --carter-focus:         var(--carter-blood-700);
+}

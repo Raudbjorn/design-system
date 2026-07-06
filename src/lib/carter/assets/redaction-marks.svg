@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CARTER — redaction bar variants with uneven ink ends (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <symbol id="redaction-bar" viewBox="0 0 120 16" preserveAspectRatio="none">
+      <path d="M2 3 118 2 119 13 3 14Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="redaction-heavy" viewBox="0 0 120 16" preserveAspectRatio="none">
+      <rect x="1" y="1" width="118" height="14" fill="currentColor"/>
+      <path d="M1 8 119 8" stroke="#000" stroke-opacity="0.25" stroke-width="2"/>
+    </symbol>
+    <symbol id="redaction-scribble" viewBox="0 0 120 16" preserveAspectRatio="none">
+      <path d="M2 8 118 8" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+      <path d="M6 4 116 4M4 12 114 12" stroke="currentColor" stroke-width="3" stroke-opacity="0.7"/>
+    </symbol>
+  </defs>
+</svg>

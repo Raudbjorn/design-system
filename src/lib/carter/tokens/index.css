@@ -1,0 +1,22 @@
+/* ============================================================
+   CARTER — token entry point
+   A modern-mystery / cosmic-horror design system distilled from
+   Delta Green case files. Named for Chris Carter (The X-Files).
+
+   Two-tier tokens: PRIMITIVES (raw scale values) resolve to
+   SEMANTIC aliases per theme. Components MUST consume the semantic
+   layer only (--carter-bg, --carter-primary, --carter-text, …) so a
+   future re-palette edits one block, never the components.
+
+   Two runtime themes on [data-carter-theme]:
+     field   — night ops (dark, default)
+     dossier — paper case file (light)
+
+   Import order matters: colors → fonts → scale → typography → effects.
+   This file resolves to the package export `./styles.css`.
+   ============================================================ */
+@import "./colors.css";
+@import "./fonts.css";
+@import "./scale.css";
+@import "./typography.css";
+@import "./effects.css";

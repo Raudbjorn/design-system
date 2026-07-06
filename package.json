@@ -56,7 +56,13 @@
       "svelte": "./dist/vermis/index.js",
       "default": "./dist/vermis/index.js"
     },
-    "./vermis/styles.css": "./dist/vermis/tokens/index.css"
+    "./vermis/styles.css": "./dist/vermis/tokens/index.css",
+    "./carter": {
+      "types": "./dist/carter/index.d.ts",
+      "svelte": "./dist/carter/index.js",
+      "default": "./dist/carter/index.js"
+    },
+    "./carter/styles.css": "./dist/carter/tokens/index.css"
   },
   "scripts": {
     "dev": "vite dev",
