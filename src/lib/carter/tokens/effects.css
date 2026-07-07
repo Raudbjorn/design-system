@@ -11,6 +11,9 @@
   --carter-scanline-opacity: 0.28;
   --carter-tape-opacity: 0.55;
   --carter-photo-rotate: -1.5deg;
+  --carter-dur-fast: 90ms;
+  --carter-dur-medium: 180ms;
+  --carter-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Redaction bar — blacked-out span; the truth is still under there. */
