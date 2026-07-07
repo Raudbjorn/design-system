@@ -5,29 +5,24 @@
   switches the rule and hint to --carter-danger.
 -->
 <script lang="ts">
+  import type { HTMLInputAttributes, HTMLTextareaAttributes } from "svelte/elements";
+
   type Type = "text" | "email" | "number" | "password" | "search" | "textarea";
 
-  interface Props {
+  // Extends input attributes (a superset that also covers <textarea>) so
+  // consumers can pass id/class/aria-*/data-*/… typed passthrough (…rest).
+  // `type="textarea"` switches the render to a multi-line field.
+  interface Props extends Omit<HTMLInputAttributes, "type" | "value"> {
     /** Field label, always visible above the control. */
     label: string;
     /** Bindable field value. */
     value?: string;
-    /** Placeholder text. */
-    placeholder?: string;
     /** Control type; "textarea" renders a multi-line field. */
     type?: Type;
     /** Helper text rendered below the control. */
     hint?: string;
     /** Marks the field as invalid; recolors the rule and hint. */
     invalid?: boolean;
-    /** Disable the control. */
-    disabled?: boolean;
-    /** Make the control read-only. */
-    readonly?: boolean;
-    /** Mark the control required. */
-    required?: boolean;
-    /** Element id; auto-generated and stable across SSR when omitted. */
-    id?: string;
   }
 
   const uid = $props.id();
@@ -45,8 +40,10 @@
     id = `carter-input-${uid}`,
     ...rest
   }: Props = $props();
-</script>
 
+  const hintId = $derived(hint ? `${id}-hint` : undefined);
+  const describedBy = $derived(hint ? hintId : undefined);
+</script>
 <div class="field">
   <label class="carter-label" for={id}>{label}</label>
   {#if type === "textarea"}
@@ -57,8 +54,9 @@
       {readonly}
       {required}
       aria-invalid={invalid ? "true" : undefined}
+      aria-describedby={describedBy}
       bind:value
-      {...rest}
+      {...rest as unknown as HTMLTextareaAttributes}
     ></textarea>
   {:else}
     <input
@@ -69,12 +67,13 @@
       {readonly}
       {required}
       aria-invalid={invalid ? "true" : undefined}
+      aria-describedby={describedBy}
       bind:value
       {...rest}
     />
   {/if}
   {#if hint}
-    <p class="hint" data-invalid={invalid ? "true" : undefined}>{hint}</p>
+    <p id={hintId} class="hint" data-invalid={invalid ? "true" : undefined}>{hint}</p>
   {/if}
 </div>
 
