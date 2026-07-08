@@ -13,7 +13,9 @@ describe('Tooltip', () => {
     if (!trigger) throw new Error('tooltip trigger missing');
     await fireEvent.mouseEnter(trigger);
     const el = container.querySelector('[data-sv="tooltip"]');
+    const button = container.querySelector('button');
     expect(el).toHaveAttribute('role', 'tooltip');
     expect(el).toHaveTextContent('Hi');
+    expect(button).toHaveAttribute('aria-describedby', el?.id);
   });
 });

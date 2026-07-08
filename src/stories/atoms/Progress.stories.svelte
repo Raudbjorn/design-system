@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { Progress, Stack } from '../../lib/index';
+  import { Progress } from '../../lib/index';
 
   const { Story } = defineMeta({
     title: 'Atoms/Progress',

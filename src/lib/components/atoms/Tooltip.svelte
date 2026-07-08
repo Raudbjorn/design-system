@@ -1,3 +1,7 @@
+<script module lang="ts">
+  let _tooltipUid = 0;
+</script>
+
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
@@ -9,10 +13,39 @@
 
   let { content, placement = 'top', children }: Props = $props();
 
+  const tooltipId = `sv-tooltip-${++_tooltipUid}`;
   let open = $state(false);
+  let wrapEl = $state<HTMLElement | null>(null);
+
+  $effect(() => {
+    const trigger = wrapEl?.firstElementChild;
+    if (!(trigger instanceof HTMLElement)) return;
+
+    const currentIds = (trigger.getAttribute('aria-describedby') ?? '')
+      .split(/\s+/)
+      .filter(Boolean)
+      .filter((id) => id !== tooltipId);
+
+    if (open) {
+      currentIds.push(tooltipId);
+      trigger.setAttribute('aria-describedby', currentIds.join(' '));
+      return () => {
+        const nextIds = (trigger.getAttribute('aria-describedby') ?? '')
+          .split(/\s+/)
+          .filter(Boolean)
+          .filter((id) => id !== tooltipId);
+        if (nextIds.length > 0) trigger.setAttribute('aria-describedby', nextIds.join(' '));
+        else trigger.removeAttribute('aria-describedby');
+      };
+    }
+
+    if (currentIds.length > 0) trigger.setAttribute('aria-describedby', currentIds.join(' '));
+    else trigger.removeAttribute('aria-describedby');
+  });
 </script>
 
 <span
+  bind:this={wrapEl}
   data-sv="tooltip-wrap"
   onmouseenter={() => (open = true)}
   onmouseleave={() => (open = false)}
@@ -22,6 +55,7 @@
   {@render children()}
   {#if open}
     <span
+      id={tooltipId}
       data-sv="tooltip"
       data-placement={placement}
       data-open={open}

@@ -21,7 +21,8 @@
     children
   }: Props = $props();
 
-  const labelId = $derived(children ? (id ? `${id}-label` : `sv-switch-label-${++_switchUid}`) : undefined);
+  const generatedLabelId = `sv-switch-label-${++_switchUid}`;
+  const labelId = $derived(children ? (id ? `${id}-label` : generatedLabelId) : undefined);
 
   function toggle() {
     if (disabled) return;

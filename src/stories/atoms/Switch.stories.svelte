@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { Switch, Stack } from '../../lib/index';
+  import { Switch } from '../../lib/index';
 
   const { Story } = defineMeta({
     title: 'Atoms/Switch',
