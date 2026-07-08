@@ -263,3 +263,166 @@ export interface Vernacular {
   codeBlock?: Pick<CodeBlockProps, 'copyLabel' | 'copiedLabel' | 'copyAriaLabel'>;
   navBar?: Pick<NavBarProps, 'navLabel' | 'menuLabel'>;
 }
+
+/** Labelled text field with hint + error states. */
+export interface InputProps {
+  value?: string;
+  id?: string;
+  label?: string;
+  hint?: string;
+  /** String message (shown) or boolean flag; either turns the border red. */
+  error?: string | boolean;
+  placeholder?: string;
+  type?: 'text' | 'email' | 'password' | 'search';
+  mono?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
+  oninput?: (e: Event) => void;
+}
+export declare const Input: React.FC<InputProps>;
+
+/** Native select restyled to the token surface. */
+export interface SelectProps {
+  value?: string;
+  options: { value: string; label: string }[];
+  id?: string;
+  label?: string;
+  disabled?: boolean;
+  onchange?: (e: Event) => void;
+}
+export declare const Select: React.FC<SelectProps>;
+
+/** Soft-fill checkbox. `disabled` renders the coral unavailable state. */
+export interface CheckboxProps {
+  checked?: boolean;
+  disabled?: boolean;
+  id?: string;
+  onchange?: (checked: boolean) => void;
+  children?: React.ReactNode;
+}
+export declare const Checkbox: React.FC<CheckboxProps>;
+
+/** Radio option. Group via a shared `name`; `group` holds the selected value. */
+export interface RadioProps {
+  group?: string;
+  value: string;
+  name: string;
+  disabled?: boolean;
+  id?: string;
+  onchange?: (value: string) => void;
+  children?: React.ReactNode;
+}
+export declare const Radio: React.FC<RadioProps>;
+
+/** Binary toggle; accent fills the track when on. */
+export interface SwitchProps {
+  checked?: boolean;
+  disabled?: boolean;
+  id?: string;
+  onchange?: (checked: boolean) => void;
+  children?: React.ReactNode;
+}
+export declare const Switch: React.FC<SwitchProps>;
+
+/** Inline message; `info` maps to accent, the rest to semantic tokens. */
+export interface AlertProps {
+  tone?: 'info' | 'success' | 'warning' | 'error';
+  title?: string;
+  icon?: string;
+  children: React.ReactNode;
+}
+export declare const Alert: React.FC<AlertProps>;
+
+/** Hover/focus tooltip over a trigger. */
+export interface TooltipProps {
+  content: string;
+  placement?: 'top' | 'bottom';
+  children: React.ReactNode;
+}
+export declare const Tooltip: React.FC<TooltipProps>;
+
+/** Indeterminate activity spinner. */
+export interface SpinnerProps {
+  size?: 'sm' | 'md' | 'lg';
+  label?: string;
+}
+export declare const Spinner: React.FC<SpinnerProps>;
+
+/** Determinate or indeterminate progress bar. */
+export interface ProgressProps {
+  value?: number;
+  indeterminate?: boolean;
+  tone?: 'accent' | 'accent-2';
+  label?: string;
+}
+export declare const Progress: React.FC<ProgressProps>;
+
+/** Underline tablist (controlled via value). Consumer renders the panel. */
+export interface TabsProps {
+  tabs: { id: string; label: string }[];
+  value?: string;
+  onchange?: (id: string) => void;
+}
+export declare const Tabs: React.FC<TabsProps>;
+
+/** Data table with a surface-2 header band. */
+export interface TableColumn {
+  key: string;
+  header: string;
+  width?: string;
+  align?: 'left' | 'right' | 'center';
+  mono?: boolean;
+}
+export interface TableProps {
+  columns: TableColumn[];
+  rows: Record<string, unknown>[];
+  /** Rich-cell renderer; receives the row, column, and resolved value. */
+  cell?: (args: { row: Record<string, unknown>; column: TableColumn; value: unknown }) => React.ReactNode;
+}
+export declare const Table: React.FC<TableProps>;
+
+/** Vertical timeline; alternate is the locked default in product use. */
+export interface TimelineItem {
+  content: string;
+  title?: string;
+  color?: 'accent' | 'success' | 'warning' | 'error' | 'accent-2' | string;
+  loading?: boolean;
+  placement?: 'start' | 'end';
+}
+export interface TimelineProps {
+  items: TimelineItem[];
+  mode?: 'start' | 'alternate' | 'end';
+  variant?: 'filled' | 'outlined';
+  reverse?: boolean;
+}
+export declare const Timeline: React.FC<TimelineProps>;
+
+/** Skewed-block breadcrumb; last item is the current page. */
+export interface BreadcrumbProps {
+  items: { label: string; href?: string }[];
+  'aria-label'?: string;
+}
+export declare const Breadcrumb: React.FC<BreadcrumbProps>;
+
+/** Center modal dialog. */
+export interface ModalProps {
+  open?: boolean;
+  title?: string;
+  footer?: React.ReactNode;
+  children: React.ReactNode;
+  closeOnScrim?: boolean;
+  onclose?: () => void;
+}
+export declare const Modal: React.FC<ModalProps>;
+
+/** Edge drawer over a blurred scrim (right | left). */
+export interface SheetProps {
+  open?: boolean;
+  placement?: 'right' | 'left';
+  title?: string;
+  footer?: React.ReactNode;
+  children: React.ReactNode;
+  closeOnScrim?: boolean;
+  onclose?: () => void;
+}
+export declare const Sheet: React.FC<SheetProps>;

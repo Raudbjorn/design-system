@@ -3,7 +3,7 @@
 [![Covered by Argos Visual Testing](https://argos-ci.com/badge.svg)](https://app.argos-ci.com/argos-ci-2/design-system/reference)
 
 A dark-first, developer-native **Svelte 5** component library — design tokens,
-self-hosted fonts, and 13 components. Restrained by design: one primary accent
+self-hosted fonts, and 28 components. Restrained by design: one primary accent
 (teal `#4ec9b0`), one secondary (coral `#e06c75`), a near-black neutral ramp,
 and a first-class syntax-highlighted `CodeBlock`.
 

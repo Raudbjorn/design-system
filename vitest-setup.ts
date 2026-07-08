@@ -31,3 +31,14 @@ Object.defineProperty(globalThis, 'localStorage', {
   configurable: true,
   value: new MemoryStorage()
 });
+
+// jsdom lacks the Web Animations API; svelte/transition calls Element.animate.
+// A no-op keeps transition-bearing components (Modal, Sheet) unit-testable.
+if (typeof Element !== 'undefined' && !Element.prototype.animate) {
+  Element.prototype.animate = () =>
+    ({
+      cancel() {}, finish() {}, play() {}, pause() {}, reverse() {},
+      finished: Promise.resolve(), onfinish: null, oncancel: null,
+      currentTime: 0, playState: 'finished'
+    }) as unknown as Animation;
+}

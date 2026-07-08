@@ -3,19 +3,34 @@
 // exposes each behind the wrap() adapter. Snippet-prop lists mirror each
 // component's Props interface exactly.
 import {
+  Alert as SvAlert,
   Avatar as SvAvatar,
   Badge as SvBadge,
+  Breadcrumb as SvBreadcrumb,
   Button as SvButton,
   Card as SvCard,
+  Checkbox as SvCheckbox,
   CodeBlock as SvCodeBlock,
   Heading as SvHeading,
   Icon as SvIcon,
+  Input as SvInput,
   Kbd as SvKbd,
   Link as SvLink,
+  Modal as SvModal,
   NavBar as SvNavBar,
+  Progress as SvProgress,
+  Radio as SvRadio,
+  Select as SvSelect,
+  Sheet as SvSheet,
+  Spinner as SvSpinner,
   Stack as SvStack,
   StatCard as SvStatCard,
+  Switch as SvSwitch,
+  Table as SvTable,
+  Tabs as SvTabs,
   Text as SvText,
+  Timeline as SvTimeline,
+  Tooltip as SvTooltip,
 } from '../../dist/index.js';
 import { wrap } from './wrap.js';
 
@@ -34,6 +49,22 @@ export const Card = wrap('Card', SvCard, ['children', 'header', 'footer']);
 export const CodeBlock = wrap('CodeBlock', SvCodeBlock, []);
 export const NavBar = wrap('NavBar', SvNavBar, ['children', 'brand']);
 export const StatCard = wrap('StatCard', SvStatCard, []);
+
+export const Input = wrap('Input', SvInput, []);
+export const Select = wrap('Select', SvSelect, []);
+export const Checkbox = wrap('Checkbox', SvCheckbox, ['children']);
+export const Radio = wrap('Radio', SvRadio, ['children']);
+export const Switch = wrap('Switch', SvSwitch, ['children']);
+export const Alert = wrap('Alert', SvAlert, ['children']);
+export const Tooltip = wrap('Tooltip', SvTooltip, ['children']);
+export const Spinner = wrap('Spinner', SvSpinner, []);
+export const Progress = wrap('Progress', SvProgress, []);
+export const Tabs = wrap('Tabs', SvTabs, []);
+export const Table = wrap('Table', SvTable, ['cell']);
+export const Timeline = wrap('Timeline', SvTimeline, []);
+export const Breadcrumb = wrap('Breadcrumb', SvBreadcrumb, []);
+export const Modal = wrap('Modal', SvModal, ['children', 'footer']);
+export const Sheet = wrap('Sheet', SvSheet, ['children', 'footer']);
 
 // Theme-as-data spine — pure pass-through of the library's real compiled
 // theme API (plain functions and palette data; nothing to wrap).

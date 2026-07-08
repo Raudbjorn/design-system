@@ -12,6 +12,27 @@ export { default as CodeBlock } from './components/molecules/CodeBlock.svelte';
 export { default as NavBar } from './components/molecules/NavBar.svelte';
 export { default as StatCard } from './components/molecules/StatCard.svelte';
 
+// Forms
+export { default as Input } from './components/atoms/Input.svelte';
+export { default as Select } from './components/atoms/Select.svelte';
+export { default as Checkbox } from './components/atoms/Checkbox.svelte';
+export { default as Radio } from './components/atoms/Radio.svelte';
+export { default as Switch } from './components/atoms/Switch.svelte';
+
+// Feedback
+export { default as Alert } from './components/atoms/Alert.svelte';
+export { default as Tooltip } from './components/atoms/Tooltip.svelte';
+export { default as Spinner } from './components/atoms/Spinner.svelte';
+export { default as Progress } from './components/atoms/Progress.svelte';
+
+// Navigation / data
+export { default as Tabs } from './components/molecules/Tabs.svelte';
+export { default as Table } from './components/molecules/Table.svelte';
+export { default as Timeline } from './components/molecules/Timeline.svelte';
+export { default as Breadcrumb } from './components/molecules/Breadcrumb.svelte';
+export { default as Modal } from './components/molecules/Modal.svelte';
+export { default as Sheet } from './components/molecules/Sheet.svelte';
+
 export { applyTheme, contrastGates, defineTheme, swapTheme, themeCss } from './theme/theme.js';
 export type {
   ApplyThemeOptions,

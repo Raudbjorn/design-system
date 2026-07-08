@@ -31,9 +31,11 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
     const hostRef = React.useRef(null);
     const st = React.useRef(null);
     if (!st.current) {
-      st.current = { containers: new Map(), snippets: new Map(), app: null, bag: null, last: null };
+      st.current = { containers: new Map(), snippets: new Map(), app: null, bag: null, last: null, cells: new Map(), cellSeq: 0, cellFns: {} };
     }
     const s = st.current;
+    const [, forceRender] = React.useReducer((x) => x + 1, 0);
+    s.cellFns = {};
 
     const svelteProps = {};
     const portals = [];
@@ -51,6 +53,34 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
     for (const k of snippetProps) {
       const node = props[k];
       if (node == null || node === false) continue;
+
+      if (typeof node === 'function') {
+        // Parameterized snippet (React render-prop). Each Svelte {@render k(arg)}
+        // gets its own container + portal; args flow through Svelte 5 getters.
+        s.cellFns[k] = node;
+        let snip = s.snippets.get(k);
+        if (!snip) {
+          snip = createRawSnippet((argGetter) => {
+            const id = ++s.cellSeq;
+            return {
+              render: () => '<ds-slot style="display:contents"></ds-slot>',
+              setup(target) {
+                s.cells.set(id, { el: target, get: argGetter, prop: k });
+                queueMicrotask(forceRender);
+                return () => {
+                  s.cells.delete(id);
+                  queueMicrotask(forceRender);
+                };
+              },
+            };
+          });
+          s.snippets.set(k, snip);
+        }
+        svelteProps[k] = snip;
+        continue;
+      }
+
+      // --- existing static-portal path (unchanged) ---
       let el = s.containers.get(k);
       if (!el) {
         el = document.createElement('ds-slot');
@@ -63,9 +93,7 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
           render: () => '<ds-slot style="display:contents"></ds-slot>',
           setup(target) {
             target.appendChild(el);
-            return () => {
-              if (el.parentNode === target) target.removeChild(el);
-            };
+            return () => { if (el.parentNode === target) target.removeChild(el); };
           },
         }));
         s.snippets.set(k, snip);
@@ -94,11 +122,17 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
       }
     });
 
+    const cellPortals = [];
+    for (const [id, c] of s.cells) {
+      const fn = s.cellFns[c.prop];
+      if (fn) cellPortals.push(ReactDOM.createPortal(fn(c.get()), c.el, `ds-cell-${id}`));
+    }
     return React.createElement(
       React.Fragment,
       null,
       React.createElement('ds-host', { ref: hostRef, style: { display: 'contents' } }),
       portals,
+      cellPortals,
     );
   }
   Wrapper.displayName = name;
