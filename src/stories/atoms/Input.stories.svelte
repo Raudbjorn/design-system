@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { Input, Stack } from '../../lib/index';
+  import { Input } from '../../lib/index';
 
   const { Story } = defineMeta({
     title: 'Atoms/Input',
