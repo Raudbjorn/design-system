@@ -408,6 +408,7 @@ export declare const Breadcrumb: React.FC<BreadcrumbProps>;
 export interface ModalProps {
   open?: boolean;
   title?: string;
+  'aria-label'?: string;
   footer?: React.ReactNode;
   children: React.ReactNode;
   closeOnScrim?: boolean;
@@ -420,6 +421,7 @@ export interface SheetProps {
   open?: boolean;
   placement?: 'right' | 'left';
   title?: string;
+  'aria-label'?: string;
   footer?: React.ReactNode;
   children: React.ReactNode;
   closeOnScrim?: boolean;

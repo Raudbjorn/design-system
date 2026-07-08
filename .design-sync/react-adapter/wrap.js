@@ -31,11 +31,27 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
     const hostRef = React.useRef(null);
     const st = React.useRef(null);
     if (!st.current) {
-      st.current = { containers: new Map(), snippets: new Map(), app: null, bag: null, last: null, cells: new Map(), cellSeq: 0, cellFns: {} };
+      st.current = {
+        containers: new Map(),
+        snippets: new Map(),
+        app: null,
+        bag: null,
+        last: null,
+        cells: new Map(),
+        cellSeq: 0,
+        cellFns: {},
+        mounted: false,
+      };
     }
     const s = st.current;
     const [, forceRender] = React.useReducer((x) => x + 1, 0);
     s.cellFns = {};
+
+    const scheduleRender = () => {
+      queueMicrotask(() => {
+        if (s.mounted) forceRender();
+      });
+    };
 
     const svelteProps = {};
     const portals = [];
@@ -43,12 +59,20 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
       if (snippetProps.includes(k)) continue;
       svelteProps[k] = v;
     }
-    // Forgiving alias: React muscle memory writes onClick; the real Svelte 5
-    // prop is onclick. Documented API stays onclick — this only prevents a
-    // silently dead handler.
-    if (svelteProps['onClick'] && !svelteProps['onclick']) {
-      svelteProps['onclick'] = svelteProps['onClick'];
-      delete svelteProps['onClick'];
+    // Forgiving aliases: React muscle memory writes camelCase event props; the
+    // real Svelte 5 props stay lowercase. Documented API stays lowercase —
+    // this only prevents silently dead handlers.
+    const eventAliases = {
+      onClick: 'onclick',
+      onChange: 'onchange',
+      onInput: 'oninput',
+      onClose: 'onclose',
+    };
+    for (const [reactName, svelteName] of Object.entries(eventAliases)) {
+      if (svelteProps[reactName] && !svelteProps[svelteName]) {
+        svelteProps[svelteName] = svelteProps[reactName];
+        delete svelteProps[reactName];
+      }
     }
     for (const k of snippetProps) {
       const node = props[k];
@@ -66,10 +90,10 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
               render: () => '<ds-slot style="display:contents"></ds-slot>',
               setup(target) {
                 s.cells.set(id, { el: target, get: argGetter, prop: k });
-                queueMicrotask(forceRender);
+                scheduleRender();
                 return () => {
                   s.cells.delete(id);
-                  queueMicrotask(forceRender);
+                  scheduleRender();
                 };
               },
             };
@@ -93,7 +117,9 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
           render: () => '<ds-slot style="display:contents"></ds-slot>',
           setup(target) {
             target.appendChild(el);
-            return () => { if (el.parentNode === target) target.removeChild(el); };
+            return () => {
+              if (el.parentNode === target) target.removeChild(el);
+            };
           },
         }));
         s.snippets.set(k, snip);
@@ -103,10 +129,12 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
     }
 
     React.useLayoutEffect(() => {
+      s.mounted = true;
       s.bag = createBag(svelteProps);
       s.last = svelteProps;
       s.app = mount(Host, { target: hostRef.current, props: { component: SvelteComponent, bag: s.bag } });
       return () => {
+        s.mounted = false;
         const app = s.app;
         s.app = null;
         s.bag = null;
@@ -125,7 +153,10 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
     const cellPortals = [];
     for (const [id, c] of s.cells) {
       const fn = s.cellFns[c.prop];
-      if (fn) cellPortals.push(ReactDOM.createPortal(fn(c.get()), c.el, `ds-cell-${id}`));
+      if (fn) {
+        const args = typeof c.get === 'function' ? c.get() : undefined;
+        cellPortals.push(ReactDOM.createPortal(fn(args), c.el, `ds-cell-${id}`));
+      }
     }
     return React.createElement(
       React.Fragment,

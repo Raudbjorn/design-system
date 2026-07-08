@@ -76,6 +76,7 @@
       type="button"
       data-sv="card-trigger"
       aria-expanded={open}
+      aria-label={heading ? undefined : 'Toggle details'}
       onclick={toggle}
     >
       {#if heading}<span data-sv="card-heading">{@render heading()}</span>{/if}

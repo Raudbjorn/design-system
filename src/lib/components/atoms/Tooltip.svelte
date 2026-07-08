@@ -20,15 +20,17 @@
   onfocusout={() => (open = false)}
 >
   {@render children()}
-  <span
-    data-sv="tooltip"
-    data-placement={placement}
-    data-open={open}
-    role="tooltip"
-  >
-    {content}
-    <span data-sv="tooltip-arrow" aria-hidden="true"></span>
-  </span>
+  {#if open}
+    <span
+      data-sv="tooltip"
+      data-placement={placement}
+      data-open={open}
+      role="tooltip"
+    >
+      {content}
+      <span data-sv="tooltip-arrow" aria-hidden="true"></span>
+    </span>
+  {/if}
 </span>
 
 <style>

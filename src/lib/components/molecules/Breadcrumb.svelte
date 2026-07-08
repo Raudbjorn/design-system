@@ -21,10 +21,14 @@
           <span data-sv="crumb" data-current="true" aria-current="page">
             <span data-sv="crumb-label">{crumb.label}</span>
           </span>
-        {:else}
-          <a data-sv="crumb" href={crumb.href ?? '#'}>
+        {:else if crumb.href}
+          <a data-sv="crumb" href={crumb.href}>
             <span data-sv="crumb-label">{crumb.label}</span>
           </a>
+        {:else}
+          <span data-sv="crumb">
+            <span data-sv="crumb-label">{crumb.label}</span>
+          </span>
         {/if}
       </li>
     {/each}

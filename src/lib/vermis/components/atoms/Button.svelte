@@ -31,19 +31,21 @@
     onclick,
     children
   }: Props = $props();
+
+  const inert = $derived(disabled || loading);
 </script>
 
 {#if href}
   <a
-    href={disabled ? undefined : href}
+    href={inert ? undefined : href}
     data-sv="button"
     data-variant={variant}
     data-size={size}
-    aria-disabled={disabled || undefined}
+    aria-disabled={inert || undefined}
     aria-busy={loading || undefined}
-    tabindex={disabled ? -1 : undefined}
+    tabindex={inert ? -1 : undefined}
     onclick={(e) => {
-      if (disabled) {
+      if (inert) {
         e.preventDefault();
         return;
       }
@@ -58,7 +60,7 @@
     data-sv="button"
     data-variant={variant}
     data-size={size}
-    disabled={disabled || loading}
+    disabled={inert}
     aria-busy={loading || undefined}
     {onclick}
   >

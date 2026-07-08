@@ -91,6 +91,8 @@
 
   /* Document-tier Pattern 32: palette registers */
   --layform-register-body: var(--layform-parchment-1);      /* body/interior register */
+  --layform-register-panel: var(--layform-parchment-2);     /* inset/photo/supporting panel register */
+  --layform-register-rule: var(--layform-parchment-3);      /* separators / low-emphasis ruled edges */
   --layform-register-threshold: var(--layform-ink-1);       /* cover/section-opener register */
 
   /* Element-tier Pattern 85: near-black ink vs. background role split */
@@ -99,6 +101,7 @@
 
   /* Element-tier Pattern 81/83: primary accent (property-bound, size-aware) */
   --layform-accent: var(--layform-accent-primary-1);       /* full-saturation, small-element default */
+  --layform-accent-detail: var(--layform-accent-primary-3);/* caption/detail border emphasis */
   --layform-accent-large: var(--layform-accent-primary-4); /* attenuated step for large-area fills — swapped from -primary-2, see CONTRAST.md */
 
   /* Element-tier Pattern 87: secondary (subordinate, nested-context-only) accent */

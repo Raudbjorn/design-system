@@ -156,9 +156,11 @@ Non-goals confirmed by the same pass:
 
 ## Components
 
-**Atoms:** Text, Heading, Button, Link, Badge, Icon, Kbd, Avatar
+**Atoms:** Text, Heading, Button, Link, Badge, Icon, Kbd, Avatar, Input, Select,
+Checkbox, Radio, Switch, Alert, Tooltip, Spinner, Progress
 **Layout:** Stack
-**Molecules:** Card, CodeBlock, NavBar, StatCard
+**Molecules:** Card, CodeBlock, NavBar, StatCard, Tabs, Table, Timeline,
+Breadcrumb, Modal, Sheet
 
 `CodeBlock` renders **pre-tokenized** highlight HTML (from a build-time
 highlighter such as Shiki, with token classes mapping to `--sv-syn-*`); it
