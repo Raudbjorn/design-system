@@ -74,6 +74,8 @@
     border-top: 1px solid var(--sv-border);
   }
   [data-mono='true'] { font-family: var(--sv-font-mono); }
-  [data-align='right'] { text-align: right; }
-  [data-align='center'] { text-align: center; }
+  [data-sv='table'] th[data-align='right'],
+  [data-sv='table'] td[data-align='right'] { text-align: right; }
+  [data-sv='table'] th[data-align='center'],
+  [data-sv='table'] td[data-align='center'] { text-align: center; }
 </style>

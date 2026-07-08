@@ -26,9 +26,10 @@
   interface Props {
     columns: Column[];
     rows: Array<Record<string, string | number>>;
+    'aria-label'?: string;
   }
 
-  let { columns, rows }: Props = $props();
+  let { columns, rows, 'aria-label': ariaLabel = 'Data table' }: Props = $props();
 
   function cellValue(row: Record<string, string | number>, key: string): string | number {
     return row[key] ?? '';
@@ -45,7 +46,7 @@
 </script>
 
 <div data-sv="data-table">
-  <table data-sv="data-table-grid">
+  <table data-sv="data-table-grid" aria-label={ariaLabel}>
     <thead>
       <tr data-sv="data-table-header-row">
         {#each columns as column (column.key)}

@@ -27,11 +27,14 @@
     padding: var(--layform-space-1) var(--layform-space-2);
     background: var(--layform-parchment-1);
   }
+  [data-sv='form-field']:focus-within {
+    outline: var(--layform-border-thin) solid var(--layform-accent);
+    outline-offset: 2px;
+  }
   [data-sv='form-field'] :global(input),
   [data-sv='form-field'] :global(select),
   [data-sv='form-field'] :global(textarea) {
     border: none;
-    outline: none;
     background: transparent;
     font-family: var(--layform-font-reading);
     color: var(--layform-ink);

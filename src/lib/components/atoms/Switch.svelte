@@ -1,3 +1,7 @@
+<script module lang="ts">
+  let _switchUid = 0;
+</script>
+
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
@@ -17,6 +21,8 @@
     children
   }: Props = $props();
 
+  const labelId = $derived(children ? (id ? `${id}-label` : `sv-switch-label-${++_switchUid}`) : undefined);
+
   function toggle() {
     if (disabled) return;
     checked = !checked;
@@ -24,13 +30,15 @@
   }
 </script>
 
-<span data-sv="switch-row" data-disabled={disabled || undefined}>
-  {#if children}<span data-sv="switch-label">{@render children()}</span>{/if}
+<label data-sv="switch-row" data-disabled={disabled || undefined}>
+  {#if children}<span data-sv="switch-label" id={labelId}>{@render children()}</span>{/if}
   <button
     {id}
     type="button"
     role="switch"
     aria-checked={checked}
+    aria-labelledby={labelId}
+    aria-label={labelId ? undefined : 'Toggle'}
     data-sv="switch"
     data-on={checked}
     {disabled}
@@ -38,7 +46,7 @@
   >
     <span data-sv="switch-knob"></span>
   </button>
-</span>
+</label>
 
 <style>
   [data-sv='switch-row'] {

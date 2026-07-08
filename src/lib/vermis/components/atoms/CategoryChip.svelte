@@ -13,7 +13,7 @@
   let { children, pressed = false }: Props = $props();
 </script>
 
-<span data-sv="category-chip" data-pressed={pressed} aria-pressed={pressed}>
+<span data-sv="category-chip" data-pressed={pressed}>
   {@render children()}
 </span>
 

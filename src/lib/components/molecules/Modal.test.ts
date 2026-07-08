@@ -17,4 +17,13 @@ describe('Modal', () => {
     expect(modal).toHaveAttribute('aria-labelledby', titleSpan?.id);
     expect(container).toHaveTextContent('Settings');
   });
+
+  it('accepts aria-label when no title is present', () => {
+    const { container } = render(Modal, {
+      open: true,
+      'aria-label': 'Filters',
+      children: createRawSnippet(() => ({ render: () => '<span>body</span>' }))
+    });
+    expect(container.querySelector('[data-sv="modal"]')).toHaveAttribute('aria-label', 'Filters');
+  });
 });

@@ -19,4 +19,17 @@ describe('Sheet', () => {
     expect(sheet).toHaveAttribute('role', 'dialog');
     expect(sheet?.getAttribute('aria-labelledby')).toBeTruthy();
   });
+
+  it('accepts aria-label when no title is present', () => {
+    const { container } = render(Sheet, {
+      open: true,
+      placement: 'right',
+      'aria-label': 'Queue controls',
+      children: createRawSnippet(() => ({ render: () => '<span>body</span>' }))
+    });
+    expect(container.querySelector('[data-sv="sheet"]')).toHaveAttribute(
+      'aria-label',
+      'Queue controls'
+    );
+  });
 });

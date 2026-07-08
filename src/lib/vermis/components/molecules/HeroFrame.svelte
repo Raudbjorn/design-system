@@ -111,7 +111,7 @@
   [data-kind='photo'] [data-sv='hero-frame-art'] :global(img) {
     filter: sepia(0.35) saturate(1.1) contrast(1.05);
     mix-blend-mode: multiply;
-    background-color: var(--layform-parchment-2);
+    background-color: var(--layform-register-panel);
   }
 
   /* Pattern 115: single-stage, observer-gated scroll reveal */
@@ -137,8 +137,8 @@
   /* Pattern 66: caption band, border-bonded, present only when figcaption exists */
   [data-sv='hero-frame-caption'] {
     margin: 0;
-    border-block-start: var(--layform-border-medium) solid var(--layform-accent-primary-3);
-    background-color: var(--layform-parchment-1);
+    border-block-start: var(--layform-border-medium) solid var(--layform-accent-detail);
+    background-color: var(--layform-register-body);
     padding-inline: var(--layform-space-3);
     padding-block: var(--layform-space-2);
     font-family: var(--layform-font-reading);

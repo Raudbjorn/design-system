@@ -70,7 +70,7 @@
   [data-sv='framed-image-caption'] {
     margin: 0;
     border-top: var(--layform-border-medium) solid var(--frame-accent);
-    background: var(--layform-parchment-1);
+    background: var(--layform-register-body);
     padding: var(--layform-space-2) var(--layform-space-3);
     font-family: var(--layform-font-reading);
     font-weight: var(--layform-weight-reading-body);

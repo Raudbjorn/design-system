@@ -10,6 +10,7 @@
   interface Props {
     open?: boolean;
     title?: string;
+    'aria-label'?: string;
     footer?: Snippet;
     children: Snippet;
     closeOnScrim?: boolean;
@@ -19,6 +20,7 @@
   let {
     open = $bindable(false),
     title,
+    'aria-label': ariaLabel,
     footer,
     children,
     closeOnScrim = true,
@@ -53,6 +55,7 @@
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? titleId : undefined}
+      aria-label={title ? undefined : ariaLabel}
       tabindex="-1"
       use:trapFocus
       transition:fly={{ y: 8, duration: 220 }}

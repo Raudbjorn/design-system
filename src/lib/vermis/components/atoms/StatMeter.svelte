@@ -23,9 +23,10 @@
   let clamped = $derived(
     Number.isFinite(value) ? Math.min(Math.max(Math.trunc(value), 0), segments) : 0
   );
+  const ariaLabel = $derived(label ? `${label}: ${clamped} of ${segments}` : `${clamped} of ${segments}`);
 </script>
 
-<span data-sv="stat-meter" role="img" aria-label={`${label}: ${clamped} of ${segments}`}>
+<span data-sv="stat-meter" role="img" aria-label={ariaLabel}>
   {#each Array.from({ length: segments }) as _, index (index)}
     <span data-sv="stat-meter-segment" data-filled={index < clamped}></span>
   {/each}

@@ -12,6 +12,7 @@
     open?: boolean;
     placement?: 'right' | 'left';
     title?: string;
+    'aria-label'?: string;
     footer?: Snippet;
     children: Snippet;
     closeOnScrim?: boolean;
@@ -22,6 +23,7 @@
     open = $bindable(false),
     placement = 'right',
     title,
+    'aria-label': ariaLabel,
     footer,
     children,
     closeOnScrim = true,
@@ -59,6 +61,7 @@
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? titleId : undefined}
+      aria-label={title ? undefined : ariaLabel}
       tabindex="-1"
       use:trapFocus
       transition:fly={{ x: flyX, duration: 300, easing: cubicOut }}

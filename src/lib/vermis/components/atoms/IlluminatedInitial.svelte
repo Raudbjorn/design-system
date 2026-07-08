@@ -14,7 +14,7 @@
 
   // Defensive clamp to a single Unicode code point (handles surrogate-pair
   // glyphs like emoji correctly) rather than throwing on multi-char input.
-  const glyph = $derived(Array.from(firstLetter)[0] ?? '');
+  const glyph = $derived(Array.from(firstLetter ?? '')[0] ?? '');
 </script>
 
 <p data-sv="illuminated-initial">
