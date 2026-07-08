@@ -44,7 +44,7 @@
 
   /* Pattern 57: rule-separated rows, no per-row illustration or panel */
   [data-sv='nav-list'] li + li {
-    border-top: var(--layform-border-hairline) solid var(--layform-parchment-3);
+    border-top: var(--layform-border-hairline) solid var(--layform-register-rule);
   }
 
   [data-sv='nav-list-item'] {
