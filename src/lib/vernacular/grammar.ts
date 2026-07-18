@@ -41,6 +41,8 @@ const isBidi = (cp: number): boolean =>
 const isFormat = (cp: number): boolean =>
   cp === 0x200b || cp === 0x2060 || (cp >= 0x2061 && cp <= 0x2064) || cp === 0xfeff;
 
+const ONLY_DEFAULT_IGNORABLE_RE = /^\p{Default_Ignorable_Code_Point}+$/u;
+
 /**
  * Parse an untrusted value into a hygienic SafeString or a reasoned rejection.
  * NFC-normalizes first (stable length + equality; defeats combining-mark
@@ -56,7 +58,9 @@ export const parseSafeString = (raw: unknown, maxLen: number): SafeResult => {
     if (isFormat(cp)) return { ok: false, code: 'E_VERN_FORMAT' };
   }
   const text = nfc.trim();
-  if (text === '') return { ok: false, code: 'E_VERN_EMPTY' };
+  if (text === '' || ONLY_DEFAULT_IGNORABLE_RE.test(text)) {
+    return { ok: false, code: 'E_VERN_EMPTY' };
+  }
   const length = [...text].length;
   if (length > maxLen) return { ok: false, code: 'E_VERN_LENGTH' };
   return { ok: true, value: { text, length } };

@@ -134,9 +134,10 @@ maps for non-web consumers: `@svnbjrn/design/qss/dark.qss` (apply via
 bidirectional-override / invisible-format characters, length-caps per slot),
 and resolves it into component props with a world → English fallback and a
 plain-language toggle. Producer/CI helpers: `checkTerminology` (coverage /
-drift), `pseudoLocalize`, and `vernacularToJson({ escape: 'html' })` for Qt /
-non-Svelte sinks. A single world bundle may carry both `tokens` and `strings`;
-each parser reads its own half.
+drift), `pseudoLocalize`, and `vernacularToJson()` for plain native and
+accessibility sinks. Escape only at an actual HTML sink with `escapeHtml`; Qt
+widgets should use `Qt::PlainText`. A single world bundle may carry both
+`tokens` and `strings`; each parser reads its own half.
 
 ### Verified decisions
 

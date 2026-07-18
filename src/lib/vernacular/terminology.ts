@@ -5,6 +5,7 @@
 // missed diegetic term must never blank the UI; CI decides on `!report.ok`.
 
 import type { VernacularCatalog, VernacularIssue } from './types.ts';
+import { VERNACULAR_REGISTRY } from './registry.ts';
 
 export interface TermRule {
   id: string;
@@ -53,7 +54,9 @@ const makeContainsRe = (needle: string, caseSensitive: boolean): RegExp => {
 
 /** Measure a catalog against a glossary. Pure; safe to run in CI. */
 export const checkTerminology = (catalog: VernacularCatalog, glossary: Glossary): TerminologyReport => {
-  const slots = [...catalog.strings.entries()];
+  const slots = [...VERNACULAR_REGISTRY].map(
+    ([key, spec]) => [key, catalog.strings.get(key) ?? spec.plainDefault] as const
+  );
   const issues: VernacularIssue[] = [];
   let coveredSlots = 0;
   let totalSlots = 0;
