@@ -264,10 +264,19 @@ export interface Vernacular {
   navBar?: Pick<NavBarProps, 'navLabel' | 'menuLabel'>;
 }
 
+type ReactInputAttributesWithoutHandlers = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  keyof React.DOMAttributes<HTMLInputElement> | 'className'
+>;
+type ReactSelectAttributesWithoutHandlers = Omit<
+  React.SelectHTMLAttributes<HTMLSelectElement>,
+  keyof React.DOMAttributes<HTMLSelectElement> | 'className'
+>;
+
 /** Labelled text field with hint + error states. */
 export interface InputProps extends Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'children' | 'value' | 'type' | 'readOnly' | 'onInput' | 'onChange'
+  ReactInputAttributesWithoutHandlers,
+  'value' | 'type' | 'readOnly'
 > {
   value?: string;
   label?: string;
@@ -285,8 +294,8 @@ export declare const Input: React.FC<InputProps>;
 
 /** Native select restyled to the token surface. */
 export interface SelectProps extends Omit<
-  React.SelectHTMLAttributes<HTMLSelectElement>,
-  'children' | 'value' | 'onChange' | 'multiple'
+  ReactSelectAttributesWithoutHandlers,
+  'value' | 'multiple'
 > {
   value?: string;
   options: { value: string; label: string }[];
@@ -298,8 +307,8 @@ export declare const Select: React.FC<SelectProps>;
 
 /** Soft-fill checkbox. `disabled` renders the coral unavailable state. */
 export interface CheckboxProps extends Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'children' | 'type' | 'checked' | 'onChange'
+  ReactInputAttributesWithoutHandlers,
+  'type' | 'checked'
 > {
   checked?: boolean;
   onchange?: (checked: boolean) => void;

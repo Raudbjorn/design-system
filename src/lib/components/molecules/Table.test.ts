@@ -69,4 +69,24 @@ describe('Table', () => {
     expect(renderedRows[0]).toHaveTextContent('Missing A');
     expect(renderedRows[3]).toHaveTextContent('Duplicate B');
   });
+
+  it('replaces a unique row that is missing the configured key', async () => {
+    const columns = [{ key: 'name', header: 'Name' }];
+    const { container, rerender } = render(Table, {
+      columns,
+      rows: [{ name: 'Missing' }],
+      rowKey: 'id'
+    });
+    const initialRow = container.querySelector('tbody tr');
+
+    await rerender({
+      columns,
+      rows: [{ name: 'Replacement' }],
+      rowKey: 'id'
+    });
+    const replacementRow = container.querySelector('tbody tr');
+    expect(replacementRow).not.toBe(initialRow);
+    expect(replacementRow).toHaveTextContent('Replacement');
+  });
+
 });
