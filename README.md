@@ -2,10 +2,11 @@
 
 [![Covered by Argos Visual Testing](https://argos-ci.com/badge.svg)](https://app.argos-ci.com/argos-ci-2/design-system/reference)
 
-A dark-first, developer-native **Svelte 5** component library — design tokens,
-self-hosted fonts, and 28 components. Restrained by design: one primary accent
-(teal `#4ec9b0`), one secondary (coral `#e06c75`), a near-black neutral ramp,
-and a first-class syntax-highlighted `CodeBlock`.
+A dark-first, developer-native **Svelte 5** component library with design
+tokens, self-hosted fonts, 28 core components, and two opt-in visual languages.
+The core stays restrained: one primary accent (teal `#4ec9b0`), one secondary
+(coral `#e06c75`), a near-black neutral ramp, and a first-class
+syntax-highlighted `CodeBlock`.
 
 - **Framework:** Svelte 5 (runes, snippets)
 - **Styling:** CSS custom properties (`--sv-*`), light + dark via
@@ -19,6 +20,9 @@ Not published to npm. Consume from source:
 ```bash
 pnpm add github:Raudbjorn/design-system
 ```
+
+The component peer dependency is Svelte 5. Building the package or running its
+generator CLI requires Node.js 22 or newer.
 
 ## Usage
 
@@ -34,9 +38,26 @@ components:
 <Stack gap={4}>
   <Button variant="primary">Ship it</Button>
   <StatCard value="128" label="Deploys" tone="accent-2" />
-  <CodeBlock code={`const x = 1;`} filename="demo.ts" />
+  <CodeBlock code={`const x = 1;`} filename="demo.ts" showLineNumbers />
 </Stack>
 ```
+
+### Package entry points
+
+| Import | Purpose |
+| --- | --- |
+| `@svnbjrn/design` | 28 core Svelte components, palettes, `defineTheme`, and common vernacular helpers |
+| `@svnbjrn/design/styles.css` | Core tokens, bundled fonts, cascade layers, and dark/light themes |
+| `@svnbjrn/design/tokens` | Typed core palettes and token names |
+| `@svnbjrn/design/theme` | Framework-agnostic world-theme parser, CSS emitter, runtime appliers, mode persistence, and boot script |
+| `@svnbjrn/design/theme/svelte` | Svelte world-theme wrapper |
+| `@svnbjrn/design/generate` | Deterministic seed-to-theme generator API |
+| `@svnbjrn/design/vernacular` | Untrusted catalog parser, resolver, terminology checks, escaping, and pseudo-localization |
+| `@svnbjrn/design/vernacular/svelte` | Svelte vernacular context |
+| `@svnbjrn/design/vermis` + `/vermis/styles.css` | Opt-in occult-ornate Vermis component and token system |
+| `@svnbjrn/design/carter` + `/carter/styles.css` | Opt-in modern-mystery Carter component and token system |
+| `@svnbjrn/design/qss/*.qss` | Generated dark/light Qt Style Sheets |
+| `@svnbjrn/design/tokens/*.json` | Resolved cross-platform token maps |
 
 ### Theming
 
@@ -72,8 +93,8 @@ if (result.ok) {
   const dispose = applyTheme(result.theme); // reversible; scoped via { selector }
 } else {
   // Errors as values: unknown tokens, non-hex colors (CSS-injection guard),
-  // and WCAG failures (AA 4.5:1 text, 3:1 UI — the same gates the built-in
-  // palettes pass). Drop the named tokens and retry to clamp to the base.
+  // and component-aware WCAG failures. Drop the named tokens and retry to
+  // clamp to the selected base palette.
   console.warn(result.issues);
 }
 ```
@@ -113,8 +134,10 @@ dominants from uploaded art) into a complete package whose every pairing
 meets WCAG AA **by construction** — contrast targets are inputs to the
 solver, not an audit afterward:
 
+After installation, the package exposes the `design-generate` binary:
+
 ```bash
-pnpm generate -- --seeds "#c9a227,#b5473a" --name grimdark-hive --hints grimdark
+pnpm exec design-generate --seeds "#c9a227,#b5473a" --name grimdark-hive --hints grimdark
 ```
 
 The same API runs in the browser (see the Storybook **Theme Lab** story).
@@ -137,7 +160,38 @@ plain-language toggle. Producer/CI helpers: `checkTerminology` (coverage /
 drift), `pseudoLocalize`, and `vernacularToJson()` for plain native and
 accessibility sinks. Escape only at an actual HTML sink with `escapeHtml`; Qt
 widgets should use `Qt::PlainText`. A single world bundle may carry both
-`tokens` and `strings`; each parser reads its own half.
+`tokens` and `strings`; each parser reads its own half. Svelte consumers can
+share the resolved catalog through `@svnbjrn/design/vernacular/svelte`.
+
+### Alternative design languages
+
+Vermis and Carter are intentionally separate from the core `--sv-*` system.
+Each has its own component barrel and required stylesheet, so opting into one
+cannot silently restyle core components:
+
+```svelte
+<script>
+  import '@svnbjrn/design/vermis/styles.css';
+  import { VermisButton, VermisCard } from '@svnbjrn/design/vermis';
+
+  import '@svnbjrn/design/carter/styles.css';
+  import { CarterCaseFile, CarterStatusTag } from '@svnbjrn/design/carter';
+</script>
+
+<VermisCard>
+  <VermisButton>Descend</VermisButton>
+</VermisCard>
+
+<div data-carter-theme="dossier">
+  <CarterCaseFile>
+    <CarterStatusTag status="open" />
+  </CarterCaseFile>
+</div>
+```
+
+Vermis ships the `--layform-*` token surface. Carter ships `--carter-*` tokens
+and two `[data-carter-theme]` modes: `field` (dark, default) and `dossier`
+(light).
 
 ### Verified decisions
 
@@ -157,16 +211,25 @@ Non-goals confirmed by the same pass:
 
 ## Components
 
-**Atoms:** Text, Heading, Button, Link, Badge, Icon, Kbd, Avatar, Input, Select,
-Checkbox, Radio, Switch, Alert, Tooltip, Spinner, Progress
-**Layout:** Stack
-**Molecules:** Card, CodeBlock, NavBar, StatCard, Tabs, Table, Timeline,
-Breadcrumb, Modal, Sheet
+The default entry point exports **28 core components**:
+
+- **Atoms:** Text, Heading, Button, Link, Badge, Icon, Kbd, Avatar, Input,
+  Select, Checkbox, Radio, Switch, Alert, Tooltip, Spinner, Progress
+- **Layout:** Stack
+- **Molecules:** Card, CodeBlock, NavBar, StatCard, Tabs, Table, Timeline,
+  Breadcrumb, Modal, Sheet
+
+The opt-in Vermis and Carter barrels add their own atoms, layouts, molecules,
+and templates; they are not included in the core count.
 
 `CodeBlock` renders **pre-tokenized** highlight HTML (from a build-time
 highlighter such as Shiki, with token classes mapping to `--sv-syn-*`); it
 ships no client-side highlighter. Copy-to-clipboard always copies the raw
-`code`. `showLineNumbers` renders a line-number gutter, numbered from `code`.
+`code`. `showLineNumbers` renders a gutter derived from `code`, ignores one
+trailing newline, and emits a development warning when supplied `html` does
+not preserve that line count. `copyLabel`, `copiedLabel`, and `copyAriaLabel`
+support localized or world-flavored copy controls without breaking
+label-in-name.
 
 ## Develop
 
