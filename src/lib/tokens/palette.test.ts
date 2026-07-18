@@ -57,6 +57,17 @@ describe('palette accessibility', () => {
     expect(failures).toEqual([]);
   });
 
+  it('dark semantic text colors clear 4.5:1 on the page background', () => {
+    const failures = SEMANTIC_TEXT_TOKENS.map((fg) => ({
+      fg,
+      ratio: contrastRatio(dark[fg]!, dark.bg!)
+    }))
+      .filter(({ ratio }) => ratio < 4.5)
+      .map(({ fg, ratio }) => `${fg} on bg: ${ratio.toFixed(2)} < 4.5`);
+
+    expect(failures).toEqual([]);
+  });
+
   it('dark and light define the same token keys', () => {
     expect(Object.keys(dark).sort()).toEqual(Object.keys(light).sort());
   });
