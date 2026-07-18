@@ -53,6 +53,33 @@ describe('Table', () => {
     expect(reorderedRows[1]).toBe(firstRow);
   });
 
+  it('supports an empty-string row key field', async () => {
+    const columns = [{ key: 'name', header: 'Name' }];
+    const { container, rerender } = render(Table, {
+      columns,
+      rows: [
+        { '': 'a', name: 'A' },
+        { '': 'b', name: 'B' }
+      ],
+      rowKey: ''
+    });
+    const initialRows = container.querySelectorAll('tbody tr');
+    const firstRow = initialRows[0];
+    const secondRow = initialRows[1];
+
+    await rerender({
+      columns,
+      rows: [
+        { '': 'b', name: 'B updated' },
+        { '': 'a', name: 'A updated' }
+      ],
+      rowKey: ''
+    });
+    const reorderedRows = container.querySelectorAll('tbody tr');
+    expect(reorderedRows[0]).toBe(secondRow);
+    expect(reorderedRows[1]).toBe(firstRow);
+  });
+
   it('falls back to row identity for missing or duplicate row keys', () => {
     const { container } = render(Table, {
       columns: [{ key: 'name', header: 'Name' }],

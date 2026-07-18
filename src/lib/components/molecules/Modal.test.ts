@@ -165,6 +165,30 @@ describe('Modal', () => {
     node.remove();
   });
 
+  it('does not recenter focus for a repeated registration', () => {
+    const node = document.createElement('div');
+    const first = document.createElement('button');
+    const second = document.createElement('button');
+    Object.defineProperty(first, 'offsetParent', { value: node });
+    Object.defineProperty(second, 'offsetParent', { value: node });
+    node.append(first, second);
+    document.body.appendChild(node);
+
+    const initialAction = trapFocus(node, vi.fn());
+    expect(document.activeElement).toBe(first);
+    second.focus();
+    const repeatedAction = trapFocus(node, vi.fn());
+    expect(document.activeElement).toBe(second);
+
+    if ('destroy' in repeatedAction && typeof repeatedAction.destroy === 'function') {
+      repeatedAction.destroy();
+    }
+    if ('destroy' in initialAction && typeof initialAction.destroy === 'function') {
+      initialAction.destroy();
+    }
+    node.remove();
+  });
+
   it('keeps visual stacking aligned with focus-trap open order', () => {
     const earlierScrim = document.createElement('div');
     const earlierDialog = document.createElement('div');

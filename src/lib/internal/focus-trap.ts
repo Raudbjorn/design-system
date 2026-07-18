@@ -61,6 +61,7 @@ function onDocumentCaptureKeydown(event: KeyboardEvent) {
 export function trapFocus(node: HTMLElement, onEscape: () => boolean | void) {
   if (typeof document === 'undefined') return {};
   let entry = traps.find((candidate) => candidate.node === node);
+  const wasRegistered = Boolean(entry);
   if (entry) {
     entry.onEscape = onEscape;
   } else {
@@ -86,7 +87,7 @@ export function trapFocus(node: HTMLElement, onEscape: () => boolean | void) {
     }
   }
 
-  (focusables(node)[0] ?? node).focus();
+  if (!wasRegistered) (focusables(node)[0] ?? node).focus();
 
   return {
     update(nextOnEscape: () => boolean | void) {
