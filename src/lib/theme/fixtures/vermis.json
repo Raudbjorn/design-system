@@ -9,7 +9,7 @@
     "source": "layform pattern language (Vermis I/II, Plurabelle Comix)"
   },
   "tokens": {
-    "accent": { "$value": "#c0432c" },
+    "accent": { "$value": "#d85a40" },
     "accent-2": { "$value": "#c9b458" },
     "accent-rust": { "$value": "#8b6f47" },
     "success": { "$value": "#7a8a3a" },

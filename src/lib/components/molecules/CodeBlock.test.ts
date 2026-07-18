@@ -26,6 +26,61 @@ describe('CodeBlock', () => {
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('copy me');
   });
 
+  it('leaves the label unchanged when the Clipboard API is unavailable', async () => {
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    render(CodeBlock, { code: 'copy me' });
+    const button = screen.getByRole('button', { name: /copy/i });
+
+    expect(() => button.click()).not.toThrow();
+    await Promise.resolve();
+    flushSync();
+    expect(button).toHaveTextContent('Copy');
+  });
+
+  it('leaves the label unchanged when the clipboard write is rejected', async () => {
+    const writeText = vi.fn().mockRejectedValue(new Error('permission denied'));
+    Object.assign(navigator, { clipboard: { writeText } });
+    render(CodeBlock, { code: 'copy me' });
+    const button = screen.getByRole('button', { name: /copy/i });
+
+    button.click();
+    await vi.waitFor(() => expect(writeText).toHaveBeenCalledWith('copy me'));
+    flushSync();
+    expect(button).toHaveTextContent('Copy');
+  });
+
+  it('restarts the copied window and clears its timer on unmount', async () => {
+    vi.useFakeTimers();
+    try {
+      const { unmount } = render(CodeBlock, { code: 'copy me' });
+      const button = screen.getByRole('button', { name: /copy/i });
+
+      button.click();
+      await vi.waitFor(() => {
+        flushSync();
+        expect(button).toHaveTextContent('Copied');
+      });
+
+      vi.advanceTimersByTime(1000);
+      button.click();
+      await vi.waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(2));
+      await Promise.resolve();
+      await Promise.resolve();
+      vi.advanceTimersByTime(600);
+      flushSync();
+      expect(button).toHaveTextContent('Copied');
+
+      unmount();
+      expect(vi.getTimerCount()).toBe(0);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('accessible name follows the visible label through the copied window', async () => {
     vi.useFakeTimers();
     try {

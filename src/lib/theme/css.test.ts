@@ -17,7 +17,7 @@ describe('worldThemeToCss', () => {
     expect(css).toContain('@layer sv.world {');
     expect(css).toContain(':root {');
     expect(css).toContain('--sv-bg: #141210;');
-    expect(css).toContain('--sv-accent-rust: #b5473a;');
+    expect(css).toContain('--sv-accent-rust: #ca5a4c;');
     expect(css).toContain("--sv-font-sans: 'Alegreya', 'Georgia', serif;");
     expect(css).toContain('--sv-radius-lg: 6px;');
   });
