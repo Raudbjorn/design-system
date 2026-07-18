@@ -5,6 +5,7 @@
     Button,
     Card,
     CodeBlock,
+    Heading,
     Icon,
     Kbd,
     Link,
@@ -110,6 +111,17 @@
             </div>
           {/each}
         </div>
+      </Stack>
+    </section>
+
+    <section class="spec-section">
+      <h2 class="eyebrow">[data-sv="heading"]</h2>
+      <Stack gap={2}>
+        <Heading level={3}>Semantic structure, visual hierarchy</Heading>
+        <Text size="sm" tone="muted">
+          The Heading component renders a real heading element; the type-ramp samples below stay
+          presentational so they do not rewrite the document outline.
+        </Text>
       </Stack>
     </section>
 
