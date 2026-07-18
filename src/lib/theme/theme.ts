@@ -12,19 +12,38 @@
 import { dark, light } from '../tokens/palette.js';
 import type { Palette, TokenName } from '../tokens/palette.js';
 import { contrastRatio } from '../internal/contrast.js';
+import { SELECTOR_RE } from './css.js';
 
 /**
- * The WCAG pairings every palette must satisfy — the same invariants
- * palette.test.ts enforces on the built-in dark and light palettes.
- * 4.5:1 is AA for normal text; 3:1 is AA for UI components and large text.
+ * 4.5:1 is AA for normal text. These are the foreground/background
+ * combinations the components actually render.
  */
 export const contrastGates: ReadonlyArray<{ fg: TokenName; bg: TokenName; min: number }> = [
   { fg: 'text', bg: 'bg', min: 4.5 },
   { fg: 'text-strong', bg: 'bg', min: 4.5 },
   { fg: 'text-muted', bg: 'bg', min: 4.5 },
   { fg: 'text-faint', bg: 'bg', min: 4.5 },
-  { fg: 'accent', bg: 'bg', min: 3 },
-  { fg: 'accent-2', bg: 'bg', min: 3 },
+  { fg: 'text', bg: 'surface-1', min: 4.5 },
+  { fg: 'text', bg: 'surface-2', min: 4.5 },
+  { fg: 'text', bg: 'surface-3', min: 4.5 },
+  { fg: 'text-strong', bg: 'surface-1', min: 4.5 },
+  { fg: 'text-strong', bg: 'surface-2', min: 4.5 },
+  { fg: 'text-strong', bg: 'surface-3', min: 4.5 },
+  { fg: 'text-muted', bg: 'surface-1', min: 4.5 },
+  { fg: 'text-muted', bg: 'surface-2', min: 4.5 },
+  { fg: 'text-muted', bg: 'surface-3', min: 4.5 },
+  { fg: 'text-faint', bg: 'surface-1', min: 4.5 },
+  { fg: 'accent', bg: 'bg', min: 4.5 },
+  { fg: 'accent', bg: 'surface-1', min: 4.5 },
+  { fg: 'accent', bg: 'surface-2', min: 4.5 },
+  { fg: 'accent-2', bg: 'bg', min: 4.5 },
+  { fg: 'accent-2', bg: 'surface-1', min: 4.5 },
+  { fg: 'success', bg: 'bg', min: 4.5 },
+  { fg: 'success', bg: 'surface-2', min: 4.5 },
+  { fg: 'error', bg: 'bg', min: 4.5 },
+  { fg: 'error', bg: 'surface-2', min: 4.5 },
+  { fg: 'warning', bg: 'bg', min: 4.5 },
+  { fg: 'warning', bg: 'surface-2', min: 4.5 },
   { fg: 'syn-keyword', bg: 'surface-3', min: 4.5 },
   { fg: 'syn-string', bg: 'surface-3', min: 4.5 },
   { fg: 'syn-var', bg: 'surface-3', min: 4.5 },
@@ -60,6 +79,17 @@ export interface DefineThemeOptions {
 
 const HEX = /^#[0-9a-f]{6}$/i;
 
+const safeSelector = (selector: unknown): string => {
+  if (
+    typeof selector !== 'string' ||
+    selector.trim().length === 0 ||
+    !SELECTOR_RE.test(selector)
+  ) {
+    throw new TypeError('themeCss selector contains unsafe CSS or markup characters.');
+  }
+  return selector;
+};
+
 /**
  * Validate a partial palette override into a Theme.
  *
@@ -84,12 +114,21 @@ export function defineTheme(
     options.base === 'light' ? light : options.base === undefined || options.base === 'dark' ? dark : options.base;
 
   const issues: ThemeIssue[] = [];
-  // A custom base must satisfy the full TokenName contract the type system
-  // can no longer promise (the generated Palette is an open Record) — a
-  // sparse base would leave contrast gates silently unenforceable.
-  if (typeof options.base === 'object' && options.base !== null) {
+
+  const customBase =
+    typeof options.base === 'object' && options.base !== null
+      ? (options.base as Record<string, unknown>)
+      : undefined;
+  if (customBase) {
     for (const token of Object.keys(dark) as TokenName[]) {
-      if (!Object.hasOwn(options.base, token)) issues.push({ kind: 'missing-token', token });
+      if (!Object.hasOwn(customBase, token)) issues.push({ kind: 'missing-token', token });
+    }
+    for (const [token, value] of Object.entries(customBase)) {
+      if (!Object.hasOwn(dark, token)) {
+        issues.push({ kind: 'unknown-token', token });
+      } else if (typeof value !== 'string' || !HEX.test(value)) {
+        issues.push({ kind: 'invalid-color', token: token as TokenName, value: String(value) });
+      }
     }
   }
   // Plain Record: Partial<Palette> would widen every read to
@@ -135,10 +174,11 @@ export function defineTheme(
  * contains only `--sv-*: #rrggbb;` declarations.
  */
 export function themeCss(theme: Theme, selector = ':root'): string {
+  const scopedSelector = safeSelector(selector);
   const decls = (Object.entries(theme.overrides) as [TokenName, string][])
     .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
     .map(([token, value]) => `  --sv-${token}: ${value};`);
-  return `${selector} {\n${decls.join('\n')}\n}\n`;
+  return `${scopedSelector} {\n${decls.join('\n')}\n}\n`;
 }
 
 export interface ApplyThemeOptions {
@@ -215,6 +255,7 @@ export async function swapTheme(theme: Theme, options: SwapThemeOptions = {}): P
   if (!theme || typeof theme !== 'object' || !theme.overrides) {
     throw new Error('swapTheme: a valid Theme is required — check result.ok before using result.theme.');
   }
+  safeSelector(options.selector ?? ':root');
   // No-op init instead of a non-null assertion: the disposer stays safe to
   // call even if an exotic View Transitions implementation resolves without
   // running the update callback.

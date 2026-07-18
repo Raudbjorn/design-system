@@ -45,7 +45,7 @@ QPushButton:focus {
 }
 QPushButton:disabled {
   background: #1e1e1e;
-  color: #818181;
+  color: #858585;
   border-color: #3c3c3c;
 }
 
@@ -67,20 +67,20 @@ QPushButton[class="primary"]:focus {
 }
 QPushButton[class="primary"]:disabled {
   background: #2d2d2d;
-  color: #818181;
+  color: #858585;
 }
 
 QPushButton[class="danger"] {
-  background: #f44430;
+  background: #ff5b48;
   color: #ffffff;
   border: none;
   padding: 9px 17px;
 }
 QPushButton[class="danger"]:hover {
-  background: #fa6853;
+  background: #ff7865;
 }
 QPushButton[class="danger"]:pressed {
-  background: #fd7c68;
+  background: #ff8a78;
 }
 QPushButton[class="danger"]:focus {
   border: 2px solid #f5f5f5;
@@ -88,7 +88,7 @@ QPushButton[class="danger"]:focus {
 }
 QPushButton[class="danger"]:disabled {
   background: #2d2d2d;
-  color: #818181;
+  color: #858585;
 }
 
 QPushButton[class="ghost"] {
@@ -105,7 +105,7 @@ QPushButton[class="ghost"]:pressed {
   background: #555556;
 }
 QPushButton[class="ghost"]:disabled {
-  color: #818181;
+  color: #858585;
 }
 
 /* ── Text inputs ─────────────────────────────────────────────────────── */
@@ -125,10 +125,10 @@ QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus, QSpinBox:focus, QDoubleS
 }
 QLineEdit:disabled, QTextEdit:disabled, QPlainTextEdit:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled, QComboBox:disabled {
   background: #1e1e1e;
-  color: #818181;
+  color: #858585;
 }
 QLineEdit[hasError="true"] {
-  border: 2px solid #f44430;
+  border: 2px solid #ff5b48;
   padding: 7px 11px;
 }
 
@@ -175,7 +175,7 @@ QMenu::item:selected {
   background: #2d2d2d;
 }
 QMenu::item:disabled {
-  color: #818181;
+  color: #858585;
 }
 QMenu::separator {
   height: 1px;
@@ -211,7 +211,7 @@ QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
   min-width: 24px;
 }
 QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
-  background: #818181;
+  background: #858585;
 }
 QScrollBar::add-line, QScrollBar::sub-line {
   height: 0;
@@ -268,7 +268,7 @@ QCheckBox::indicator:checked, QRadioButton::indicator:checked {
   border-color: #4ec9b0;
 }
 QCheckBox:disabled, QRadioButton:disabled {
-  color: #818181;
+  color: #858585;
 }
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled {
   background: #1e1e1e;
@@ -400,8 +400,8 @@ QHeaderView::section {
 
 /* ── Status text helpers (setProperty("class", ...) + re-polish) ─────── */
 
-QLabel[class="success"] { color: #0c9138; }
-QLabel[class="error"] { color: #f44430; }
+QLabel[class="success"] { color: #74a55e; }
+QLabel[class="error"] { color: #ff5b48; }
 QLabel[class="warning"] { color: #ffa500; }
 QLabel[class="muted"] { color: #9a9a9a; }
 QLabel[class="code"] {

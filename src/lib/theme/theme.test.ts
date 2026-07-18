@@ -39,6 +39,11 @@ describe('defineTheme', () => {
     expect(result.theme.palette).toEqual(dark);
   });
 
+  it('both built-in bases pass every component contrast gate', () => {
+    expect(defineTheme({}, { base: 'dark' }).ok).toBe(true);
+    expect(defineTheme({}, { base: 'light' }).ok).toBe(true);
+  });
+
   it('reports an unknown token name', () => {
     const result = defineTheme({ 'not-a-real-token': '#ffffff' });
     expect(result.ok).toBe(false);
@@ -65,7 +70,6 @@ describe('defineTheme', () => {
     expect(result.ok).toBe(false);
     if (result.ok) return;
 
-    expect(result.issues).toHaveLength(3);
     expect(result.issues).toContainEqual({ kind: 'unknown-token', token: 'not-a-real-token' });
     expect(result.issues).toContainEqual({
       kind: 'invalid-color',
@@ -82,8 +86,7 @@ describe('defineTheme', () => {
     const result = defineTheme({ text: '#222222' });
     expect(result.ok).toBe(false);
     if (result.ok) return;
-    expect(result.issues).toHaveLength(1);
-    const [issue] = result.issues;
+    const issue = result.issues.find((candidate) => candidate.kind === 'contrast' && candidate.bg === 'bg');
     expect(issue).toMatchObject({ kind: 'contrast', fg: 'text', bg: 'bg', min: 4.5 });
     expect((issue as Extract<ThemeIssue, { kind: 'contrast' }>).ratio).toBeLessThan(4.5);
   });
@@ -102,13 +105,21 @@ describe('defineTheme', () => {
     expect((issue as Extract<ThemeIssue, { kind: 'contrast' }>).ratio).toBeLessThan(4.5);
   });
 
+  it('rejects a surface override that erases text rendered by components', () => {
+    const result = defineTheme({ 'surface-1': '#d4d4d4' });
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.issues).toContainEqual(
+      expect.objectContaining({ kind: 'contrast', fg: 'text', bg: 'surface-1', min: 4.5 })
+    );
+  });
+
   it('accepts a full custom Palette object as the base and gates against it', () => {
-    const customBase: Palette = { ...dark, 'accent-rust': '#123456' };
-    const result = defineTheme({ border: '#334455' }, { base: customBase });
+    const customBase: Palette = { ...dark, border: '#334455' };
+    const result = defineTheme({ border: '#445566' }, { base: customBase });
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    expect(result.theme.palette).toEqual({ ...customBase, border: '#334455' });
-    expect(result.theme.palette['accent-rust']).toBe('#123456');
+    expect(result.theme.palette).toEqual({ ...customBase, border: '#445566' });
   });
 
   it('layers merge in array order, a later layer overriding an earlier one for the same token', () => {
@@ -206,6 +217,18 @@ describe('themeCss', () => {
     const css = themeCss(result.theme, '[data-theme="custom"]');
     expect(css).toBe('[data-theme="custom"] {\n  --sv-border: #123456;\n}\n');
   });
+
+  it.each([
+    ':root { background: url(https://example.invalid) } body',
+    ':root; body',
+    '</style><script>alert(1)</script>'
+  ])('rejects the unsafe selector %j', (selector) => {
+    const result = defineTheme({ border: '#123456' });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+
+    expect(() => themeCss(result.theme, selector)).toThrow(/selector/);
+  });
 });
 
 describe('applyTheme', () => {
@@ -262,18 +285,18 @@ describe('swapTheme', () => {
   });
 
   it('falls back to an instant swap when the View Transitions API is unavailable, disposing the old theme and returning a disposer for the new one', async () => {
-    const themeA = defineTheme({ accent: '#ff0000' });
+    const themeA = defineTheme({ accent: '#ff5b48' });
     const themeB = defineTheme({ accent: '#00ccff' });
     expect(themeA.ok).toBe(true);
     expect(themeB.ok).toBe(true);
     if (!themeA.ok || !themeB.ok) return;
 
     const disposeA = applyTheme(themeA.theme);
-    expect(themeCssInjected('--sv-accent: #ff0000')).toBe(true);
+    expect(themeCssInjected('--sv-accent: #ff5b48')).toBe(true);
 
     const disposeB = await swapTheme(themeB.theme, { dispose: disposeA });
 
-    expect(themeCssInjected('--sv-accent: #ff0000')).toBe(false);
+    expect(themeCssInjected('--sv-accent: #ff5b48')).toBe(false);
     expect(themeCssInjected('--sv-accent: #00ccff')).toBe(true);
 
     disposeB();
@@ -281,7 +304,7 @@ describe('swapTheme', () => {
   });
 
   it('routes the swap through document.startViewTransition when available, calling it exactly once', async () => {
-    const themeA = defineTheme({ accent: '#ff0000' });
+    const themeA = defineTheme({ accent: '#ff5b48' });
     const themeB = defineTheme({ accent: '#00ccff' });
     expect(themeA.ok).toBe(true);
     expect(themeB.ok).toBe(true);
@@ -299,14 +322,26 @@ describe('swapTheme', () => {
     const disposeB = await swapTheme(themeB.theme, { dispose: disposeA });
 
     expect(startViewTransition).toHaveBeenCalledTimes(1);
-    expect(themeCssInjected('--sv-accent: #ff0000')).toBe(false);
+    expect(themeCssInjected('--sv-accent: #ff5b48')).toBe(false);
     expect(themeCssInjected('--sv-accent: #00ccff')).toBe(true);
 
     disposeB();
   });
 
+  it('keeps the active theme when a replacement selector is rejected', async () => {
+    const theme = defineTheme({ accent: '#00ccff' });
+    expect(theme.ok).toBe(true);
+    if (!theme.ok) return;
+    const dispose = vi.fn();
+
+    await expect(swapTheme(theme.theme, { selector: ':root; body', dispose })).rejects.toThrow(
+      /selector/
+    );
+    expect(dispose).not.toHaveBeenCalled();
+  });
+
   it('throws without a DOM document', async () => {
-    const themeA = defineTheme({ accent: '#ff0000' });
+    const themeA = defineTheme({ accent: '#ff5b48' });
     expect(themeA.ok).toBe(true);
     if (!themeA.ok) return;
 
@@ -324,7 +359,7 @@ describe('zero-trust input hardening', () => {
     }
 
     // One junk layer poisons the result but not the parse of its siblings.
-    const mixed = defineTheme([{ accent: '#ff0000' }, 'junk' as never, 42 as never]);
+    const mixed = defineTheme([{ accent: '#4ec9b0' }, 'junk' as never, 42 as never]);
     expect(mixed.ok).toBe(false);
     if (!mixed.ok) {
       expect(mixed.issues).toEqual([
@@ -353,6 +388,18 @@ describe('zero-trust input hardening', () => {
     }
   });
 
+  it('validates custom-base token names and colors before contrast checks', () => {
+    const result = defineTheme(
+      {},
+      { base: { ...dark, bg: 'red', 'not-a-real-token': '#ffffff' } as Palette }
+    );
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.issues).toContainEqual({ kind: 'invalid-color', token: 'bg', value: 'red' });
+      expect(result.issues).toContainEqual({ kind: 'unknown-token', token: 'not-a-real-token' });
+    }
+  });
+
   it('applyTheme and swapTheme name the misuse when handed a non-Theme', async () => {
     expect(() => applyTheme(undefined as never)).toThrow(/check result.ok/);
     await expect(swapTheme(null as never)).rejects.toThrow(/check result.ok/);
@@ -360,7 +407,7 @@ describe('zero-trust input hardening', () => {
 
   it('applyTheme falls back to documentElement when doc.head is null', () => {
     const bare = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null);
-    const result = defineTheme({ accent: '#ff0000' });
+    const result = defineTheme({ accent: '#ff5b48' });
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     const dispose = applyTheme(result.theme, { target: bare as unknown as Document });

@@ -50,13 +50,13 @@
     },
     "accent": {
       "type": "color",
-      "css": "#2b8a77",
-      "qt": "#2b8a77"
+      "css": "#1f6659",
+      "qt": "#1f6659"
     },
     "accent-2": {
       "type": "color",
-      "css": "#c0505a",
-      "qt": "#c0505a"
+      "css": "#8d3740",
+      "qt": "#8d3740"
     },
     "accent-rust": {
       "type": "color",
@@ -70,18 +70,18 @@
     },
     "success": {
       "type": "color",
-      "css": "#0c9138",
-      "qt": "#0c9138"
+      "css": "#086326",
+      "qt": "#086326"
     },
     "error": {
       "type": "color",
-      "css": "#d13b2a",
-      "qt": "#d13b2a"
+      "css": "#9d2b20",
+      "qt": "#9d2b20"
     },
     "warning": {
       "type": "color",
-      "css": "#b26a00",
-      "qt": "#b26a00"
+      "css": "#7d4800",
+      "qt": "#7d4800"
     },
     "syn-keyword": {
       "type": "color",
@@ -300,12 +300,12 @@
     }
   },
   "derived": {
-    "accent-hover": "#216e5f",
-    "accent-pressed": "#1a5c4f",
-    "accent-2-hover": "#9a3f47",
-    "accent-2-pressed": "#82343b",
-    "error-hover": "#a82e20",
-    "error-pressed": "#8e2519",
+    "accent-hover": "#175146",
+    "accent-pressed": "#11433a",
+    "accent-2-hover": "#702a32",
+    "accent-2-pressed": "#5e2228",
+    "error-hover": "#7e2118",
+    "error-pressed": "#691a12",
     "surface-1-hover": "#beb594",
     "surface-1-pressed": "#a0997c",
     "surface-2-hover": "#b9b18f",
