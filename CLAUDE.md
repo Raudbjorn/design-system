@@ -29,7 +29,7 @@ Gotchas: unit tests print harmless jsdom `Could not parse CSS stylesheet` noise 
 
 ## Architecture
 
-**Tokens are the source of truth, and generated outputs are committed.** DTCG sources live in `src/lib/tokens/*.tokens.json` + the `themes.ts` registry. `scripts/build-tokens.mjs` emits `scale.css`, `colors.css`, `palette.ts`, `resolved/*.tokens.json`, and `qss/*.qss`. **Never hand-edit generated outputs** — edit the DTCG source, run `pnpm run tokens`, commit every output. Drift is guarded by tests. Adding a built-in theme = one token file + one registry entry.
+**Tokens are the source of truth, and generated outputs are committed.** DTCG sources live in `src/lib/tokens/*.tokens.json` + the `themes.ts` registry. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, and `src/lib/qss/*.qss`. **Never hand-edit generated outputs** — edit the DTCG source, run `pnpm run tokens`, commit every output. Drift is guarded by tests. Adding a built-in theme = one token file + one registry entry.
 
 **Cascade layers** order token precedence: `sv.base < sv.theme < sv.world < sv.user`. Consumer *unlayered* overrides beat all of them.
 
@@ -41,7 +41,7 @@ Key `src/lib/` areas:
 - `internal/` — shared `color`/`contrast` math, `focus-trap`, and **`invariants.ts`** (versioned world-theme rules — never tighten a published threshold without versioning + updating docs/fixtures/tests/adapter together).
 - `vermis/` and `carter/` — isolated opt-in systems with their own component barrels + required stylesheets. Never leak their `--layform-*` / `--carter-*` tokens into core `--sv-*`, and never let opting in silently restyle core.
 
-**Stories are visual regression tests.** `src/stories/*` — every story is screenshotted in both themes and diffed via Argos on each PR. User-visible component/token changes need deterministic stories (no time, locale, or randomness) validated in both themes. See `docs/visual-testing.md`.
+**Stories are browser visual regression tests.** `src/stories/*` covers both themes through Storybook and Argos. The workflow's visual/Argos job is currently disabled, so run `CI= pnpm run test:visual` and verify both themes locally until it is re-enabled. User-visible component/token changes need deterministic stories with no time, locale, or randomness. See `docs/visual-testing.md`.
 
 **React bridge.** `.design-sync/react-adapter` + `.design-sync/previews` are a *committed*, hand-maintained bridge — nothing regenerates them. Public component/prop/event/snippet changes must update the adapter (`index.js`, `index.d.ts`, `wrap.js`) and the owned preview; React camelCase event aliases must match Svelte lowercase props (`onclick`).
 

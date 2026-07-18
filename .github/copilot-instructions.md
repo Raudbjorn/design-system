@@ -21,7 +21,7 @@ pnpm run build-storybook
 
 `pnpm run build` requires `pyftsubset` from Python FontTools. It rewrites committed token/QSS outputs and subsets fonts; `PfEd NOT subset` is expected, but publint must report `All good`. Unit tests may print jsdom `Could not parse CSS stylesheet` noise; judge the final Vitest summary. Three known Svelte warnings currently exist in Tooltip, Modal, and Sheet; do not add more.
 
-The visual project uploads to Argos whenever `CI` is truthy, so explicitly clear inherited `CI` locally. CI (`.github/workflows/ci.yml`) runs install/check/unit tests, then Chromium visual tests, Storybook build, and Argos deploy. Argos HTTP 402 “maximum screenshot capacity” is account quota after tests, not a product defect; do not suppress it in code.
+The visual project uploads to Argos whenever `CI` is truthy, so explicitly clear inherited `CI` locally. The `argos` job in `.github/workflows/ci.yml` is currently disabled; run the Chromium story suite and Storybook build locally until that job is re-enabled. When uploads resume, Argos HTTP 402 “maximum screenshot capacity” is account quota after tests, not a product defect; do not suppress it in code.
 
 ## Project map and sources of truth
 
@@ -29,7 +29,7 @@ The visual project uploads to Argos whenever `CI` is truthy, so explicitly clear
 - `src/stories`: Storybook stories; each is a dark/light visual regression test.
 - `src/lib/theme`, `vernacular`, and `generate`: runtime theme handling, hostile-input string catalogs, and the seed-to-theme solver.
 - `src/lib/vermis` and `src/lib/carter`: isolated opt-in systems. Never leak their `--layform-*`/`--carter-*` tokens into core `--sv-*`.
-- `src/lib/tokens/*.tokens.json` plus `themes.ts`: DTCG source of truth. `scripts/build-tokens.mjs` emits `scale.css`, `colors.css`, `palette.ts`, `resolved/*.tokens.json`, and `qss/*.qss`. Never hand-edit outputs; after source edits run `pnpm run tokens` and commit every output. Preserve structured DTCG color/dimension/shadow values.
+- `src/lib/tokens/*.tokens.json` plus `themes.ts`: DTCG source of truth. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, and `src/lib/qss/*.qss`. Never hand-edit outputs; after source edits run `pnpm run tokens` and commit every output. Preserve structured DTCG color/dimension/shadow values.
 - `.storybook`, `vitest.config.ts`, and `docs/visual-testing.md`: visual-test contract.
 - `.design-sync/react-adapter` and `.design-sync/previews`: committed React bridge. Nothing regenerates its API automatically.
 - `README.md`, `docs/theme-packages.md`, and `docs/bones-integration.md`: public contracts.
