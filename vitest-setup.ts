@@ -33,12 +33,26 @@ Object.defineProperty(globalThis, 'localStorage', {
 });
 
 // jsdom lacks the Web Animations API; svelte/transition calls Element.animate.
-// A no-op keeps transition-bearing components (Modal, Sheet) unit-testable.
+// Complete each mock animation on the next microtask so transition cleanup runs.
 if (typeof Element !== 'undefined' && !Element.prototype.animate) {
-  Element.prototype.animate = () =>
-    ({
-      cancel() {}, finish() {}, play() {}, pause() {}, reverse() {},
-      finished: Promise.resolve(), onfinish: null, oncancel: null,
-      currentTime: 0, playState: 'finished'
-    }) as unknown as Animation;
+  Element.prototype.animate = () => {
+    const animation = {
+      cancel() {},
+      finish() {},
+      play() {},
+      pause() {},
+      reverse() {},
+      finished: Promise.resolve(),
+      onfinish: null,
+      oncancel: null,
+      currentTime: 0,
+      playState: 'running'
+    } as unknown as Animation;
+
+    animation.finish = () => {
+      animation.onfinish?.call(animation, new Event('finish') as AnimationPlaybackEvent);
+    };
+    queueMicrotask(() => animation.finish());
+    return animation;
+  };
 }

@@ -20,4 +20,18 @@ describe('Radio', () => {
     expect(first).not.toBeChecked();
     expect(second).toBeChecked();
   });
+
+  it('uses native checked state for unbound radio groups', async () => {
+    const first = render(Radio, { name: 'backend', value: 'cpu' });
+    const second = render(Radio, { name: 'backend', value: 'gpu' });
+    const cpu = first.container.querySelector('input');
+    const gpu = second.container.querySelector('input');
+    if (!cpu || !gpu) throw new Error('radio inputs missing');
+
+    await fireEvent.click(cpu);
+    await fireEvent.click(gpu);
+
+    expect(cpu).not.toBeChecked();
+    expect(gpu).toBeChecked();
+  });
 });
