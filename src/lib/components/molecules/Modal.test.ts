@@ -145,6 +145,27 @@ describe('Modal', () => {
     node.remove();
   });
 
+  it('leaves Escape unhandled when the topmost trap declines it', () => {
+    const node = document.createElement('div');
+    document.body.appendChild(node);
+    const action = trapFocus(node, () => false);
+    const observer = vi.fn();
+    document.addEventListener('keydown', observer);
+
+    const event = new KeyboardEvent('keydown', {
+      key: 'Escape',
+      bubbles: true,
+      cancelable: true
+    });
+    document.dispatchEvent(event);
+
+    expect(event.defaultPrevented).toBe(false);
+    expect(observer).toHaveBeenCalledOnce();
+    document.removeEventListener('keydown', observer);
+    if ('destroy' in action && typeof action.destroy === 'function') action.destroy();
+    node.remove();
+  });
+
   it('recaptures focus when the active control leaves the dialog', async () => {
     const { container } = render(Modal, {
       open: true,
