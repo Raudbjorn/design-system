@@ -1,23 +1,23 @@
-<script module lang="ts">
-  let _sheetUid = 0;
-</script>
-
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import { fade, fly } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import { trapFocus } from '../../internal/focus-trap';
 
-  interface Props {
+  interface SharedProps {
     open?: boolean;
     placement?: 'right' | 'left';
-    title?: string;
-    'aria-label'?: string;
     footer?: Snippet;
     children: Snippet;
     closeOnScrim?: boolean;
     onclose?: () => void;
   }
+
+  type Props =
+    | (SharedProps & { title: string; 'aria-label'?: never })
+    | (SharedProps & { title?: never; 'aria-label': string });
+
+  const uid = $props.id();
 
   let {
     open = $bindable(false),
@@ -30,23 +30,19 @@
     onclose
   }: Props = $props();
 
-  const titleId = `sv-sheet-title-${++_sheetUid}`;
+  const titleId = `sv-sheet-title-${uid}`;
 
   function close() {
     open = false;
     onclose?.();
   }
-  function onScrim() {
-    if (closeOnScrim) close();
-  }
-  function onKeydown(e: KeyboardEvent) {
-    if (open && e.key === 'Escape') close();
+  function onScrim(event: MouseEvent) {
+    if (event.target === event.currentTarget && closeOnScrim) close();
   }
 
   const flyX = $derived(placement === 'right' ? 340 : -340);
 </script>
 
-<svelte:window onkeydown={onKeydown} />
 
 {#if open}
   <div
@@ -63,9 +59,8 @@
       aria-labelledby={title ? titleId : undefined}
       aria-label={title ? undefined : ariaLabel}
       tabindex="-1"
-      use:trapFocus
       transition:fly={{ x: flyX, duration: 300, easing: cubicOut }}
-      onclick={(e) => e.stopPropagation()}
+      use:trapFocus={close}
     >
       {#if title}
         <div data-sv="sheet-header">

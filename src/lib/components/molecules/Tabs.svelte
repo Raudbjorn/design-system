@@ -2,6 +2,10 @@
   interface Tab {
     id: string;
     label: string;
+    /** DOM id for this tab button. */
+    tabId: string;
+    /** DOM id of the consumer-rendered tabpanel. */
+    panelId: string;
   }
 
   interface Props {
@@ -9,13 +13,25 @@
     /** The active tab id (two-way). */
     value?: string;
     onchange?: (id: string) => void;
+    /** Accessible name for the tab list. */
+    'aria-label'?: string;
   }
 
-  let { tabs, value = $bindable(), onchange }: Props = $props();
+  let {
+    tabs,
+    value = $bindable(),
+    onchange,
+    'aria-label': ariaLabel = 'Tabs'
+  }: Props = $props();
+
+  const selectedId = $derived(
+    tabs.some((tab) => tab.id === value) ? value : tabs[0]?.id
+  );
 
   $effect(() => {
-    const first = tabs[0];
-    if (value === undefined && first) value = first.id;
+    if (selectedId === undefined || selectedId === value) return;
+    value = selectedId;
+    onchange?.(selectedId);
   });
 
   function select(id: string) {
@@ -40,15 +56,17 @@
   }
 </script>
 
-<div data-sv="tabs" role="tablist">
+<div data-sv="tabs" role="tablist" aria-label={ariaLabel}>
   {#each tabs as t, i (t.id)}
     <button
       type="button"
       role="tab"
-      aria-selected={value === t.id}
-      tabindex={value === t.id ? 0 : -1}
+      id={t.tabId}
+      aria-controls={t.panelId}
+      aria-selected={selectedId === t.id}
+      tabindex={selectedId === t.id ? 0 : -1}
       data-sv="tab"
-      data-active={value === t.id}
+      data-active={selectedId === t.id}
       onclick={() => select(t.id)}
       onkeydown={(e) => keyNav(e, i)}
     >

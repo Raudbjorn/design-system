@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/svelte';
+import { describe, expect, it, vi } from 'vitest';
+import { fireEvent, render } from '@testing-library/svelte';
 import Checkbox from './Checkbox.svelte';
 
 describe('Checkbox', () => {
@@ -9,5 +9,20 @@ describe('Checkbox', () => {
       'data-checked',
       'true'
     );
+  });
+
+  it('reports the new state and forwards native form attributes', async () => {
+    const onchange = vi.fn();
+    const { container } = render(Checkbox, {
+      name: 'feature',
+      value: 'enabled',
+      onchange
+    });
+    const input = container.querySelector<HTMLInputElement>('input');
+    if (!input) throw new Error('checkbox input missing');
+    await fireEvent.click(input);
+    expect(onchange).toHaveBeenCalledWith(true);
+    expect(input).toHaveAttribute('name', 'feature');
+    expect(input).toHaveAttribute('value', 'enabled');
   });
 });

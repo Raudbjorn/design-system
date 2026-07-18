@@ -3,9 +3,9 @@ import * as React from 'react';
 import { Tabs, Text } from '@svnbjrn/design';
 
 const tabItems = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'logs', label: 'Logs' },
-  { id: 'config', label: 'Config' }
+  { id: 'overview', label: 'Overview', tabId: 'overview-tab', panelId: 'overview-panel' },
+  { id: 'logs', label: 'Logs', tabId: 'logs-tab', panelId: 'logs-panel' },
+  { id: 'config', label: 'Config', tabId: 'config-tab', panelId: 'config-panel' }
 ];
 
 export const Default = () => {
@@ -13,7 +13,12 @@ export const Default = () => {
   return (
     <div>
       <Tabs tabs={tabItems} value={active} onchange={setActive} />
-      <div style={{ padding: '1rem' }}>
+      <div
+        id={`${active}-panel`}
+        role="tabpanel"
+        aria-labelledby={`${active}-tab`}
+        style={{ padding: '1rem' }}
+      >
         {active === 'overview' && (
           <Text>Service overview — uptime, peers, traffic.</Text>
         )}

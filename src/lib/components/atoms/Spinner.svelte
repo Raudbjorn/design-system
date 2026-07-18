@@ -31,4 +31,7 @@
   @keyframes sv-spinner {
     to { transform: rotate(360deg); }
   }
+  @media (prefers-reduced-motion: reduce) {
+    [data-sv='spinner'] { animation: none; }
+  }
 </style>

@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/svelte';
+import { describe, expect, it, vi } from 'vitest';
+import { fireEvent, render } from '@testing-library/svelte';
 import { createRawSnippet } from 'svelte';
 import Sheet from './Sheet.svelte';
 
@@ -31,5 +31,17 @@ describe('Sheet', () => {
       'aria-label',
       'Queue controls'
     );
+  });
+
+  it('handles Escape through the shared overlay stack', async () => {
+    const onclose = vi.fn();
+    render(Sheet, {
+      open: true,
+      title: 'Side panel',
+      onclose,
+      children: createRawSnippet(() => ({ render: () => '<span>body</span>' }))
+    });
+    await fireEvent.keyDown(document, { key: 'Escape' });
+    expect(onclose).toHaveBeenCalledOnce();
   });
 });

@@ -28,7 +28,7 @@
   const checked = $derived(group === value);
 </script>
 
-<label data-sv="radio" data-checked={checked} data-disabled={disabled || undefined}>
+<label data-sv="radio" data-disabled={disabled || undefined}>
   <input
     {id}
     {name}
@@ -79,17 +79,22 @@
     transform: scale(0);
     transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.3);
   }
-  [data-checked='true'] [data-sv='radio-ring'] {
+  [data-sv='radio'] input:checked + [data-sv='radio-ring'] {
     border-color: var(--sv-accent);
     box-shadow: 0 0 0 4px color-mix(in oklab, var(--sv-accent), transparent 80%);
   }
-  [data-checked='true'] [data-sv='radio-dot'] { transform: scale(1); }
+  [data-sv='radio'] input:checked + [data-sv='radio-ring'] [data-sv='radio-dot'] {
+    transform: scale(1);
+  }
 
   /* Coral "unavailable" state. */
   [data-disabled] { cursor: not-allowed; color: color-mix(in oklab, var(--sv-accent-2), var(--sv-text-faint) 40%); }
   [data-disabled] input { pointer-events: none; }
   [data-disabled] [data-sv='radio-ring'] { border-color: var(--sv-accent-2); box-shadow: none; }
-  [data-disabled] [data-sv='radio-dot'] { transform: scale(0); }
+  [data-disabled] input:checked + [data-sv='radio-ring'] [data-sv='radio-dot'] {
+    background: var(--sv-accent-2);
+    transform: scale(1);
+  }
 
   [data-sv='radio'] input:focus-visible + [data-sv='radio-ring'] {
     outline: 2px solid var(--sv-accent);

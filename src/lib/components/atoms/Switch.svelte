@@ -1,7 +1,3 @@
-<script module lang="ts">
-  let _switchUid = 0;
-</script>
-
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
@@ -9,20 +5,23 @@
     checked?: boolean;
     disabled?: boolean;
     id?: string;
+    'aria-label'?: string;
     onchange?: (checked: boolean) => void;
     children?: Snippet;
   }
+
+  const uid = $props.id();
 
   let {
     checked = $bindable(false),
     disabled = false,
     id,
+    'aria-label': ariaLabel,
     onchange,
     children
   }: Props = $props();
 
-  const generatedLabelId = `sv-switch-label-${++_switchUid}`;
-  const labelId = $derived(children ? (id ? `${id}-label` : generatedLabelId) : undefined);
+  const labelId = $derived(children ? (id ? `${id}-label` : `sv-switch-label-${uid}`) : undefined);
 
   function toggle() {
     if (disabled) return;
@@ -39,7 +38,7 @@
     role="switch"
     aria-checked={checked}
     aria-labelledby={labelId}
-    aria-label={labelId ? undefined : 'Toggle'}
+    aria-label={labelId ? undefined : ariaLabel}
     data-sv="switch"
     data-on={checked}
     {disabled}

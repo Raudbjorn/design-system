@@ -15,7 +15,7 @@
 
 <Story name="Default">
   {#snippet template({ children: _, ...args })}
-    <Switch {...args} />
+    <Switch {...args} aria-label="Feature toggle" />
   {/snippet}
 </Story>
 

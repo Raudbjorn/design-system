@@ -1,3 +1,7 @@
+<script module lang="ts">
+  const KNOWN_COLORS = new Set(['accent', 'success', 'warning', 'error', 'accent-2']);
+</script>
+
 <script lang="ts">
   interface Item {
     content: string;
@@ -17,8 +21,8 @@
 
   let { items, mode = 'alternate', variant = 'outlined', reverse = false }: Props = $props();
 
-  const known = new Set(['accent', 'success', 'warning', 'error', 'accent-2']);
-  const dotColor = (c?: string) => (c ? (known.has(c) ? `var(--sv-${c})` : c) : 'var(--sv-accent)');
+  const dotColor = (c?: string) =>
+    c ? (KNOWN_COLORS.has(c) ? `var(--sv-${c})` : c) : 'var(--sv-accent)';
 
   const ordered = $derived(reverse ? [...items].reverse() : items);
 
@@ -30,9 +34,9 @@
   }
 </script>
 
-<div data-sv="timeline" data-mode={mode}>
+<ol data-sv="timeline" data-mode={mode}>
   {#each ordered as item, i (i)}
-    <div data-sv="tl-item" data-side={side(item, i)} data-last={i === ordered.length - 1 || undefined}>
+    <li data-sv="tl-item" data-side={side(item, i)} data-last={i === ordered.length - 1 || undefined}>
       <div data-sv="tl-content-start">
         {#if side(item, i) === 'start'}
           {#if item.title}<span data-sv="tl-title">{item.title}</span>{/if}
@@ -41,7 +45,7 @@
       </div>
       <div data-sv="tl-axis">
         {#if item.loading}
-          <span data-sv="tl-spinner"></span>
+          <span data-sv="tl-spinner" role="status" aria-label={item.title ? `Loading ${item.title}` : 'Loading timeline item'}></span>
         {:else}
           <span
             data-sv="tl-dot"
@@ -57,12 +61,18 @@
           <span data-sv="tl-text">{item.content}</span>
         {/if}
       </div>
-    </div>
+    </li>
   {/each}
-</div>
+</ol>
 
 <style>
-  [data-sv='timeline'] { display: flex; flex-direction: column; }
+  [data-sv='timeline'] {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
   /* start/end modes collapse the unused side column. */
   [data-mode='start'] [data-sv='tl-item'] { grid-template-columns: 1fr 14px 0; }
   [data-mode='end'] [data-sv='tl-item'] { grid-template-columns: 0 14px 1fr; }
@@ -122,4 +132,7 @@
     min-height: 14px;
   }
   @keyframes sv-tl-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    [data-sv='tl-spinner'] { animation: none; }
+  }
 </style>
