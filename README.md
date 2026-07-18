@@ -21,8 +21,7 @@ Not published to npm. Consume from source:
 pnpm add github:Raudbjorn/design-system
 ```
 
-The component peer dependency is Svelte 5. Building the package or running its
-generator CLI requires Node.js 22 or newer.
+The package requires Node.js 22 or newer and has Svelte 5 as a peer dependency.
 
 ## Usage
 
@@ -227,9 +226,9 @@ highlighter such as Shiki, with token classes mapping to `--sv-syn-*`); it
 ships no client-side highlighter. Copy-to-clipboard always copies the raw
 `code`. `showLineNumbers` renders a gutter derived from `code`, ignores one
 trailing newline, and emits a development warning when supplied `html` does
-not preserve that line count. `copyLabel`, `copiedLabel`, and `copyAriaLabel`
-support localized or world-flavored copy controls without breaking
-label-in-name.
+not preserve that line count. `copyLabel` and `copiedLabel` localize the
+visible copy states. `copyAriaLabel` customizes the idle accessible name and
+must include the visible `copyLabel` to preserve label-in-name.
 
 ## Develop
 
