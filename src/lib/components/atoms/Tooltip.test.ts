@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { fireEvent, render } from '@testing-library/svelte';
 import { createRawSnippet } from 'svelte';
 import Tooltip from './Tooltip.svelte';
@@ -32,8 +32,12 @@ describe('Tooltip', () => {
     await fireEvent.focusIn(wrapper);
     const tooltip = container.querySelector('[role="tooltip"]');
     expect(svg).toHaveAttribute('aria-describedby', tooltip?.id);
+    const bubbled = vi.fn();
+    document.addEventListener('keydown', bubbled);
     await fireEvent.keyDown(wrapper, { key: 'Escape' });
     expect(container.querySelector('[role="tooltip"]')).toBeNull();
+    expect(bubbled).not.toHaveBeenCalled();
+    document.removeEventListener('keydown', bubbled);
     expect(svg).not.toHaveAttribute('aria-describedby');
   });
 

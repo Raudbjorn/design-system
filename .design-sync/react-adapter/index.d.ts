@@ -1,8 +1,8 @@
 // React-surface types for @svnbjrn/design — the Svelte 5 library consumed
 // through its React adapter (see .design-sync/react-adapter/). Props mirror
 // each component's Svelte Props interface 1:1; snippet props (children,
-// header, footer, brand) accept React nodes. Event callbacks keep the
-// library's real Svelte 5 names (onclick, lowercase).
+// header, footer, and brand) accept React nodes. Lowercase Svelte event names
+// remain canonical; matching React camelCase aliases are also accepted.
 import * as React from 'react';
 
 /** Body text on the token ramp. Renders a p by default; as switches the element. */
@@ -278,18 +278,21 @@ export interface InputProps extends Omit<
   mono?: boolean;
   readonly?: boolean;
   oninput?: (e: Event) => void;
+  onInput?: (e: Event) => void;
+  onChange?: (e: Event) => void;
 }
 export declare const Input: React.FC<InputProps>;
 
 /** Native select restyled to the token surface. */
 export interface SelectProps extends Omit<
   React.SelectHTMLAttributes<HTMLSelectElement>,
-  'children' | 'value' | 'onChange'
+  'children' | 'value' | 'onChange' | 'multiple'
 > {
   value?: string;
   options: { value: string; label: string }[];
   label?: string;
   onchange?: (e: Event) => void;
+  onChange?: (e: Event) => void;
 }
 export declare const Select: React.FC<SelectProps>;
 
@@ -300,6 +303,7 @@ export interface CheckboxProps extends Omit<
 > {
   checked?: boolean;
   onchange?: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
   children?: React.ReactNode;
 }
 export declare const Checkbox: React.FC<CheckboxProps>;
@@ -312,19 +316,22 @@ export interface RadioProps {
   disabled?: boolean;
   id?: string;
   onchange?: (value: string) => void;
+  onChange?: (value: string) => void;
   children?: React.ReactNode;
 }
 export declare const Radio: React.FC<RadioProps>;
 
 /** Binary toggle; accent fills the track when on. */
-export interface SwitchProps {
+export type SwitchProps = {
   checked?: boolean;
   disabled?: boolean;
   id?: string;
-  'aria-label'?: string;
   onchange?: (checked: boolean) => void;
-  children?: React.ReactNode;
-}
+  onChange?: (checked: boolean) => void;
+} & (
+  | { children: React.ReactNode; 'aria-label'?: never }
+  | { children?: never; 'aria-label': string }
+);
 export declare const Switch: React.FC<SwitchProps>;
 
 /** Inline message; `info` maps to accent, the rest to semantic tokens. */
@@ -374,6 +381,7 @@ export interface TabsProps {
   }[];
   value?: string;
   onchange?: (id: string) => void;
+  onChange?: (id: string) => void;
   /** Accessible name for the tab list. */
   'aria-label'?: string;
 }
@@ -427,6 +435,7 @@ export type ModalProps = {
   children: React.ReactNode;
   closeOnScrim?: boolean;
   onclose?: () => void;
+  onClose?: () => void;
 } & (
   | { title: string; 'aria-label'?: never }
   | { title?: never; 'aria-label': string }
@@ -441,6 +450,7 @@ export type SheetProps = {
   children: React.ReactNode;
   closeOnScrim?: boolean;
   onclose?: () => void;
+  onClose?: () => void;
 } & (
   | { title: string; 'aria-label'?: never }
   | { title?: never; 'aria-label': string }

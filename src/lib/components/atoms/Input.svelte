@@ -25,12 +25,14 @@
     disabled = false,
     readonly = false,
     oninput,
+    'aria-describedby': ariaDescribedby,
     ...rest
   }: Props = $props();
 
   const hasError = $derived(!!error);
   const message = $derived(typeof error === 'string' ? error : '');
   const descId = $derived(message || hint ? `${id}-desc` : undefined);
+  const describedBy = $derived([ariaDescribedby, descId].filter(Boolean).join(' ') || undefined);
 </script>
 
 <div data-sv="field">
@@ -46,7 +48,7 @@
     data-mono={mono}
     data-error={hasError || undefined}
     aria-invalid={hasError || undefined}
-    aria-describedby={descId}
+    aria-describedby={describedBy}
     bind:value
     {oninput}
   />

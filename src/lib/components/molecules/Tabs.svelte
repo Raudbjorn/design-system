@@ -28,10 +28,25 @@
     tabs.some((tab) => tab.id === value) ? value : tabs[0]?.id
   );
 
+  let lastInvalidValue: string | undefined;
+  let lastSelectedId: string | undefined;
+  let correctionNotified = false;
+
   $effect(() => {
-    if (selectedId === undefined || selectedId === value) return;
-    value = selectedId;
-    onchange?.(selectedId);
+    if (selectedId === undefined) return;
+    if (selectedId === value) {
+      correctionNotified = false;
+      return;
+    }
+    if (!onchange) {
+      value = selectedId;
+      return;
+    }
+    if (correctionNotified && lastInvalidValue === value && lastSelectedId === selectedId) return;
+    lastInvalidValue = value;
+    lastSelectedId = selectedId;
+    correctionNotified = true;
+    onchange(selectedId);
   });
 
   function select(id: string) {

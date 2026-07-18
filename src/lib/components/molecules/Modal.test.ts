@@ -59,6 +59,45 @@ describe('Modal', () => {
     expect(document.body.style.overflow).toBe(previousOverflow);
   });
 
+  it('lets a nested control consume Escape before overlay routing', async () => {
+    const onclose = vi.fn();
+    const result = render(Modal, {
+      open: true,
+      title: 'Dialog',
+      onclose,
+      children: createRawSnippet(() => ({ render: () => '<button>Nested control</button>' }))
+    });
+    const button = result.container.querySelector('button');
+    if (!button) throw new Error('nested control missing');
+    button.addEventListener('keydown', (event) => event.stopPropagation());
+
+    await fireEvent.keyDown(button, { key: 'Escape' });
+    expect(onclose).not.toHaveBeenCalled();
+    result.unmount();
+  });
+
+  it('transfers return focus when a lower overlay unmounts first', () => {
+    const opener = document.createElement('button');
+    document.body.appendChild(opener);
+    opener.focus();
+    const children = createRawSnippet(() => ({ render: () => '<button>Action</button>' }));
+    const modalRender = render(Modal, {
+      open: true,
+      title: 'Base dialog',
+      children
+    });
+    const sheetRender = render(Sheet, {
+      open: true,
+      title: 'Top drawer',
+      children
+    });
+
+    modalRender.unmount();
+    sheetRender.unmount();
+    expect(document.activeElement).toBe(opener);
+    opener.remove();
+  });
+
   it('recaptures focus when the active control leaves the dialog', async () => {
     const { container } = render(Modal, {
       open: true,
