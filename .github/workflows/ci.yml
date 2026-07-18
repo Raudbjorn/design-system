@@ -26,6 +26,7 @@ jobs:
 
   argos:
     name: Visual tests & Storybook deploy
+    if: ${{ false }} # Disabled until the visual test and deploy action is re-enabled.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
