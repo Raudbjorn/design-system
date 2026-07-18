@@ -29,7 +29,7 @@
     }
     return rows.map((row) => {
       const key = row[rowKey];
-      return { row, key: counts.get(key) === 1 ? key : row };
+      return { row, key: key !== undefined && counts.get(key) === 1 ? key : row };
     });
   });
 </script>
