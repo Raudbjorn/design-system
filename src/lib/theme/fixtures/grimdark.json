@@ -16,7 +16,7 @@
     "surface-3": { "$value": "#282319" },
     "border": { "$value": "#453c2f" },
     "accent": { "$value": "#c9a227" },
-    "accent-2": { "$value": "#b5473a" },
+    "accent-2": { "$value": "#ca5a4c" },
     "accent-rust": { "$value": "{accent-2}" },
     "syn": {
       "$type": "color",

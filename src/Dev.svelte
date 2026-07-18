@@ -69,7 +69,11 @@
 
 <NavBar>
   {#snippet brand()}svnbjrn{/snippet}
-  <button class="theme" onclick={() => (theme = theme === 'dark' ? 'light' : 'dark')}>
+  <button
+    class="theme"
+    onclick={() => (theme = theme === 'dark' ? 'light' : 'dark')}
+    aria-pressed={theme === 'dark'}
+  >
     {theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
   </button>
 </NavBar>

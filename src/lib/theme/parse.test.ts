@@ -191,7 +191,7 @@ describe('grimdark fixture', () => {
       extends: 'dark'
     });
     expect(result.value.tokens.get('bg')).toBe('#141210');
-    expect(result.value.tokens.get('accent-rust')).toBe('#b5473a'); // via alias
+    expect(result.value.tokens.get('accent-rust')).toBe('#ca5a4c'); // via alias
     expect(result.value.tokens.get('syn-string')).toBe('#cd9a50'); // via oklch()
     expect(result.value.tokens.get('radius-lg')).toBe('6px');
     expect(result.value.tokens.get('font-sans')).toBe("'Alegreya', 'Georgia', serif");
@@ -211,7 +211,7 @@ describe('vermis fixture', () => {
       version: '1.0.0',
       extends: 'dark'
     });
-    expect(result.value.tokens.get('accent')).toBe('#c0432c');
+    expect(result.value.tokens.get('accent')).toBe('#d85a40');
     expect(result.value.tokens.get('accent-2')).toBe('#c9b458');
     expect(result.value.tokens.get('accent-rust')).toBe('#8b6f47');
     expect(result.value.tokens.get('success')).toBe('#7a8a3a');

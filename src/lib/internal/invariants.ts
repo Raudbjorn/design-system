@@ -31,10 +31,12 @@ const SYN_TOKENS = [
 ] as const;
 
 export const CONTRAST_RULES: readonly ContrastRule[] = [
-  // Frozen: the contract palette.test.ts has enforced since v1.
+  // Frozen: body text, accent text/buttons, and syntax text all use normal-size
+  // glyphs in shipped components, so every foreground/background pair must
+  // clear the WCAG AA 4.5:1 text threshold.
   ...BODY_TOKENS.map((fg): ContrastRule => ({ fg, bg: 'bg', floor: 4.5, tier: 'frozen' })),
-  { fg: 'accent', bg: 'bg', floor: 3, tier: 'frozen' },
-  { fg: 'accent-2', bg: 'bg', floor: 3, tier: 'frozen' },
+  { fg: 'accent', bg: 'bg', floor: 4.5, tier: 'frozen' },
+  { fg: 'accent-2', bg: 'bg', floor: 4.5, tier: 'frozen' },
   ...SYN_TOKENS.map((fg): ContrastRule => ({ fg, bg: 'surface-3', floor: 4.5, tier: 'frozen' })),
   // Extension: additive rules for the world-theme engine. Status colors also
   // serve UI indicators there, so this broader engine retains a 3:1 floor;

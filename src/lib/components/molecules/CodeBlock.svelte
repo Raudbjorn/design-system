@@ -1,5 +1,6 @@
 <script lang="ts">
   import { DEV } from 'esm-env';
+  import { onDestroy } from 'svelte';
 
   interface Props {
     code: string;
@@ -26,6 +27,11 @@
   }: Props = $props();
 
   let copied = $state(false);
+  let copiedReset: ReturnType<typeof setTimeout> | undefined;
+
+  onDestroy(() => {
+    if (copiedReset !== undefined) clearTimeout(copiedReset);
+  });
   // The accessible name must track the VISIBLE label through the copied
   // window (label-in-name, WCAG 2.5.3) — and the name change is what tells a
   // focused screen-reader user the copy landed. copiedLabel verbatim keeps
@@ -61,8 +67,12 @@
     if (!navigator.clipboard) return;
     try {
       await navigator.clipboard.writeText(code);
+      if (copiedReset !== undefined) clearTimeout(copiedReset);
       copied = true;
-      setTimeout(() => (copied = false), 1500);
+      copiedReset = setTimeout(() => {
+        copied = false;
+        copiedReset = undefined;
+      }, 1500);
     } catch {
       // Clipboard write can reject on permission denial; leave the label unchanged.
     }
