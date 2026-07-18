@@ -235,6 +235,31 @@ describe('Modal', () => {
     node.remove();
   });
 
+  it('lets focused controls consume Tab before containment runs', () => {
+    const node = document.createElement('div');
+    const first = document.createElement('button');
+    const last = document.createElement('button');
+    Object.defineProperty(first, 'offsetParent', { value: node });
+    Object.defineProperty(last, 'offsetParent', { value: node });
+    node.append(first, last);
+    document.body.appendChild(node);
+    const action = trapFocus(node, vi.fn());
+    last.focus();
+    last.addEventListener('keydown', (event) => event.preventDefault());
+
+    const event = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      bubbles: true,
+      cancelable: true
+    });
+    last.dispatchEvent(event);
+
+    expect(event.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(last);
+    if ('destroy' in action && typeof action.destroy === 'function') action.destroy();
+    node.remove();
+  });
+
   it('recaptures focus when the active control leaves the dialog', async () => {
     const { container } = render(Modal, {
       open: true,
