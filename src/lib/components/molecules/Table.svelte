@@ -20,16 +20,36 @@
 
   let { columns, rows, rowKey, cell }: Props = $props();
 
-  const keyedRows = $derived.by(() => {
-    if (!rowKey) return rows.map((row) => ({ row, key: row }));
-    const counts = new Map<unknown, number>();
-    for (const row of rows) {
-      const key = row[rowKey];
-      counts.set(key, (counts.get(key) ?? 0) + 1);
+  const fallbackKeys = new WeakMap<Record<string, unknown>, object[]>();
+
+  function fallbackKey(row: Record<string, unknown>, occurrence: number): object {
+    let keys = fallbackKeys.get(row);
+    if (!keys) {
+      keys = [];
+      fallbackKeys.set(row, keys);
     }
+    return (keys[occurrence] ??= {});
+  }
+
+  const keyedRows = $derived.by(() => {
+    const counts = new Map<unknown, number>();
+    if (rowKey) {
+      for (const row of rows) {
+        const key = row[rowKey];
+        counts.set(key, (counts.get(key) ?? 0) + 1);
+      }
+    }
+
+    const occurrences = new Map<Record<string, unknown>, number>();
     return rows.map((row) => {
-      const key = row[rowKey];
-      return { row, key: key !== undefined && counts.get(key) === 1 ? key : row };
+      const occurrence = occurrences.get(row) ?? 0;
+      occurrences.set(row, occurrence + 1);
+      const configuredKey = rowKey ? row[rowKey] : undefined;
+      const key =
+        rowKey && configuredKey !== undefined && counts.get(configuredKey) === 1
+          ? configuredKey
+          : fallbackKey(row, occurrence);
+      return { row, key };
     });
   });
 </script>

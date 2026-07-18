@@ -19,7 +19,9 @@
 
   function getTrigger(): Element | null {
     let trigger = wrapEl?.firstElementChild ?? null;
-    while (trigger?.tagName === 'DS-SLOT') trigger = trigger.firstElementChild;
+    while (trigger && (trigger.tagName === 'DS-SLOT' || trigger.tagName === 'DS-HOST')) {
+      trigger = trigger.firstElementChild;
+    }
     return trigger;
   }
 

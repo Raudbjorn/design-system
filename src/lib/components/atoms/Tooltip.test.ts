@@ -19,6 +19,23 @@ describe('Tooltip', () => {
     expect(button).toHaveAttribute('aria-describedby', el?.id);
   });
 
+  it('describes triggers nested through adapter hosts', async () => {
+    const { container } = render(Tooltip, {
+      content: 'Adapter help',
+      children: createRawSnippet(() => ({
+        render: () =>
+          '<ds-slot><ds-slot><ds-host><button type="button">Nested</button></ds-host></ds-slot></ds-slot>'
+      }))
+    });
+    const wrapper = container.querySelector<HTMLElement>('[data-sv="tooltip-wrap"]');
+    const button = container.querySelector('button');
+    if (!wrapper || !button) throw new Error('nested tooltip trigger missing');
+
+    await fireEvent.mouseEnter(wrapper);
+    const tooltip = container.querySelector('[role="tooltip"]');
+    expect(button).toHaveAttribute('aria-describedby', tooltip?.id);
+  });
+
   it('supports SVG triggers and dismisses with Escape', async () => {
     const { container } = render(Tooltip, {
       content: 'Icon help',

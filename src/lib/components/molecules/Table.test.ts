@@ -89,4 +89,19 @@ describe('Table', () => {
     expect(replacementRow).toHaveTextContent('Replacement');
   });
 
+  it('assigns distinct fallback keys to repeated row references', () => {
+    const columns = [{ key: 'name', header: 'Name' }];
+    const row = { id: 'same', name: 'Repeated' };
+
+    for (const rowKey of [undefined, 'id']) {
+      const { container, unmount } = render(Table, {
+        columns,
+        rows: [row, row],
+        rowKey
+      });
+      expect(container.querySelectorAll('tbody tr')).toHaveLength(2);
+      unmount();
+    }
+  });
+
 });
