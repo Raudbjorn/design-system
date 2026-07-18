@@ -330,6 +330,8 @@ export interface RadioProps {
 }
 export declare const Radio: React.FC<RadioProps>;
 
+type RenderableSwitchLabel = Exclude<React.ReactNode, boolean | null | undefined>;
+
 /** Binary toggle; accent fills the track when on. */
 export type SwitchProps = {
   checked?: boolean;
@@ -338,7 +340,7 @@ export type SwitchProps = {
   onchange?: (checked: boolean) => void;
   onChange?: (checked: boolean) => void;
 } & (
-  | { children: React.ReactNode; 'aria-label'?: never }
+  | { children: RenderableSwitchLabel; 'aria-label'?: never }
   | { children?: never; 'aria-label': string }
 );
 export declare const Switch: React.FC<SwitchProps>;
