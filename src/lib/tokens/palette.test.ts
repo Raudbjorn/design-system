@@ -4,9 +4,10 @@ import { contrastRatio } from '../internal/contrast';
 import { dark, light } from './palette';
 
 // The shared runtime contract lives in internal/invariants.ts. Built-in themes
-// pass every shared rule; the light palette additionally keeps every semantic
-// text color at 4.5:1 across its full paper surface ramp. The published v1
-// theme-package contract remains 3:1 for backwards compatibility.
+// pass every shared rule and keep semantic text at 4.5:1 on their primary
+// background; the light palette additionally guarantees that floor across its
+// full paper surface ramp. The published v1 theme-package contract remains 3:1
+// for backwards compatibility.
 
 const SEMANTIC_TEXT_TOKENS = [
   'accent',
@@ -30,6 +31,17 @@ describe('palette accessibility', () => {
       expect(failures).toEqual([]);
     });
   }
+
+  it('dark semantic text colors clear 4.5:1 on the primary background', () => {
+    const failures = SEMANTIC_TEXT_TOKENS.map((fg) => ({
+      fg,
+      ratio: contrastRatio(dark[fg]!, dark.bg!)
+    }))
+      .filter(({ ratio }) => ratio < 4.5)
+      .map(({ fg, ratio }) => `${fg} on bg: ${ratio.toFixed(2)} < 4.5`);
+
+    expect(failures).toEqual([]);
+  });
 
   it('light semantic text colors clear 4.5:1 on every permitted surface', () => {
     const failures = SEMANTIC_TEXT_TOKENS.flatMap((fg) =>
