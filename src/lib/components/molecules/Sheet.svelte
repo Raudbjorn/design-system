@@ -33,10 +33,11 @@
   const titleId = `sv-sheet-title-${uid}`;
 
   function close() {
+    if (!open) return;
     open = false;
     onclose?.();
   }
-  function onScrim(event: MouseEvent) {
+  function onScrim(event: PointerEvent) {
     if (event.target === event.currentTarget && closeOnScrim) close();
   }
 
@@ -49,7 +50,7 @@
     data-sv="sheet-scrim"
     data-placement={placement}
     transition:fade={{ duration: 220 }}
-    onclick={onScrim}
+    onpointerdown={onScrim}
     role="presentation"
   >
     <div

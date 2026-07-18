@@ -123,8 +123,17 @@
     transition: opacity 0.12s ease;
     z-index: var(--sv-z-dropdown);
   }
+  [data-sv='tooltip']::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 8px;
+  }
   [data-placement='top'] { bottom: calc(100% + 8px); }
+  [data-placement='top']::before { top: 100%; }
   [data-placement='bottom'] { top: calc(100% + 8px); }
+  [data-placement='bottom']::before { bottom: 100%; }
   [data-open='true'] { opacity: 1; }
   [data-sv='tooltip-arrow'] {
     position: absolute;

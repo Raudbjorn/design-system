@@ -151,7 +151,7 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
       if (s.app && s.bag && !shallowEq(s.last, svelteProps)) {
         s.bag.v = svelteProps;
         s.last = svelteProps;
-        scheduleRender();
+        if (s.cells.size > 0) scheduleRender();
       }
     });
 
