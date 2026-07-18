@@ -5,15 +5,21 @@ import Timeline from './Timeline.svelte';
 describe('Timeline', () => {
   it('defaults to alternate mode with alternating sides', () => {
     const { container } = render(Timeline, {
-      items: [{ content: 'A' }, { content: 'B' }]
+      items: [{ content: 'A', title: 'Deploy', loading: true }, { content: 'B' }]
     });
     expect(container.querySelector('[data-sv="timeline"]')).toHaveAttribute(
       'data-mode',
       'alternate'
     );
+    expect(container.querySelector('[data-sv="timeline"]')).toHaveAttribute('role', 'list');
     const items = container.querySelectorAll('[data-sv="tl-item"]');
     expect(items[0]).toHaveAttribute('data-side', 'start');
     expect(items[1]).toHaveAttribute('data-side', 'end');
+    expect(items[0]?.tagName).toBe('LI');
+    expect(container.querySelector('[data-sv="tl-spinner"]')).toHaveAttribute(
+      'aria-label',
+      'Loading Deploy'
+    );
   });
 
   it('uses ordered-list semantics and names loading state', () => {

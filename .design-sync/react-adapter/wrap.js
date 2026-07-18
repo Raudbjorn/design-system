@@ -63,16 +63,16 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
       if (snippetProps.includes(k)) continue;
       svelteProps[k] = v;
     }
-    // Forgiving aliases: React muscle memory writes camelCase event props; the
-    // real Svelte 5 props stay lowercase. Documented API stays lowercase —
-    // this only prevents silently dead handlers.
-    const eventAliases = {
+    // Forgiving aliases for React's camelCase prop conventions. The wrapped
+    // Svelte 5 components keep their lowercase public props.
+    const propAliases = {
       onClick: 'onclick',
       onChange: 'onchange',
       onInput: 'oninput',
       onClose: 'onclose',
+      readOnly: 'readonly',
     };
-    for (const [reactName, svelteName] of Object.entries(eventAliases)) {
+    for (const [reactName, svelteName] of Object.entries(propAliases)) {
       if (svelteProps[reactName] && !svelteProps[svelteName]) {
         svelteProps[svelteName] = svelteProps[reactName];
         delete svelteProps[reactName];
