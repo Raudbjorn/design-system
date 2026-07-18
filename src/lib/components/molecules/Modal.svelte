@@ -29,10 +29,11 @@
 
   const titleId = `sv-modal-title-${uid}`;
 
-  function close() {
-    if (!open) return;
+  function close(): boolean {
+    if (!open) return false;
     open = false;
     onclose?.();
+    return true;
   }
   function onScrim(event: PointerEvent) {
     if (event.target === event.currentTarget && closeOnScrim) close();

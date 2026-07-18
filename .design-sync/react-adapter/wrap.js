@@ -67,7 +67,7 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
     // Svelte 5 components keep their lowercase public props.
     const propAliases = {
       onClick: 'onclick',
-      onChange: 'onchange',
+      onChange: name === 'Input' ? 'oninput' : 'onchange',
       onInput: 'oninput',
       onClose: 'onclose',
       readOnly: 'readonly',

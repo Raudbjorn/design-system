@@ -5,7 +5,7 @@ const FOCUSABLE =
 
 type TrapEntry = {
   node: HTMLElement;
-  onEscape: () => void;
+  onEscape: () => boolean | void;
   previouslyFocused: HTMLElement | null;
   addedTabIndex: boolean;
 };
@@ -23,9 +23,9 @@ function onDocumentKeydown(event: KeyboardEvent) {
   const active = traps[traps.length - 1];
   if (!active || event.key !== 'Escape' || event.defaultPrevented) return;
 
+  if (active.onEscape() === false) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  active.onEscape();
 }
 
 function onDocumentCaptureKeydown(event: KeyboardEvent) {
@@ -49,7 +49,7 @@ function onDocumentCaptureKeydown(event: KeyboardEvent) {
   }
 }
 
-export function trapFocus(node: HTMLElement, onEscape: () => void) {
+export function trapFocus(node: HTMLElement, onEscape: () => boolean | void) {
   if (typeof document === 'undefined') return {};
   let entry = traps.find((candidate) => candidate.node === node);
   if (entry) {
@@ -76,7 +76,7 @@ export function trapFocus(node: HTMLElement, onEscape: () => void) {
   (focusables(node)[0] ?? node).focus();
 
   return {
-    update(nextOnEscape: () => void) {
+    update(nextOnEscape: () => boolean | void) {
       if (entry) entry.onEscape = nextOnEscape;
     },
     destroy() {
