@@ -74,7 +74,8 @@
     onclick={() => (theme = theme === 'dark' ? 'light' : 'dark')}
     aria-pressed={theme === 'dark'}
   >
-    Dark theme
+    <span>Dark theme</span>
+    <span class="theme-state" aria-hidden="true">{theme === 'dark' ? 'On' : 'Off'}</span>
   </button>
 </NavBar>
 
@@ -389,6 +390,9 @@
   }
 
   .theme {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
     font-family: var(--sv-font-mono);
     font-size: var(--sv-fs-xs);
     color: var(--sv-text-muted);
@@ -398,6 +402,8 @@
     padding: 0.35em 0.75em;
     cursor: pointer;
   }
+  .theme-state { color: var(--sv-text-faint); }
+  .theme[aria-pressed='true'] .theme-state { color: var(--sv-accent); }
   .theme:hover { color: var(--sv-accent); border-color: var(--sv-accent); }
   .theme:focus-visible { outline: 2px solid var(--sv-accent); outline-offset: 2px; }
 
