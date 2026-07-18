@@ -20,7 +20,10 @@
       "coral-300": { "$value": "#e06c75" },
       "coral-600": { "$value": "#8d3740" },
       "rust-300": { "$value": "#ce9178" },
-      "rust-600": { "$value": "#b26a45" },
+      "rust-600": {
+        "$value": "#874a30",
+        "$description": "AA (>=4.5:1) on paper-100 through paper-400 for semantic text"
+      },
       "rust-700": { "$value": "#8a4326" },
       "white": { "$value": "#ffffff" },
       "black": { "$value": "#000000" },
