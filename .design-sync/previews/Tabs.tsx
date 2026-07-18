@@ -13,18 +13,22 @@ export const Default = () => {
   return (
     <div>
       <Tabs tabs={tabItems} value={active} onchange={setActive} />
-      <div
-        id={`${active}-panel`}
-        role="tabpanel"
-        aria-labelledby={`${active}-tab`}
-        style={{ padding: '1rem' }}
-      >
-        {active === 'overview' && (
-          <Text>Service overview — uptime, peers, traffic.</Text>
-        )}
-        {active === 'logs' && <Text>journalctl -u nginx — last 100 lines.</Text>}
-        {active === 'config' && <Text>/etc/named.conf — current zone list.</Text>}
-      </div>
+      {tabItems.map((tab) => (
+        <div
+          key={tab.id}
+          id={tab.panelId}
+          role="tabpanel"
+          aria-labelledby={tab.tabId}
+          hidden={active !== tab.id}
+          style={{ padding: '1rem' }}
+        >
+          {tab.id === 'overview' && (
+            <Text>Service overview — uptime, peers, traffic.</Text>
+          )}
+          {tab.id === 'logs' && <Text>journalctl -u nginx — last 100 lines.</Text>}
+          {tab.id === 'config' && <Text>/etc/named.conf — current zone list.</Text>}
+        </div>
+      ))}
     </div>
   );
 };

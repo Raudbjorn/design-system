@@ -22,19 +22,22 @@
 <Story name="Default" asChild>
   <div>
     <Tabs tabs={tabItems} bind:value={active} />
-    <div
-      id={`${active}-panel`}
-      role="tabpanel"
-      aria-labelledby={`${active}-tab`}
-      style="padding: 1rem;"
-    >
-      {#if active === 'overview'}
-        <Text>Service overview — uptime, peers, traffic.</Text>
-      {:else if active === 'logs'}
-        <Text>journalctl -u nginx — last 100 lines.</Text>
-      {:else}
-        <Text>/etc/named.conf — current zone list.</Text>
-      {/if}
-    </div>
+    {#each tabItems as tab (tab.id)}
+      <div
+        id={tab.panelId}
+        role="tabpanel"
+        aria-labelledby={tab.tabId}
+        hidden={active !== tab.id}
+        style="padding: 1rem;"
+      >
+        {#if tab.id === 'overview'}
+          <Text>Service overview — uptime, peers, traffic.</Text>
+        {:else if tab.id === 'logs'}
+          <Text>journalctl -u nginx — last 100 lines.</Text>
+        {:else}
+          <Text>/etc/named.conf — current zone list.</Text>
+        {/if}
+      </div>
+    {/each}
   </div>
 </Story>
