@@ -15,7 +15,7 @@ import type {
 } from './types.ts';
 
 const NAME_RE = /^[a-z0-9][a-z0-9-]{0,63}$/;
-const VERSION_RE = /^\d+\.\d+\.\d+/;
+const VERSION_RE = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
 const MAX_INPUT_BYTES = 64 * 1024;
 const MAX_META_ENTRIES = 32;
 const MAX_META_VALUE_LENGTH = 256;
@@ -24,6 +24,84 @@ const MAX_UNKNOWN_REPORTS = 20;
 // `tokens` and `extends` are the theme engine's keys — tolerated (not warned)
 // so a single {tokens, strings} world bundle parses cleanly through both.
 const KNOWN_TOP_LEVEL = new Set(['$schema', 'name', 'version', 'meta', 'strings', 'tokens', 'extends']);
+
+const MAX_OBJECT_INPUT_DEPTH = 32;
+const textEncoder = new TextEncoder();
+
+/**
+ * Clone an untrusted JSON-like object into inert data while enforcing the same
+ * structural budget for string and object inputs. Only ordinary/null-prototype
+ * objects, arrays, primitives, and enumerable own data properties survive.
+ */
+const sanitizeObjectInput = (value: unknown): Record<string, unknown> | null => {
+  const invalid = Symbol('invalid input');
+  let remaining = MAX_INPUT_BYTES;
+  const ancestors = new WeakSet<object>();
+
+  const visit = (current: unknown, depth: number): unknown | typeof invalid => {
+    if (depth > MAX_OBJECT_INPUT_DEPTH || --remaining < 0) return invalid;
+    if (typeof current === 'string') {
+      if (current.length > remaining) return invalid;
+      remaining -= textEncoder.encode(current).length;
+      return remaining >= 0 ? current : invalid;
+    }
+    if (current === null || typeof current === 'boolean') return current;
+    if (typeof current === 'number') {
+      if (!Number.isFinite(current)) return invalid;
+      remaining -= String(current).length;
+      return remaining >= 0 ? current : invalid;
+    }
+    if (typeof current !== 'object' || ancestors.has(current)) return invalid;
+
+    const array = Array.isArray(current);
+    const prototype = Object.getPrototypeOf(current);
+    if (
+      (array && prototype !== Array.prototype) ||
+      (!array && prototype !== Object.prototype && prototype !== null) ||
+      (array && current.length > remaining)
+    ) {
+      return invalid;
+    }
+
+    ancestors.add(current);
+    const out: unknown[] | Record<string, unknown> = array ? [] : Object.create(null);
+    for (const key in current) {
+      if (!Object.hasOwn(current, key)) continue;
+      const descriptor = Object.getOwnPropertyDescriptor(current, key);
+      if (!descriptor || !('value' in descriptor)) {
+        ancestors.delete(current);
+        return invalid;
+      }
+      const safeKey = visit(key, depth + 1);
+      const safeValue = visit(descriptor.value, depth + 1);
+      if (safeKey === invalid || safeValue === invalid) {
+        ancestors.delete(current);
+        return invalid;
+      }
+      Object.defineProperty(out, safeKey as string, {
+        value: safeValue,
+        enumerable: true,
+        writable: true,
+        configurable: true
+      });
+    }
+    ancestors.delete(current);
+    return out;
+  };
+
+  try {
+    if (value && typeof value === 'object') {
+      for (const key of ['name', 'version', 'strings', 'meta']) {
+        const descriptor = Object.getOwnPropertyDescriptor(value, key);
+        if (descriptor && (!descriptor.enumerable || !('value' in descriptor))) return null;
+      }
+    }
+    const safe = visit(value, 0);
+    return safe !== invalid && isRecord(safe) ? safe : null;
+  } catch {
+    return null;
+  }
+};
 
 const isRecord = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -39,36 +117,60 @@ const preview = (value: unknown): string => {
   return text.length > 64 ? `${text.slice(0, 64)}…` : text;
 };
 
-/** Flatten nested-by-component or flat-dotted `strings` to dotted keys. Depth
- * capped at 2 ({ component: { prop: value } }); anything deeper or a non-record
- * intermediate is a typed value error, not a throw. */
+/** Flatten nested-by-component or flat-dotted `strings` to dotted keys without
+ * materializing the caller's whole object. At most MAX_STRINGS leaves or
+ * malformed component entries are retained. */
 const flatten = (
   strings: Record<string, unknown>
-): { entries: Array<[string, unknown]>; badShape: string[]; duplicates: string[] } => {
+): {
+  entries: Array<[string, unknown]>;
+  badShape: string[];
+  duplicates: string[];
+  tooMany: boolean;
+} => {
   const entries: Array<[string, unknown]> = [];
   const badShape: string[] = [];
   const seen = new Set<string>();
   const duplicates: string[] = [];
-  const record = (flatKey: string, value: unknown): void => {
-    // The same key given in both dotted and nested form is ambiguous in an
-    // untrusted catalog — flag it rather than silently last-wins.
+  let visited = 0;
+  let tooMany = false;
+
+  const record = (flatKey: string, value: unknown): boolean => {
+    if (visited >= MAX_STRINGS) {
+      tooMany = true;
+      return false;
+    }
+    visited++;
     if (seen.has(flatKey)) duplicates.push(flatKey);
     seen.add(flatKey);
     entries.push([flatKey, value]);
+    return true;
   };
-  for (const [key, value] of Object.entries(strings)) {
+
+  outer: for (const key in strings) {
+    if (!Object.hasOwn(strings, key)) continue;
+    const descriptor = Object.getOwnPropertyDescriptor(strings, key);
+    if (!descriptor || !('value' in descriptor)) continue;
+    const value = descriptor.value;
     if (key.includes('.')) {
-      record(key, value);
+      if (!record(key, value)) break;
     } else if (isRecord(value)) {
-      for (const [prop, leaf] of Object.entries(value)) {
-        record(`${key}.${prop}`, leaf);
+      for (const prop in value) {
+        if (!Object.hasOwn(value, prop)) continue;
+        const leafDescriptor = Object.getOwnPropertyDescriptor(value, prop);
+        if (!leafDescriptor || !('value' in leafDescriptor)) continue;
+        if (!record(`${key}.${prop}`, leafDescriptor.value)) break outer;
       }
     } else {
-      // A bare non-record under a component name is malformed shape.
+      if (visited >= MAX_STRINGS) {
+        tooMany = true;
+        break;
+      }
+      visited++;
       badShape.push(key);
     }
   }
-  return { entries, badShape, duplicates };
+  return { entries, badShape, duplicates, tooMany };
 };
 
 export const parseVernacular = (
@@ -95,34 +197,43 @@ export const parseVernacular = (
       return fail();
     }
   }
-  if (!isRecord(raw)) {
-    issues.push({ severity: 'error', code: 'E_VERN_INPUT', message: 'catalog must be an object' });
+  const record = sanitizeObjectInput(raw);
+  if (record === null) {
+    issues.push({ severity: 'error', code: 'E_VERN_INPUT', message: `catalog exceeds the safe ${MAX_INPUT_BYTES}-byte structural budget or is not inert JSON data` });
     return fail();
   }
 
   // ── manifest ─────────────────────────────────────────────────────────────
-  const name = typeof raw.name === 'string' && NAME_RE.test(raw.name) ? raw.name : null;
+  const nameInput = record.name;
+  const name = typeof nameInput === 'string' && NAME_RE.test(nameInput) ? nameInput : null;
   if (name === null) {
-    issues.push({ severity: 'error', code: 'E_VERN_MANIFEST', message: `"name" must match ${NAME_RE} (got ${preview(raw.name)})` });
+    issues.push({ severity: 'error', code: 'E_VERN_MANIFEST', message: `"name" must match ${NAME_RE} (got ${preview(nameInput)})` });
   }
-  const version = typeof raw.version === 'string' && VERSION_RE.test(raw.version) ? raw.version : null;
+  const versionInput = record.version;
+  const version = typeof versionInput === 'string' && VERSION_RE.test(versionInput) ? versionInput : null;
   if (version === null) {
-    issues.push({ severity: 'error', code: 'E_VERN_MANIFEST', message: `"version" must be semver-ish (got ${preview(raw.version)})` });
+    issues.push({ severity: 'error', code: 'E_VERN_MANIFEST', message: `"version" must be semver-ish (got ${preview(versionInput)})` });
   }
-  if (!isRecord(raw.strings)) {
+  const stringsInput = record.strings;
+  if (!isRecord(stringsInput)) {
     issues.push({ severity: 'error', code: 'E_VERN_MANIFEST', message: '"strings" object is required' });
   }
 
   let meta: Record<string, string> | undefined;
-  if (raw.meta !== undefined) {
-    if (!isRecord(raw.meta)) {
+  const metaInput = record.meta;
+  if (metaInput !== undefined) {
+    if (!isRecord(metaInput)) {
       issues.push({ severity: 'info', code: 'I_VERN_META_IGNORED', message: '"meta" is not an object' });
     } else {
       meta = {};
+      let kept = 0;
       let dropped = 0;
-      for (const [key, value] of Object.entries(raw.meta)) {
-        if (typeof value === 'string' && value.length <= MAX_META_VALUE_LENGTH && Object.keys(meta).length < MAX_META_ENTRIES) {
+      for (const key in metaInput) {
+        if (!Object.hasOwn(metaInput, key)) continue;
+        const value = metaInput[key];
+        if (typeof value === 'string' && value.length <= MAX_META_VALUE_LENGTH && kept < MAX_META_ENTRIES) {
           meta[key] = value;
+          kept++;
         } else {
           dropped++;
         }
@@ -132,16 +243,20 @@ export const parseVernacular = (
       }
     }
   }
-  for (const key of Object.keys(raw)) {
-    if (!KNOWN_TOP_LEVEL.has(key)) {
+  for (const key in record) {
+    if (Object.hasOwn(record, key) && !KNOWN_TOP_LEVEL.has(key)) {
       issues.push({ severity: 'info', code: 'I_VERN_META_IGNORED', message: `unknown top-level property "${key}" ignored` });
     }
   }
-  if (name === null || version === null || !isRecord(raw.strings)) return fail();
+  if (name === null || version === null || !isRecord(stringsInput)) return fail();
   const manifest: VernacularManifest = meta ? { name, version, meta } : { name, version };
 
   // ── strings ──────────────────────────────────────────────────────────────
-  const { entries, badShape, duplicates } = flatten(raw.strings);
+  const { entries, badShape, duplicates, tooMany } = flatten(stringsInput);
+  if (tooMany) {
+    issues.push({ severity: 'error', code: 'E_VERN_INPUT', message: `catalog contains more than ${MAX_STRINGS} string entries` });
+    return fail();
+  }
   for (const key of badShape) {
     issues.push({ severity: 'error', code: 'E_VERN_TYPE', key, message: `"${key}" must be a string or a { prop: string } group` });
   }
@@ -153,16 +268,23 @@ export const parseVernacular = (
   let unknownCount = 0;
   let unknownFatal = false;
   for (const [key, value] of entries) {
-    if (strings.size >= MAX_STRINGS) break;
+    const replaced = strings.delete(key);
+    if (!replaced && strings.size >= MAX_STRINGS) break;
     const spec = VERNACULAR_REGISTRY.get(key);
     if (!spec) {
       unknownCount++;
-      if (unknownPolicy === 'reject') {
-        unknownFatal = true;
-        issues.push({ severity: 'error', code: 'E_VERN_UNKNOWN_KEY', key, message: `"${key}" is not a themeable string` });
-      } else if (unknownCount <= MAX_UNKNOWN_REPORTS) {
-        issues.push({ severity: 'warning', code: 'W_VERN_UNKNOWN_KEY', key, message: `"${key}" is not a themeable string — skipped` });
+      if (unknownCount <= MAX_UNKNOWN_REPORTS) {
+        issues.push({
+          severity: unknownPolicy === 'reject' ? 'error' : 'warning',
+          code: unknownPolicy === 'reject' ? 'E_VERN_UNKNOWN_KEY' : 'W_VERN_UNKNOWN_KEY',
+          key,
+          message:
+            unknownPolicy === 'reject'
+              ? `"${key}" is not a themeable string`
+              : `"${key}" is not a themeable string — skipped`
+        });
       }
+      if (unknownPolicy === 'reject') unknownFatal = true;
       continue;
     }
     const parsed = parseSafeString(value, spec.maxLen);
@@ -183,8 +305,16 @@ export const parseVernacular = (
     }
     strings.set(key, parsed.value.text);
   }
-  if (unknownCount > MAX_UNKNOWN_REPORTS && unknownPolicy === 'skip') {
-    issues.push({ severity: 'warning', code: 'W_VERN_UNKNOWN_KEY', message: `${unknownCount - MAX_UNKNOWN_REPORTS} further unknown keys skipped unreported` });
+  if (unknownCount > MAX_UNKNOWN_REPORTS) {
+    const omitted = unknownCount - MAX_UNKNOWN_REPORTS;
+    issues.push({
+      severity: unknownPolicy === 'reject' ? 'error' : 'warning',
+      code: unknownPolicy === 'reject' ? 'E_VERN_UNKNOWN_KEY' : 'W_VERN_UNKNOWN_KEY',
+      message:
+        unknownPolicy === 'reject'
+          ? `${omitted} further unknown keys rejected unreported`
+          : `${omitted} further unknown keys skipped unreported`
+    });
   }
   if (unknownFatal) return fail();
 

@@ -31,6 +31,16 @@ describe('checkTerminology', () => {
     expect(report.perTerm[0]?.missesIn).toEqual(['navBar.menuLabel']);
   });
 
+  it('counts omitted registry slots using their rendered English fallback', () => {
+    const cat = catalog({ 'navBar.navLabel': 'Ways' });
+    const report = checkTerminology(cat, {
+      terms: [{ id: 'ways', required: 'Ways', appliesTo: ['navBar.*'] }]
+    });
+    expect(report.coverage).toBe(0.5);
+    expect(report.ok).toBe(false);
+    expect(report.perTerm[0]?.missesIn).toEqual(['navBar.menuLabel']);
+  });
+
   it('flags a forbidden synonym as drift', () => {
     const cat = catalog({ 'navBar.navLabel': 'Menu' });
     const report = checkTerminology(cat, {
@@ -43,18 +53,34 @@ describe('checkTerminology', () => {
   it('uses a Unicode-aware boundary (accented / CJK terms are not matched mid-word)', () => {
     // "café" must not match inside "cafééclair"; "字" must not match inside "漢字".
     const accented = catalog({ 'navBar.navLabel': 'cafééclair' });
-    expect(checkTerminology(accented, { terms: [{ id: 'c', required: 'café' }] }).coverage).toBe(0);
+    expect(
+      checkTerminology(accented, {
+        terms: [{ id: 'c', required: 'café', appliesTo: ['navBar.navLabel'] }]
+      }).coverage
+    ).toBe(0);
     const whole = catalog({ 'navBar.navLabel': 'a café here' });
-    expect(checkTerminology(whole, { terms: [{ id: 'c', required: 'café' }] }).coverage).toBe(1);
+    expect(
+      checkTerminology(whole, {
+        terms: [{ id: 'c', required: 'café', appliesTo: ['navBar.navLabel'] }]
+      }).coverage
+    ).toBe(1);
     const cjk = catalog({ 'navBar.navLabel': '漢字' });
-    expect(checkTerminology(cjk, { terms: [{ id: 'j', required: '字' }] }).coverage).toBe(0);
+    expect(
+      checkTerminology(cjk, {
+        terms: [{ id: 'j', required: '字', appliesTo: ['navBar.navLabel'] }]
+      }).coverage
+    ).toBe(0);
   });
 
   it('honours case sensitivity', () => {
     const cat = catalog({ 'navBar.navLabel': 'ways' });
-    const insensitive = checkTerminology(cat, { terms: [{ id: 't', required: 'Ways' }] });
+    const insensitive = checkTerminology(cat, {
+      terms: [{ id: 't', required: 'Ways', appliesTo: ['navBar.navLabel'] }]
+    });
     const sensitive = checkTerminology(cat, {
-      terms: [{ id: 't', required: 'Ways', caseSensitive: true }]
+      terms: [
+        { id: 't', required: 'Ways', caseSensitive: true, appliesTo: ['navBar.navLabel'] }
+      ]
     });
     expect(insensitive.coverage).toBe(1);
     expect(sensitive.coverage).toBe(0);

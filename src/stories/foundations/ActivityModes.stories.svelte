@@ -51,17 +51,23 @@
   let active = $state<string | null>(null);
   let dispose: (() => void) | null = null;
   let mounted = false;
+  let selectionGeneration = 0;
 
   // User-driven ONLY: called from click handlers, never a timer/observer/telemetry.
   async function select(mode: string | null): Promise<void> {
     const layers = mode ? [world, modes[mode]!] : [world];
     const result = defineTheme(layers, { base });
     if (!result.ok) return; // gate governs — an illegible mode never applies
-    const next = await swapTheme(result.theme, { selector: SELECTOR, dispose: dispose ?? undefined });
-    // If we were unmounted while swapTheme was in flight, dispose the orphan
-    // sheet immediately rather than leaking it (the disposer would otherwise
-    // never be reached).
-    if (!mounted) {
+
+    const generation = ++selectionGeneration;
+    const previousDispose = dispose;
+    const next = await swapTheme(result.theme, {
+      selector: SELECTOR,
+      dispose: previousDispose ?? undefined
+    });
+    // Only the newest successful request may own the active sheet. Stale
+    // completions and completions after unmount dispose their orphan at once.
+    if (!mounted || generation !== selectionGeneration) {
       next();
       return;
     }
@@ -76,7 +82,9 @@
     void select(null);
     return () => {
       mounted = false;
+      selectionGeneration++;
       dispose?.();
+      dispose = null;
     };
   });
 </script>

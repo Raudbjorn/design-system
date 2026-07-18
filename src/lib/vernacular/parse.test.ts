@@ -27,6 +27,71 @@ describe('input + manifest', () => {
     if (!r.ok) expect(codes(r.error)).toContain('E_VERN_INPUT');
   });
 
+  it('rejects an object payload over the structural byte budget', () => {
+    const r = parseVernacular(pkg({ 'navBar.navLabel': 'x'.repeat(70_000) }));
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(codes(r.error)).toContain('E_VERN_INPUT');
+  });
+
+  it('applies structural depth limits after parsing JSON strings', () => {
+    let nested: Record<string, unknown> = {};
+    for (let depth = 0; depth < 34; depth++) nested = { child: nested };
+    const r = parseVernacular(JSON.stringify(pkg({}, { tokens: nested })));
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(codes(r.error)).toContain('E_VERN_INPUT');
+  });
+
+  it('rejects accessor and inherited-property objects without invoking getters', () => {
+    let invoked = false;
+    const inherited = Object.create({
+      get name() {
+        invoked = true;
+        throw new Error('must not run');
+      }
+    }) as Record<string, unknown>;
+    inherited.version = '1.0.0';
+    inherited.strings = {};
+
+    const accessor = pkg({});
+    Object.defineProperty(accessor, 'name', {
+      enumerable: false,
+      get() {
+        invoked = true;
+        throw new Error('must not run');
+      }
+    });
+
+    for (const input of [inherited, accessor]) {
+      const r = parseVernacular(input);
+      expect(r.ok).toBe(false);
+      if (!r.ok) expect(codes(r.error)).toContain('E_VERN_INPUT');
+    }
+    expect(invoked).toBe(false);
+  });
+
+  it('rejects object catalogs over the flat-entry cap before diagnostics fan out', () => {
+    const strings = Object.fromEntries(
+      Array.from({ length: 201 }, (_, index) => [`unknown.${index}`, 'x'])
+    );
+    const r = parseVernacular(pkg(strings), { unknownKeys: 'reject' });
+    expect(r.ok).toBe(false);
+    if (!r.ok) {
+      expect(codes(r.error)).toContain('E_VERN_INPUT');
+      expect(r.error.length).toBe(1);
+    }
+  });
+
+  it('accepts SemVer suffixes but rejects trailing garbage and extra components', () => {
+    for (const version of ['1.2.3', '1.2.3-beta.1', '1.2.3+build.7', '1.2.3-beta+build']) {
+      expect(parseVernacular(pkg({}, { version })).ok).toBe(true);
+    }
+    for (const version of ['1.0.0garbage', '1.2.3<script', '1.2.3.4', '01.2.3']) {
+      const r = parseVernacular(pkg({}, { version }));
+      expect(r.ok).toBe(false);
+      if (!r.ok) expect(codes(r.error)).toContain('E_VERN_MANIFEST');
+    }
+  });
+
   it('collects bad name and version together', () => {
     const r = parseVernacular({ name: 'Bad Name!', version: 'one', strings: {} });
     expect(r.ok).toBe(false);
@@ -68,6 +133,16 @@ describe('string processing', () => {
     if (!reject.ok) expect(codes(reject.error)).toContain('E_VERN_UNKNOWN_KEY');
   });
 
+  it('caps unknown-key diagnostics under the reject policy', () => {
+    const strings = Object.fromEntries(
+      Array.from({ length: 200 }, (_, index) => [`unknown.${index}`, 'x'])
+    );
+    const r = parseVernacular(pkg(strings), { unknownKeys: 'reject' });
+    expect(r.ok).toBe(false);
+    if (r.ok) return;
+    expect(codes(r.error).filter((code) => code === 'E_VERN_UNKNOWN_KEY')).toHaveLength(21);
+  });
+
   it('drops one bad value while siblings survive (collect-all)', () => {
     const r = parseVernacular(
       pkg({ 'codeBlock.copyLabel': 'x'.repeat(50), 'navBar.navLabel': 'Ways' })
@@ -77,6 +152,29 @@ describe('string processing', () => {
     expect(codes(r.value.issues)).toContain('E_VERN_LENGTH');
     expect(r.value.strings.has('codeBlock.copyLabel')).toBe(false);
     expect(r.value.strings.get('navBar.navLabel')).toBe('Ways');
+  });
+
+  it('rejects Unicode line and paragraph separators in single-line labels', () => {
+    for (const separator of ['\u2028', '\u2029']) {
+      const r = parseVernacular(pkg({ 'navBar.navLabel': `Way${separator}points` }));
+      expect(r.ok).toBe(true);
+      if (!r.ok) continue;
+      expect(codes(r.value.issues)).toContain('E_VERN_CONTROL');
+      expect(r.value.strings.has('navBar.navLabel')).toBe(false);
+    }
+  });
+
+  it('rejects labels made only from default-ignorable joiners', () => {
+    for (const value of ['\u200c', '\u200d', '\u200c\u200d', ' \u200d ']) {
+      const r = parseVernacular(pkg({ 'navBar.navLabel': value }));
+      expect(r.ok).toBe(true);
+      if (!r.ok) continue;
+      expect(codes(r.value.issues)).toContain('E_VERN_EMPTY');
+      expect(r.value.strings.has('navBar.navLabel')).toBe(false);
+    }
+    const joinedEmoji = parseVernacular(pkg({ 'navBar.navLabel': '👩‍💻 tools' }));
+    expect(joinedEmoji.ok).toBe(true);
+    if (joinedEmoji.ok) expect(joinedEmoji.value.strings.get('navBar.navLabel')).toBe('👩‍💻 tools');
   });
 
   it('flags a malformed component shape', () => {
@@ -94,6 +192,17 @@ describe('string processing', () => {
     if (!r.ok) return;
     expect(codes(r.value.issues)).toContain('W_VERN_DUPLICATE_KEY');
     expect(r.value.strings.get('codeBlock.copyLabel')).toBe('B'); // later wins
+  });
+
+  it('drops an earlier valid duplicate when the later value is malformed', () => {
+    const r = parseVernacular(
+      pkg({ 'codeBlock.copyLabel': 'Copy', codeBlock: { copyLabel: 'x'.repeat(50) } })
+    );
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(codes(r.value.issues)).toContain('W_VERN_DUPLICATE_KEY');
+    expect(codes(r.value.issues)).toContain('E_VERN_LENGTH');
+    expect(r.value.strings.has('codeBlock.copyLabel')).toBe(false);
   });
 
   it('warns on an all-skipped (empty) catalog', () => {

@@ -1,8 +1,8 @@
-// Fallback + plain-language toggle. The chain is world → English default → raw
-// key, realized by OMISSION: a key with no surviving override is simply not
-// placed, so the component's own default prop renders (the established
-// "absent key → English default" contract). The single source of English is
-// the component props themselves (plainDefault mirrors them, lockstep-tested).
+// Fallback + plain-language toggle. The chain is world → English default,
+// realized by OMISSION: a key with no surviving override is simply not placed,
+// so the component's own default prop renders (the established "absent key →
+// English default" contract). The single source of English is the component
+// props themselves (plainDefault mirrors them, lockstep-tested).
 
 import { VERNACULAR_REGISTRY } from './registry.ts';
 import type { Vernacular, VernacularCatalog } from './types.ts';
