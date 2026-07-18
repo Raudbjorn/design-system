@@ -6,7 +6,7 @@
     label: string;
   }
 
-  interface Props extends Omit<HTMLSelectAttributes, 'value' | 'onchange' | 'children'> {
+  interface Props extends Omit<HTMLSelectAttributes, 'value' | 'onchange' | 'children' | 'multiple'> {
     value?: string;
     options: Option[];
     label?: string;

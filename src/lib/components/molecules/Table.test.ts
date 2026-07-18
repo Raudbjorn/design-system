@@ -52,4 +52,21 @@ describe('Table', () => {
     expect(reorderedRows[0]).toBe(secondRow);
     expect(reorderedRows[1]).toBe(firstRow);
   });
+
+  it('falls back to row identity for missing or duplicate row keys', () => {
+    const { container } = render(Table, {
+      columns: [{ key: 'name', header: 'Name' }],
+      rows: [
+        { name: 'Missing A' },
+        { name: 'Missing B' },
+        { id: 'duplicate', name: 'Duplicate A' },
+        { id: 'duplicate', name: 'Duplicate B' }
+      ],
+      rowKey: 'id'
+    });
+    const renderedRows = container.querySelectorAll('tbody tr');
+    expect(renderedRows).toHaveLength(4);
+    expect(renderedRows[0]).toHaveTextContent('Missing A');
+    expect(renderedRows[3]).toHaveTextContent('Duplicate B');
+  });
 });

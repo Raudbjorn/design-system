@@ -1,14 +1,18 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  interface Props {
+  type SharedProps = {
     checked?: boolean;
     disabled?: boolean;
     id?: string;
-    'aria-label'?: string;
     onchange?: (checked: boolean) => void;
-    children?: Snippet;
-  }
+  };
+
+  type Props = SharedProps &
+    (
+      | { children: Snippet; 'aria-label'?: never }
+      | { children?: never; 'aria-label': string }
+    );
 
   const uid = $props.id();
 

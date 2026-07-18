@@ -69,7 +69,9 @@
   });
 
   function onKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape') dismissed = true;
+    if (event.key !== 'Escape' || !open) return;
+    dismissed = true;
+    event.stopPropagation();
   }
 </script>
 

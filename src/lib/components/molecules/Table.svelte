@@ -19,6 +19,19 @@
   }
 
   let { columns, rows, rowKey, cell }: Props = $props();
+
+  const keyedRows = $derived.by(() => {
+    if (!rowKey) return rows.map((row) => ({ row, key: row }));
+    const counts = new Map<unknown, number>();
+    for (const row of rows) {
+      const key = row[rowKey];
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+    return rows.map((row) => {
+      const key = row[rowKey];
+      return { row, key: counts.get(key) === 1 ? key : row };
+    });
+  });
 </script>
 
 <div data-sv="table-wrap">
@@ -31,7 +44,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each rows as row (rowKey ? row[rowKey] : row)}
+      {#each keyedRows as { row, key } (key)}
         <tr>
           {#each columns as col (col.key)}
             <td data-align={col.align ?? 'left'} data-mono={col.mono || undefined}>

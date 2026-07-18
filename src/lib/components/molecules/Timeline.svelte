@@ -34,7 +34,7 @@
   }
 </script>
 
-<ol data-sv="timeline" data-mode={mode}>
+<ol data-sv="timeline" data-mode={mode} role="list">
   {#each ordered as item, i (i)}
     <li data-sv="tl-item" data-side={side(item, i)} data-last={i === ordered.length - 1 || undefined}>
       <div data-sv="tl-content-start">

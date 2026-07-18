@@ -21,6 +21,7 @@ describe('Timeline', () => {
       items: [{ content: 'Deploying', title: 'Release', loading: true }]
     });
     expect(container.querySelector('ol[data-sv="timeline"]')).toBeTruthy();
+    expect(container.querySelector('ol[data-sv="timeline"]')).toHaveAttribute('role', 'list');
     expect(container.querySelectorAll('li[data-sv="tl-item"]')).toHaveLength(1);
     expect(container.querySelector('[role="status"]')).toHaveAccessibleName('Loading Release');
   });

@@ -20,15 +20,16 @@ function focusables(node: HTMLElement): HTMLElement[] {
 
 function onDocumentKeydown(event: KeyboardEvent) {
   const active = traps[traps.length - 1];
-  if (!active) return;
+  if (!active || event.key !== 'Escape' || event.defaultPrevented) return;
 
-  if (event.key === 'Escape') {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    active.onEscape();
-    return;
-  }
-  if (event.key !== 'Tab') return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  active.onEscape();
+}
+
+function onDocumentCaptureKeydown(event: KeyboardEvent) {
+  const active = traps[traps.length - 1];
+  if (!active || event.key !== 'Tab') return;
 
   const elements = focusables(active.node);
   const first = elements[0] ?? active.node;
@@ -64,7 +65,8 @@ export function trapFocus(node: HTMLElement, onEscape: () => void) {
   if (traps.length === 1) {
     previousBodyOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', onDocumentKeydown, true);
+    document.addEventListener('keydown', onDocumentCaptureKeydown, true);
+    document.addEventListener('keydown', onDocumentKeydown);
   }
 
   (focusables(node)[0] ?? node).focus();
@@ -79,11 +81,19 @@ export function trapFocus(node: HTMLElement, onEscape: () => void) {
       const wasTopmost = index === traps.length - 1;
       const [removed] = traps.splice(index, 1);
       if (traps.length === 0) {
-        document.removeEventListener('keydown', onDocumentKeydown, true);
+        document.removeEventListener('keydown', onDocumentCaptureKeydown, true);
+        document.removeEventListener('keydown', onDocumentKeydown);
         document.body.style.overflow = previousBodyOverflow ?? '';
         previousBodyOverflow = null;
       }
-      if (!wasTopmost || !removed) return;
+      if (!removed) return;
+      if (!wasTopmost) {
+        const nextTrap = traps[index];
+        if (nextTrap && removed.node.contains(nextTrap.previouslyFocused)) {
+          nextTrap.previouslyFocused = removed.previouslyFocused;
+        }
+        return;
+      }
 
       const nextTrap = traps[traps.length - 1];
       const returnTarget = removed.previouslyFocused;

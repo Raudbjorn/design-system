@@ -27,4 +27,16 @@ describe('Input', () => {
     expect(input).toBeRequired();
     expect(input).toHaveAttribute('aria-describedby', `${input?.id}-desc`);
   });
+
+  it('composes caller and generated descriptions', () => {
+    const { container } = render(Input, {
+      id: 'host',
+      hint: 'Fully qualified domain name',
+      'aria-describedby': 'external-help'
+    });
+    expect(container.querySelector('[data-sv="input"]')).toHaveAttribute(
+      'aria-describedby',
+      'external-help host-desc'
+    );
+  });
 });
