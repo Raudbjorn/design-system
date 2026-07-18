@@ -30,7 +30,7 @@
   const titleId = `sv-modal-title-${uid}`;
 
   function close(): boolean {
-    if (!open) return false;
+    if (!open) return true;
     open = false;
     onclose?.();
     return true;
@@ -75,7 +75,7 @@
   [data-sv='modal-scrim'] {
     position: fixed;
     inset: 0;
-    z-index: var(--sv-z-overlay);
+    z-index: calc(var(--sv-z-overlay) + var(--sv-overlay-stack-index, 0));
     display: flex;
     align-items: center;
     justify-content: center;

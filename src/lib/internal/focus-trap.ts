@@ -8,10 +8,19 @@ type TrapEntry = {
   onEscape: () => boolean | void;
   previouslyFocused: HTMLElement | null;
   addedTabIndex: boolean;
+  stackElement: HTMLElement | null;
+  previousStackIndex: string;
 };
 
 const traps: TrapEntry[] = [];
 let previousBodyOverflow: string | null = null;
+const OVERLAY_STACK_PROPERTY = '--sv-overlay-stack-index';
+
+function syncOverlayStack() {
+  traps.forEach((entry, index) => {
+    entry.stackElement?.style.setProperty(OVERLAY_STACK_PROPERTY, String(index));
+  });
+}
 
 function focusables(node: HTMLElement): HTMLElement[] {
   return Array.from(node.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
@@ -57,13 +66,17 @@ export function trapFocus(node: HTMLElement, onEscape: () => boolean | void) {
   } else {
     const addedTabIndex = !node.hasAttribute('tabindex');
     if (addedTabIndex) node.setAttribute('tabindex', '-1');
+    const stackElement = node.parentElement;
     entry = {
       node,
       onEscape,
       previouslyFocused: document.activeElement as HTMLElement | null,
-      addedTabIndex
+      addedTabIndex,
+      stackElement,
+      previousStackIndex: stackElement?.style.getPropertyValue(OVERLAY_STACK_PROPERTY) ?? ''
     };
     traps.push(entry);
+    syncOverlayStack();
 
     if (traps.length === 1) {
       previousBodyOverflow = document.body.style.overflow;
@@ -84,6 +97,17 @@ export function trapFocus(node: HTMLElement, onEscape: () => boolean | void) {
       if (index === -1) return;
       const wasTopmost = index === traps.length - 1;
       const [removed] = traps.splice(index, 1);
+      if (removed?.stackElement) {
+        if (removed.previousStackIndex) {
+          removed.stackElement.style.setProperty(
+            OVERLAY_STACK_PROPERTY,
+            removed.previousStackIndex
+          );
+        } else {
+          removed.stackElement.style.removeProperty(OVERLAY_STACK_PROPERTY);
+        }
+      }
+      syncOverlayStack();
       if (traps.length === 0) {
         document.removeEventListener('keydown', onDocumentCaptureKeydown, true);
         document.removeEventListener('keydown', onDocumentKeydown);

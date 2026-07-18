@@ -48,6 +48,8 @@ describe('Modal', () => {
       onclose: sheetClose,
       children
     });
+    const leakedEscape = vi.fn();
+    document.addEventListener('keydown', leakedEscape);
     const firstSheetEscape = fireEvent.keyDown(document, { key: 'Escape' });
     const secondSheetEscape = fireEvent.keyDown(document, { key: 'Escape' });
     await Promise.all([firstSheetEscape, secondSheetEscape]);
@@ -59,8 +61,10 @@ describe('Modal', () => {
     const secondModalEscape = fireEvent.keyDown(document, { key: 'Escape' });
     await Promise.all([firstModalEscape, secondModalEscape]);
     expect(modalClose).toHaveBeenCalledOnce();
+    expect(leakedEscape).not.toHaveBeenCalled();
 
     modalRender.unmount();
+    document.removeEventListener('keydown', leakedEscape);
     expect(document.body.style.overflow).toBe(previousOverflow);
   });
 
@@ -143,6 +147,31 @@ describe('Modal', () => {
 
     if ('destroy' in first && typeof first.destroy === 'function') first.destroy();
     node.remove();
+  });
+
+  it('keeps visual stacking aligned with focus-trap open order', () => {
+    const earlierScrim = document.createElement('div');
+    const earlierDialog = document.createElement('div');
+    earlierScrim.appendChild(earlierDialog);
+    const laterScrim = document.createElement('div');
+    const laterDialog = document.createElement('div');
+    laterScrim.appendChild(laterDialog);
+    document.body.append(earlierScrim, laterScrim);
+
+    const laterAction = trapFocus(laterDialog, vi.fn());
+    const earlierAction = trapFocus(earlierDialog, vi.fn());
+    expect(laterScrim.style.getPropertyValue('--sv-overlay-stack-index')).toBe('0');
+    expect(earlierScrim.style.getPropertyValue('--sv-overlay-stack-index')).toBe('1');
+
+    if ('destroy' in earlierAction && typeof earlierAction.destroy === 'function') {
+      earlierAction.destroy();
+    }
+    expect(laterScrim.style.getPropertyValue('--sv-overlay-stack-index')).toBe('0');
+    if ('destroy' in laterAction && typeof laterAction.destroy === 'function') {
+      laterAction.destroy();
+    }
+    earlierScrim.remove();
+    laterScrim.remove();
   });
 
   it('leaves Escape unhandled when the topmost trap declines it', () => {
