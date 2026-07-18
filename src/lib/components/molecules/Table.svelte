@@ -33,7 +33,7 @@
 
   const keyedRows = $derived.by(() => {
     const counts = new Map<unknown, number>();
-    if (rowKey) {
+    if (rowKey !== undefined) {
       for (const row of rows) {
         const key = row[rowKey];
         counts.set(key, (counts.get(key) ?? 0) + 1);
@@ -44,9 +44,9 @@
     return rows.map((row) => {
       const occurrence = occurrences.get(row) ?? 0;
       occurrences.set(row, occurrence + 1);
-      const configuredKey = rowKey ? row[rowKey] : undefined;
+      const configuredKey = rowKey !== undefined ? row[rowKey] : undefined;
       const key =
-        rowKey && configuredKey !== undefined && counts.get(configuredKey) === 1
+        rowKey !== undefined && configuredKey !== undefined && counts.get(configuredKey) === 1
           ? configuredKey
           : fallbackKey(row, occurrence);
       return { row, key };
