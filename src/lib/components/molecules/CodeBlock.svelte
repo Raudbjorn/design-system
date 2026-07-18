@@ -28,8 +28,10 @@
 
   let copied = $state(false);
   let copiedReset: ReturnType<typeof setTimeout> | undefined;
+  let destroyed = false;
 
   onDestroy(() => {
+    destroyed = true;
     if (copiedReset !== undefined) clearTimeout(copiedReset);
   });
   // The accessible name must track the VISIBLE label through the copied
@@ -67,6 +69,7 @@
     if (!navigator.clipboard) return;
     try {
       await navigator.clipboard.writeText(code);
+      if (destroyed) return;
       if (copiedReset !== undefined) clearTimeout(copiedReset);
       copied = true;
       copiedReset = setTimeout(() => {

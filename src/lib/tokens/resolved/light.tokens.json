@@ -60,8 +60,8 @@
     },
     "accent-rust": {
       "type": "color",
-      "css": "#b26a45",
-      "qt": "#b26a45"
+      "css": "#874a30",
+      "qt": "#874a30"
     },
     "mix-target": {
       "type": "color",

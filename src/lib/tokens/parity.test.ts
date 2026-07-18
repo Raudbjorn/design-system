@@ -49,7 +49,7 @@ const GOLDEN_LIGHT: Record<string, string> = {
   'text-faint': '#65604b',
   accent: '#1f6659',
   'accent-2': '#8d3740',
-  'accent-rust': '#b26a45',
+  'accent-rust': '#874a30',
   'mix-target': '#000000',
   success: '#086326',
   error: '#9d2b20',

@@ -5,7 +5,6 @@
     Button,
     Card,
     CodeBlock,
-    Heading,
     Icon,
     Kbd,
     Link,
@@ -74,7 +73,7 @@
     onclick={() => (theme = theme === 'dark' ? 'light' : 'dark')}
     aria-pressed={theme === 'dark'}
   >
-    {theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
+    Dark theme
   </button>
 </NavBar>
 
@@ -120,7 +119,7 @@
         {#each headingRamp as row (row.level)}
           <div class="ramp-row">
             <span class="ramp-label">{row.token}</span>
-            <Heading level={row.level}>{row.sample}</Heading>
+            <span class="ramp-sample" data-level={row.level}>{row.sample}</span>
           </div>
         {/each}
         <div class="ramp-row">
@@ -355,6 +354,16 @@
     font-size: var(--sv-fs-xs);
     color: var(--sv-text-faint);
   }
+  .ramp-sample {
+    font-family: var(--sv-font-sans);
+    font-weight: var(--sv-font-weight-bold);
+    line-height: var(--sv-lh-tight);
+    color: var(--sv-text-strong);
+  }
+  .ramp-sample[data-level='1'] { font-size: var(--sv-fs-3xl); }
+  .ramp-sample[data-level='2'] { font-size: var(--sv-fs-2xl); }
+  .ramp-sample[data-level='3'] { font-size: var(--sv-fs-xl); }
+  .ramp-sample[data-level='4'] { font-size: var(--sv-fs-lg); }
 
   .parts {
     display: grid;

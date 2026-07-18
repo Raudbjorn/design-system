@@ -81,6 +81,32 @@ describe('CodeBlock', () => {
     }
   });
 
+  it('ignores a pending clipboard completion after unmount', async () => {
+    vi.useFakeTimers();
+    let resolveWrite: (() => void) | undefined;
+    const writeText = vi.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveWrite = resolve;
+        })
+    );
+    Object.assign(navigator, { clipboard: { writeText } });
+
+    try {
+      const { unmount } = render(CodeBlock, { code: 'copy me' });
+      screen.getByRole('button', { name: /copy/i }).click();
+      await vi.waitFor(() => expect(writeText).toHaveBeenCalledWith('copy me'));
+
+      unmount();
+      resolveWrite?.();
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(vi.getTimerCount()).toBe(0);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('accessible name follows the visible label through the copied window', async () => {
     vi.useFakeTimers();
     try {
