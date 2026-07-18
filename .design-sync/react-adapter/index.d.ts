@@ -276,7 +276,7 @@ type ReactSelectAttributesWithoutHandlers = Omit<
 /** Labelled text field with hint + error states. */
 export interface InputProps extends Omit<
   ReactInputAttributesWithoutHandlers,
-  'value' | 'type' | 'readOnly'
+  'value' | 'defaultValue' | 'type' | 'readOnly'
 > {
   value?: string;
   label?: string;
@@ -308,7 +308,7 @@ export declare const Select: React.FC<SelectProps>;
 /** Soft-fill checkbox. `disabled` renders the coral unavailable state. */
 export interface CheckboxProps extends Omit<
   ReactInputAttributesWithoutHandlers,
-  'type' | 'checked'
+  'type' | 'checked' | 'defaultChecked'
 > {
   checked?: boolean;
   onchange?: (checked: boolean) => void;

@@ -37,9 +37,9 @@ function onDocumentKeydown(event: KeyboardEvent) {
   event.stopImmediatePropagation();
 }
 
-function onDocumentCaptureKeydown(event: KeyboardEvent) {
+function onDocumentTabKeydown(event: KeyboardEvent) {
   const active = traps[traps.length - 1];
-  if (!active || event.key !== 'Tab') return;
+  if (!active || event.key !== 'Tab' || event.defaultPrevented) return;
 
   const elements = focusables(active.node);
   const first = elements[0] ?? active.node;
@@ -82,7 +82,7 @@ export function trapFocus(node: HTMLElement, onEscape: () => boolean | void) {
     if (traps.length === 1) {
       previousBodyOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
-      document.addEventListener('keydown', onDocumentCaptureKeydown, true);
+      document.addEventListener('keydown', onDocumentTabKeydown);
       document.addEventListener('keydown', onDocumentKeydown);
     }
   }
@@ -110,7 +110,7 @@ export function trapFocus(node: HTMLElement, onEscape: () => boolean | void) {
       }
       syncOverlayStack();
       if (traps.length === 0) {
-        document.removeEventListener('keydown', onDocumentCaptureKeydown, true);
+        document.removeEventListener('keydown', onDocumentTabKeydown);
         document.removeEventListener('keydown', onDocumentKeydown);
         document.body.style.overflow = previousBodyOverflow ?? '';
         previousBodyOverflow = null;
