@@ -32,10 +32,19 @@ Object.defineProperty(globalThis, 'localStorage', {
   value: new MemoryStorage()
 });
 
+// jsdom lacks PointerEvent; MouseEvent covers the button semantics these controls use.
+if (typeof globalThis.PointerEvent === 'undefined') {
+  Object.defineProperty(globalThis, 'PointerEvent', {
+    configurable: true,
+    value: MouseEvent
+  });
+}
+
 // jsdom lacks the Web Animations API; svelte/transition calls Element.animate.
 // Complete each mock animation on the next microtask so transition cleanup runs.
 if (typeof Element !== 'undefined' && !Element.prototype.animate) {
   Element.prototype.animate = () => {
+    let settled = false;
     const animation = {
       cancel() {},
       finish() {},
@@ -49,7 +58,14 @@ if (typeof Element !== 'undefined' && !Element.prototype.animate) {
       playState: 'running'
     } as unknown as Animation;
 
+    animation.cancel = () => {
+      if (settled) return;
+      settled = true;
+      animation.oncancel?.call(animation, new Event('cancel') as AnimationPlaybackEvent);
+    };
     animation.finish = () => {
+      if (settled) return;
+      settled = true;
       animation.onfinish?.call(animation, new Event('finish') as AnimationPlaybackEvent);
     };
     queueMicrotask(() => animation.finish());

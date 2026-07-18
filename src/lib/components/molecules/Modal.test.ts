@@ -124,9 +124,25 @@ describe('Modal', () => {
     await fireEvent.click(scrim);
     expect(onclose).not.toHaveBeenCalled();
 
-    await fireEvent.pointerDown(scrim);
+    await fireEvent.pointerDown(scrim, { button: 2 });
+    expect(onclose).not.toHaveBeenCalled();
+
+    await fireEvent.pointerDown(scrim, { button: 0 });
     expect(onclose).toHaveBeenCalledOnce();
     unmount();
+  });
+
+  it('does not finish canceled transition animations', async () => {
+    const animation = document.createElement('div').animate([]);
+    const onfinish = vi.fn();
+    const oncancel = vi.fn();
+    animation.onfinish = onfinish;
+    animation.oncancel = oncancel;
+
+    animation.cancel();
+    await Promise.resolve();
+    expect(oncancel).toHaveBeenCalledOnce();
+    expect(onfinish).not.toHaveBeenCalled();
   });
 
   it('does not overwrite scroll restoration for a repeated registration', () => {
