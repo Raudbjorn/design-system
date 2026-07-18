@@ -30,10 +30,11 @@
   const titleId = `sv-modal-title-${uid}`;
 
   function close() {
+    if (!open) return;
     open = false;
     onclose?.();
   }
-  function onScrim(event: MouseEvent) {
+  function onScrim(event: PointerEvent) {
     if (event.target === event.currentTarget && closeOnScrim) close();
   }
 </script>
@@ -43,7 +44,7 @@
   <div
     data-sv="modal-scrim"
     transition:fade={{ duration: 200 }}
-    onclick={onScrim}
+    onpointerdown={onScrim}
     role="presentation"
   >
     <div

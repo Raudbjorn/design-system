@@ -91,6 +91,10 @@
   [data-disabled] { cursor: not-allowed; color: color-mix(in oklab, var(--sv-accent-2), var(--sv-text-faint) 40%); }
   [data-disabled] input { pointer-events: none; }
   [data-disabled] [data-sv='radio-ring'] { border-color: var(--sv-accent-2); box-shadow: none; }
+  [data-sv='radio'][data-disabled] input:checked + [data-sv='radio-ring'] {
+    border-color: var(--sv-accent-2);
+    box-shadow: none;
+  }
   [data-disabled] input:checked + [data-sv='radio-ring'] [data-sv='radio-dot'] {
     background: var(--sv-accent-2);
     transform: scale(1);

@@ -3,6 +3,7 @@ import { fireEvent, render } from '@testing-library/svelte';
 import { createRawSnippet } from 'svelte';
 import Modal from './Modal.svelte';
 import Sheet from './Sheet.svelte';
+import { trapFocus } from '../../internal/focus-trap';
 
 describe('Modal', () => {
   it('renders a labeled dialog when open', () => {
@@ -47,12 +48,16 @@ describe('Modal', () => {
       onclose: sheetClose,
       children
     });
-    await fireEvent.keyDown(document, { key: 'Escape' });
+    const firstSheetEscape = fireEvent.keyDown(document, { key: 'Escape' });
+    const secondSheetEscape = fireEvent.keyDown(document, { key: 'Escape' });
+    await Promise.all([firstSheetEscape, secondSheetEscape]);
     expect(sheetClose).toHaveBeenCalledOnce();
     expect(modalClose).not.toHaveBeenCalled();
 
     sheetRender.unmount();
-    await fireEvent.keyDown(document, { key: 'Escape' });
+    const firstModalEscape = fireEvent.keyDown(document, { key: 'Escape' });
+    const secondModalEscape = fireEvent.keyDown(document, { key: 'Escape' });
+    await Promise.all([firstModalEscape, secondModalEscape]);
     expect(modalClose).toHaveBeenCalledOnce();
 
     modalRender.unmount();
@@ -96,6 +101,48 @@ describe('Modal', () => {
     sheetRender.unmount();
     expect(document.activeElement).toBe(opener);
     opener.remove();
+  });
+
+  it('only closes when a pointer press begins on the scrim', async () => {
+    const onclose = vi.fn();
+    const { container, unmount } = render(Modal, {
+      open: true,
+      title: 'Pointer test',
+      onclose,
+      children: createRawSnippet(() => ({ render: () => '<button>Inside</button>' }))
+    });
+    const scrim = container.querySelector<HTMLElement>('[data-sv="modal-scrim"]');
+    const modal = container.querySelector<HTMLElement>('[data-sv="modal"]');
+    if (!scrim || !modal) throw new Error('modal structure missing');
+
+    await fireEvent.pointerDown(modal);
+    await fireEvent.pointerUp(scrim);
+    await fireEvent.click(scrim);
+    expect(onclose).not.toHaveBeenCalled();
+
+    await fireEvent.pointerDown(scrim);
+    expect(onclose).toHaveBeenCalledOnce();
+    unmount();
+  });
+
+  it('does not overwrite scroll restoration for a repeated registration', () => {
+    const previousOverflow = document.body.style.overflow;
+    const node = document.createElement('div');
+    document.body.appendChild(node);
+    const first = trapFocus(node, vi.fn());
+    const second = trapFocus(node, vi.fn());
+
+    expect(document.activeElement).toBe(node);
+    expect(node).toHaveAttribute('tabindex', '-1');
+    if (!('destroy' in second) || typeof second.destroy !== 'function') {
+      throw new Error('focus trap action missing destroy');
+    }
+    second.destroy();
+    expect(document.body.style.overflow).toBe(previousOverflow);
+    expect(node).not.toHaveAttribute('tabindex');
+
+    if ('destroy' in first && typeof first.destroy === 'function') first.destroy();
+    node.remove();
   });
 
   it('recaptures focus when the active control leaves the dialog', async () => {

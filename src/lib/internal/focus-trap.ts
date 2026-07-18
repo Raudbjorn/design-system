@@ -7,6 +7,7 @@ type TrapEntry = {
   node: HTMLElement;
   onEscape: () => void;
   previouslyFocused: HTMLElement | null;
+  addedTabIndex: boolean;
 };
 
 const traps: TrapEntry[] = [];
@@ -54,19 +55,22 @@ export function trapFocus(node: HTMLElement, onEscape: () => void) {
   if (entry) {
     entry.onEscape = onEscape;
   } else {
+    const addedTabIndex = !node.hasAttribute('tabindex');
+    if (addedTabIndex) node.setAttribute('tabindex', '-1');
     entry = {
       node,
       onEscape,
-      previouslyFocused: document.activeElement as HTMLElement | null
+      previouslyFocused: document.activeElement as HTMLElement | null,
+      addedTabIndex
     };
     traps.push(entry);
-  }
 
-  if (traps.length === 1) {
-    previousBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', onDocumentCaptureKeydown, true);
-    document.addEventListener('keydown', onDocumentKeydown);
+    if (traps.length === 1) {
+      previousBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', onDocumentCaptureKeydown, true);
+      document.addEventListener('keydown', onDocumentKeydown);
+    }
   }
 
   (focusables(node)[0] ?? node).focus();
@@ -87,6 +91,9 @@ export function trapFocus(node: HTMLElement, onEscape: () => void) {
         previousBodyOverflow = null;
       }
       if (!removed) return;
+      if (removed.addedTabIndex && removed.node.getAttribute('tabindex') === '-1') {
+        removed.node.removeAttribute('tabindex');
+      }
       if (!wasTopmost) {
         const nextTrap = traps[index];
         if (nextTrap && removed.node.contains(nextTrap.previouslyFocused)) {
