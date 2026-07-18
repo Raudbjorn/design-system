@@ -1,15 +1,24 @@
 <script lang="ts">
-  interface Props {
-    /** 0–100. Ignored when indeterminate. */
+  interface SharedProps {
     value?: number;
     indeterminate?: boolean;
     tone?: 'accent' | 'accent-2';
-    label?: string;
   }
 
-  let { value = 0, indeterminate = false, tone = 'accent', label }: Props = $props();
+  type Props =
+    | (SharedProps & { label: string; 'aria-label'?: never })
+    | (SharedProps & { label?: never; 'aria-label': string });
 
-  const clamped = $derived(Math.max(0, Math.min(100, value)));
+  let {
+    value = 0,
+    indeterminate = false,
+    tone = 'accent',
+    label,
+    'aria-label': ariaLabel
+  }: Props = $props();
+
+  const normalized = $derived(Number.isFinite(value) ? value : 0);
+  const clamped = $derived(Math.max(0, Math.min(100, normalized)));
 </script>
 
 <div data-sv="progress" data-tone={tone}>
@@ -22,7 +31,7 @@
   <div
     data-sv="progress-track"
     role="progressbar"
-    aria-label={label || undefined}
+    aria-label={label ?? ariaLabel}
     aria-valuenow={indeterminate ? undefined : clamped}
     aria-valuemin={0}
     aria-valuemax={100}
@@ -71,5 +80,9 @@
   @keyframes sv-progress-indeterminate {
     0% { left: -40%; }
     100% { left: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-sv='progress-fill'] { transition: none; }
+    [data-sv='progress-sweep'] { left: 30%; animation: none; }
   }
 </style>

@@ -41,6 +41,7 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
         cellSeq: 0,
         cellFns: {},
         mounted: false,
+        renderScheduled: false,
       };
     }
     const s = st.current;
@@ -48,7 +49,10 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
     s.cellFns = {};
 
     const scheduleRender = () => {
+      if (s.renderScheduled) return;
+      s.renderScheduled = true;
       queueMicrotask(() => {
+        s.renderScheduled = false;
         if (s.mounted) forceRender();
       });
     };
@@ -147,6 +151,7 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
       if (s.app && s.bag && !shallowEq(s.last, svelteProps)) {
         s.bag.v = svelteProps;
         s.last = svelteProps;
+        scheduleRender();
       }
     });
 

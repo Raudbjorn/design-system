@@ -1,7 +1,3 @@
-<script module lang="ts">
-  let _tooltipUid = 0;
-</script>
-
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
@@ -13,13 +9,42 @@
 
   let { content, placement = 'top', children }: Props = $props();
 
-  const tooltipId = `sv-tooltip-${++_tooltipUid}`;
-  let open = $state(false);
+  const uid = $props.id();
+  const tooltipId = `sv-tooltip-${uid}`;
+  let hovered = $state(false);
+  let focused = $state(false);
+  let dismissed = $state(false);
+  const open = $derived(!dismissed && (hovered || focused));
   let wrapEl = $state<HTMLElement | null>(null);
 
+  function getTrigger(): Element | null {
+    let trigger = wrapEl?.firstElementChild ?? null;
+    while (trigger?.tagName === 'DS-SLOT') trigger = trigger.firstElementChild;
+    return trigger;
+  }
+
+  function onMouseenter() {
+    hovered = true;
+    dismissed = false;
+  }
+
+  function onMouseleave() {
+    hovered = false;
+  }
+
+  function onFocusin() {
+    focused = true;
+    dismissed = false;
+  }
+
+  function onFocusout(event: FocusEvent) {
+    const next = event.relatedTarget;
+    if (!(next instanceof Node) || !wrapEl?.contains(next)) focused = false;
+  }
+
   $effect(() => {
-    const trigger = wrapEl?.firstElementChild;
-    if (!(trigger instanceof HTMLElement)) return;
+    const trigger = getTrigger();
+    if (!(trigger instanceof Element)) return;
 
     const currentIds = (trigger.getAttribute('aria-describedby') ?? '')
       .split(/\s+/)
@@ -42,15 +67,21 @@
     if (currentIds.length > 0) trigger.setAttribute('aria-describedby', currentIds.join(' '));
     else trigger.removeAttribute('aria-describedby');
   });
+
+  function onKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape') dismissed = true;
+  }
 </script>
 
 <span
   bind:this={wrapEl}
   data-sv="tooltip-wrap"
-  onmouseenter={() => (open = true)}
-  onmouseleave={() => (open = false)}
-  onfocusin={() => (open = true)}
-  onfocusout={() => (open = false)}
+  role="presentation"
+  onmouseenter={onMouseenter}
+  onmouseleave={onMouseleave}
+  onfocusin={onFocusin}
+  onfocusout={onFocusout}
+  onkeydown={onKeydown}
 >
   {@render children()}
   {#if open}
@@ -85,7 +116,7 @@
     border-radius: var(--sv-radius-md);
     font-family: var(--sv-font-sans);
     font-size: var(--sv-fs-xs);
-    pointer-events: none;
+    pointer-events: auto;
     opacity: 0;
     transition: opacity 0.12s ease;
     z-index: var(--sv-z-dropdown);

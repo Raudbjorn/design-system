@@ -18,4 +18,41 @@ describe('Tooltip', () => {
     expect(el).toHaveTextContent('Hi');
     expect(button).toHaveAttribute('aria-describedby', el?.id);
   });
+
+  it('supports SVG triggers and dismisses with Escape', async () => {
+    const { container } = render(Tooltip, {
+      content: 'Icon help',
+      children: createRawSnippet(() => ({
+        render: () => '<svg tabindex="0" aria-label="Status"></svg>'
+      }))
+    });
+    const wrapper = container.querySelector<HTMLElement>('[data-sv="tooltip-wrap"]');
+    const svg = container.querySelector('svg');
+    if (!wrapper || !svg) throw new Error('tooltip elements missing');
+    await fireEvent.focusIn(wrapper);
+    const tooltip = container.querySelector('[role="tooltip"]');
+    expect(svg).toHaveAttribute('aria-describedby', tooltip?.id);
+    await fireEvent.keyDown(wrapper, { key: 'Escape' });
+    expect(container.querySelector('[role="tooltip"]')).toBeNull();
+    expect(svg).not.toHaveAttribute('aria-describedby');
+  });
+
+  it('stays open while focused after hover ends', async () => {
+    const { container } = render(Tooltip, {
+      content: 'Persistent help',
+      children: createRawSnippet(() => ({
+        render: () => '<button type="button">trigger</button>'
+      }))
+    });
+    const wrapper = container.querySelector<HTMLElement>('[data-sv="tooltip-wrap"]');
+    if (!wrapper) throw new Error('tooltip wrapper missing');
+
+    await fireEvent.focusIn(wrapper);
+    await fireEvent.mouseEnter(wrapper);
+    await fireEvent.mouseLeave(wrapper);
+    expect(container.querySelector('[role="tooltip"]')).toBeTruthy();
+
+    await fireEvent.focusOut(wrapper, { relatedTarget: document.body });
+    expect(container.querySelector('[role="tooltip"]')).toBeNull();
+  });
 });

@@ -11,4 +11,20 @@ describe('Input', () => {
     expect(input).toHaveAttribute('aria-describedby', 'e-desc');
     expect(container.querySelector('#e-desc')).toHaveTextContent('Bad');
   });
+
+  it('generates a label association and forwards native attributes', () => {
+    const { container } = render(Input, {
+      label: 'Host',
+      hint: 'FQDN',
+      name: 'host',
+      required: true
+    });
+    const input = container.querySelector<HTMLInputElement>('[data-sv="input"]');
+    const label = container.querySelector('label');
+    expect(input?.id).toMatch(/^sv-input-/);
+    expect(label).toHaveAttribute('for', input?.id);
+    expect(input).toHaveAttribute('name', 'host');
+    expect(input).toBeRequired();
+    expect(input).toHaveAttribute('aria-describedby', `${input?.id}-desc`);
+  });
 });

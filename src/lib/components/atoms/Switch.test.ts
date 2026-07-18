@@ -14,4 +14,12 @@ describe('Switch', () => {
     expect(el).toHaveAttribute('aria-checked', 'true');
     expect(el?.getAttribute('aria-labelledby')).toBeTruthy();
   });
+
+  it('uses a caller-provided name when no visible label is rendered', () => {
+    const { container } = render(Switch, { 'aria-label': 'Enable telemetry' });
+    expect(container.querySelector('[data-sv="switch"]')).toHaveAttribute(
+      'aria-label',
+      'Enable telemetry'
+    );
+  });
 });

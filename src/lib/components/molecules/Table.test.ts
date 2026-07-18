@@ -26,4 +26,30 @@ describe('Table', () => {
     expect(cells[0]).toHaveTextContent('v1');
     expect(cells[1]).toHaveTextContent('v2');
   });
+
+  it('preserves row DOM identity when recreated rows use rowKey', async () => {
+    const columns = [{ key: 'name', header: 'Name' }];
+    const { container, rerender } = render(Table, {
+      columns,
+      rows: [
+        { id: 'a', name: 'A' },
+        { id: 'b', name: 'B' }
+      ],
+      rowKey: 'id'
+    });
+    const initialRows = container.querySelectorAll('tbody tr');
+    const firstRow = initialRows[0];
+    const secondRow = initialRows[1];
+    await rerender({
+      columns,
+      rows: [
+        { id: 'b', name: 'B updated' },
+        { id: 'a', name: 'A updated' }
+      ],
+      rowKey: 'id'
+    });
+    const reorderedRows = container.querySelectorAll('tbody tr');
+    expect(reorderedRows[0]).toBe(secondRow);
+    expect(reorderedRows[1]).toBe(firstRow);
+  });
 });

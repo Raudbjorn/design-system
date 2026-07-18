@@ -1,21 +1,21 @@
-<script module lang="ts">
-  let _modalUid = 0;
-</script>
-
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import { fade, fly } from 'svelte/transition';
   import { trapFocus } from '../../internal/focus-trap';
 
-  interface Props {
+  interface SharedProps {
     open?: boolean;
-    title?: string;
-    'aria-label'?: string;
     footer?: Snippet;
     children: Snippet;
     closeOnScrim?: boolean;
     onclose?: () => void;
   }
+
+  type Props =
+    | (SharedProps & { title: string; 'aria-label'?: never })
+    | (SharedProps & { title?: never; 'aria-label': string });
+
+  const uid = $props.id();
 
   let {
     open = $bindable(false),
@@ -27,21 +27,17 @@
     onclose
   }: Props = $props();
 
-  const titleId = `sv-modal-title-${++_modalUid}`;
+  const titleId = `sv-modal-title-${uid}`;
 
   function close() {
     open = false;
     onclose?.();
   }
-  function onScrim() {
-    if (closeOnScrim) close();
-  }
-  function onKeydown(e: KeyboardEvent) {
-    if (open && e.key === 'Escape') close();
+  function onScrim(event: MouseEvent) {
+    if (event.target === event.currentTarget && closeOnScrim) close();
   }
 </script>
 
-<svelte:window onkeydown={onKeydown} />
 
 {#if open}
   <div
@@ -57,9 +53,8 @@
       aria-labelledby={title ? titleId : undefined}
       aria-label={title ? undefined : ariaLabel}
       tabindex="-1"
-      use:trapFocus
       transition:fly={{ y: 8, duration: 220 }}
-      onclick={(e) => e.stopPropagation()}
+      use:trapFocus={close}
     >
       {#if title}
         <div data-sv="modal-header">
@@ -88,6 +83,9 @@
   [data-sv='modal'] {
     width: 420px;
     max-width: 100%;
+    max-height: calc(100dvh - 2 * var(--sv-space-4));
+    display: flex;
+    flex-direction: column;
     background: var(--sv-surface-1);
     border: 1px solid var(--sv-border);
     border-radius: var(--sv-radius-lg);
@@ -107,6 +105,8 @@
     color: var(--sv-text-strong);
   }
   [data-sv='modal-body'] {
+    min-height: 0;
+    overflow-y: auto;
     padding: var(--sv-space-6);
     color: var(--sv-text);
     font-family: var(--sv-font-sans);

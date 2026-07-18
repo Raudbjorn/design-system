@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
+  import type { HTMLInputAttributes } from 'svelte/elements';
 
-  interface Props {
+  interface Props extends Omit<HTMLInputAttributes, 'type' | 'checked' | 'onchange' | 'children'> {
     /** Two-way checked state. */
     checked?: boolean;
     /** Renders the coral "unavailable" state (non-interactive). */
     disabled?: boolean;
-    id?: string;
     onchange?: (checked: boolean) => void;
     children?: Snippet;
   }
@@ -16,17 +16,19 @@
     disabled = false,
     id,
     onchange,
-    children
+    children,
+    ...rest
   }: Props = $props();
 </script>
 
 <label data-sv="checkbox" data-checked={checked} data-disabled={disabled || undefined}>
   <input
+    {...rest}
     {id}
     type="checkbox"
     bind:checked
     {disabled}
-    onchange={() => onchange?.(checked)}
+    onchange={(event) => onchange?.(event.currentTarget.checked)}
   />
   <span data-sv="checkbox-box"><span data-sv="checkbox-mark">✓</span></span>
   {#if children}<span data-sv="checkbox-label">{@render children()}</span>{/if}
@@ -84,7 +86,10 @@
     background: transparent;
     box-shadow: none;
   }
-  [data-disabled] [data-sv='checkbox-mark'] { transform: scale(0); }
+  [data-disabled][data-checked='true'] [data-sv='checkbox-box'] {
+    background: var(--sv-accent-2);
+  }
+  [data-disabled][data-checked='true'] [data-sv='checkbox-mark'] { transform: scale(1); }
 
   [data-sv='checkbox'] input:focus-visible + [data-sv='checkbox-box'] {
     outline: 2px solid var(--sv-accent);

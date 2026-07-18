@@ -12,11 +12,13 @@
   interface Props {
     columns: Column[];
     rows: Record<string, unknown>[];
+    /** Stable identity field for rows recreated between updates; object identity is the fallback. */
+    rowKey?: string;
     /** Optional custom cell renderer for rich content (e.g. Badge). */
     cell?: Snippet<[{ row: Record<string, unknown>; column: Column; value: unknown }]>;
   }
 
-  let { columns, rows, cell }: Props = $props();
+  let { columns, rows, rowKey, cell }: Props = $props();
 </script>
 
 <div data-sv="table-wrap">
@@ -29,7 +31,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each rows as row, i (i)}
+      {#each rows as row (rowKey ? row[rowKey] : row)}
         <tr>
           {#each columns as col (col.key)}
             <td data-align={col.align ?? 'left'} data-mono={col.mono || undefined}>
@@ -50,7 +52,7 @@
   [data-sv='table-wrap'] {
     border: 1px solid var(--sv-border);
     border-radius: var(--sv-radius-md);
-    overflow: hidden;
+    overflow-x: auto;
   }
   [data-sv='table'] {
     width: 100%;

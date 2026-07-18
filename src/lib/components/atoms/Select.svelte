@@ -1,32 +1,40 @@
 <script lang="ts">
+  import type { HTMLSelectAttributes } from 'svelte/elements';
+
   interface Option {
     value: string;
     label: string;
   }
 
-  interface Props {
+  interface Props extends Omit<HTMLSelectAttributes, 'value' | 'onchange' | 'children'> {
     value?: string;
     options: Option[];
-    id?: string;
     label?: string;
-    disabled?: boolean;
     onchange?: (e: Event) => void;
   }
 
+  const uid = $props.id();
+
   let {
-    value = $bindable(''),
+    value = $bindable(),
     options,
-    id,
+    id = `sv-select-${uid}`,
     label,
     disabled = false,
-    onchange
+    onchange,
+    ...rest
   }: Props = $props();
+
+  $effect(() => {
+    const first = options[0];
+    if (value === undefined && first) value = first.value;
+  });
 </script>
 
 <div data-sv="field">
   {#if label}<label data-sv="field-label" for={id}>{label}</label>{/if}
   <div data-sv="select-wrap">
-    <select {id} {disabled} data-sv="select" bind:value {onchange}>
+    <select {...rest} {id} {disabled} data-sv="select" bind:value {onchange}>
       {#each options as o (o.value)}
         <option value={o.value}>{o.label}</option>
       {/each}

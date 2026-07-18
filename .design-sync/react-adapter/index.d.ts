@@ -265,38 +265,40 @@ export interface Vernacular {
 }
 
 /** Labelled text field with hint + error states. */
-export interface InputProps {
+export interface InputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'children' | 'value' | 'type' | 'readOnly' | 'onInput' | 'onChange'
+> {
   value?: string;
-  id?: string;
   label?: string;
   hint?: string;
   /** String message (shown) or boolean flag; either turns the border red. */
   error?: string | boolean;
-  placeholder?: string;
   type?: 'text' | 'email' | 'password' | 'search';
   mono?: boolean;
-  disabled?: boolean;
   readonly?: boolean;
   oninput?: (e: Event) => void;
 }
 export declare const Input: React.FC<InputProps>;
 
 /** Native select restyled to the token surface. */
-export interface SelectProps {
+export interface SelectProps extends Omit<
+  React.SelectHTMLAttributes<HTMLSelectElement>,
+  'children' | 'value' | 'onChange'
+> {
   value?: string;
   options: { value: string; label: string }[];
-  id?: string;
   label?: string;
-  disabled?: boolean;
   onchange?: (e: Event) => void;
 }
 export declare const Select: React.FC<SelectProps>;
 
 /** Soft-fill checkbox. `disabled` renders the coral unavailable state. */
-export interface CheckboxProps {
+export interface CheckboxProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'children' | 'type' | 'checked' | 'onChange'
+> {
   checked?: boolean;
-  disabled?: boolean;
-  id?: string;
   onchange?: (checked: boolean) => void;
   children?: React.ReactNode;
 }
@@ -319,6 +321,7 @@ export interface SwitchProps {
   checked?: boolean;
   disabled?: boolean;
   id?: string;
+  'aria-label'?: string;
   onchange?: (checked: boolean) => void;
   children?: React.ReactNode;
 }
@@ -349,19 +352,30 @@ export interface SpinnerProps {
 export declare const Spinner: React.FC<SpinnerProps>;
 
 /** Determinate or indeterminate progress bar. */
-export interface ProgressProps {
+export type ProgressProps = {
   value?: number;
   indeterminate?: boolean;
   tone?: 'accent' | 'accent-2';
-  label?: string;
-}
+} & (
+  | { label: string; 'aria-label'?: never }
+  | { label?: never; 'aria-label': string }
+);
 export declare const Progress: React.FC<ProgressProps>;
 
 /** Underline tablist (controlled via value). Consumer renders the panel. */
 export interface TabsProps {
-  tabs: { id: string; label: string }[];
+  tabs: {
+    id: string;
+    label: string;
+    /** DOM id for the tab button. */
+    tabId: string;
+    /** DOM id of the consumer-rendered tabpanel. */
+    panelId: string;
+  }[];
   value?: string;
   onchange?: (id: string) => void;
+  /** Accessible name for the tab list. */
+  'aria-label'?: string;
 }
 export declare const Tabs: React.FC<TabsProps>;
 
@@ -376,6 +390,8 @@ export interface TableColumn {
 export interface TableProps {
   columns: TableColumn[];
   rows: Record<string, unknown>[];
+  /** Stable identity field for rows recreated between updates; object identity is the fallback. */
+  rowKey?: string;
   /** Rich-cell renderer; receives the row, column, and resolved value. */
   cell?: (args: { row: Record<string, unknown>; column: TableColumn; value: unknown }) => React.ReactNode;
 }
@@ -405,26 +421,28 @@ export interface BreadcrumbProps {
 export declare const Breadcrumb: React.FC<BreadcrumbProps>;
 
 /** Center modal dialog. */
-export interface ModalProps {
+export type ModalProps = {
   open?: boolean;
-  title?: string;
-  'aria-label'?: string;
   footer?: React.ReactNode;
   children: React.ReactNode;
   closeOnScrim?: boolean;
   onclose?: () => void;
-}
+} & (
+  | { title: string; 'aria-label'?: never }
+  | { title?: never; 'aria-label': string }
+);
 export declare const Modal: React.FC<ModalProps>;
 
 /** Edge drawer over a blurred scrim (right | left). */
-export interface SheetProps {
+export type SheetProps = {
   open?: boolean;
   placement?: 'right' | 'left';
-  title?: string;
-  'aria-label'?: string;
   footer?: React.ReactNode;
   children: React.ReactNode;
   closeOnScrim?: boolean;
   onclose?: () => void;
-}
+} & (
+  | { title: string; 'aria-label'?: never }
+  | { title?: never; 'aria-label': string }
+);
 export declare const Sheet: React.FC<SheetProps>;

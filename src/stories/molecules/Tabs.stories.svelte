@@ -3,9 +3,9 @@
   import { Tabs, Text } from '../../lib/index';
 
   const tabItems = [
-    { id: 'overview', label: 'Overview' },
-    { id: 'logs', label: 'Logs' },
-    { id: 'config', label: 'Config' }
+    { id: 'overview', label: 'Overview', tabId: 'overview-tab', panelId: 'overview-panel' },
+    { id: 'logs', label: 'Logs', tabId: 'logs-tab', panelId: 'logs-panel' },
+    { id: 'config', label: 'Config', tabId: 'config-tab', panelId: 'config-panel' }
   ];
 
   const { Story } = defineMeta({
@@ -22,7 +22,12 @@
 <Story name="Default" asChild>
   <div>
     <Tabs tabs={tabItems} bind:value={active} />
-    <div style="padding: 1rem;">
+    <div
+      id={`${active}-panel`}
+      role="tabpanel"
+      aria-labelledby={`${active}-tab`}
+      style="padding: 1rem;"
+    >
       {#if active === 'overview'}
         <Text>Service overview — uptime, peers, traffic.</Text>
       {:else if active === 'logs'}

@@ -1,21 +1,21 @@
 <script lang="ts">
-  interface Props {
+  import type { HTMLInputAttributes } from 'svelte/elements';
+
+  interface Props extends Omit<HTMLInputAttributes, 'value' | 'type' | 'oninput'> {
     value?: string;
-    id?: string;
     label?: string;
     hint?: string;
     error?: string | boolean;
-    placeholder?: string;
     type?: 'text' | 'email' | 'password' | 'search';
     mono?: boolean;
-    disabled?: boolean;
-    readonly?: boolean;
     oninput?: (e: Event) => void;
   }
 
+  const uid = $props.id();
+
   let {
     value = $bindable(''),
-    id,
+    id = `sv-input-${uid}`,
     label,
     hint,
     error = false,
@@ -24,17 +24,19 @@
     mono = false,
     disabled = false,
     readonly = false,
-    oninput
+    oninput,
+    ...rest
   }: Props = $props();
 
   const hasError = $derived(!!error);
   const message = $derived(typeof error === 'string' ? error : '');
-  const descId = $derived(id && (message || hint) ? `${id}-desc` : undefined);
+  const descId = $derived(message || hint ? `${id}-desc` : undefined);
 </script>
 
 <div data-sv="field">
   {#if label}<label data-sv="field-label" for={id}>{label}</label>{/if}
   <input
+    {...rest}
     {id}
     {type}
     {placeholder}
