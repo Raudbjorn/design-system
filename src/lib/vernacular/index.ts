@@ -1,7 +1,7 @@
 // Public vernacular runtime — `@svnbjrn/design/vernacular`.
 // Ingest untrusted world-vernacular catalogs, resolve them into the spreadable
-// Vernacular shape with world → English → key fallback and a plain-language
-// toggle, plus CI helpers (terminology metric, pseudo-localization) and the
+// Vernacular shape with world → English fallback and a plain-language toggle,
+// plus CI helpers (terminology metric, pseudo-localization) and the
 // non-Svelte escaped-JSON emit.
 
 export { parseVernacular } from './parse.ts';

@@ -27,6 +27,12 @@ describe('input + manifest', () => {
     if (!r.ok) expect(codes(r.error)).toContain('E_VERN_INPUT');
   });
 
+  it('rejects an object payload over the structural byte budget', () => {
+    const r = parseVernacular(pkg({ 'navBar.navLabel': 'x'.repeat(70_000) }));
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(codes(r.error)).toContain('E_VERN_INPUT');
+  });
+
   it('collects bad name and version together', () => {
     const r = parseVernacular({ name: 'Bad Name!', version: 'one', strings: {} });
     expect(r.ok).toBe(false);
@@ -79,6 +85,16 @@ describe('string processing', () => {
     expect(r.value.strings.get('navBar.navLabel')).toBe('Ways');
   });
 
+  it('rejects Unicode line and paragraph separators in single-line labels', () => {
+    for (const separator of ['\u2028', '\u2029']) {
+      const r = parseVernacular(pkg({ 'navBar.navLabel': `Way${separator}points` }));
+      expect(r.ok).toBe(true);
+      if (!r.ok) continue;
+      expect(codes(r.value.issues)).toContain('E_VERN_CONTROL');
+      expect(r.value.strings.has('navBar.navLabel')).toBe(false);
+    }
+  });
+
   it('flags a malformed component shape', () => {
     const r = parseVernacular(pkg({ codeBlock: 'not-a-group' }));
     expect(r.ok).toBe(true); // recoverable
@@ -94,6 +110,17 @@ describe('string processing', () => {
     if (!r.ok) return;
     expect(codes(r.value.issues)).toContain('W_VERN_DUPLICATE_KEY');
     expect(r.value.strings.get('codeBlock.copyLabel')).toBe('B'); // later wins
+  });
+
+  it('drops an earlier valid duplicate when the later value is malformed', () => {
+    const r = parseVernacular(
+      pkg({ 'codeBlock.copyLabel': 'Copy', codeBlock: { copyLabel: 'x'.repeat(50) } })
+    );
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(codes(r.value.issues)).toContain('W_VERN_DUPLICATE_KEY');
+    expect(codes(r.value.issues)).toContain('E_VERN_LENGTH');
+    expect(r.value.strings.has('codeBlock.copyLabel')).toBe(false);
   });
 
   it('warns on an all-skipped (empty) catalog', () => {

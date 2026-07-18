@@ -22,9 +22,9 @@ export interface SafeString {
 
 export type SafeResult = { ok: true; value: SafeString } | { ok: false; code: VernacularIssueCode };
 
-// C0 controls (incl. tab/newline — labels are single-line), DEL, and C1.
+// Single-line separators, C0 controls (incl. tab/newline), DEL, and C1.
 const isControl = (cp: number): boolean =>
-  cp <= 0x1f || cp === 0x7f || (cp >= 0x80 && cp <= 0x9f);
+  cp <= 0x1f || cp === 0x7f || (cp >= 0x80 && cp <= 0x9f) || cp === 0x2028 || cp === 0x2029;
 
 // Bidi override / embedding / isolate — the Trojan Source set (CVE-2021-42574):
 // ALM, LRM, RLM, LRE..RLO/PDF, LRI..RLI/FSI/PDI.

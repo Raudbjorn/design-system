@@ -25,6 +25,54 @@ const MAX_UNKNOWN_REPORTS = 20;
 // so a single {tokens, strings} world bundle parses cleanly through both.
 const KNOWN_TOP_LEVEL = new Set(['$schema', 'name', 'version', 'meta', 'strings', 'tokens', 'extends']);
 
+const MAX_OBJECT_INPUT_DEPTH = 32;
+const textEncoder = new TextEncoder();
+
+/**
+ * Bound traversal and allocation before flattening an already-parsed object.
+ * Every visited node consumes budget, while strings consume their UTF-8 size;
+ * depth, cycles, accessors, and non-JSON values are rejected.
+ */
+const fitsObjectInputBudget = (value: unknown): boolean => {
+  let remaining = MAX_INPUT_BYTES;
+  const ancestors = new WeakSet<object>();
+
+  const visit = (current: unknown, depth: number): boolean => {
+    if (depth > MAX_OBJECT_INPUT_DEPTH || --remaining < 0) return false;
+    if (typeof current === 'string') {
+      if (current.length > remaining) return false;
+      remaining -= textEncoder.encode(current).length;
+      return remaining >= 0;
+    }
+    if (current === null || typeof current === 'boolean') return true;
+    if (typeof current === 'number') {
+      remaining -= Number.isFinite(current) ? String(current).length : 4;
+      return remaining >= 0;
+    }
+    if (typeof current !== 'object' || ancestors.has(current)) return false;
+    if (Array.isArray(current) && current.length > remaining) return false;
+
+    ancestors.add(current);
+    for (const key in current) {
+      if (!Object.hasOwn(current, key)) continue;
+      const descriptor = Object.getOwnPropertyDescriptor(current, key);
+      if (
+        !descriptor ||
+        !('value' in descriptor) ||
+        !visit(key, depth + 1) ||
+        !visit(descriptor.value, depth + 1)
+      ) {
+        ancestors.delete(current);
+        return false;
+      }
+    }
+    ancestors.delete(current);
+    return true;
+  };
+
+  return visit(value, 0);
+};
+
 const isRecord = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
 
@@ -99,6 +147,10 @@ export const parseVernacular = (
     issues.push({ severity: 'error', code: 'E_VERN_INPUT', message: 'catalog must be an object' });
     return fail();
   }
+  if (typeof input !== 'string' && !fitsObjectInputBudget(raw)) {
+    issues.push({ severity: 'error', code: 'E_VERN_INPUT', message: `catalog exceeds the safe ${MAX_INPUT_BYTES}-byte structural budget` });
+    return fail();
+  }
 
   // ── manifest ─────────────────────────────────────────────────────────────
   const name = typeof raw.name === 'string' && NAME_RE.test(raw.name) ? raw.name : null;
@@ -153,7 +205,8 @@ export const parseVernacular = (
   let unknownCount = 0;
   let unknownFatal = false;
   for (const [key, value] of entries) {
-    if (strings.size >= MAX_STRINGS) break;
+    const replaced = strings.delete(key);
+    if (!replaced && strings.size >= MAX_STRINGS) break;
     const spec = VERNACULAR_REGISTRY.get(key);
     if (!spec) {
       unknownCount++;
