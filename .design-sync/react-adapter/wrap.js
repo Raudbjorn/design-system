@@ -72,11 +72,25 @@ export function wrap(name, SvelteComponent, snippetProps = []) {
       onClose: 'onclose',
       readOnly: 'readonly',
     };
+    const aliasedTargets = new Set();
     for (const [reactName, svelteName] of Object.entries(propAliases)) {
-      if (svelteProps[reactName] && !svelteProps[svelteName]) {
-        svelteProps[svelteName] = svelteProps[reactName];
-        delete svelteProps[reactName];
+      if (!Object.hasOwn(svelteProps, reactName)) continue;
+      const aliasValue = svelteProps[reactName];
+      if (!Object.hasOwn(svelteProps, svelteName)) {
+        svelteProps[svelteName] = aliasValue;
+        aliasedTargets.add(svelteName);
+      } else if (aliasedTargets.has(svelteName)) {
+        const currentValue = svelteProps[svelteName];
+        if (typeof currentValue === 'function' && typeof aliasValue === 'function') {
+          svelteProps[svelteName] = (...args) => {
+            currentValue(...args);
+            return aliasValue(...args);
+          };
+        } else if (currentValue == null || currentValue === false) {
+          svelteProps[svelteName] = aliasValue;
+        }
       }
+      delete svelteProps[reactName];
     }
     for (const k of snippetProps) {
       const node = props[k];

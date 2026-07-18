@@ -33,7 +33,7 @@
   const titleId = `sv-sheet-title-${uid}`;
 
   function close(): boolean {
-    if (!open) return false;
+    if (!open) return true;
     open = false;
     onclose?.();
     return true;
@@ -81,7 +81,7 @@
   [data-sv='sheet-scrim'] {
     position: fixed;
     inset: 0;
-    z-index: var(--sv-z-overlay);
+    z-index: calc(var(--sv-z-overlay) + var(--sv-overlay-stack-index, 0));
     display: flex;
     align-items: stretch;
     background: rgba(0, 0, 0, 0.42);
