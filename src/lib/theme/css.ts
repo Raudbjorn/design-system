@@ -14,7 +14,7 @@ const LAYER_ORDER = '@layer sv.base, sv.theme, sv.world, sv.user;';
 // :root, or an engine-generated/consumer-provided scope attribute selector.
 // Braces and other structure-breaking characters are a programmer error, not
 // data — theme values never reach this parameter.
-const SELECTOR_RE = /^[a-zA-Z0-9:*[\]="'()\-_.#\s,>+~]+$/;
+export const SELECTOR_RE = /^[a-zA-Z0-9:*[\]="'()\-_.#\s,>+~]+$/;
 
 export interface WorldThemeCssOptions {
   selector?: string;

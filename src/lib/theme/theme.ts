@@ -12,6 +12,7 @@
 import { dark, light } from '../tokens/palette.js';
 import type { Palette, TokenName } from '../tokens/palette.js';
 import { contrastRatio } from '../internal/contrast.js';
+import { SELECTOR_RE } from './css.js';
 
 /**
  * 4.5:1 is AA for normal text. These are the foreground/background
@@ -82,11 +83,9 @@ const safeSelector = (selector: unknown): string => {
   if (
     typeof selector !== 'string' ||
     selector.trim().length === 0 ||
-    /[{}\r\n\f]/.test(selector) ||
-    selector.includes('/*') ||
-    selector.includes('*/')
+    !SELECTOR_RE.test(selector)
   ) {
-    throw new TypeError('themeCss selector must be a non-empty selector without CSS block delimiters.');
+    throw new TypeError('themeCss selector contains unsafe CSS or markup characters.');
   }
   return selector;
 };
@@ -256,6 +255,7 @@ export async function swapTheme(theme: Theme, options: SwapThemeOptions = {}): P
   if (!theme || typeof theme !== 'object' || !theme.overrides) {
     throw new Error('swapTheme: a valid Theme is required — check result.ok before using result.theme.');
   }
+  safeSelector(options.selector ?? ':root');
   // No-op init instead of a non-null assertion: the disposer stays safe to
   // call even if an exotic View Transitions implementation resolves without
   // running the update callback.

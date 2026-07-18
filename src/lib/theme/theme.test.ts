@@ -218,14 +218,16 @@ describe('themeCss', () => {
     expect(css).toBe('[data-theme="custom"] {\n  --sv-border: #123456;\n}\n');
   });
 
-  it('rejects selectors that can escape the generated CSS block', () => {
+  it.each([
+    ':root { background: url(https://example.invalid) } body',
+    ':root; body',
+    '</style><script>alert(1)</script>'
+  ])('rejects the unsafe selector %j', (selector) => {
     const result = defineTheme({ border: '#123456' });
     expect(result.ok).toBe(true);
     if (!result.ok) return;
 
-    expect(() =>
-      themeCss(result.theme, ':root { background: url(https://example.invalid) } body')
-    ).toThrow(/selector/);
+    expect(() => themeCss(result.theme, selector)).toThrow(/selector/);
   });
 });
 
@@ -324,6 +326,18 @@ describe('swapTheme', () => {
     expect(themeCssInjected('--sv-accent: #00ccff')).toBe(true);
 
     disposeB();
+  });
+
+  it('keeps the active theme when a replacement selector is rejected', async () => {
+    const theme = defineTheme({ accent: '#00ccff' });
+    expect(theme.ok).toBe(true);
+    if (!theme.ok) return;
+    const dispose = vi.fn();
+
+    await expect(swapTheme(theme.theme, { selector: ':root; body', dispose })).rejects.toThrow(
+      /selector/
+    );
+    expect(dispose).not.toHaveBeenCalled();
   });
 
   it('throws without a DOM document', async () => {
