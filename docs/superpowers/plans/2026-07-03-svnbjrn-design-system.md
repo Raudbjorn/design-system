@@ -503,14 +503,32 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { openSync } from 'fontkit';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const fontsDir = join(here, '../fonts');
 
+const iosevkaFiles = ['Iosevka-Regular.woff2', 'Iosevka-Bold.woff2'] as const;
+const representativePuaCodePoints = [0xe000, 0xe0a0, 0xe0b0, 0xf000] as const;
+
 describe('fonts', () => {
   it('Iosevka weights are under 400 KB each', () => {
-    for (const f of ['Iosevka-Regular.woff2', 'Iosevka-Bold.woff2']) {
-      expect(statSync(join(fontsDir, f)).size).toBeLessThan(400 * 1024);
+    for (const file of iosevkaFiles) {
+      expect(statSync(join(fontsDir, file)).size).toBeLessThan(400 * 1024);
+    }
+  });
+
+  it.each(iosevkaFiles)('%s preserves representative Nerd Font PUA glyphs', (file) => {
+    const font = openSync(join(fontsDir, file));
+    if (!('characterSet' in font)) {
+      throw new Error(`${file} unexpectedly contains a font collection`);
+    }
+
+    const characterSet = new Set(font.characterSet);
+    for (const codePoint of representativePuaCodePoints) {
+      expect(characterSet.has(codePoint), `missing U+${codePoint.toString(16).toUpperCase()}`).toBe(
+        true
+      );
     }
   });
 
@@ -2072,7 +2090,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 
 **Interfaces:**
 - Consumes: all components (Tasks 5–16).
-- Produces: `src/lib/index.ts` re-exporting every component and its `Props` type; a green `svelte-check`; a `dist/` from `svelte-package`; a `/dev` page rendering all components in dark + light.
+- Produces: `src/lib/index.ts` re-exporting every component value; consumers receive each component's inferred prop shape through Svelte's generated declarations; a green `svelte-check`; a `dist/` from `svelte-package`; a `/dev` page rendering all components in dark + light.
 
 Note: This library uses plain `@sveltejs/vite-plugin-svelte`, not SvelteKit. The "dev page" is a standalone Vite entry, not a SvelteKit route. Use `index.html` + `src/dev.ts` mounting a `Dev.svelte`, avoiding a SvelteKit dependency.
 
@@ -2226,7 +2244,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
 
 **Placeholder scan:** No TBD/TODO; every code step shows full code; every test shows real assertions. ✓
 
-**Type consistency:** `contrastRatio(a,b)` used identically in Tasks 2–3 tests. `Palette` keys (no `--sv-` prefix) consumed by generator with `--sv-${k}`. Component `Props` names match their `.test.ts` prop usage and the barrel export names in Task 17 (13 components). `data-sv` attribute convention consistent across components and tests. ✓
+**Type consistency:** `contrastRatio(a,b)` used identically in Tasks 2–3 tests. `Palette` keys (no `--sv-` prefix) consumed by generator with `--sv-${k}`. Component `Props` definitions match their `.test.ts` prop usage; Task 17's barrel exports all 13 component values. `data-sv` attribute convention consistent across components and tests. ✓
 
 **Known follow-ups (documented, not gaps):** publish-time npm scope check; optional real Shiki integration example for consumers (out of v1 scope — component contract is defined and tested).
 
