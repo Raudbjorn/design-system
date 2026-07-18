@@ -36,7 +36,7 @@
     return true;
   }
   function onScrim(event: PointerEvent) {
-    if (event.target === event.currentTarget && closeOnScrim) close();
+    if (event.button === 0 && event.target === event.currentTarget && closeOnScrim) close();
   }
 </script>
 

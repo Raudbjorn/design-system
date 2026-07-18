@@ -33,6 +33,23 @@ describe('Sheet', () => {
     );
   });
 
+  it('dismisses only for a primary pointer press on the scrim', async () => {
+    const onclose = vi.fn();
+    const { container } = render(Sheet, {
+      open: true,
+      title: 'Filters',
+      onclose,
+      children: createRawSnippet(() => ({ render: () => '<span>body</span>' }))
+    });
+    const scrim = container.querySelector<HTMLElement>('[data-sv="sheet-scrim"]');
+    if (!scrim) throw new Error('sheet scrim missing');
+
+    await fireEvent.pointerDown(scrim, { button: 1 });
+    expect(onclose).not.toHaveBeenCalled();
+    await fireEvent.pointerDown(scrim, { button: 0 });
+    expect(onclose).toHaveBeenCalledOnce();
+  });
+
   it('handles Escape through the shared overlay stack', async () => {
     const onclose = vi.fn();
     render(Sheet, {
