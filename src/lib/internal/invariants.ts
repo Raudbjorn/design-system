@@ -36,10 +36,10 @@ export const CONTRAST_RULES: readonly ContrastRule[] = [
   { fg: 'accent', bg: 'bg', floor: 3, tier: 'frozen' },
   { fg: 'accent-2', bg: 'bg', floor: 3, tier: 'frozen' },
   ...SYN_TOKENS.map((fg): ContrastRule => ({ fg, bg: 'surface-3', floor: 4.5, tier: 'frozen' })),
-  // Extension: additive, both built-ins pass (dark success is 4.29 — a 4.5
-  // status floor would fail it, which is why status gates at the 3:1 UI
-  // threshold, not the text threshold). Border stays ungated: ~1.6:1 hairline
-  // by design.
+  // Extension: additive rules for the world-theme engine. Status colors also
+  // serve UI indicators there, so this broader engine retains a 3:1 floor;
+  // the component-aware defineTheme API separately gates status text at 4.5:1.
+  // Border stays ungated: ~1.6:1 hairline by design.
   { fg: 'success', bg: 'bg', floor: 3, tier: 'extension' },
   { fg: 'error', bg: 'bg', floor: 3, tier: 'extension' },
   { fg: 'warning', bg: 'bg', floor: 3, tier: 'extension' },

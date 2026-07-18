@@ -18,7 +18,7 @@
       "$value": "{primitive.color.white}",
       "$description": "hover lightens in dark"
     },
-    "success": { "$value": "{primitive.color.green-600}" },
+    "success": { "$value": "{primitive.color.green-350}" },
     "error": { "$value": "{primitive.color.red-400}" },
     "warning": { "$value": "{primitive.color.orange-400}" },
     "syn-keyword": { "$value": "{primitive.color.blue-300}" },

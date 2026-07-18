@@ -60,9 +60,9 @@
   if (!ember.ok || !verdant.ok || !emberUser.ok) throw new Error('story preset failed its theme gates');
 
   const worlds = [
-    { id: 'ember', title: 'Ember Hollow', note: 'grimdark · over the dark base', css: themeCss(ember.theme, "[data-world='ember']") },
-    { id: 'verdant', title: 'Verdant Reach', note: 'solarpunk · over the light base', css: themeCss(verdant.theme, "[data-world='verdant']") },
-    { id: 'ember-user', title: 'Ember Hollow · user layer', note: 'world + user override · later layer wins', css: themeCss(emberUser.theme, "[data-world='ember-user']") }
+    { id: 'ember', base: 'dark', title: 'Ember Hollow', note: 'grimdark · over the dark base', css: themeCss(ember.theme, "[data-world='ember']") },
+    { id: 'verdant', base: 'light', title: 'Verdant Reach', note: 'solarpunk · over the light base', css: themeCss(verdant.theme, "[data-world='verdant']") },
+    { id: 'ember-user', base: 'dark', title: 'Ember Hollow · user layer', note: 'world + user override · later layer wins', css: themeCss(emberUser.theme, "[data-world='ember-user']") }
   ];
 
   // The gate at work: an "LLM-extracted" override with an injection attempt,
@@ -94,7 +94,7 @@
   <Stack gap={8}>
     {#each worlds as world (world.id)}
       {@html `<style>${world.css}</style>`}
-      <section data-world={world.id} class="world">
+      <section data-world={world.id} data-theme={world.base} class="world">
         <Stack gap={4}>
           <Eyebrow>{world.title} · {world.note}</Eyebrow>
           <Stack direction="row" gap={4} align="center">
