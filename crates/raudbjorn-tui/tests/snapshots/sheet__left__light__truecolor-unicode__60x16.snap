@@ -1,0 +1,961 @@
+width=60 height=16
+0,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,0: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,0:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,1: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,1:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,2: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,2: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,2:L|Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+3,2:e|Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+4,2:f|Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+5,2:t|Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+6,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+7,2:p|Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+8,2:a|Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+9,2:n|Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+10,2:e|Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+11,2:l|Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+12,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+13,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+14,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+15,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+16,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+17,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+18,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+19,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+20,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+21,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+22,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+23,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+24,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+25,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+26,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+27,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+28,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+29,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+30,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+31,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+32,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+33,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+34,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+35,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+36,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+37,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+38,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+39,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+40,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+41,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+42,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+43,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+44,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+45,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+46,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+47,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+48,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+49,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+50,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+51,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+52,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+53,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+54,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+55,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+56,2: |Rgb(31, 102, 89)|Rgb(236, 225, 184)|Reset|BOLD
+57,2: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,2: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,2:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,3: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,3: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,3:L|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+3,3:E|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+4,3:F|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+5,3:T|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+6,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+7,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+8,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+9,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+10,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+11,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+12,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+13,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+14,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+15,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+16,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+17,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+18,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+19,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+20,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+21,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+22,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+23,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+24,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+25,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+26,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+27,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+28,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+29,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+30,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+31,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+32,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+33,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+34,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+35,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+36,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+37,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+38,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+39,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+40,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+41,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+42,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+43,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+44,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+45,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+46,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+47,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+48,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+49,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+50,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+51,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+52,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+53,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+54,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+55,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+56,3: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+57,3: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,3: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,3:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,4:C|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,4:o|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,4:n|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,4:t|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,4:e|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,4:n|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,4:t|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,4: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,4:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,5: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,5:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,6: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,6:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,7: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,7:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,8: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,8:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,9: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,9:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,10: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,10:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,11: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,11:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,12: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,12: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+3,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+4,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+5,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+6,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+7,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+8,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+9,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+10,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+11,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+12,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+13,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+14,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+15,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+16,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+17,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+18,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+19,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+20,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+21,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+22,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+23,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+24,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+25,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+26,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+27,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+28,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+29,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+30,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+31,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+32,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+33,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+34,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+35,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+36,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+37,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+38,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+39,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+40,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+41,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+42,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+43,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+44,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+45,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+46,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+47,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+48,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+49,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+50,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+51,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+52,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+53,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+54,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+55,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+56,12:─|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+57,12: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,12: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,12:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,13: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,13: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,13:E|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+3,13:s|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+4,13:c|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+5,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+6,13:c|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+7,13:l|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+8,13:o|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+9,13:s|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+10,13:e|Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+11,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+12,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+13,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+14,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+15,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+16,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+17,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+18,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+19,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+20,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+21,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+22,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+23,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+24,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+25,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+26,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+27,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+28,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+29,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+30,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+31,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+32,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+33,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+34,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+35,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+36,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+37,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+38,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+39,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+40,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+41,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+42,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+43,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+44,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+45,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+46,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+47,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+48,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+49,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+50,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+51,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+52,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+53,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+54,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+55,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+56,13: |Rgb(96, 91, 71)|Rgb(236, 225, 184)|Reset|NONE
+57,13: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,13: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,13:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,14: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,14:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+0,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+1,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+2,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+3,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+4,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+5,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+6,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+7,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+8,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+9,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+10,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+11,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+12,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+13,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+14,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+15,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+16,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+17,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+18,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+19,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+20,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+21,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+22,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+23,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+24,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+25,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+26,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+27,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+28,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+29,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+30,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+31,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+32,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+33,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+34,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+35,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+36,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+37,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+38,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+39,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+40,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+41,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+42,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+43,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+44,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+45,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+46,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+47,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+48,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+49,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+50,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+51,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+52,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+53,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+54,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+55,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+56,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+57,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+58,15: |Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE
+59,15:│|Rgb(58, 53, 39)|Rgb(236, 225, 184)|Reset|NONE

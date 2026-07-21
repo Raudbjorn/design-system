@@ -47,3 +47,14 @@ jobs:
       - run: pnpm exec argos deploy ./storybook-static
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+
+  # Cross-language generated.rs drift is owned by the test job's pnpm test gate.
+  tui:
+    name: TUI check & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@1.96.1
+      - run: cargo check --workspace --all-targets
+      - run: cargo test --workspace
+      - run: bash scripts/test-tui-determinism.sh

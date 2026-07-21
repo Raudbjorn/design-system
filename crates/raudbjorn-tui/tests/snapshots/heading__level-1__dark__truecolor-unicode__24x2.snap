@@ -1,0 +1,49 @@
+width=24 height=2
+0,0:S|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+1,0:e|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+2,0:r|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+3,0:v|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+4,0:i|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+5,0:c|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+6,0:e|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+7,0: |Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+8,0:d|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+9,0:a|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+10,0:s|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+11,0:h|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+12,0:b|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+13,0:o|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+14,0:a|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+15,0:r|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+16,0:d|Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+17,0: |Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+18,0: |Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+19,0: |Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+20,0: |Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+21,0: |Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+22,0: |Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+23,0: |Rgb(78, 201, 176)|Reset|Reset|BOLD | UNDERLINED
+0,1:l|Rgb(133, 133, 133)|Reset|Reset|NONE
+1,1:e|Rgb(133, 133, 133)|Reset|Reset|NONE
+2,1:v|Rgb(133, 133, 133)|Reset|Reset|NONE
+3,1:e|Rgb(133, 133, 133)|Reset|Reset|NONE
+4,1:l|Rgb(133, 133, 133)|Reset|Reset|NONE
+5,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+6,1:1|Rgb(133, 133, 133)|Reset|Reset|NONE
+7,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+8,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+9,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+10,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+11,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+12,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+13,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+14,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+15,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+16,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+17,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+18,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+19,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+20,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+21,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+22,1: |Rgb(133, 133, 133)|Reset|Reset|NONE
+23,1: |Rgb(133, 133, 133)|Reset|Reset|NONE

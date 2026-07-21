@@ -20,6 +20,28 @@ The `.woff2` files shipped by this package are subsets of the above, produced
 with `fonttools`/`pyftsubset`; subsetting and WOFF2 conversion are "Modified
 Versions" as defined by the OFL and are redistributed under the same license.
 
+## Native TUI dependencies
+
+The `raudbjorn-tui` development crate links the following Rust libraries. The
+license identifiers and repository URLs below come from the published crate
+metadata:
+
+- **Crepuscularity TUI 0.4.22** — MPL-2.0
+  (https://github.com/tschk/crepuscularity).
+- **Ratatui 0.30.2** — MIT
+  (https://github.com/ratatui/ratatui).
+- **Crossterm 0.29.0** — MIT
+  (https://github.com/crossterm-rs/crossterm).
+- **tui-overlay 0.1.2** — MIT OR Apache-2.0
+  (https://github.com/jharsono/tui-overlay).
+- **unicode-width 0.2.0** — MIT OR Apache-2.0
+  (https://github.com/unicode-rs/unicode-width).
+
+**tui-pantry 0.4.0** (MIT OR Apache-2.0,
+https://github.com/taho-inc/tui-pantry) was evaluated for the optional
+developer browser but is not linked or shipped by the current Frame-native
+gallery.
+
 ## SIL Open Font License, Version 1.1
 
 Copyright holders are listed above per font.

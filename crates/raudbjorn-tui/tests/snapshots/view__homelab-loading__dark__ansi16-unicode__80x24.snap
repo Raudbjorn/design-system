@@ -1,0 +1,1921 @@
+width=80 height=24
+0,0: |White|Black|Reset|NONE
+1,0: |White|Black|Reset|NONE
+2,0: |White|Black|Reset|NONE
+3,0: |White|Black|Reset|NONE
+4,0: |White|Black|Reset|NONE
+5,0: |White|Black|Reset|NONE
+6,0: |White|Black|Reset|NONE
+7,0: |White|Black|Reset|NONE
+8,0: |White|Black|Reset|NONE
+9,0: |White|Black|Reset|NONE
+10,0: |White|Black|Reset|NONE
+11,0: |White|Black|Reset|NONE
+12,0: |White|Black|Reset|NONE
+13,0: |White|Black|Reset|NONE
+14,0: |White|Black|Reset|NONE
+15,0: |White|Black|Reset|NONE
+16,0: |White|Black|Reset|NONE
+17,0: |White|Black|Reset|NONE
+18,0: |White|Black|Reset|NONE
+19,0: |White|Black|Reset|NONE
+20,0: |White|Black|Reset|NONE
+21,0: |White|Black|Reset|NONE
+22,0: |White|Black|Reset|NONE
+23,0: |White|Black|Reset|NONE
+24,0: |White|Black|Reset|NONE
+25,0: |White|Black|Reset|NONE
+26,0: |White|Black|Reset|NONE
+27,0:[|DarkGray|Black|Reset|NONE
+28,0:D|DarkGray|Black|Reset|NONE
+29,0:a|DarkGray|Black|Reset|NONE
+30,0:s|DarkGray|Black|Reset|NONE
+31,0:h|DarkGray|Black|Reset|NONE
+32,0:b|DarkGray|Black|Reset|NONE
+33,0:o|DarkGray|Black|Reset|NONE
+34,0:a|DarkGray|Black|Reset|NONE
+35,0:r|DarkGray|Black|Reset|NONE
+36,0:d|DarkGray|Black|Reset|NONE
+37,0:]|DarkGray|Black|Reset|NONE
+38,0: |DarkGray|Black|Reset|NONE
+39,0: |DarkGray|Black|Reset|NONE
+40,0: |DarkGray|Black|Reset|NONE
+41,0: |DarkGray|Black|Reset|NONE
+42,0: |DarkGray|Black|Reset|NONE
+43,0: |DarkGray|Black|Reset|NONE
+44,0: |DarkGray|Black|Reset|NONE
+45,0: |DarkGray|Black|Reset|NONE
+46,0: |DarkGray|Black|Reset|NONE
+47,0: |DarkGray|Black|Reset|NONE
+48,0: |DarkGray|Black|Reset|NONE
+49,0: |DarkGray|Black|Reset|NONE
+50,0: |DarkGray|Black|Reset|NONE
+51,0: |DarkGray|Black|Reset|NONE
+52,0: |DarkGray|Black|Reset|NONE
+53,0: |White|Black|Reset|NONE
+54,0:[|White|Black|Reset|NONE
+55,0:M|White|Black|Reset|NONE
+56,0:e|White|Black|Reset|NONE
+57,0:n|White|Black|Reset|NONE
+58,0:u|White|Black|Reset|NONE
+59,0:]|White|Black|Reset|NONE
+60,0: |White|Black|Reset|NONE
+61,0: |White|Black|Reset|NONE
+62,0: |White|Black|Reset|NONE
+63,0: |White|Black|Reset|NONE
+64,0: |White|Black|Reset|NONE
+65,0: |White|Black|Reset|NONE
+66,0: |White|Black|Reset|NONE
+67,0: |White|Black|Reset|NONE
+68,0: |White|Black|Reset|NONE
+69,0: |White|Black|Reset|NONE
+70,0: |White|Black|Reset|NONE
+71,0: |White|Black|Reset|NONE
+72,0: |White|Black|Reset|NONE
+73,0: |White|Black|Reset|NONE
+74,0: |White|Black|Reset|NONE
+75,0: |White|Black|Reset|NONE
+76,0: |White|Black|Reset|NONE
+77,0: |White|Black|Reset|NONE
+78,0: |White|Black|Reset|NONE
+79,0: |White|Black|Reset|NONE
+0,1:─|White|Black|Reset|NONE
+1,1:─|White|Black|Reset|NONE
+2,1:─|White|Black|Reset|NONE
+3,1:─|White|Black|Reset|NONE
+4,1:─|White|Black|Reset|NONE
+5,1:─|White|Black|Reset|NONE
+6,1:─|White|Black|Reset|NONE
+7,1:─|White|Black|Reset|NONE
+8,1:─|White|Black|Reset|NONE
+9,1:─|White|Black|Reset|NONE
+10,1:─|White|Black|Reset|NONE
+11,1:─|White|Black|Reset|NONE
+12,1:─|White|Black|Reset|NONE
+13,1:─|White|Black|Reset|NONE
+14,1:─|White|Black|Reset|NONE
+15,1:─|White|Black|Reset|NONE
+16,1:─|White|Black|Reset|NONE
+17,1:─|White|Black|Reset|NONE
+18,1:─|White|Black|Reset|NONE
+19,1:─|White|Black|Reset|NONE
+20,1:─|White|Black|Reset|NONE
+21,1:─|White|Black|Reset|NONE
+22,1:─|White|Black|Reset|NONE
+23,1:─|White|Black|Reset|NONE
+24,1:─|White|Black|Reset|NONE
+25,1:─|White|Black|Reset|NONE
+26,1:─|White|Black|Reset|NONE
+27,1:─|White|Black|Reset|NONE
+28,1:─|White|Black|Reset|NONE
+29,1:─|White|Black|Reset|NONE
+30,1:─|White|Black|Reset|NONE
+31,1:─|White|Black|Reset|NONE
+32,1:─|White|Black|Reset|NONE
+33,1:─|White|Black|Reset|NONE
+34,1:─|White|Black|Reset|NONE
+35,1:─|White|Black|Reset|NONE
+36,1:─|White|Black|Reset|NONE
+37,1:─|White|Black|Reset|NONE
+38,1:─|White|Black|Reset|NONE
+39,1:─|White|Black|Reset|NONE
+40,1:─|White|Black|Reset|NONE
+41,1:─|White|Black|Reset|NONE
+42,1:─|White|Black|Reset|NONE
+43,1:─|White|Black|Reset|NONE
+44,1:─|White|Black|Reset|NONE
+45,1:─|White|Black|Reset|NONE
+46,1:─|White|Black|Reset|NONE
+47,1:─|White|Black|Reset|NONE
+48,1:─|White|Black|Reset|NONE
+49,1:─|White|Black|Reset|NONE
+50,1:─|White|Black|Reset|NONE
+51,1:─|White|Black|Reset|NONE
+52,1:─|White|Black|Reset|NONE
+53,1:─|White|Black|Reset|NONE
+54,1:─|White|Black|Reset|NONE
+55,1:─|White|Black|Reset|NONE
+56,1:─|White|Black|Reset|NONE
+57,1:─|White|Black|Reset|NONE
+58,1:─|White|Black|Reset|NONE
+59,1:─|White|Black|Reset|NONE
+60,1:─|White|Black|Reset|NONE
+61,1:─|White|Black|Reset|NONE
+62,1:─|White|Black|Reset|NONE
+63,1:─|White|Black|Reset|NONE
+64,1:─|White|Black|Reset|NONE
+65,1:─|White|Black|Reset|NONE
+66,1:─|White|Black|Reset|NONE
+67,1:─|White|Black|Reset|NONE
+68,1:─|White|Black|Reset|NONE
+69,1:─|White|Black|Reset|NONE
+70,1:─|White|Black|Reset|NONE
+71,1:─|White|Black|Reset|NONE
+72,1:─|White|Black|Reset|NONE
+73,1:─|White|Black|Reset|NONE
+74,1:─|White|Black|Reset|NONE
+75,1:─|White|Black|Reset|NONE
+76,1:─|White|Black|Reset|NONE
+77,1:─|White|Black|Reset|NONE
+78,1:─|White|Black|Reset|NONE
+79,1:─|White|Black|Reset|NONE
+0,2: |Gray|Black|Reset|NONE
+1,2:╭|White|Black|Reset|NONE
+2,2:─|White|Black|Reset|NONE
+3,2:─|White|Black|Reset|NONE
+4,2:─|White|Black|Reset|NONE
+5,2:─|White|Black|Reset|NONE
+6,2:─|White|Black|Reset|NONE
+7,2:─|White|Black|Reset|NONE
+8,2:─|White|Black|Reset|NONE
+9,2:─|White|Black|Reset|NONE
+10,2:─|White|Black|Reset|NONE
+11,2:─|White|Black|Reset|NONE
+12,2:─|White|Black|Reset|NONE
+13,2:─|White|Black|Reset|NONE
+14,2:─|White|Black|Reset|NONE
+15,2:─|White|Black|Reset|NONE
+16,2:─|White|Black|Reset|NONE
+17,2:─|White|Black|Reset|NONE
+18,2:─|White|Black|Reset|NONE
+19,2:─|White|Black|Reset|NONE
+20,2:─|White|Black|Reset|NONE
+21,2:─|White|Black|Reset|NONE
+22,2:─|White|Black|Reset|NONE
+23,2:─|White|Black|Reset|NONE
+24,2:─|White|Black|Reset|NONE
+25,2:╮|White|Black|Reset|NONE
+26,2: |White|Black|Reset|NONE
+27,2:╭|White|Black|Reset|NONE
+28,2:─|White|Black|Reset|NONE
+29,2:─|White|Black|Reset|NONE
+30,2:─|White|Black|Reset|NONE
+31,2:─|White|Black|Reset|NONE
+32,2:─|White|Black|Reset|NONE
+33,2:─|White|Black|Reset|NONE
+34,2:─|White|Black|Reset|NONE
+35,2:─|White|Black|Reset|NONE
+36,2:─|White|Black|Reset|NONE
+37,2:─|White|Black|Reset|NONE
+38,2:─|White|Black|Reset|NONE
+39,2:─|White|Black|Reset|NONE
+40,2:─|White|Black|Reset|NONE
+41,2:─|White|Black|Reset|NONE
+42,2:─|White|Black|Reset|NONE
+43,2:─|White|Black|Reset|NONE
+44,2:─|White|Black|Reset|NONE
+45,2:─|White|Black|Reset|NONE
+46,2:─|White|Black|Reset|NONE
+47,2:─|White|Black|Reset|NONE
+48,2:─|White|Black|Reset|NONE
+49,2:─|White|Black|Reset|NONE
+50,2:─|White|Black|Reset|NONE
+51,2:─|White|Black|Reset|NONE
+52,2:╮|White|Black|Reset|NONE
+53,2: |White|Black|Reset|NONE
+54,2:╭|White|Black|Reset|NONE
+55,2:─|White|Black|Reset|NONE
+56,2:─|White|Black|Reset|NONE
+57,2:─|White|Black|Reset|NONE
+58,2:─|White|Black|Reset|NONE
+59,2:─|White|Black|Reset|NONE
+60,2:─|White|Black|Reset|NONE
+61,2:─|White|Black|Reset|NONE
+62,2:─|White|Black|Reset|NONE
+63,2:─|White|Black|Reset|NONE
+64,2:─|White|Black|Reset|NONE
+65,2:─|White|Black|Reset|NONE
+66,2:─|White|Black|Reset|NONE
+67,2:─|White|Black|Reset|NONE
+68,2:─|White|Black|Reset|NONE
+69,2:─|White|Black|Reset|NONE
+70,2:─|White|Black|Reset|NONE
+71,2:─|White|Black|Reset|NONE
+72,2:─|White|Black|Reset|NONE
+73,2:─|White|Black|Reset|NONE
+74,2:─|White|Black|Reset|NONE
+75,2:─|White|Black|Reset|NONE
+76,2:─|White|Black|Reset|NONE
+77,2:─|White|Black|Reset|NONE
+78,2:╮|White|Black|Reset|NONE
+79,2: |Gray|Black|Reset|NONE
+0,3: |Gray|Black|Reset|NONE
+1,3:│|White|Black|Reset|NONE
+2,3: |White|Black|Reset|NONE
+3,3:1|DarkGray|Black|Reset|BOLD
+4,3:2|DarkGray|Black|Reset|BOLD
+5,3:%|DarkGray|Black|Reset|BOLD
+6,3: |DarkGray|Black|Reset|BOLD
+7,3: |DarkGray|Black|Reset|BOLD
+8,3: |DarkGray|Black|Reset|BOLD
+9,3: |DarkGray|Black|Reset|BOLD
+10,3: |DarkGray|Black|Reset|BOLD
+11,3: |DarkGray|Black|Reset|BOLD
+12,3: |DarkGray|Black|Reset|BOLD
+13,3: |DarkGray|Black|Reset|BOLD
+14,3: |DarkGray|Black|Reset|BOLD
+15,3: |DarkGray|Black|Reset|BOLD
+16,3: |DarkGray|Black|Reset|BOLD
+17,3: |DarkGray|Black|Reset|BOLD
+18,3: |DarkGray|Black|Reset|BOLD
+19,3: |DarkGray|Black|Reset|BOLD
+20,3: |DarkGray|Black|Reset|BOLD
+21,3: |DarkGray|Black|Reset|BOLD
+22,3: |DarkGray|Black|Reset|BOLD
+23,3: |DarkGray|Black|Reset|BOLD
+24,3: |White|Black|Reset|NONE
+25,3:│|White|Black|Reset|NONE
+26,3: |White|Black|Reset|NONE
+27,3:│|White|Black|Reset|NONE
+28,3: |White|Black|Reset|NONE
+29,3:4|DarkGray|Black|Reset|BOLD
+30,3:.|DarkGray|Black|Reset|BOLD
+31,3:2|DarkGray|Black|Reset|BOLD
+32,3:G|DarkGray|Black|Reset|BOLD
+33,3: |DarkGray|Black|Reset|BOLD
+34,3: |DarkGray|Black|Reset|BOLD
+35,3: |DarkGray|Black|Reset|BOLD
+36,3: |DarkGray|Black|Reset|BOLD
+37,3: |DarkGray|Black|Reset|BOLD
+38,3: |DarkGray|Black|Reset|BOLD
+39,3: |DarkGray|Black|Reset|BOLD
+40,3: |DarkGray|Black|Reset|BOLD
+41,3: |DarkGray|Black|Reset|BOLD
+42,3: |DarkGray|Black|Reset|BOLD
+43,3: |DarkGray|Black|Reset|BOLD
+44,3: |DarkGray|Black|Reset|BOLD
+45,3: |DarkGray|Black|Reset|BOLD
+46,3: |DarkGray|Black|Reset|BOLD
+47,3: |DarkGray|Black|Reset|BOLD
+48,3: |DarkGray|Black|Reset|BOLD
+49,3: |DarkGray|Black|Reset|BOLD
+50,3: |DarkGray|Black|Reset|BOLD
+51,3: |White|Black|Reset|NONE
+52,3:│|White|Black|Reset|NONE
+53,3: |White|Black|Reset|NONE
+54,3:│|White|Black|Reset|NONE
+55,3: |White|Black|Reset|NONE
+56,3:1|White|Black|Reset|BOLD
+57,3:4|White|Black|Reset|BOLD
+58,3:d|White|Black|Reset|BOLD
+59,3: |White|Black|Reset|BOLD
+60,3: |White|Black|Reset|BOLD
+61,3: |White|Black|Reset|BOLD
+62,3: |White|Black|Reset|BOLD
+63,3: |White|Black|Reset|BOLD
+64,3: |White|Black|Reset|BOLD
+65,3: |White|Black|Reset|BOLD
+66,3: |White|Black|Reset|BOLD
+67,3: |White|Black|Reset|BOLD
+68,3: |White|Black|Reset|BOLD
+69,3: |White|Black|Reset|BOLD
+70,3: |White|Black|Reset|BOLD
+71,3: |White|Black|Reset|BOLD
+72,3: |White|Black|Reset|BOLD
+73,3: |White|Black|Reset|BOLD
+74,3: |White|Black|Reset|BOLD
+75,3: |White|Black|Reset|BOLD
+76,3: |White|Black|Reset|BOLD
+77,3: |White|Black|Reset|NONE
+78,3:│|White|Black|Reset|NONE
+79,3: |Gray|Black|Reset|NONE
+0,4: |Gray|Black|Reset|NONE
+1,4:│|White|Black|Reset|NONE
+2,4: |White|Black|Reset|NONE
+3,4:C|DarkGray|Black|Reset|NONE
+4,4:P|DarkGray|Black|Reset|NONE
+5,4:U|DarkGray|Black|Reset|NONE
+6,4: |DarkGray|Black|Reset|NONE
+7,4: |DarkGray|Black|Reset|NONE
+8,4: |DarkGray|Black|Reset|NONE
+9,4: |DarkGray|Black|Reset|NONE
+10,4: |DarkGray|Black|Reset|NONE
+11,4: |DarkGray|Black|Reset|NONE
+12,4: |DarkGray|Black|Reset|NONE
+13,4: |DarkGray|Black|Reset|NONE
+14,4: |DarkGray|Black|Reset|NONE
+15,4: |DarkGray|Black|Reset|NONE
+16,4: |DarkGray|Black|Reset|NONE
+17,4: |DarkGray|Black|Reset|NONE
+18,4: |DarkGray|Black|Reset|NONE
+19,4: |DarkGray|Black|Reset|NONE
+20,4: |DarkGray|Black|Reset|NONE
+21,4: |DarkGray|Black|Reset|NONE
+22,4: |DarkGray|Black|Reset|NONE
+23,4: |DarkGray|Black|Reset|NONE
+24,4: |White|Black|Reset|NONE
+25,4:│|White|Black|Reset|NONE
+26,4: |White|Black|Reset|NONE
+27,4:│|White|Black|Reset|NONE
+28,4: |White|Black|Reset|NONE
+29,4:M|DarkGray|Black|Reset|NONE
+30,4:E|DarkGray|Black|Reset|NONE
+31,4:M|DarkGray|Black|Reset|NONE
+32,4: |DarkGray|Black|Reset|NONE
+33,4: |DarkGray|Black|Reset|NONE
+34,4: |DarkGray|Black|Reset|NONE
+35,4: |DarkGray|Black|Reset|NONE
+36,4: |DarkGray|Black|Reset|NONE
+37,4: |DarkGray|Black|Reset|NONE
+38,4: |DarkGray|Black|Reset|NONE
+39,4: |DarkGray|Black|Reset|NONE
+40,4: |DarkGray|Black|Reset|NONE
+41,4: |DarkGray|Black|Reset|NONE
+42,4: |DarkGray|Black|Reset|NONE
+43,4: |DarkGray|Black|Reset|NONE
+44,4: |DarkGray|Black|Reset|NONE
+45,4: |DarkGray|Black|Reset|NONE
+46,4: |DarkGray|Black|Reset|NONE
+47,4: |DarkGray|Black|Reset|NONE
+48,4: |DarkGray|Black|Reset|NONE
+49,4: |DarkGray|Black|Reset|NONE
+50,4: |DarkGray|Black|Reset|NONE
+51,4: |White|Black|Reset|NONE
+52,4:│|White|Black|Reset|NONE
+53,4: |White|Black|Reset|NONE
+54,4:│|White|Black|Reset|NONE
+55,4: |White|Black|Reset|NONE
+56,4:U|DarkGray|Black|Reset|NONE
+57,4:P|DarkGray|Black|Reset|NONE
+58,4:T|DarkGray|Black|Reset|NONE
+59,4:I|DarkGray|Black|Reset|NONE
+60,4:M|DarkGray|Black|Reset|NONE
+61,4:E|DarkGray|Black|Reset|NONE
+62,4: |DarkGray|Black|Reset|NONE
+63,4: |DarkGray|Black|Reset|NONE
+64,4: |DarkGray|Black|Reset|NONE
+65,4: |DarkGray|Black|Reset|NONE
+66,4: |DarkGray|Black|Reset|NONE
+67,4: |DarkGray|Black|Reset|NONE
+68,4: |DarkGray|Black|Reset|NONE
+69,4: |DarkGray|Black|Reset|NONE
+70,4: |DarkGray|Black|Reset|NONE
+71,4: |DarkGray|Black|Reset|NONE
+72,4: |DarkGray|Black|Reset|NONE
+73,4: |DarkGray|Black|Reset|NONE
+74,4: |DarkGray|Black|Reset|NONE
+75,4: |DarkGray|Black|Reset|NONE
+76,4: |DarkGray|Black|Reset|NONE
+77,4: |White|Black|Reset|NONE
+78,4:│|White|Black|Reset|NONE
+79,4: |Gray|Black|Reset|NONE
+0,5: |Gray|Black|Reset|NONE
+1,5:╰|White|Black|Reset|NONE
+2,5:─|White|Black|Reset|NONE
+3,5:─|White|Black|Reset|NONE
+4,5:─|White|Black|Reset|NONE
+5,5:─|White|Black|Reset|NONE
+6,5:─|White|Black|Reset|NONE
+7,5:─|White|Black|Reset|NONE
+8,5:─|White|Black|Reset|NONE
+9,5:─|White|Black|Reset|NONE
+10,5:─|White|Black|Reset|NONE
+11,5:─|White|Black|Reset|NONE
+12,5:─|White|Black|Reset|NONE
+13,5:─|White|Black|Reset|NONE
+14,5:─|White|Black|Reset|NONE
+15,5:─|White|Black|Reset|NONE
+16,5:─|White|Black|Reset|NONE
+17,5:─|White|Black|Reset|NONE
+18,5:─|White|Black|Reset|NONE
+19,5:─|White|Black|Reset|NONE
+20,5:─|White|Black|Reset|NONE
+21,5:─|White|Black|Reset|NONE
+22,5:─|White|Black|Reset|NONE
+23,5:─|White|Black|Reset|NONE
+24,5:─|White|Black|Reset|NONE
+25,5:╯|White|Black|Reset|NONE
+26,5: |White|Black|Reset|NONE
+27,5:╰|White|Black|Reset|NONE
+28,5:─|White|Black|Reset|NONE
+29,5:─|White|Black|Reset|NONE
+30,5:─|White|Black|Reset|NONE
+31,5:─|White|Black|Reset|NONE
+32,5:─|White|Black|Reset|NONE
+33,5:─|White|Black|Reset|NONE
+34,5:─|White|Black|Reset|NONE
+35,5:─|White|Black|Reset|NONE
+36,5:─|White|Black|Reset|NONE
+37,5:─|White|Black|Reset|NONE
+38,5:─|White|Black|Reset|NONE
+39,5:─|White|Black|Reset|NONE
+40,5:─|White|Black|Reset|NONE
+41,5:─|White|Black|Reset|NONE
+42,5:─|White|Black|Reset|NONE
+43,5:─|White|Black|Reset|NONE
+44,5:─|White|Black|Reset|NONE
+45,5:─|White|Black|Reset|NONE
+46,5:─|White|Black|Reset|NONE
+47,5:─|White|Black|Reset|NONE
+48,5:─|White|Black|Reset|NONE
+49,5:─|White|Black|Reset|NONE
+50,5:─|White|Black|Reset|NONE
+51,5:─|White|Black|Reset|NONE
+52,5:╯|White|Black|Reset|NONE
+53,5: |White|Black|Reset|NONE
+54,5:╰|White|Black|Reset|NONE
+55,5:─|White|Black|Reset|NONE
+56,5:─|White|Black|Reset|NONE
+57,5:─|White|Black|Reset|NONE
+58,5:─|White|Black|Reset|NONE
+59,5:─|White|Black|Reset|NONE
+60,5:─|White|Black|Reset|NONE
+61,5:─|White|Black|Reset|NONE
+62,5:─|White|Black|Reset|NONE
+63,5:─|White|Black|Reset|NONE
+64,5:─|White|Black|Reset|NONE
+65,5:─|White|Black|Reset|NONE
+66,5:─|White|Black|Reset|NONE
+67,5:─|White|Black|Reset|NONE
+68,5:─|White|Black|Reset|NONE
+69,5:─|White|Black|Reset|NONE
+70,5:─|White|Black|Reset|NONE
+71,5:─|White|Black|Reset|NONE
+72,5:─|White|Black|Reset|NONE
+73,5:─|White|Black|Reset|NONE
+74,5:─|White|Black|Reset|NONE
+75,5:─|White|Black|Reset|NONE
+76,5:─|White|Black|Reset|NONE
+77,5:─|White|Black|Reset|NONE
+78,5:╯|White|Black|Reset|NONE
+79,5: |Gray|Black|Reset|NONE
+0,6: |Gray|Black|Reset|NONE
+1,6:S|White|Black|Reset|BOLD
+2,6:e|White|Black|Reset|BOLD
+3,6:r|White|Black|Reset|BOLD
+4,6:v|White|Black|Reset|BOLD
+5,6:i|White|Black|Reset|BOLD
+6,6:c|White|Black|Reset|BOLD
+7,6:e|White|Black|Reset|BOLD
+8,6:s|White|Black|Reset|BOLD
+9,6: |White|Black|Reset|BOLD
+10,6: |White|Black|Reset|BOLD
+11,6: |White|Black|Reset|BOLD
+12,6: |White|Black|Reset|BOLD
+13,6: |White|Black|Reset|BOLD
+14,6: |White|Black|Reset|BOLD
+15,6: |White|Black|Reset|BOLD
+16,6: |White|Black|Reset|BOLD
+17,6: |White|Black|Reset|BOLD
+18,6: |White|Black|Reset|BOLD
+19,6: |White|Black|Reset|BOLD
+20,6: |White|Black|Reset|BOLD
+21,6: |White|Black|Reset|BOLD
+22,6: |White|Black|Reset|BOLD
+23,6: |White|Black|Reset|BOLD
+24,6: |White|Black|Reset|BOLD
+25,6: |White|Black|Reset|BOLD
+26,6: |White|Black|Reset|BOLD
+27,6: |White|Black|Reset|BOLD
+28,6: |White|Black|Reset|BOLD
+29,6: |White|Black|Reset|BOLD
+30,6: |White|Black|Reset|BOLD
+31,6: |White|Black|Reset|BOLD
+32,6: |White|Black|Reset|BOLD
+33,6: |White|Black|Reset|BOLD
+34,6: |White|Black|Reset|BOLD
+35,6: |White|Black|Reset|BOLD
+36,6: |White|Black|Reset|BOLD
+37,6: |White|Black|Reset|BOLD
+38,6: |White|Black|Reset|BOLD
+39,6: |White|Black|Reset|BOLD
+40,6: |White|Black|Reset|BOLD
+41,6: |White|Black|Reset|BOLD
+42,6: |White|Black|Reset|BOLD
+43,6: |White|Black|Reset|BOLD
+44,6: |White|Black|Reset|BOLD
+45,6: |White|Black|Reset|BOLD
+46,6: |White|Black|Reset|BOLD
+47,6: |White|Black|Reset|BOLD
+48,6: |White|Black|Reset|BOLD
+49,6: |White|Black|Reset|BOLD
+50,6: |White|Black|Reset|BOLD
+51,6: |White|Black|Reset|BOLD
+52,6: |White|Black|Reset|BOLD
+53,6: |White|Black|Reset|BOLD
+54,6: |White|Black|Reset|BOLD
+55,6: |White|Black|Reset|BOLD
+56,6: |White|Black|Reset|BOLD
+57,6: |White|Black|Reset|BOLD
+58,6: |White|Black|Reset|BOLD
+59,6: |White|Black|Reset|BOLD
+60,6: |White|Black|Reset|BOLD
+61,6: |White|Black|Reset|BOLD
+62,6: |White|Black|Reset|BOLD
+63,6: |White|Black|Reset|BOLD
+64,6: |White|Black|Reset|BOLD
+65,6: |White|Black|Reset|BOLD
+66,6: |White|Black|Reset|BOLD
+67,6: |White|Black|Reset|BOLD
+68,6: |White|Black|Reset|BOLD
+69,6: |White|Black|Reset|BOLD
+70,6: |White|Black|Reset|BOLD
+71,6: |White|Black|Reset|BOLD
+72,6: |White|Black|Reset|BOLD
+73,6: |White|Black|Reset|BOLD
+74,6: |White|Black|Reset|BOLD
+75,6: |White|Black|Reset|BOLD
+76,6: |White|Black|Reset|BOLD
+77,6: |White|Black|Reset|BOLD
+78,6: |White|Black|Reset|BOLD
+79,6: |Gray|Black|Reset|NONE
+0,7: |Gray|Black|Reset|NONE
+1,7:┌|Gray|Black|Reset|NONE
+2,7:─|Gray|Black|Reset|NONE
+3,7:─|Gray|Black|Reset|NONE
+4,7:─|Gray|Black|Reset|NONE
+5,7:─|Gray|Black|Reset|NONE
+6,7:─|Gray|Black|Reset|NONE
+7,7:─|Gray|Black|Reset|NONE
+8,7:─|Gray|Black|Reset|NONE
+9,7:─|Gray|Black|Reset|NONE
+10,7:─|Gray|Black|Reset|NONE
+11,7:─|Gray|Black|Reset|NONE
+12,7:─|Gray|Black|Reset|NONE
+13,7:─|Gray|Black|Reset|NONE
+14,7:─|Gray|Black|Reset|NONE
+15,7:─|Gray|Black|Reset|NONE
+16,7:─|Gray|Black|Reset|NONE
+17,7:─|Gray|Black|Reset|NONE
+18,7:─|Gray|Black|Reset|NONE
+19,7:─|Gray|Black|Reset|NONE
+20,7:─|Gray|Black|Reset|NONE
+21,7:─|Gray|Black|Reset|NONE
+22,7:─|Gray|Black|Reset|NONE
+23,7:─|Gray|Black|Reset|NONE
+24,7:─|Gray|Black|Reset|NONE
+25,7:─|Gray|Black|Reset|NONE
+26,7:─|Gray|Black|Reset|NONE
+27,7:─|Gray|Black|Reset|NONE
+28,7:─|Gray|Black|Reset|NONE
+29,7:─|Gray|Black|Reset|NONE
+30,7:─|Gray|Black|Reset|NONE
+31,7:─|Gray|Black|Reset|NONE
+32,7:─|Gray|Black|Reset|NONE
+33,7:─|Gray|Black|Reset|NONE
+34,7:─|Gray|Black|Reset|NONE
+35,7:─|Gray|Black|Reset|NONE
+36,7:─|Gray|Black|Reset|NONE
+37,7:─|Gray|Black|Reset|NONE
+38,7:─|Gray|Black|Reset|NONE
+39,7:─|Gray|Black|Reset|NONE
+40,7:─|Gray|Black|Reset|NONE
+41,7:─|Gray|Black|Reset|NONE
+42,7:─|Gray|Black|Reset|NONE
+43,7:─|Gray|Black|Reset|NONE
+44,7:─|Gray|Black|Reset|NONE
+45,7:─|Gray|Black|Reset|NONE
+46,7:─|Gray|Black|Reset|NONE
+47,7:─|Gray|Black|Reset|NONE
+48,7:─|Gray|Black|Reset|NONE
+49,7:─|Gray|Black|Reset|NONE
+50,7:─|Gray|Black|Reset|NONE
+51,7:─|Gray|Black|Reset|NONE
+52,7:─|Gray|Black|Reset|NONE
+53,7:─|Gray|Black|Reset|NONE
+54,7:─|Gray|Black|Reset|NONE
+55,7:─|Gray|Black|Reset|NONE
+56,7:─|Gray|Black|Reset|NONE
+57,7:─|Gray|Black|Reset|NONE
+58,7:─|Gray|Black|Reset|NONE
+59,7:─|Gray|Black|Reset|NONE
+60,7:─|Gray|Black|Reset|NONE
+61,7:─|Gray|Black|Reset|NONE
+62,7:─|Gray|Black|Reset|NONE
+63,7:─|Gray|Black|Reset|NONE
+64,7:─|Gray|Black|Reset|NONE
+65,7:─|Gray|Black|Reset|NONE
+66,7:─|Gray|Black|Reset|NONE
+67,7:─|Gray|Black|Reset|NONE
+68,7:─|Gray|Black|Reset|NONE
+69,7:─|Gray|Black|Reset|NONE
+70,7:─|Gray|Black|Reset|NONE
+71,7:─|Gray|Black|Reset|NONE
+72,7:─|Gray|Black|Reset|NONE
+73,7:─|Gray|Black|Reset|NONE
+74,7:─|Gray|Black|Reset|NONE
+75,7:─|Gray|Black|Reset|NONE
+76,7:─|Gray|Black|Reset|NONE
+77,7:─|Gray|Black|Reset|NONE
+78,7:┐|Gray|Black|Reset|NONE
+79,7: |Gray|Black|Reset|NONE
+0,8: |Gray|Black|Reset|NONE
+1,8:│|Gray|Black|Reset|NONE
+2,8:N|White|Black|Reset|BOLD
+3,8:A|White|Black|Reset|BOLD
+4,8:M|White|Black|Reset|BOLD
+5,8:E|White|Black|Reset|BOLD
+6,8: |White|Black|Reset|BOLD
+7,8:S|White|Black|Reset|BOLD
+8,8:T|White|Black|Reset|BOLD
+9,8:A|White|Black|Reset|BOLD
+10,8:T|White|Black|Reset|BOLD
+11,8:U|White|Black|Reset|BOLD
+12,8:S|White|Black|Reset|BOLD
+13,8: |White|Black|Reset|BOLD
+14,8:U|White|Black|Reset|BOLD
+15,8:P|White|Black|Reset|BOLD
+16,8:T|White|Black|Reset|BOLD
+17,8:I|White|Black|Reset|BOLD
+18,8:M|White|Black|Reset|BOLD
+19,8:E|White|Black|Reset|BOLD
+20,8: |White|Black|Reset|BOLD
+21,8: |White|Black|Reset|BOLD
+22,8: |White|Black|Reset|BOLD
+23,8: |White|Black|Reset|BOLD
+24,8: |White|Black|Reset|BOLD
+25,8: |White|Black|Reset|BOLD
+26,8: |White|Black|Reset|BOLD
+27,8: |White|Black|Reset|BOLD
+28,8: |White|Black|Reset|BOLD
+29,8: |White|Black|Reset|BOLD
+30,8: |White|Black|Reset|BOLD
+31,8: |White|Black|Reset|BOLD
+32,8: |White|Black|Reset|BOLD
+33,8: |White|Black|Reset|BOLD
+34,8: |White|Black|Reset|BOLD
+35,8: |White|Black|Reset|BOLD
+36,8: |White|Black|Reset|BOLD
+37,8: |White|Black|Reset|BOLD
+38,8: |White|Black|Reset|BOLD
+39,8: |White|Black|Reset|BOLD
+40,8: |White|Black|Reset|BOLD
+41,8: |White|Black|Reset|BOLD
+42,8: |White|Black|Reset|BOLD
+43,8: |White|Black|Reset|BOLD
+44,8: |White|Black|Reset|BOLD
+45,8: |White|Black|Reset|BOLD
+46,8: |White|Black|Reset|BOLD
+47,8: |White|Black|Reset|BOLD
+48,8: |White|Black|Reset|BOLD
+49,8: |White|Black|Reset|BOLD
+50,8: |White|Black|Reset|BOLD
+51,8: |White|Black|Reset|BOLD
+52,8: |White|Black|Reset|BOLD
+53,8: |White|Black|Reset|BOLD
+54,8: |White|Black|Reset|BOLD
+55,8: |White|Black|Reset|BOLD
+56,8: |White|Black|Reset|BOLD
+57,8: |White|Black|Reset|BOLD
+58,8: |White|Black|Reset|BOLD
+59,8: |White|Black|Reset|BOLD
+60,8: |White|Black|Reset|BOLD
+61,8: |White|Black|Reset|BOLD
+62,8: |White|Black|Reset|BOLD
+63,8: |White|Black|Reset|BOLD
+64,8: |White|Black|Reset|BOLD
+65,8: |White|Black|Reset|BOLD
+66,8: |White|Black|Reset|BOLD
+67,8: |White|Black|Reset|BOLD
+68,8: |White|Black|Reset|BOLD
+69,8: |White|Black|Reset|BOLD
+70,8: |White|Black|Reset|BOLD
+71,8: |White|Black|Reset|BOLD
+72,8: |White|Black|Reset|BOLD
+73,8: |White|Black|Reset|BOLD
+74,8: |White|Black|Reset|BOLD
+75,8: |White|Black|Reset|BOLD
+76,8: |White|Black|Reset|BOLD
+77,8: |White|Black|Reset|BOLD
+78,8:│|Gray|Black|Reset|NONE
+79,8: |Gray|Black|Reset|NONE
+0,9: |Gray|Black|Reset|NONE
+1,9:│|Gray|Black|Reset|NONE
+2,9:─|White|Black|Reset|BOLD
+3,9:─|White|Black|Reset|BOLD
+4,9:─|White|Black|Reset|BOLD
+5,9:─|White|Black|Reset|BOLD
+6,9:─|White|Black|Reset|BOLD
+7,9:─|White|Black|Reset|BOLD
+8,9:─|White|Black|Reset|BOLD
+9,9:─|White|Black|Reset|BOLD
+10,9:─|White|Black|Reset|BOLD
+11,9:─|White|Black|Reset|BOLD
+12,9:─|White|Black|Reset|BOLD
+13,9:─|White|Black|Reset|BOLD
+14,9:─|White|Black|Reset|BOLD
+15,9:─|White|Black|Reset|BOLD
+16,9:─|White|Black|Reset|BOLD
+17,9:─|White|Black|Reset|BOLD
+18,9:─|White|Black|Reset|BOLD
+19,9:─|White|Black|Reset|BOLD
+20,9:─|White|Black|Reset|BOLD
+21,9:─|White|Black|Reset|BOLD
+22,9:─|White|Black|Reset|BOLD
+23,9:─|White|Black|Reset|BOLD
+24,9:─|White|Black|Reset|BOLD
+25,9:─|White|Black|Reset|BOLD
+26,9:─|White|Black|Reset|BOLD
+27,9:─|White|Black|Reset|BOLD
+28,9:─|White|Black|Reset|BOLD
+29,9:─|White|Black|Reset|BOLD
+30,9:─|White|Black|Reset|BOLD
+31,9:─|White|Black|Reset|BOLD
+32,9:─|White|Black|Reset|BOLD
+33,9:─|White|Black|Reset|BOLD
+34,9:─|White|Black|Reset|BOLD
+35,9:─|White|Black|Reset|BOLD
+36,9:─|White|Black|Reset|BOLD
+37,9:─|White|Black|Reset|BOLD
+38,9:─|White|Black|Reset|BOLD
+39,9:─|White|Black|Reset|BOLD
+40,9:─|White|Black|Reset|BOLD
+41,9:─|White|Black|Reset|BOLD
+42,9:─|White|Black|Reset|BOLD
+43,9:─|White|Black|Reset|BOLD
+44,9:─|White|Black|Reset|BOLD
+45,9:─|White|Black|Reset|BOLD
+46,9:─|White|Black|Reset|BOLD
+47,9:─|White|Black|Reset|BOLD
+48,9:─|White|Black|Reset|BOLD
+49,9:─|White|Black|Reset|BOLD
+50,9:─|White|Black|Reset|BOLD
+51,9:─|White|Black|Reset|BOLD
+52,9:─|White|Black|Reset|BOLD
+53,9:─|White|Black|Reset|BOLD
+54,9:─|White|Black|Reset|BOLD
+55,9:─|White|Black|Reset|BOLD
+56,9:─|White|Black|Reset|BOLD
+57,9:─|White|Black|Reset|BOLD
+58,9:─|White|Black|Reset|BOLD
+59,9:─|White|Black|Reset|BOLD
+60,9:─|White|Black|Reset|BOLD
+61,9:─|White|Black|Reset|BOLD
+62,9:─|White|Black|Reset|BOLD
+63,9:─|White|Black|Reset|BOLD
+64,9:─|White|Black|Reset|BOLD
+65,9:─|White|Black|Reset|BOLD
+66,9:─|White|Black|Reset|BOLD
+67,9:─|White|Black|Reset|BOLD
+68,9:─|White|Black|Reset|BOLD
+69,9:─|White|Black|Reset|BOLD
+70,9:─|White|Black|Reset|BOLD
+71,9:─|White|Black|Reset|BOLD
+72,9:─|White|Black|Reset|BOLD
+73,9:─|White|Black|Reset|BOLD
+74,9:─|White|Black|Reset|BOLD
+75,9:─|White|Black|Reset|BOLD
+76,9:─|White|Black|Reset|BOLD
+77,9:─|White|Black|Reset|BOLD
+78,9:│|Gray|Black|Reset|NONE
+79,9: |Gray|Black|Reset|NONE
+0,10: |Gray|Black|Reset|NONE
+1,10:│|Gray|Black|Reset|NONE
+2,10:j|Gray|Black|Reset|NONE
+3,10:e|Gray|Black|Reset|NONE
+4,10:l|Gray|Black|Reset|NONE
+5,10:l|Gray|Black|Reset|NONE
+6,10:y|Gray|Black|Reset|NONE
+7,10:f|Gray|Black|Reset|NONE
+8,10:i|Gray|Black|Reset|NONE
+9,10:n|Gray|Black|Reset|NONE
+10,10: |Gray|Black|Reset|NONE
+11,10:L|Gray|Black|Reset|NONE
+12,10:O|Gray|Black|Reset|NONE
+13,10:A|Gray|Black|Reset|NONE
+14,10:D|Gray|Black|Reset|NONE
+15,10:I|Gray|Black|Reset|NONE
+16,10:N|Gray|Black|Reset|NONE
+17,10:G|Gray|Black|Reset|NONE
+18,10: |Gray|Black|Reset|NONE
+19,10:-|Gray|Black|Reset|NONE
+20,10:-|Gray|Black|Reset|NONE
+21,10: |Gray|Black|Reset|NONE
+22,10: |Gray|Black|Reset|NONE
+23,10: |Gray|Black|Reset|NONE
+24,10: |Gray|Black|Reset|NONE
+25,10: |Gray|Black|Reset|NONE
+26,10: |Gray|Black|Reset|NONE
+27,10: |Gray|Black|Reset|NONE
+28,10: |Gray|Black|Reset|NONE
+29,10: |Gray|Black|Reset|NONE
+30,10: |Gray|Black|Reset|NONE
+31,10: |Gray|Black|Reset|NONE
+32,10: |Gray|Black|Reset|NONE
+33,10: |Gray|Black|Reset|NONE
+34,10: |Gray|Black|Reset|NONE
+35,10: |Gray|Black|Reset|NONE
+36,10: |Gray|Black|Reset|NONE
+37,10: |Gray|Black|Reset|NONE
+38,10: |Gray|Black|Reset|NONE
+39,10: |Gray|Black|Reset|NONE
+40,10: |Gray|Black|Reset|NONE
+41,10: |Gray|Black|Reset|NONE
+42,10: |Gray|Black|Reset|NONE
+43,10: |Gray|Black|Reset|NONE
+44,10: |Gray|Black|Reset|NONE
+45,10: |Gray|Black|Reset|NONE
+46,10: |Gray|Black|Reset|NONE
+47,10: |Gray|Black|Reset|NONE
+48,10: |Gray|Black|Reset|NONE
+49,10: |Gray|Black|Reset|NONE
+50,10: |Gray|Black|Reset|NONE
+51,10: |Gray|Black|Reset|NONE
+52,10: |Gray|Black|Reset|NONE
+53,10: |Gray|Black|Reset|NONE
+54,10: |Gray|Black|Reset|NONE
+55,10: |Gray|Black|Reset|NONE
+56,10: |Gray|Black|Reset|NONE
+57,10: |Gray|Black|Reset|NONE
+58,10: |Gray|Black|Reset|NONE
+59,10: |Gray|Black|Reset|NONE
+60,10: |Gray|Black|Reset|NONE
+61,10: |Gray|Black|Reset|NONE
+62,10: |Gray|Black|Reset|NONE
+63,10: |Gray|Black|Reset|NONE
+64,10: |Gray|Black|Reset|NONE
+65,10: |Gray|Black|Reset|NONE
+66,10: |Gray|Black|Reset|NONE
+67,10: |Gray|Black|Reset|NONE
+68,10: |Gray|Black|Reset|NONE
+69,10: |Gray|Black|Reset|NONE
+70,10: |Gray|Black|Reset|NONE
+71,10: |Gray|Black|Reset|NONE
+72,10: |Gray|Black|Reset|NONE
+73,10: |Gray|Black|Reset|NONE
+74,10: |Gray|Black|Reset|NONE
+75,10: |Gray|Black|Reset|NONE
+76,10: |Gray|Black|Reset|NONE
+77,10: |Gray|Black|Reset|NONE
+78,10:│|Gray|Black|Reset|NONE
+79,10: |Gray|Black|Reset|NONE
+0,11: |Gray|Black|Reset|NONE
+1,11:│|Gray|Black|Reset|NONE
+2,11: |Gray|Black|Reset|NONE
+3,11: |Gray|Black|Reset|NONE
+4,11: |Gray|Black|Reset|NONE
+5,11: |Gray|Black|Reset|NONE
+6,11: |Gray|Black|Reset|NONE
+7,11: |Gray|Black|Reset|NONE
+8,11: |Gray|Black|Reset|NONE
+9,11: |Gray|Black|Reset|NONE
+10,11: |Gray|Black|Reset|NONE
+11,11: |Gray|Black|Reset|NONE
+12,11: |Gray|Black|Reset|NONE
+13,11: |Gray|Black|Reset|NONE
+14,11: |Gray|Black|Reset|NONE
+15,11: |Gray|Black|Reset|NONE
+16,11: |Gray|Black|Reset|NONE
+17,11: |Gray|Black|Reset|NONE
+18,11: |Gray|Black|Reset|NONE
+19,11: |Gray|Black|Reset|NONE
+20,11: |Gray|Black|Reset|NONE
+21,11: |Gray|Black|Reset|NONE
+22,11: |Gray|Black|Reset|NONE
+23,11: |Gray|Black|Reset|NONE
+24,11: |Gray|Black|Reset|NONE
+25,11: |Gray|Black|Reset|NONE
+26,11: |Gray|Black|Reset|NONE
+27,11: |Gray|Black|Reset|NONE
+28,11: |Gray|Black|Reset|NONE
+29,11: |Gray|Black|Reset|NONE
+30,11: |Gray|Black|Reset|NONE
+31,11: |Gray|Black|Reset|NONE
+32,11: |Gray|Black|Reset|NONE
+33,11: |Gray|Black|Reset|NONE
+34,11: |Gray|Black|Reset|NONE
+35,11: |Gray|Black|Reset|NONE
+36,11: |Gray|Black|Reset|NONE
+37,11: |Gray|Black|Reset|NONE
+38,11: |Gray|Black|Reset|NONE
+39,11: |Gray|Black|Reset|NONE
+40,11: |Gray|Black|Reset|NONE
+41,11: |Gray|Black|Reset|NONE
+42,11: |Gray|Black|Reset|NONE
+43,11: |Gray|Black|Reset|NONE
+44,11: |Gray|Black|Reset|NONE
+45,11: |Gray|Black|Reset|NONE
+46,11: |Gray|Black|Reset|NONE
+47,11: |Gray|Black|Reset|NONE
+48,11: |Gray|Black|Reset|NONE
+49,11: |Gray|Black|Reset|NONE
+50,11: |Gray|Black|Reset|NONE
+51,11: |Gray|Black|Reset|NONE
+52,11: |Gray|Black|Reset|NONE
+53,11: |Gray|Black|Reset|NONE
+54,11: |Gray|Black|Reset|NONE
+55,11: |Gray|Black|Reset|NONE
+56,11: |Gray|Black|Reset|NONE
+57,11: |Gray|Black|Reset|NONE
+58,11: |Gray|Black|Reset|NONE
+59,11: |Gray|Black|Reset|NONE
+60,11: |Gray|Black|Reset|NONE
+61,11: |Gray|Black|Reset|NONE
+62,11: |Gray|Black|Reset|NONE
+63,11: |Gray|Black|Reset|NONE
+64,11: |Gray|Black|Reset|NONE
+65,11: |Gray|Black|Reset|NONE
+66,11: |Gray|Black|Reset|NONE
+67,11: |Gray|Black|Reset|NONE
+68,11: |Gray|Black|Reset|NONE
+69,11: |Gray|Black|Reset|NONE
+70,11: |Gray|Black|Reset|NONE
+71,11: |Gray|Black|Reset|NONE
+72,11: |Gray|Black|Reset|NONE
+73,11: |Gray|Black|Reset|NONE
+74,11: |Gray|Black|Reset|NONE
+75,11: |Gray|Black|Reset|NONE
+76,11: |Gray|Black|Reset|NONE
+77,11: |Gray|Black|Reset|NONE
+78,11:│|Gray|Black|Reset|NONE
+79,11: |Gray|Black|Reset|NONE
+0,12: |Gray|Black|Reset|NONE
+1,12:└|Gray|Black|Reset|NONE
+2,12:─|Gray|Black|Reset|NONE
+3,12:─|Gray|Black|Reset|NONE
+4,12:─|Gray|Black|Reset|NONE
+5,12:─|Gray|Black|Reset|NONE
+6,12:─|Gray|Black|Reset|NONE
+7,12:─|Gray|Black|Reset|NONE
+8,12:─|Gray|Black|Reset|NONE
+9,12:─|Gray|Black|Reset|NONE
+10,12:─|Gray|Black|Reset|NONE
+11,12:─|Gray|Black|Reset|NONE
+12,12:─|Gray|Black|Reset|NONE
+13,12:─|Gray|Black|Reset|NONE
+14,12:─|Gray|Black|Reset|NONE
+15,12:─|Gray|Black|Reset|NONE
+16,12:─|Gray|Black|Reset|NONE
+17,12:─|Gray|Black|Reset|NONE
+18,12:─|Gray|Black|Reset|NONE
+19,12:─|Gray|Black|Reset|NONE
+20,12:─|Gray|Black|Reset|NONE
+21,12:─|Gray|Black|Reset|NONE
+22,12:─|Gray|Black|Reset|NONE
+23,12:─|Gray|Black|Reset|NONE
+24,12:─|Gray|Black|Reset|NONE
+25,12:─|Gray|Black|Reset|NONE
+26,12:─|Gray|Black|Reset|NONE
+27,12:─|Gray|Black|Reset|NONE
+28,12:─|Gray|Black|Reset|NONE
+29,12:─|Gray|Black|Reset|NONE
+30,12:─|Gray|Black|Reset|NONE
+31,12:─|Gray|Black|Reset|NONE
+32,12:─|Gray|Black|Reset|NONE
+33,12:─|Gray|Black|Reset|NONE
+34,12:─|Gray|Black|Reset|NONE
+35,12:─|Gray|Black|Reset|NONE
+36,12:─|Gray|Black|Reset|NONE
+37,12:─|Gray|Black|Reset|NONE
+38,12:─|Gray|Black|Reset|NONE
+39,12:─|Gray|Black|Reset|NONE
+40,12:─|Gray|Black|Reset|NONE
+41,12:─|Gray|Black|Reset|NONE
+42,12:─|Gray|Black|Reset|NONE
+43,12:─|Gray|Black|Reset|NONE
+44,12:─|Gray|Black|Reset|NONE
+45,12:─|Gray|Black|Reset|NONE
+46,12:─|Gray|Black|Reset|NONE
+47,12:─|Gray|Black|Reset|NONE
+48,12:─|Gray|Black|Reset|NONE
+49,12:─|Gray|Black|Reset|NONE
+50,12:─|Gray|Black|Reset|NONE
+51,12:─|Gray|Black|Reset|NONE
+52,12:─|Gray|Black|Reset|NONE
+53,12:─|Gray|Black|Reset|NONE
+54,12:─|Gray|Black|Reset|NONE
+55,12:─|Gray|Black|Reset|NONE
+56,12:─|Gray|Black|Reset|NONE
+57,12:─|Gray|Black|Reset|NONE
+58,12:─|Gray|Black|Reset|NONE
+59,12:─|Gray|Black|Reset|NONE
+60,12:─|Gray|Black|Reset|NONE
+61,12:─|Gray|Black|Reset|NONE
+62,12:─|Gray|Black|Reset|NONE
+63,12:─|Gray|Black|Reset|NONE
+64,12:─|Gray|Black|Reset|NONE
+65,12:─|Gray|Black|Reset|NONE
+66,12:─|Gray|Black|Reset|NONE
+67,12:─|Gray|Black|Reset|NONE
+68,12:─|Gray|Black|Reset|NONE
+69,12:─|Gray|Black|Reset|NONE
+70,12:─|Gray|Black|Reset|NONE
+71,12:─|Gray|Black|Reset|NONE
+72,12:─|Gray|Black|Reset|NONE
+73,12:─|Gray|Black|Reset|NONE
+74,12:─|Gray|Black|Reset|NONE
+75,12:─|Gray|Black|Reset|NONE
+76,12:─|Gray|Black|Reset|NONE
+77,12:─|Gray|Black|Reset|NONE
+78,12:┘|Gray|Black|Reset|NONE
+79,12: |Gray|Black|Reset|NONE
+0,13: |Gray|Black|Reset|NONE
+1,13:┌|Gray|Black|Reset|NONE
+2,13:─|Gray|Black|Reset|NONE
+3,13:─|Gray|Black|Reset|NONE
+4,13:─|Gray|Black|Reset|NONE
+5,13:─|Gray|Black|Reset|NONE
+6,13:─|Gray|Black|Reset|NONE
+7,13:─|Gray|Black|Reset|NONE
+8,13:─|Gray|Black|Reset|NONE
+9,13:─|Gray|Black|Reset|NONE
+10,13:─|Gray|Black|Reset|NONE
+11,13:─|Gray|Black|Reset|NONE
+12,13:─|Gray|Black|Reset|NONE
+13,13:─|Gray|Black|Reset|NONE
+14,13:─|Gray|Black|Reset|NONE
+15,13:─|Gray|Black|Reset|NONE
+16,13:─|Gray|Black|Reset|NONE
+17,13:─|Gray|Black|Reset|NONE
+18,13:─|Gray|Black|Reset|NONE
+19,13:─|Gray|Black|Reset|NONE
+20,13:─|Gray|Black|Reset|NONE
+21,13:─|Gray|Black|Reset|NONE
+22,13:─|Gray|Black|Reset|NONE
+23,13:─|Gray|Black|Reset|NONE
+24,13:─|Gray|Black|Reset|NONE
+25,13:─|Gray|Black|Reset|NONE
+26,13:─|Gray|Black|Reset|NONE
+27,13:─|Gray|Black|Reset|NONE
+28,13:─|Gray|Black|Reset|NONE
+29,13:─|Gray|Black|Reset|NONE
+30,13:─|Gray|Black|Reset|NONE
+31,13:─|Gray|Black|Reset|NONE
+32,13:─|Gray|Black|Reset|NONE
+33,13:─|Gray|Black|Reset|NONE
+34,13:─|Gray|Black|Reset|NONE
+35,13:─|Gray|Black|Reset|NONE
+36,13:─|Gray|Black|Reset|NONE
+37,13:─|Gray|Black|Reset|NONE
+38,13:─|Gray|Black|Reset|NONE
+39,13:─|Gray|Black|Reset|NONE
+40,13:─|Gray|Black|Reset|NONE
+41,13:─|Gray|Black|Reset|NONE
+42,13:─|Gray|Black|Reset|NONE
+43,13:─|Gray|Black|Reset|NONE
+44,13:─|Gray|Black|Reset|NONE
+45,13:─|Gray|Black|Reset|NONE
+46,13:─|Gray|Black|Reset|NONE
+47,13:─|Gray|Black|Reset|NONE
+48,13:─|Gray|Black|Reset|NONE
+49,13:─|Gray|Black|Reset|NONE
+50,13:─|Gray|Black|Reset|NONE
+51,13:─|Gray|Black|Reset|NONE
+52,13:─|Gray|Black|Reset|NONE
+53,13:─|Gray|Black|Reset|NONE
+54,13:─|Gray|Black|Reset|NONE
+55,13:─|Gray|Black|Reset|NONE
+56,13:─|Gray|Black|Reset|NONE
+57,13:─|Gray|Black|Reset|NONE
+58,13:─|Gray|Black|Reset|NONE
+59,13:─|Gray|Black|Reset|NONE
+60,13:─|Gray|Black|Reset|NONE
+61,13:─|Gray|Black|Reset|NONE
+62,13:─|Gray|Black|Reset|NONE
+63,13:─|Gray|Black|Reset|NONE
+64,13:─|Gray|Black|Reset|NONE
+65,13:─|Gray|Black|Reset|NONE
+66,13:─|Gray|Black|Reset|NONE
+67,13:─|Gray|Black|Reset|NONE
+68,13:─|Gray|Black|Reset|NONE
+69,13:─|Gray|Black|Reset|NONE
+70,13:─|Gray|Black|Reset|NONE
+71,13:─|Gray|Black|Reset|NONE
+72,13:─|Gray|Black|Reset|NONE
+73,13:─|Gray|Black|Reset|NONE
+74,13:─|Gray|Black|Reset|NONE
+75,13:─|Gray|Black|Reset|NONE
+76,13:─|Gray|Black|Reset|NONE
+77,13:─|Gray|Black|Reset|NONE
+78,13:┐|Gray|Black|Reset|NONE
+79,13: |Gray|Black|Reset|NONE
+0,14: |Gray|Black|Reset|NONE
+1,14:│|Gray|Black|Reset|NONE
+2,14:A|White|Black|Reset|BOLD
+3,14:c|White|Black|Reset|BOLD
+4,14:t|White|Black|Reset|BOLD
+5,14:i|White|Black|Reset|BOLD
+6,14:v|White|Black|Reset|BOLD
+7,14:i|White|Black|Reset|BOLD
+8,14:t|White|Black|Reset|BOLD
+9,14:y|White|Black|Reset|BOLD
+10,14: |White|Black|Reset|BOLD
+11,14: |White|Black|Reset|BOLD
+12,14: |White|Black|Reset|BOLD
+13,14: |White|Black|Reset|BOLD
+14,14: |White|Black|Reset|BOLD
+15,14: |White|Black|Reset|BOLD
+16,14: |White|Black|Reset|BOLD
+17,14: |White|Black|Reset|BOLD
+18,14: |White|Black|Reset|BOLD
+19,14: |White|Black|Reset|BOLD
+20,14: |White|Black|Reset|BOLD
+21,14: |White|Black|Reset|BOLD
+22,14: |White|Black|Reset|BOLD
+23,14: |White|Black|Reset|BOLD
+24,14: |White|Black|Reset|BOLD
+25,14: |White|Black|Reset|BOLD
+26,14: |White|Black|Reset|BOLD
+27,14: |White|Black|Reset|BOLD
+28,14: |White|Black|Reset|BOLD
+29,14: |White|Black|Reset|BOLD
+30,14: |White|Black|Reset|BOLD
+31,14: |White|Black|Reset|BOLD
+32,14: |White|Black|Reset|BOLD
+33,14: |White|Black|Reset|BOLD
+34,14: |White|Black|Reset|BOLD
+35,14: |White|Black|Reset|BOLD
+36,14: |White|Black|Reset|BOLD
+37,14: |White|Black|Reset|BOLD
+38,14: |White|Black|Reset|BOLD
+39,14: |White|Black|Reset|BOLD
+40,14: |White|Black|Reset|BOLD
+41,14: |White|Black|Reset|BOLD
+42,14: |White|Black|Reset|BOLD
+43,14: |White|Black|Reset|BOLD
+44,14: |White|Black|Reset|BOLD
+45,14: |White|Black|Reset|BOLD
+46,14: |White|Black|Reset|BOLD
+47,14: |White|Black|Reset|BOLD
+48,14: |White|Black|Reset|BOLD
+49,14: |White|Black|Reset|BOLD
+50,14: |White|Black|Reset|BOLD
+51,14: |White|Black|Reset|BOLD
+52,14: |White|Black|Reset|BOLD
+53,14: |White|Black|Reset|BOLD
+54,14: |White|Black|Reset|BOLD
+55,14: |White|Black|Reset|BOLD
+56,14: |White|Black|Reset|BOLD
+57,14: |White|Black|Reset|BOLD
+58,14: |White|Black|Reset|BOLD
+59,14: |White|Black|Reset|BOLD
+60,14: |White|Black|Reset|BOLD
+61,14: |White|Black|Reset|BOLD
+62,14: |White|Black|Reset|BOLD
+63,14: |White|Black|Reset|BOLD
+64,14: |White|Black|Reset|BOLD
+65,14: |White|Black|Reset|BOLD
+66,14: |White|Black|Reset|BOLD
+67,14: |White|Black|Reset|BOLD
+68,14: |White|Black|Reset|BOLD
+69,14: |White|Black|Reset|BOLD
+70,14: |White|Black|Reset|BOLD
+71,14: |White|Black|Reset|BOLD
+72,14: |White|Black|Reset|BOLD
+73,14: |White|Black|Reset|BOLD
+74,14: |White|Black|Reset|BOLD
+75,14: |White|Black|Reset|BOLD
+76,14: |White|Black|Reset|BOLD
+77,14: |White|Black|Reset|BOLD
+78,14:│|Gray|Black|Reset|NONE
+79,14: |Gray|Black|Reset|NONE
+0,15: |Gray|Black|Reset|NONE
+1,15:│|Gray|Black|Reset|NONE
+2,15:↑|Gray|Black|Reset|NONE
+3,15: |Gray|Black|Reset|NONE
+4,15:[|Gray|Black|Reset|NONE
+5,15:1|Gray|Black|Reset|NONE
+6,15:2|Gray|Black|Reset|NONE
+7,15::|Gray|Black|Reset|NONE
+8,15:0|Gray|Black|Reset|NONE
+9,15:0|Gray|Black|Reset|NONE
+10,15:]|Gray|Black|Reset|NONE
+11,15: |Gray|Black|Reset|NONE
+12,15:R|Gray|Black|Reset|NONE
+13,15:e|Gray|Black|Reset|NONE
+14,15:f|Gray|Black|Reset|NONE
+15,15:r|Gray|Black|Reset|NONE
+16,15:e|Gray|Black|Reset|NONE
+17,15:s|Gray|Black|Reset|NONE
+18,15:h|Gray|Black|Reset|NONE
+19,15:i|Gray|Black|Reset|NONE
+20,15:n|Gray|Black|Reset|NONE
+21,15:g|Gray|Black|Reset|NONE
+22,15: |Gray|Black|Reset|NONE
+23,15:s|Gray|Black|Reset|NONE
+24,15:e|Gray|Black|Reset|NONE
+25,15:r|Gray|Black|Reset|NONE
+26,15:v|Gray|Black|Reset|NONE
+27,15:i|Gray|Black|Reset|NONE
+28,15:c|Gray|Black|Reset|NONE
+29,15:e|Gray|Black|Reset|NONE
+30,15:s|Gray|Black|Reset|NONE
+31,15: |Gray|Black|Reset|NONE
+32,15: |Gray|Black|Reset|NONE
+33,15: |Gray|Black|Reset|NONE
+34,15: |Gray|Black|Reset|NONE
+35,15: |Gray|Black|Reset|NONE
+36,15: |Gray|Black|Reset|NONE
+37,15: |Gray|Black|Reset|NONE
+38,15: |Gray|Black|Reset|NONE
+39,15: |Gray|Black|Reset|NONE
+40,15: |Gray|Black|Reset|NONE
+41,15: |Gray|Black|Reset|NONE
+42,15: |Gray|Black|Reset|NONE
+43,15: |Gray|Black|Reset|NONE
+44,15: |Gray|Black|Reset|NONE
+45,15: |Gray|Black|Reset|NONE
+46,15: |Gray|Black|Reset|NONE
+47,15: |Gray|Black|Reset|NONE
+48,15: |Gray|Black|Reset|NONE
+49,15: |Gray|Black|Reset|NONE
+50,15: |Gray|Black|Reset|NONE
+51,15: |Gray|Black|Reset|NONE
+52,15: |Gray|Black|Reset|NONE
+53,15: |Gray|Black|Reset|NONE
+54,15: |Gray|Black|Reset|NONE
+55,15: |Gray|Black|Reset|NONE
+56,15: |Gray|Black|Reset|NONE
+57,15: |Gray|Black|Reset|NONE
+58,15: |Gray|Black|Reset|NONE
+59,15: |Gray|Black|Reset|NONE
+60,15: |Gray|Black|Reset|NONE
+61,15: |Gray|Black|Reset|NONE
+62,15: |Gray|Black|Reset|NONE
+63,15: |Gray|Black|Reset|NONE
+64,15: |Gray|Black|Reset|NONE
+65,15: |Gray|Black|Reset|NONE
+66,15: |Gray|Black|Reset|NONE
+67,15: |Gray|Black|Reset|NONE
+68,15: |Gray|Black|Reset|NONE
+69,15: |Gray|Black|Reset|NONE
+70,15: |Gray|Black|Reset|NONE
+71,15: |Gray|Black|Reset|NONE
+72,15: |Gray|Black|Reset|NONE
+73,15: |Gray|Black|Reset|NONE
+74,15: |Gray|Black|Reset|NONE
+75,15: |Gray|Black|Reset|NONE
+76,15: |Gray|Black|Reset|NONE
+77,15: |Gray|Black|Reset|NONE
+78,15:│|Gray|Black|Reset|NONE
+79,15: |Gray|Black|Reset|NONE
+0,16: |Gray|Black|Reset|NONE
+1,16:└|Gray|Black|Reset|NONE
+2,16:─|Gray|Black|Reset|NONE
+3,16:─|Gray|Black|Reset|NONE
+4,16:─|Gray|Black|Reset|NONE
+5,16:─|Gray|Black|Reset|NONE
+6,16:─|Gray|Black|Reset|NONE
+7,16:─|Gray|Black|Reset|NONE
+8,16:─|Gray|Black|Reset|NONE
+9,16:─|Gray|Black|Reset|NONE
+10,16:─|Gray|Black|Reset|NONE
+11,16:─|Gray|Black|Reset|NONE
+12,16:─|Gray|Black|Reset|NONE
+13,16:─|Gray|Black|Reset|NONE
+14,16:─|Gray|Black|Reset|NONE
+15,16:─|Gray|Black|Reset|NONE
+16,16:─|Gray|Black|Reset|NONE
+17,16:─|Gray|Black|Reset|NONE
+18,16:─|Gray|Black|Reset|NONE
+19,16:─|Gray|Black|Reset|NONE
+20,16:─|Gray|Black|Reset|NONE
+21,16:─|Gray|Black|Reset|NONE
+22,16:─|Gray|Black|Reset|NONE
+23,16:─|Gray|Black|Reset|NONE
+24,16:─|Gray|Black|Reset|NONE
+25,16:─|Gray|Black|Reset|NONE
+26,16:─|Gray|Black|Reset|NONE
+27,16:─|Gray|Black|Reset|NONE
+28,16:─|Gray|Black|Reset|NONE
+29,16:─|Gray|Black|Reset|NONE
+30,16:─|Gray|Black|Reset|NONE
+31,16:─|Gray|Black|Reset|NONE
+32,16:─|Gray|Black|Reset|NONE
+33,16:─|Gray|Black|Reset|NONE
+34,16:─|Gray|Black|Reset|NONE
+35,16:─|Gray|Black|Reset|NONE
+36,16:─|Gray|Black|Reset|NONE
+37,16:─|Gray|Black|Reset|NONE
+38,16:─|Gray|Black|Reset|NONE
+39,16:─|Gray|Black|Reset|NONE
+40,16:─|Gray|Black|Reset|NONE
+41,16:─|Gray|Black|Reset|NONE
+42,16:─|Gray|Black|Reset|NONE
+43,16:─|Gray|Black|Reset|NONE
+44,16:─|Gray|Black|Reset|NONE
+45,16:─|Gray|Black|Reset|NONE
+46,16:─|Gray|Black|Reset|NONE
+47,16:─|Gray|Black|Reset|NONE
+48,16:─|Gray|Black|Reset|NONE
+49,16:─|Gray|Black|Reset|NONE
+50,16:─|Gray|Black|Reset|NONE
+51,16:─|Gray|Black|Reset|NONE
+52,16:─|Gray|Black|Reset|NONE
+53,16:─|Gray|Black|Reset|NONE
+54,16:─|Gray|Black|Reset|NONE
+55,16:─|Gray|Black|Reset|NONE
+56,16:─|Gray|Black|Reset|NONE
+57,16:─|Gray|Black|Reset|NONE
+58,16:─|Gray|Black|Reset|NONE
+59,16:─|Gray|Black|Reset|NONE
+60,16:─|Gray|Black|Reset|NONE
+61,16:─|Gray|Black|Reset|NONE
+62,16:─|Gray|Black|Reset|NONE
+63,16:─|Gray|Black|Reset|NONE
+64,16:─|Gray|Black|Reset|NONE
+65,16:─|Gray|Black|Reset|NONE
+66,16:─|Gray|Black|Reset|NONE
+67,16:─|Gray|Black|Reset|NONE
+68,16:─|Gray|Black|Reset|NONE
+69,16:─|Gray|Black|Reset|NONE
+70,16:─|Gray|Black|Reset|NONE
+71,16:─|Gray|Black|Reset|NONE
+72,16:─|Gray|Black|Reset|NONE
+73,16:─|Gray|Black|Reset|NONE
+74,16:─|Gray|Black|Reset|NONE
+75,16:─|Gray|Black|Reset|NONE
+76,16:─|Gray|Black|Reset|NONE
+77,16:─|Gray|Black|Reset|NONE
+78,16:┘|Gray|Black|Reset|NONE
+79,16: |Gray|Black|Reset|NONE
+0,17: |Gray|Black|Reset|NONE
+1,17: |DarkGray|Black|Reset|NONE
+2,17: |DarkGray|Black|Reset|NONE
+3,17: |DarkGray|Black|Reset|NONE
+4,17: |DarkGray|Black|Reset|NONE
+5,17: |DarkGray|Black|Reset|NONE
+6,17: |DarkGray|Black|Reset|NONE
+7,17: |DarkGray|Black|Reset|NONE
+8,17: |DarkGray|Black|Reset|NONE
+9,17: |DarkGray|Black|Reset|NONE
+10,17: |DarkGray|Black|Reset|NONE
+11,17: |DarkGray|Black|Reset|NONE
+12,17: |DarkGray|Black|Reset|NONE
+13,17: |DarkGray|Black|Reset|NONE
+14,17: |DarkGray|Black|Reset|NONE
+15,17: |DarkGray|Black|Reset|NONE
+16,17: |DarkGray|Black|Reset|NONE
+17,17: |DarkGray|Black|Reset|NONE
+18,17: |DarkGray|Black|Reset|NONE
+19,17: |DarkGray|Black|Reset|NONE
+20,17: |DarkGray|Black|Reset|NONE
+21,17: |DarkGray|Black|Reset|NONE
+22,17: |DarkGray|Black|Reset|NONE
+23,17: |DarkGray|Black|Reset|NONE
+24,17: |DarkGray|Black|Reset|NONE
+25,17: |DarkGray|Black|Reset|NONE
+26,17: |DarkGray|Black|Reset|NONE
+27,17: |DarkGray|Black|Reset|NONE
+28,17: |DarkGray|Black|Reset|NONE
+29,17: |DarkGray|Black|Reset|NONE
+30,17: |DarkGray|Black|Reset|NONE
+31,17: |DarkGray|Black|Reset|NONE
+32,17: |DarkGray|Black|Reset|NONE
+33,17: |DarkGray|Black|Reset|NONE
+34,17: |DarkGray|Black|Reset|NONE
+35,17: |DarkGray|Black|Reset|NONE
+36,17: |DarkGray|Black|Reset|NONE
+37,17: |DarkGray|Black|Reset|NONE
+38,17: |DarkGray|Black|Reset|NONE
+39,17: |DarkGray|Black|Reset|NONE
+40,17: |DarkGray|Black|Reset|NONE
+41,17:L|DarkGray|Black|Reset|NONE
+42,17:o|DarkGray|Black|Reset|NONE
+43,17:a|DarkGray|Black|Reset|NONE
+44,17:d|DarkGray|Black|Reset|NONE
+45,17:i|DarkGray|Black|Reset|NONE
+46,17:n|DarkGray|Black|Reset|NONE
+47,17:g|DarkGray|Black|Reset|NONE
+48,17:.|DarkGray|Black|Reset|NONE
+49,17:.|DarkGray|Black|Reset|NONE
+50,17:.|DarkGray|Black|Reset|NONE
+51,17: |DarkGray|Black|Reset|NONE
+52,17:-|DarkGray|Black|Reset|NONE
+53,17: |DarkGray|Black|Reset|NONE
+54,17: |DarkGray|Black|Reset|NONE
+55,17: |DarkGray|Black|Reset|NONE
+56,17: |DarkGray|Black|Reset|NONE
+57,17: |DarkGray|Black|Reset|NONE
+58,17: |DarkGray|Black|Reset|NONE
+59,17: |DarkGray|Black|Reset|NONE
+60,17: |DarkGray|Black|Reset|NONE
+61,17: |DarkGray|Black|Reset|NONE
+62,17: |DarkGray|Black|Reset|NONE
+63,17: |DarkGray|Black|Reset|NONE
+64,17: |DarkGray|Black|Reset|NONE
+65,17: |DarkGray|Black|Reset|NONE
+66,17: |DarkGray|Black|Reset|NONE
+67,17: |DarkGray|Black|Reset|NONE
+68,17: |DarkGray|Black|Reset|NONE
+69,17: |DarkGray|Black|Reset|NONE
+70,17: |DarkGray|Black|Reset|NONE
+71,17: |DarkGray|Black|Reset|NONE
+72,17: |DarkGray|Black|Reset|NONE
+73,17: |DarkGray|Black|Reset|NONE
+74,17: |DarkGray|Black|Reset|NONE
+75,17: |DarkGray|Black|Reset|NONE
+76,17: |DarkGray|Black|Reset|NONE
+77,17: |DarkGray|Black|Reset|NONE
+78,17: |DarkGray|Black|Reset|NONE
+79,17: |Gray|Black|Reset|NONE
+0,18: |Gray|Black|Reset|NONE
+1,18: |Gray|Black|Reset|NONE
+2,18: |Gray|Black|Reset|NONE
+3,18: |Gray|Black|Reset|NONE
+4,18: |Gray|Black|Reset|NONE
+5,18: |Gray|Black|Reset|NONE
+6,18: |Gray|Black|Reset|NONE
+7,18: |Gray|Black|Reset|NONE
+8,18: |Gray|Black|Reset|NONE
+9,18: |Gray|Black|Reset|NONE
+10,18: |Gray|Black|Reset|NONE
+11,18: |Gray|Black|Reset|NONE
+12,18: |Gray|Black|Reset|NONE
+13,18: |Gray|Black|Reset|NONE
+14,18: |Gray|Black|Reset|NONE
+15,18: |Gray|Black|Reset|NONE
+16,18: |Gray|Black|Reset|NONE
+17,18: |Gray|Black|Reset|NONE
+18,18: |Gray|Black|Reset|NONE
+19,18: |Gray|Black|Reset|NONE
+20,18: |Gray|Black|Reset|NONE
+21,18: |Gray|Black|Reset|NONE
+22,18: |Gray|Black|Reset|NONE
+23,18: |Gray|Black|Reset|NONE
+24,18: |Gray|Black|Reset|NONE
+25,18: |Gray|Black|Reset|NONE
+26,18: |Gray|Black|Reset|NONE
+27,18: |Gray|Black|Reset|NONE
+28,18: |Gray|Black|Reset|NONE
+29,18: |Gray|Black|Reset|NONE
+30,18: |Gray|Black|Reset|NONE
+31,18: |Gray|Black|Reset|NONE
+32,18: |Gray|Black|Reset|NONE
+33,18: |Gray|Black|Reset|NONE
+34,18: |Gray|Black|Reset|NONE
+35,18: |Gray|Black|Reset|NONE
+36,18: |Gray|Black|Reset|NONE
+37,18: |Gray|Black|Reset|NONE
+38,18: |Gray|Black|Reset|NONE
+39,18: |Gray|Black|Reset|NONE
+40,18: |Gray|Black|Reset|NONE
+41,18: |Gray|Black|Reset|NONE
+42,18: |Gray|Black|Reset|NONE
+43,18: |Gray|Black|Reset|NONE
+44,18: |Gray|Black|Reset|NONE
+45,18: |Gray|Black|Reset|NONE
+46,18: |Gray|Black|Reset|NONE
+47,18: |Gray|Black|Reset|NONE
+48,18: |Gray|Black|Reset|NONE
+49,18: |Gray|Black|Reset|NONE
+50,18: |Gray|Black|Reset|NONE
+51,18: |Gray|Black|Reset|NONE
+52,18: |Gray|Black|Reset|NONE
+53,18: |Gray|Black|Reset|NONE
+54,18: |Gray|Black|Reset|NONE
+55,18: |Gray|Black|Reset|NONE
+56,18: |Gray|Black|Reset|NONE
+57,18: |Gray|Black|Reset|NONE
+58,18: |Gray|Black|Reset|NONE
+59,18: |Gray|Black|Reset|NONE
+60,18: |Gray|Black|Reset|NONE
+61,18: |Gray|Black|Reset|NONE
+62,18: |Gray|Black|Reset|NONE
+63,18: |Gray|Black|Reset|NONE
+64,18: |Gray|Black|Reset|NONE
+65,18: |Gray|Black|Reset|NONE
+66,18: |Gray|Black|Reset|NONE
+67,18: |Gray|Black|Reset|NONE
+68,18: |Gray|Black|Reset|NONE
+69,18: |Gray|Black|Reset|NONE
+70,18: |Gray|Black|Reset|NONE
+71,18: |Gray|Black|Reset|NONE
+72,18: |Gray|Black|Reset|NONE
+73,18: |Gray|Black|Reset|NONE
+74,18: |Gray|Black|Reset|NONE
+75,18: |Gray|Black|Reset|NONE
+76,18: |Gray|Black|Reset|NONE
+77,18: |Gray|Black|Reset|NONE
+78,18: |Gray|Black|Reset|NONE
+79,18: |Gray|Black|Reset|NONE
+0,19: |Gray|Black|Reset|NONE
+1,19: |Gray|Black|Reset|NONE
+2,19: |Gray|Black|Reset|NONE
+3,19: |Gray|Black|Reset|NONE
+4,19: |Gray|Black|Reset|NONE
+5,19: |Gray|Black|Reset|NONE
+6,19: |Gray|Black|Reset|NONE
+7,19: |Gray|Black|Reset|NONE
+8,19: |Gray|Black|Reset|NONE
+9,19: |Gray|Black|Reset|NONE
+10,19: |Gray|Black|Reset|NONE
+11,19: |Gray|Black|Reset|NONE
+12,19: |Gray|Black|Reset|NONE
+13,19: |Gray|Black|Reset|NONE
+14,19: |Gray|Black|Reset|NONE
+15,19: |Gray|Black|Reset|NONE
+16,19: |Gray|Black|Reset|NONE
+17,19: |Gray|Black|Reset|NONE
+18,19: |Gray|Black|Reset|NONE
+19,19: |Gray|Black|Reset|NONE
+20,19: |Gray|Black|Reset|NONE
+21,19: |Gray|Black|Reset|NONE
+22,19: |Gray|Black|Reset|NONE
+23,19: |Gray|Black|Reset|NONE
+24,19: |Gray|Black|Reset|NONE
+25,19: |Gray|Black|Reset|NONE
+26,19: |Gray|Black|Reset|NONE
+27,19: |Gray|Black|Reset|NONE
+28,19: |Gray|Black|Reset|NONE
+29,19: |Gray|Black|Reset|NONE
+30,19: |Gray|Black|Reset|NONE
+31,19: |Gray|Black|Reset|NONE
+32,19: |Gray|Black|Reset|NONE
+33,19: |Gray|Black|Reset|NONE
+34,19: |Gray|Black|Reset|NONE
+35,19: |Gray|Black|Reset|NONE
+36,19: |Gray|Black|Reset|NONE
+37,19: |Gray|Black|Reset|NONE
+38,19: |Gray|Black|Reset|NONE
+39,19: |Gray|Black|Reset|NONE
+40,19: |Gray|Black|Reset|NONE
+41,19: |Gray|Black|Reset|NONE
+42,19: |Gray|Black|Reset|NONE
+43,19: |Gray|Black|Reset|NONE
+44,19: |Gray|Black|Reset|NONE
+45,19: |Gray|Black|Reset|NONE
+46,19: |Gray|Black|Reset|NONE
+47,19: |Gray|Black|Reset|NONE
+48,19: |Gray|Black|Reset|NONE
+49,19: |Gray|Black|Reset|NONE
+50,19: |Gray|Black|Reset|NONE
+51,19: |Gray|Black|Reset|NONE
+52,19: |Gray|Black|Reset|NONE
+53,19: |Gray|Black|Reset|NONE
+54,19: |Gray|Black|Reset|NONE
+55,19: |Gray|Black|Reset|NONE
+56,19: |Gray|Black|Reset|NONE
+57,19: |Gray|Black|Reset|NONE
+58,19: |Gray|Black|Reset|NONE
+59,19: |Gray|Black|Reset|NONE
+60,19: |Gray|Black|Reset|NONE
+61,19: |Gray|Black|Reset|NONE
+62,19: |Gray|Black|Reset|NONE
+63,19: |Gray|Black|Reset|NONE
+64,19: |Gray|Black|Reset|NONE
+65,19: |Gray|Black|Reset|NONE
+66,19: |Gray|Black|Reset|NONE
+67,19: |Gray|Black|Reset|NONE
+68,19: |Gray|Black|Reset|NONE
+69,19: |Gray|Black|Reset|NONE
+70,19: |Gray|Black|Reset|NONE
+71,19: |Gray|Black|Reset|NONE
+72,19: |Gray|Black|Reset|NONE
+73,19: |Gray|Black|Reset|NONE
+74,19: |Gray|Black|Reset|NONE
+75,19: |Gray|Black|Reset|NONE
+76,19: |Gray|Black|Reset|NONE
+77,19: |Gray|Black|Reset|NONE
+78,19: |Gray|Black|Reset|NONE
+79,19: |Gray|Black|Reset|NONE
+0,20: |Gray|Black|Reset|NONE
+1,20: |Gray|Black|Reset|NONE
+2,20: |Gray|Black|Reset|NONE
+3,20: |Gray|Black|Reset|NONE
+4,20: |Gray|Black|Reset|NONE
+5,20: |Gray|Black|Reset|NONE
+6,20: |Gray|Black|Reset|NONE
+7,20: |Gray|Black|Reset|NONE
+8,20: |Gray|Black|Reset|NONE
+9,20: |Gray|Black|Reset|NONE
+10,20: |Gray|Black|Reset|NONE
+11,20: |Gray|Black|Reset|NONE
+12,20: |Gray|Black|Reset|NONE
+13,20: |Gray|Black|Reset|NONE
+14,20: |Gray|Black|Reset|NONE
+15,20: |Gray|Black|Reset|NONE
+16,20: |Gray|Black|Reset|NONE
+17,20: |Gray|Black|Reset|NONE
+18,20: |Gray|Black|Reset|NONE
+19,20: |Gray|Black|Reset|NONE
+20,20: |Gray|Black|Reset|NONE
+21,20: |Gray|Black|Reset|NONE
+22,20: |Gray|Black|Reset|NONE
+23,20: |Gray|Black|Reset|NONE
+24,20: |Gray|Black|Reset|NONE
+25,20: |Gray|Black|Reset|NONE
+26,20: |Gray|Black|Reset|NONE
+27,20: |Gray|Black|Reset|NONE
+28,20: |Gray|Black|Reset|NONE
+29,20: |Gray|Black|Reset|NONE
+30,20: |Gray|Black|Reset|NONE
+31,20: |Gray|Black|Reset|NONE
+32,20: |Gray|Black|Reset|NONE
+33,20: |Gray|Black|Reset|NONE
+34,20: |Gray|Black|Reset|NONE
+35,20: |Gray|Black|Reset|NONE
+36,20: |Gray|Black|Reset|NONE
+37,20: |Gray|Black|Reset|NONE
+38,20: |Gray|Black|Reset|NONE
+39,20: |Gray|Black|Reset|NONE
+40,20: |Gray|Black|Reset|NONE
+41,20: |Gray|Black|Reset|NONE
+42,20: |Gray|Black|Reset|NONE
+43,20: |Gray|Black|Reset|NONE
+44,20: |Gray|Black|Reset|NONE
+45,20: |Gray|Black|Reset|NONE
+46,20: |Gray|Black|Reset|NONE
+47,20: |Gray|Black|Reset|NONE
+48,20: |Gray|Black|Reset|NONE
+49,20: |Gray|Black|Reset|NONE
+50,20: |Gray|Black|Reset|NONE
+51,20: |Gray|Black|Reset|NONE
+52,20: |Gray|Black|Reset|NONE
+53,20: |Gray|Black|Reset|NONE
+54,20: |Gray|Black|Reset|NONE
+55,20: |Gray|Black|Reset|NONE
+56,20: |Gray|Black|Reset|NONE
+57,20: |Gray|Black|Reset|NONE
+58,20: |Gray|Black|Reset|NONE
+59,20: |Gray|Black|Reset|NONE
+60,20: |Gray|Black|Reset|NONE
+61,20: |Gray|Black|Reset|NONE
+62,20: |Gray|Black|Reset|NONE
+63,20: |Gray|Black|Reset|NONE
+64,20: |Gray|Black|Reset|NONE
+65,20: |Gray|Black|Reset|NONE
+66,20: |Gray|Black|Reset|NONE
+67,20: |Gray|Black|Reset|NONE
+68,20: |Gray|Black|Reset|NONE
+69,20: |Gray|Black|Reset|NONE
+70,20: |Gray|Black|Reset|NONE
+71,20: |Gray|Black|Reset|NONE
+72,20: |Gray|Black|Reset|NONE
+73,20: |Gray|Black|Reset|NONE
+74,20: |Gray|Black|Reset|NONE
+75,20: |Gray|Black|Reset|NONE
+76,20: |Gray|Black|Reset|NONE
+77,20: |Gray|Black|Reset|NONE
+78,20: |Gray|Black|Reset|NONE
+79,20: |Gray|Black|Reset|NONE
+0,21: |Gray|Black|Reset|NONE
+1,21:┌|Gray|Black|Reset|NONE
+2,21:─|Gray|Black|Reset|NONE
+3,21:─|Gray|Black|Reset|NONE
+4,21:─|Gray|Black|Reset|NONE
+5,21:─|Gray|Black|Reset|NONE
+6,21:─|Gray|Black|Reset|NONE
+7,21:─|Gray|Black|Reset|NONE
+8,21:─|Gray|Black|Reset|NONE
+9,21:─|Gray|Black|Reset|NONE
+10,21:─|Gray|Black|Reset|NONE
+11,21:─|Gray|Black|Reset|NONE
+12,21:─|Gray|Black|Reset|NONE
+13,21:─|Gray|Black|Reset|NONE
+14,21:─|Gray|Black|Reset|NONE
+15,21:─|Gray|Black|Reset|NONE
+16,21:─|Gray|Black|Reset|NONE
+17,21:─|Gray|Black|Reset|NONE
+18,21:─|Gray|Black|Reset|NONE
+19,21:─|Gray|Black|Reset|NONE
+20,21:─|Gray|Black|Reset|NONE
+21,21:─|Gray|Black|Reset|NONE
+22,21:─|Gray|Black|Reset|NONE
+23,21:─|Gray|Black|Reset|NONE
+24,21:─|Gray|Black|Reset|NONE
+25,21:─|Gray|Black|Reset|NONE
+26,21:─|Gray|Black|Reset|NONE
+27,21:─|Gray|Black|Reset|NONE
+28,21:─|Gray|Black|Reset|NONE
+29,21:─|Gray|Black|Reset|NONE
+30,21:─|Gray|Black|Reset|NONE
+31,21:─|Gray|Black|Reset|NONE
+32,21:─|Gray|Black|Reset|NONE
+33,21:─|Gray|Black|Reset|NONE
+34,21:─|Gray|Black|Reset|NONE
+35,21:─|Gray|Black|Reset|NONE
+36,21:─|Gray|Black|Reset|NONE
+37,21:─|Gray|Black|Reset|NONE
+38,21:─|Gray|Black|Reset|NONE
+39,21:─|Gray|Black|Reset|NONE
+40,21:─|Gray|Black|Reset|NONE
+41,21:─|Gray|Black|Reset|NONE
+42,21:─|Gray|Black|Reset|NONE
+43,21:─|Gray|Black|Reset|NONE
+44,21:─|Gray|Black|Reset|NONE
+45,21:─|Gray|Black|Reset|NONE
+46,21:─|Gray|Black|Reset|NONE
+47,21:─|Gray|Black|Reset|NONE
+48,21:─|Gray|Black|Reset|NONE
+49,21:─|Gray|Black|Reset|NONE
+50,21:─|Gray|Black|Reset|NONE
+51,21:─|Gray|Black|Reset|NONE
+52,21:─|Gray|Black|Reset|NONE
+53,21:─|Gray|Black|Reset|NONE
+54,21:─|Gray|Black|Reset|NONE
+55,21:─|Gray|Black|Reset|NONE
+56,21:─|Gray|Black|Reset|NONE
+57,21:─|Gray|Black|Reset|NONE
+58,21:─|Gray|Black|Reset|NONE
+59,21:─|Gray|Black|Reset|NONE
+60,21:─|Gray|Black|Reset|NONE
+61,21:─|Gray|Black|Reset|NONE
+62,21:─|Gray|Black|Reset|NONE
+63,21:─|Gray|Black|Reset|NONE
+64,21:─|Gray|Black|Reset|NONE
+65,21:─|Gray|Black|Reset|NONE
+66,21:─|Gray|Black|Reset|NONE
+67,21:─|Gray|Black|Reset|NONE
+68,21:─|Gray|Black|Reset|NONE
+69,21:─|Gray|Black|Reset|NONE
+70,21:─|Gray|Black|Reset|NONE
+71,21:─|Gray|Black|Reset|NONE
+72,21:─|Gray|Black|Reset|NONE
+73,21:─|Gray|Black|Reset|NONE
+74,21:─|Gray|Black|Reset|NONE
+75,21:─|Gray|Black|Reset|NONE
+76,21:─|Gray|Black|Reset|NONE
+77,21:─|Gray|Black|Reset|NONE
+78,21:┐|Gray|Black|Reset|NONE
+79,21: |Gray|Black|Reset|NONE
+0,22: |Gray|Black|Reset|NONE
+1,22:│|Gray|Black|Reset|NONE
+2,22:A|Gray|Black|Reset|BOLD
+3,22:c|Gray|Black|Reset|BOLD
+4,22:t|Gray|Black|Reset|BOLD
+5,22:i|Gray|Black|Reset|BOLD
+6,22:o|Gray|Black|Reset|BOLD
+7,22:n|Gray|Black|Reset|BOLD
+8,22:s|Gray|Black|Reset|BOLD
+9,22: |Gray|Black|Reset|BOLD
+10,22: |Gray|Black|Reset|BOLD
+11,22: |Gray|Black|Reset|BOLD
+12,22: |Gray|Black|Reset|BOLD
+13,22: |Gray|Black|Reset|BOLD
+14,22: |Gray|Black|Reset|BOLD
+15,22: |Gray|Black|Reset|BOLD
+16,22: |Gray|Black|Reset|BOLD
+17,22: |Gray|Black|Reset|BOLD
+18,22: |Gray|Black|Reset|BOLD
+19,22: |Gray|Black|Reset|BOLD
+20,22: |Gray|Black|Reset|NONE
+21,22: |White|Black|Reset|NONE
+22,22:[|White|Black|Reset|NONE
+23,22:R|White|Black|Reset|NONE
+24,22:e|White|Black|Reset|NONE
+25,22:s|White|Black|Reset|NONE
+26,22:t|White|Black|Reset|NONE
+27,22:a|White|Black|Reset|NONE
+28,22:r|White|Black|Reset|NONE
+29,22:t|White|Black|Reset|NONE
+30,22:]|White|Black|Reset|NONE
+31,22: |White|Black|Reset|NONE
+32,22: |White|Black|Reset|NONE
+33,22: |White|Black|Reset|NONE
+34,22: |White|Black|Reset|NONE
+35,22: |White|Black|Reset|NONE
+36,22: |White|Black|Reset|NONE
+37,22: |White|Black|Reset|NONE
+38,22: |White|Black|Reset|NONE
+39,22: |White|Black|Reset|NONE
+40,22: |Gray|Black|Reset|NONE
+41,22: |White|Black|Reset|NONE
+42,22:[|White|Black|Reset|NONE
+43,22:U|White|Black|Reset|NONE
+44,22:p|White|Black|Reset|NONE
+45,22:d|White|Black|Reset|NONE
+46,22:a|White|Black|Reset|NONE
+47,22:t|White|Black|Reset|NONE
+48,22:e|White|Black|Reset|NONE
+49,22:]|White|Black|Reset|NONE
+50,22: |White|Black|Reset|NONE
+51,22: |White|Black|Reset|NONE
+52,22: |White|Black|Reset|NONE
+53,22: |White|Black|Reset|NONE
+54,22: |White|Black|Reset|NONE
+55,22: |White|Black|Reset|NONE
+56,22: |White|Black|Reset|NONE
+57,22: |White|Black|Reset|NONE
+58,22: |White|Black|Reset|NONE
+59,22: |Gray|Black|Reset|NONE
+60,22: |White|Black|Reset|NONE
+61,22:[|White|Black|Reset|NONE
+62,22:L|White|Black|Reset|NONE
+63,22:o|White|Black|Reset|NONE
+64,22:g|White|Black|Reset|NONE
+65,22:s|White|Black|Reset|NONE
+66,22:]|White|Black|Reset|NONE
+67,22: |White|Black|Reset|NONE
+68,22: |White|Black|Reset|NONE
+69,22: |White|Black|Reset|NONE
+70,22: |White|Black|Reset|NONE
+71,22: |White|Black|Reset|NONE
+72,22: |White|Black|Reset|NONE
+73,22: |White|Black|Reset|NONE
+74,22: |White|Black|Reset|NONE
+75,22: |White|Black|Reset|NONE
+76,22: |White|Black|Reset|NONE
+77,22: |White|Black|Reset|NONE
+78,22:│|Gray|Black|Reset|NONE
+79,22: |Gray|Black|Reset|NONE
+0,23: |Gray|Black|Reset|NONE
+1,23:└|Gray|Black|Reset|NONE
+2,23:─|Gray|Black|Reset|NONE
+3,23:─|Gray|Black|Reset|NONE
+4,23:─|Gray|Black|Reset|NONE
+5,23:─|Gray|Black|Reset|NONE
+6,23:─|Gray|Black|Reset|NONE
+7,23:─|Gray|Black|Reset|NONE
+8,23:─|Gray|Black|Reset|NONE
+9,23:─|Gray|Black|Reset|NONE
+10,23:─|Gray|Black|Reset|NONE
+11,23:─|Gray|Black|Reset|NONE
+12,23:─|Gray|Black|Reset|NONE
+13,23:─|Gray|Black|Reset|NONE
+14,23:─|Gray|Black|Reset|NONE
+15,23:─|Gray|Black|Reset|NONE
+16,23:─|Gray|Black|Reset|NONE
+17,23:─|Gray|Black|Reset|NONE
+18,23:─|Gray|Black|Reset|NONE
+19,23:─|Gray|Black|Reset|NONE
+20,23:─|Gray|Black|Reset|NONE
+21,23:─|Gray|Black|Reset|NONE
+22,23:─|Gray|Black|Reset|NONE
+23,23:─|Gray|Black|Reset|NONE
+24,23:─|Gray|Black|Reset|NONE
+25,23:─|Gray|Black|Reset|NONE
+26,23:─|Gray|Black|Reset|NONE
+27,23:─|Gray|Black|Reset|NONE
+28,23:─|Gray|Black|Reset|NONE
+29,23:─|Gray|Black|Reset|NONE
+30,23:─|Gray|Black|Reset|NONE
+31,23:─|Gray|Black|Reset|NONE
+32,23:─|Gray|Black|Reset|NONE
+33,23:─|Gray|Black|Reset|NONE
+34,23:─|Gray|Black|Reset|NONE
+35,23:─|Gray|Black|Reset|NONE
+36,23:─|Gray|Black|Reset|NONE
+37,23:─|Gray|Black|Reset|NONE
+38,23:─|Gray|Black|Reset|NONE
+39,23:─|Gray|Black|Reset|NONE
+40,23:─|Gray|Black|Reset|NONE
+41,23:─|Gray|Black|Reset|NONE
+42,23:─|Gray|Black|Reset|NONE
+43,23:─|Gray|Black|Reset|NONE
+44,23:─|Gray|Black|Reset|NONE
+45,23:─|Gray|Black|Reset|NONE
+46,23:─|Gray|Black|Reset|NONE
+47,23:─|Gray|Black|Reset|NONE
+48,23:─|Gray|Black|Reset|NONE
+49,23:─|Gray|Black|Reset|NONE
+50,23:─|Gray|Black|Reset|NONE
+51,23:─|Gray|Black|Reset|NONE
+52,23:─|Gray|Black|Reset|NONE
+53,23:─|Gray|Black|Reset|NONE
+54,23:─|Gray|Black|Reset|NONE
+55,23:─|Gray|Black|Reset|NONE
+56,23:─|Gray|Black|Reset|NONE
+57,23:─|Gray|Black|Reset|NONE
+58,23:─|Gray|Black|Reset|NONE
+59,23:─|Gray|Black|Reset|NONE
+60,23:─|Gray|Black|Reset|NONE
+61,23:─|Gray|Black|Reset|NONE
+62,23:─|Gray|Black|Reset|NONE
+63,23:─|Gray|Black|Reset|NONE
+64,23:─|Gray|Black|Reset|NONE
+65,23:─|Gray|Black|Reset|NONE
+66,23:─|Gray|Black|Reset|NONE
+67,23:─|Gray|Black|Reset|NONE
+68,23:─|Gray|Black|Reset|NONE
+69,23:─|Gray|Black|Reset|NONE
+70,23:─|Gray|Black|Reset|NONE
+71,23:─|Gray|Black|Reset|NONE
+72,23:─|Gray|Black|Reset|NONE
+73,23:─|Gray|Black|Reset|NONE
+74,23:─|Gray|Black|Reset|NONE
+75,23:─|Gray|Black|Reset|NONE
+76,23:─|Gray|Black|Reset|NONE
+77,23:─|Gray|Black|Reset|NONE
+78,23:┘|Gray|Black|Reset|NONE
+79,23: |Gray|Black|Reset|NONE

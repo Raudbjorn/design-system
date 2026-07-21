@@ -1,0 +1,70 @@
++++
+[Stack]
+description = "Stack component"
+[Card]
+description = "Card component"
+[NavBar]
+description = "NavBar component"
+[Breadcrumb]
+description = "Breadcrumb component"
+[Tabs]
+description = "Tabs component"
++++
+--- Stack
+div h-full flex-col gap-1 text-[#aa0005]
+  if {variant == "column"}
+    div h-[1] bg-[#aa0003] "Row: {i}"
+    div h-[1] bg-[#aa0003] "Row: sonarr"
+    div h-[1] bg-[#aa0003] "Row: radarr"
+  else if {variant == "row"}
+    div flex-row gap-1
+      div h-[1] bg-[#aa0003] px-1 "{i}"
+      div h-[1] bg-[#aa0003] px-1 "sonarr"
+      div h-[1] bg-[#aa0003] px-1 "radarr"
+  else
+    div "cell A cell B cell C"
+    div "cell D cell E cell F"
+
+--- Card
+div w-full border rounded p-1 text-[#aa0006]
+  if {variant == "basic"}
+    div h-[1] font-bold text-[#aa0009] "{title}"
+    div h-[1] text-[#aa0007] "{subtitle}"
+  else if {variant == "header-footer"}
+    div h-[1] font-bold text-[#aa0009] "═══ {title} ═══"
+    div h-[1] text-[#aa0007] "{subtitle}"
+    div h-[1] text-faint text-right "footer · up time"
+  else if {variant == "emphasis"}
+    div h-[1] font-bold underline text-[#aa0009] "{title}"
+    div h-[1] text-[#aa0007] "{subtitle} · latency slow"
+  else
+    div h-[1] text-[#aa0009] "{title}"
+    div h-[1] text-[#aa0007] "{subtitle}"
+
+--- NavBar
+div h-[1] border-b text-[#aa0006] flex-row items-center
+  if {variant == "default"}
+    span font-bold text-[#aa0009] px-1 "{brand}"
+    span flex-1
+    span text-[#aa0007] "│ {section} │"
+    span px-1 "[Menu]"
+  else
+    span flex-1
+    span text-[#aa0007] "[{section}]"
+    span px-1 "[Menu]"
+
+--- Breadcrumb
+div h-[1] text-[#aa0007]
+  if {variant == "truncated"}
+    "Home … Services"
+  else
+    "Home {sep} {crumb}"
+
+--- Tabs
+div h-[1] flex-row border-b text-[#aa0005]
+  if {variant == "narrow"}
+    "[-{tab}] …"
+  else if {variant == "first-active"}
+    "[{tab}] ┆ inactive"
+  else
+    "┆ [{tab}] ┆ inactive"

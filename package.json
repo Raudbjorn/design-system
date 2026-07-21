@@ -75,7 +75,12 @@
     "test:watch": "vitest --project=unit",
     "test:visual": "vitest run --project=storybook",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "tui:check": "cargo check --workspace --all-targets",
+    "tui:test": "cargo test --workspace",
+    "tui:gallery": "cargo run -p raudbjorn-tui --example gallery",
+    "tui:list": "cargo run -p raudbjorn-tui --example gallery -- --list",
+    "tui:smoke": "bash scripts/test-tui-determinism.sh"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"

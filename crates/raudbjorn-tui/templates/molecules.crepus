@@ -1,0 +1,231 @@
++++
+[Button]
+description = "Button component"
+[Link]
+description = "Link component"
+[StatCard]
+description = "StatCard component"
+[Input]
+description = "Input component"
+[Select]
+description = "Select component"
+[Checkbox]
+description = "Checkbox component"
+[Radio]
+description = "Radio component"
+[Switch]
+description = "Switch component"
+[Alert]
+description = "Alert component"
+[Tooltip]
+description = "Tooltip component"
+[Table]
+description = "Table component"
+[Timeline]
+description = "Timeline component"
+[CodeBlock]
+description = "CodeBlock component"
++++
+--- Button
+div h-[1] flex-row px-1 text-[#aa0006]
+  if {focused}
+    span bg-[#aa0008] ">[{label}]<"
+  else if {disabled}
+    span text-[#aa0007] "[DEPLD] {label}"
+  else if {loading}
+    span text-[#aa0009] "⟳ LOADING {label}"
+  else
+    span "[{label}]"
+
+--- Link
+div h-[1] flex-row gap-1 text-[#aa0009]
+  if {external}
+    span "{href}→"
+  else if {focused}
+    span bg-[#aa0008] text-[#aa0006] "{href}→"
+  else if {disabled}
+    span text-[#aa0007] "{href}→"
+  else
+    span "{href}"
+
+--- StatCard
+div h-full border rounded px-1 text-[#aa0006]
+  if {accent}
+    div h-full flex-col
+      div h-[1] text-right font-bold
+        span text-[#aa0009] "{value}"
+      div h-[1] text-[#aa0007]
+        "{label}"
+  else if {accent_2}
+    div h-full flex-col
+      div h-[1] text-right font-bold
+        span text-[#aa000a] "{value}"
+      div h-[1] text-[#aa0007]
+        "{label}"
+  else
+    div h-full flex-col
+      div h-[1] text-right font-bold
+        span "{value}"
+      div h-[1] text-[#aa0007]
+        "{label}"
+
+--- Input
+div h-full flex-col gap-1 text-[#aa0005]
+  if {error}
+    div h-full flex-col
+      div h-[1] text-[#aa0008]
+        "{prompt}"
+      div h-[3] border px-1 bg-[#aa0001] text-[#aa000e]
+        "✕ Error: {hint}"
+  else if {focused}
+    div h-full flex-col
+      div h-[1] text-[#aa0008]
+        "{prompt}"
+      div h-[3] border px-1 bg-[#aa0008] text-[#aa0005]
+        "{value}"
+      div h-[1] text-[#aa0007]
+        if {hint}
+          span "hint: {hint}"
+  else if {disabled}
+    div h-full flex-col
+      div h-[1] text-[#aa0007]
+        "{prompt}"
+      div h-[3] border px-1 bg-[#aa0000] text-[#aa0007]
+        "{value}"
+      div h-[1] text-[#aa0007]
+        if {hint}
+          span "hint: {hint}"
+  else
+    div h-full flex-col
+      div h-[1] text-[#aa0008]
+        "{prompt}"
+      div h-[3] border px-1 bg-[#aa0000] text-[#aa0005]
+        "{value}"
+      div h-[1] text-[#aa0007]
+        if {hint}
+          span "hint: {hint}"
+
+--- Select
+div h-full flex-col gap-1 text-[#aa0005]
+  if {open}
+    div h-full flex-col
+      div h-[1] text-[#aa0006]
+        "Selected: {selected} ▼"
+      div h-full border text-[#aa0007]
+        "[{options}]"
+  else if {disabled}
+    div h-full flex-col
+      div h-[1] text-[#aa0007]
+        "[DEPLD] {selected}"
+  else if {focused}
+    div h-full flex-col
+      div h-[1] text-[#aa0006]
+        "Selected: {selected}"
+  else
+    div h-full flex-col
+      div h-[1] text-[#aa0005]
+        "Selected: {selected}"
+
+--- Checkbox
+div h-[1] flex-row gap-1 text-[#aa0005]
+  if {disabled}
+    div h-[1]
+      span text-[#aa0007] "[DISABLED] {check}"
+      span text-[#aa0007] "{label}"
+  else if {focused}
+    div h-[1]
+      span bg-[#aa0008] ">{check}<"
+      span "{label}"
+  else
+    div h-[1]
+      span "{check}"
+      span "{label}"
+
+--- Radio
+div h-[1] flex-row gap-1 text-[#aa0005]
+  if {disabled}
+    div h-[1]
+      span text-[#aa0007] "[DISABLED] {radio}"
+      span text-[#aa0007] "{label}"
+  else
+    div h-[1]
+      span "{radio}"
+      span "{label}"
+
+--- Switch
+div h-[1] flex-row gap-1 text-[#aa0005]
+  if {focused}
+    span bg-[#aa0008] "[{state}]"
+  else if {disabled}
+    span text-[#aa0007] "[DEPLD] {state}"
+  else if {on}
+    span text-[#aa0006] "[ON] {state}"
+  else
+    span "{state}"
+  if {labeled}
+    span text-[#aa0007] " {label}"
+
+--- Alert
+div h-[1] flex-row border px-2 bg-[#aa0001] text-[#aa0006]
+  if {info}
+    span "[i] INFO: {message}"
+  else if {success}
+    span "[✓] SUCCESS: {message}"
+  else if {warning}
+    span "[⚠] WARNING: {message}"
+  else if {error}
+    span "[✗] ERROR: {message}"
+  else
+    span "[!] {tone}: {message}"
+
+
+--- Tooltip
+div h-[1] italic text-[#aa0008]
+  if {open}
+    span text-[#aa0006] "[?] {help} (Help text)"
+  else if {focused}
+    span text-[#aa0006] "[?] {help}"
+  else
+    span "{help}"
+
+--- Table
+div w-full border text-[#aa0005]
+  div h-[1] border-b text-[#aa0006] font-bold
+    "{headers}"
+  if {rich}
+    span "● {rows} [RICH]"
+  else if {selected}
+    span text-[#aa0006] "{rows} [SELECTED]"
+  else if {empty}
+    span text-[#aa0007] "No rows [EMPTY]"
+  else
+    span "{rows}"
+
+--- Timeline
+div h-full flex-col gap-1 text-[#aa0005]
+  if {reverse}
+    div h-[1] flex-row
+      span text-[#aa0009] "↓ [{ts}] {event}"
+  else
+    div h-[1] flex-row
+      span "↑ [{ts}] {event}"
+  if {status}
+    div h-[1]
+      span text-[#aa0006] "[ONLINE] {event}"
+
+--- CodeBlock
+div w-full h-full border p-1 text-[#aa0005] bg-[#aa0002]
+  if {highlighted}
+    if {line_numbers}
+      div syn-keyword
+        "{lines}\n"
+    "{code}"
+    span text-[#aa0007] " [HIGHLIGHTED]"
+  else if {plain}
+    div text-white
+      "{code}"
+      span text-[#aa0007] " [PLAIN]"
+  else
+    "{code}"
+  if {overflow}
+    span text-[#aa0007] " <"

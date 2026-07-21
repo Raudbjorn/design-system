@@ -1,0 +1,79 @@
+--- Text
+div h-[1] text-[#aa0005]
+  if {variant == "default"}
+    span "{label}"
+  else if {variant == "strong"}
+    span font-bold "{label}"
+  else if {variant == "muted"}
+    span text-[#aa0007] dim "{label} ~"
+  else if {variant == "faint"}
+    span text-[#aa0008] dim italic "{label} …"
+  else
+    span "{label}"
+
+--- Heading
+div h-[2] flex-col
+  if {variant == "level-1"}
+    div text-[#aa0009] font-bold underline "{title}"
+    div h-[1] text-[#aa0008] "level 1"
+  else if {variant == "level-2"}
+    div text-[#aa0006] font-bold underline "{title}"
+    div h-[1] text-[#aa0008] "level 2"
+  else if {variant == "level-3"}
+    div text-[#aa0006] font-bold "{title}"
+    div h-[1] text-[#aa0008] "level 3"
+  else if {variant == "level-4"}
+    div text-[#aa0005] "{title}"
+    div h-[1] text-[#aa0008] "level 4"
+  else
+    span text-[#aa0006] font-bold "{title}"
+
+--- Icon
+div h-[1] flex-row gap-1 text-[#aa0009]
+  span "{symbol}"
+  span "{label}"
+
+--- Kbd
+div h-[1] flex-row gap-1 text-[#aa0005] bg-[#aa0000]
+  span "[{key}]"
+
+--- Badge
+div h-[1] flex-row gap-1 text-[#aa0007] bg-[#aa0001]
+  span "[{label}]"
+
+--- Avatar
+div h-[3] w-full flex-col justify-center items-center text-[#aa0006]
+  if {variant == "image-fallback"}
+    span "(no-image)"
+    span text-[#aa0008] "fallback"
+  else
+    span "{initials}"
+    span text-[#aa0008] "initials"
+
+--- Spinner
+div h-[1] flex-row text-[#aa0009]
+  span "{symbol}"
+  if {variant == "frozen"}
+    span " {label} -"
+  else if {variant == "animated"}
+    span " {label} ~"
+  else
+    span " {label}"
+
+--- Progress
+div h-[3] w-full flex-col gap-1 text-[#aa0005]
+  div h-[1] flex-row
+    if {state == "Unavailable"}
+      span "Progress: Unavailable "
+    else
+      if {variant == "determinate"}
+        span "Progress: {value}% "
+      else if {variant == "indeterminate"}
+        span "Working: "
+      else if {variant == "complete"}
+        span "Done: "
+      else
+        span "Error: "
+      span "{bar}"
+  div h-[1] text-[#aa0008]
+    span "{state}"

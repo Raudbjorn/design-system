@@ -6,6 +6,7 @@ dist/
 .svelte-kit/
 storybook-static/
 *storybook.log
+/target/
 screenshots/
 
 # design-sync (claude.ai/design) — transient state; the durable set
