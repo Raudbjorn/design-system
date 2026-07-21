@@ -23,6 +23,16 @@ pnpm add github:Raudbjorn/design-system
 
 The package requires Node.js 22 or newer and has Svelte 5 as a peer dependency.
 
+### Native TUI
+
+The Crepus/Ratatui counterparts for all 28 components and the Homelab terminal
+gallery are documented in [docs/tui-gallery.md](docs/tui-gallery.md). Launch
+the real terminal renderer with:
+
+```bash
+pnpm run tui:gallery
+```
+
 ## Usage
 
 Import the stylesheet once (it carries the tokens, fonts, and theme), then use

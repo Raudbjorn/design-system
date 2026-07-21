@@ -1,0 +1,14 @@
+[package]
+name = "raudbjorn-tui"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.96"
+license = "MIT"
+
+[dependencies]
+crepuscularity-tui = "=0.4.22"
+ratatui = "=0.30.2"
+crossterm = "=0.29.0"
+unicode-width = "=0.2.0"
+tui-overlay = "=0.1.2"
+thiserror = "2"

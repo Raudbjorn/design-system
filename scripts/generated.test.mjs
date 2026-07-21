@@ -10,12 +10,38 @@ import { emitColorsCss, emitScaleCss } from './emitters/emit-css.mjs';
 import { emitPaletteTs } from './emitters/emit-palette-ts.mjs';
 import { emitResolvedJson } from './emitters/emit-json.mjs';
 import { emitQss } from './emitters/emit-qss.mjs';
+import { emitTuiRust } from './emitters/emit-tui-rust.mjs';
 
 const prepared = prepareBuild();
 if (!prepared.ok) throw new Error(prepared.error.join('\n'));
 const { base, themes } = prepared.value;
 
 const read = (...segments) => readFileSync(join(TOKENS_DIR, ...segments), 'utf8');
+
+const TUI_COLOR_FIELDS = [
+  'bg',
+  'surface-1',
+  'surface-2',
+  'surface-3',
+  'border',
+  'text',
+  'text-strong',
+  'text-muted',
+  'text-faint',
+  'accent',
+  'accent-2',
+  'accent-rust',
+  'mix-target',
+  'success',
+  'error',
+  'warning',
+  'syn-keyword',
+  'syn-string',
+  'syn-var',
+  'syn-func',
+  'syn-comment',
+  'syn-number'
+];
 
 describe('committed outputs match the emitters (run `pnpm run tokens` after token edits)', () => {
   it('scale.css', () => {
@@ -38,6 +64,67 @@ describe('committed outputs match the emitters (run `pnpm run tokens` after toke
       expect(read('..', 'qss', `${theme.name}.qss`)).toBe(emitQss(theme));
     });
   }
+    it(`crates/raudbjorn-tui/src/theme/generated.rs`, () => {
+      expect(readFileSync(join(TOKENS_DIR, '../../../crates/raudbjorn-tui/src/theme/generated.rs'), 'utf8')).toBe(emitTuiRust(themes));
+    });
+});
+
+describe('crates/raudbjorn-tui/src/theme/generated.rs validation', () => {
+  const generatedPath = join(TOKENS_DIR, '../../../crates/raudbjorn-tui/src/theme/generated.rs');
+  const content = readFileSync(generatedPath, 'utf8');
+
+  it('contains no invalid syntax', () => {
+    expect(content).toContain('use ratatui::style::Color;');
+    expect(content).not.toMatch(/undefined|\{.*?\}|\$\{/);
+    expect(content).not.toMatch(/var\(/);
+    expect(content).not.toMatch(/NaN/);
+  });
+
+  for (const theme of themes) {
+    const name = theme.name.toUpperCase();
+    const regex = new RegExp(`pub const ${name}: TerminalPalette = TerminalPalette \\{([\\s\\S]*?)\\};`);
+    const match = regex.exec(content);
+
+    it(`${name} content is well-formed`, () => {
+      expect(match).not.toBeNull();
+      const fields = match[1].trim().split(',\n').filter(s => s.trim() !== '');
+      expect(fields.length).toBe(TUI_COLOR_FIELDS.length);
+    });
+
+    for (const key of TUI_COLOR_FIELDS) {
+      const hex = theme.paletteHex[key];
+      const rustField = key.replace(/-/g, '_');
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      const expected = `Color::Rgb(${r}, ${g}, ${b})`;
+
+      it(`${name} field ${key} appears once and maps to ${expected}`, () => {
+        const occurrences = match[1].match(new RegExp(`\\b${rustField}:`, 'g')) ?? [];
+        expect(occurrences).toHaveLength(1);
+        expect(match[1]).toContain(`${rustField}: ${expected}`);
+      });
+    }
+  }
+});
+
+describe('emitter validation', () => {
+  it('emits exactly one trailing newline', () => {
+    const output = emitTuiRust(themes);
+    expect(output).toMatch(/};\n$/);
+    expect(output).not.toMatch(/\n\n$/);
+  });
+
+  it('rejects missing fields', () => {
+    const badTheme = { ...themes[0], paletteHex: { ...themes[0].paletteHex } };
+    delete badTheme.paletteHex['bg'];
+    expect(() => emitTuiRust([badTheme])).toThrow(/missing field bg/);
+  });
+
+  it('rejects invalid hex strings', () => {
+    const badTheme = { ...themes[0], paletteHex: { ...themes[0].paletteHex, bg: '#invalid' } };
+    expect(() => emitTuiRust([badTheme])).toThrow(/invalid hex: #invalid/);
+  });
 });
 
 describe('QSS contract', () => {
