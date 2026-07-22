@@ -128,19 +128,18 @@ impl GalleryState {
     }
 
     pub fn handle_event_in(&mut self, input: &Event, viewport: Rect) -> BrowserControl {
-        if self.overlay_is_active() {
-            if let Event::Mouse(mouse) = input {
-                if matches!(mouse.kind, MouseEventKind::Down(_)) {
-                    let overlay = presentation_rect(self.selected_story().presentation, viewport);
-                    let inside = mouse.column >= overlay.left()
-                        && mouse.column < overlay.right()
-                        && mouse.row >= overlay.top()
-                        && mouse.row < overlay.bottom();
-                    if !inside {
-                        let close = Event::Key(KeyEvent::new(KeyCode::Esc, KeyModifiers::NONE));
-                        return self.handle_event(&close);
-                    }
-                }
+        if self.overlay_is_active()
+            && let Event::Mouse(mouse) = input
+            && matches!(mouse.kind, MouseEventKind::Down(_))
+        {
+            let overlay = presentation_rect(self.selected_story().presentation, viewport);
+            let inside = mouse.column >= overlay.left()
+                && mouse.column < overlay.right()
+                && mouse.row >= overlay.top()
+                && mouse.row < overlay.bottom();
+            if !inside {
+                let close = Event::Key(KeyEvent::new(KeyCode::Esc, KeyModifiers::NONE));
+                return self.handle_event(&close);
             }
         }
         self.handle_event(input)
@@ -163,16 +162,18 @@ impl GalleryState {
             if key.kind != KeyEventKind::Press {
                 return BrowserControl::Continue;
             }
-            if !self.fullscreen && key.code == KeyCode::Tab && key.modifiers == KeyModifiers::SHIFT
+            if !self.fullscreen
+                && (key.code == KeyCode::BackTab
+                    || (key.code == KeyCode::Tab && key.modifiers == KeyModifiers::SHIFT))
             {
                 self.toggle_preview_focus();
                 return BrowserControl::Continue;
             }
             if key.modifiers != KeyModifiers::NONE {
-                if self.preview_focused {
-                    if let Some(handler) = self.selected_story().handle_event {
-                        handler(&mut self.ctx, input);
-                    }
+                if self.preview_focused
+                    && let Some(handler) = self.selected_story().handle_event
+                {
+                    handler(&mut self.ctx, input);
                 }
                 return BrowserControl::Continue;
             }
@@ -238,10 +239,10 @@ impl GalleryState {
             }
         }
 
-        if self.preview_focused {
-            if let Some(handler) = self.selected_story().handle_event {
-                handler(&mut self.ctx, input);
-            }
+        if self.preview_focused
+            && let Some(handler) = self.selected_story().handle_event
+        {
+            handler(&mut self.ctx, input);
         }
         BrowserControl::Continue
     }
@@ -315,7 +316,7 @@ pub fn dump_story(
     }
     let story = story_by_id(story_id)?;
     let store = std::sync::Arc::new(TemplateStore::load_embedded()?);
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let ctx = story.context();
     let backend = TestBackend::new(width, height);
     let mut terminal = Terminal::new(backend).expect("TestBackend is infallible");
@@ -323,7 +324,7 @@ pub fn dump_story(
 
     terminal
         .draw(|frame| {
-            render_story(frame, &mut renderer, story, &ctx, palette, profile, area);
+            render_story(frame, &renderer, story, &ctx, palette, profile, area);
         })
         .expect("TestBackend is infallible");
 
@@ -340,7 +341,7 @@ pub fn run_story(profile: TerminalProfile, story_id: &str) -> Result<(), Gallery
 
 fn run_with_state(profile: TerminalProfile, mut app: GalleryState) -> Result<(), GalleryError> {
     let store = std::sync::Arc::new(TemplateStore::load_embedded()?);
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let story_labels: Vec<_> = STORIES
         .iter()
         .map(|story| format!("{} / {}", story.group, story.name))
@@ -353,7 +354,7 @@ fn run_with_state(profile: TerminalProfile, mut app: GalleryState) -> Result<(),
             terminal.draw(|frame| {
                 render_browser(
                     frame,
-                    &mut renderer,
+                    &renderer,
                     &story_labels,
                     app.selected,
                     &app.ctx,
@@ -395,7 +396,7 @@ fn story_by_id(story_id: &str) -> Result<&'static StorySpec, GalleryError> {
 
 fn render_browser(
     frame: &mut Frame,
-    renderer: &mut ComponentRenderer,
+    renderer: &ComponentRenderer,
     story_labels: &[String],
     selected: usize,
     ctx: &crepuscularity_tui::TemplateContext,
@@ -479,7 +480,7 @@ fn render_browser(
 
 fn render_story(
     frame: &mut Frame,
-    renderer: &mut ComponentRenderer,
+    renderer: &ComponentRenderer,
     story: &StorySpec,
     ctx: &crepuscularity_tui::TemplateContext,
     palette: TerminalPalette,
@@ -543,11 +544,12 @@ fn presentation_rect(presentation: Presentation, area: Rect) -> Rect {
             width_percent,
             height_percent,
         } => {
-            let width = (u32::from(area.width) * u32::from(width_percent) / 100) as u16;
-            let height = (u32::from(area.height) * u32::from(height_percent) / 100) as u16;
+            let width = (u32::from(area.width) * u32::from(width_percent.min(100)) / 100) as u16;
+            let height = (u32::from(area.height) * u32::from(height_percent.min(100)) / 100) as u16;
             Rect::new(
-                area.x + (area.width - width) / 2,
-                area.y + (area.height - height) / 2,
+                area.x.saturating_add(area.width.saturating_sub(width) / 2),
+                area.y
+                    .saturating_add(area.height.saturating_sub(height) / 2),
                 width,
                 height,
             )
@@ -556,10 +558,10 @@ fn presentation_rect(presentation: Presentation, area: Rect) -> Rect {
             side,
             width_percent,
         } => {
-            let width = (u32::from(area.width) * u32::from(width_percent) / 100) as u16;
+            let width = (u32::from(area.width) * u32::from(width_percent.min(100)) / 100) as u16;
             let x = match side {
                 SheetSide::Left => area.x,
-                SheetSide::Right => area.right() - width,
+                SheetSide::Right => area.right().saturating_sub(width),
             };
             Rect::new(x, area.y, width, area.height)
         }
@@ -591,7 +593,7 @@ mod tests {
     fn fullscreen_view_renders_without_browser_chrome() {
         let app = GalleryState::with_story("view/homelab-healthy").unwrap();
         let store = std::sync::Arc::new(TemplateStore::load_embedded().unwrap());
-        let mut renderer = ComponentRenderer::new(store);
+        let renderer = ComponentRenderer::new(store);
         let labels: Vec<_> = STORIES
             .iter()
             .map(|story| format!("{} / {}", story.group, story.name))
@@ -602,7 +604,7 @@ mod tests {
             .draw(|frame| {
                 render_browser(
                     frame,
-                    &mut renderer,
+                    &renderer,
                     &labels,
                     app.selected,
                     &app.ctx,
@@ -618,5 +620,27 @@ mod tests {
         assert!(text.contains("[Dashboard]") && text.contains("[Menu]"));
         assert!(!text.contains("Stories"));
         assert!(!text.contains("Tab focus preview"));
+    }
+
+    #[test]
+    fn presentation_rect_clamps_percentages_to_the_viewport() {
+        let area = Rect::new(7, 11, 40, 20);
+        let modal = presentation_rect(
+            Presentation::Modal {
+                width_percent: 200,
+                height_percent: 300,
+            },
+            area,
+        );
+        let sheet = presentation_rect(
+            Presentation::Sheet {
+                side: SheetSide::Right,
+                width_percent: 200,
+            },
+            area,
+        );
+
+        assert_eq!(modal, area);
+        assert_eq!(sheet, area);
     }
 }

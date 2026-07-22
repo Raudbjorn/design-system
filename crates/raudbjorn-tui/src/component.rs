@@ -1,13 +1,11 @@
 use crate::profile::{TerminalProfile, apply_profile_area};
 use crate::theme::TerminalPalette;
+use crepuscularity_core::{eval::eval_expr, parser::ComponentDef};
 use crepuscularity_tui::{
-    CrepusError, TemplateContext, TemplateValue, parse_component_file, render_component,
+    CrepusError, TemplateContext, TemplateValue, parse_component_file, render_nodes,
 };
 use ratatui::{Frame, layout::Rect};
-use std::{
-    collections::{HashMap, HashSet},
-    sync::Arc,
-};
+use std::{collections::HashMap, sync::Arc};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ComponentId {
@@ -164,8 +162,7 @@ pub struct TemplateRef {
 }
 
 pub struct ComponentFileEntry {
-    pub source: Arc<str>,
-    pub sections: HashSet<String>,
+    pub components: HashMap<String, ComponentDef>,
 }
 
 pub struct TemplateStore {
@@ -228,12 +225,10 @@ impl TemplateStore {
 
             match parse_component_file(content) {
                 Ok(comp_file) => {
-                    let sections: HashSet<String> = comp_file.components.keys().cloned().collect();
                     files.insert(
                         file_enum,
                         ComponentFileEntry {
-                            source: content.into(),
-                            sections,
+                            components: comp_file.components,
                         },
                     );
                 }
@@ -261,24 +256,17 @@ impl TemplateStore {
     }
 
     pub fn component(&self, template: TemplateRef) -> Result<(), ComponentError> {
-        self.files
-            .get(&template.file)
-            .and_then(|f| f.sections.get(template.section))
-            .map(|_| ())
-            .ok_or(ComponentError::MissingComponent {
-                file: template.file,
-                section: template.section,
-            })
+        self.parsed_component(template).map(|_| ())
     }
 
     pub fn virtual_files(&self) -> Arc<HashMap<String, String>> {
         self.virtual_files.clone()
     }
 
-    fn source_for_section(&self, template: TemplateRef) -> Result<Arc<str>, ComponentError> {
+    fn parsed_component(&self, template: TemplateRef) -> Result<&ComponentDef, ComponentError> {
         self.files
             .get(&template.file)
-            .map(|f| f.source.clone())
+            .and_then(|file| file.components.get(template.section))
             .ok_or(ComponentError::MissingComponent {
                 file: template.file,
                 section: template.section,
@@ -298,7 +286,7 @@ impl ComponentRenderer {
     /// Renders from the embedded `templates/` namespace. A caller-provided
     /// `base_dir` is intentionally ignored in the cloned render context.
     pub fn render(
-        &mut self,
+        &self,
         template: TemplateRef,
         ctx: &TemplateContext,
         palette: TerminalPalette,
@@ -306,32 +294,33 @@ impl ComponentRenderer {
         frame: &mut Frame,
         area: Rect,
     ) -> Result<(), ComponentError> {
-        self.store.component(template)?;
+        let component = self.store.parsed_component(template)?;
         if area.is_empty() {
             return Ok(());
         }
 
-        let content = self.store.source_for_section(template)?;
-
         let mut render_ctx = ctx.clone();
         normalize_render_context(template, &mut render_ctx);
-        if render_ctx.virtual_files.is_empty() {
-            render_ctx.virtual_files = self.store.virtual_files();
-        } else {
-            let virtual_files = self.store.virtual_files();
-            let mut virtual_files_map = (*render_ctx.virtual_files).clone();
-            for (path, content) in virtual_files.iter() {
-                virtual_files_map.insert(path.clone(), content.clone());
-            }
-            render_ctx.virtual_files = Arc::new(virtual_files_map);
-        }
+        let mut virtual_files = (*self.store.virtual_files()).clone();
+        virtual_files.extend(
+            render_ctx
+                .virtual_files
+                .iter()
+                .map(|(path, content)| (path.clone(), content.clone())),
+        );
+        render_ctx.virtual_files = Arc::new(virtual_files);
         render_ctx.base_dir = Some("templates".into());
 
         render_ctx.set("w", area.width as i64);
         render_ctx.set("h", area.height as i64);
         render_ctx.set("viewport_width", area.width as i64);
         render_ctx.set("viewport_height", area.height as i64);
-        render_component(&content, template.section, &render_ctx, frame, area).map_err(|e| {
+        for (key, expr) in &component.meta.defaults {
+            render_ctx.vars.entry(key.clone()).or_insert_with(|| {
+                eval_expr(expr, &TemplateContext::default()).unwrap_or(TemplateValue::Null)
+            });
+        }
+        render_nodes(&component.nodes, &render_ctx, frame, area).map_err(|e| {
             ComponentError::Render {
                 file: template.file,
                 section: template.section,
@@ -355,14 +344,18 @@ impl ComponentRenderer {
     }
 }
 
-fn normalize_render_context(template: TemplateRef, ctx: &mut TemplateContext) {
+pub fn normalize_render_context(template: TemplateRef, ctx: &mut TemplateContext) {
     // Injection: force-set viewport dimensions before any other normalization
     // We use the area values from the component renderer if possible, but here
     // we rely on the context already having them set.
 
     match template.section {
+        "Checkbox" => normalize_checkbox(ctx),
         "Progress" => normalize_progress(ctx),
+        "Radio" => normalize_indexed_label(ctx, "options", "selected_index", "label"),
         "Select" => normalize_select(ctx),
+        "Table" => normalize_table(ctx),
+        "Tabs" => normalize_indexed_label(ctx, "tabs", "active_index", "tab"),
         _ => {}
     }
 }
@@ -391,8 +384,7 @@ fn normalize_progress(ctx: &mut TemplateContext) {
     let bar = format!("{}{}", "█".repeat(filled), "░".repeat(10 - filled));
     ctx.set("bar", bar);
 }
-
-fn normalize_select(ctx: &mut TemplateContext) {
+pub fn normalize_select(ctx: &mut TemplateContext) {
     let has_options = !ctx.get_str("options").trim().is_empty();
     let count = match ctx.get("option_count") {
         Some(TemplateValue::Int(value)) if has_options => (*value).max(0),
@@ -411,5 +403,72 @@ fn normalize_select(ctx: &mut TemplateContext) {
     };
     if !(0..count).contains(&selected) {
         ctx.set("selected", "None").set("selected_index", -1_i64);
+        return;
     }
+
+    let value_source = if ctx.get_str("option_values").trim().is_empty() {
+        "options"
+    } else {
+        "option_values"
+    };
+    if let Some(option) = indexed_label(ctx, value_source, selected) {
+        ctx.set("selected", option);
+    } else {
+        ctx.set("selected", "None").set("selected_index", -1_i64);
+    }
+}
+
+fn normalize_checkbox(ctx: &mut TemplateContext) {
+    let marker = if ctx.get_bool("checked") {
+        "[x]"
+    } else {
+        "[ ]"
+    };
+    ctx.set("check", marker);
+}
+
+fn normalize_indexed_label(
+    ctx: &mut TemplateContext,
+    values_key: &str,
+    index_key: &str,
+    output_key: &str,
+) {
+    let index = match ctx.get(index_key) {
+        Some(TemplateValue::Int(value)) => *value,
+        _ => return,
+    };
+    if let Some(label) = indexed_label(ctx, values_key, index) {
+        ctx.set(output_key, label);
+    }
+}
+
+fn normalize_table(ctx: &mut TemplateContext) {
+    let row_count = match ctx.get("row_count") {
+        Some(TemplateValue::Int(value)) => (*value).max(0),
+        _ => 0,
+    };
+    if row_count == 0 {
+        return;
+    }
+
+    let selected_row = match ctx.get("selected_row") {
+        Some(TemplateValue::Int(value)) => *value,
+        _ => -1,
+    };
+    if let Some(label) = indexed_label(ctx, "row_labels", selected_row) {
+        ctx.set("rows", label);
+    }
+}
+
+fn indexed_label(ctx: &TemplateContext, values_key: &str, index: i64) -> Option<String> {
+    let TemplateValue::Str(values) = ctx.get(values_key)? else {
+        return None;
+    };
+    let index = usize::try_from(index).ok()?;
+    values
+        .split(',')
+        .nth(index)
+        .map(str::trim)
+        .filter(|label| !label.is_empty())
+        .map(str::to_owned)
 }

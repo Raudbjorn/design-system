@@ -150,8 +150,11 @@ pub fn handle_radio(ctx: &mut TemplateContext, event: &Event) -> bool {
         Some(KeyCode::Right | KeyCode::Down) => (current + 1) % count,
         _ => return false,
     };
-    ctx.set("selected_index", next);
-    next != current
+    if next == current {
+        return false;
+    }
+    ctx.set("selected_index", next).set("radio", "(*)");
+    true
 }
 
 pub fn handle_tabs(ctx: &mut TemplateContext, event: &Event) -> bool {
@@ -187,7 +190,7 @@ pub fn handle_table(ctx: &mut TemplateContext, event: &Event) -> bool {
     }
     let current = normalize_index(get_i64(ctx, "selected_row"), count);
     let next = match pressed_key(event) {
-        Some(KeyCode::Up) => current.saturating_sub(1),
+        Some(KeyCode::Up) => (current - 1).max(0),
         Some(KeyCode::Down) => (current + 1).min(count - 1),
         Some(KeyCode::Home) => 0,
         Some(KeyCode::End) => count - 1,

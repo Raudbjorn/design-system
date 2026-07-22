@@ -1,8 +1,15 @@
+mod support;
+
 use crossterm::event::{
-    Event, KeyCode, KeyEvent, KeyModifiers, MouseButton, MouseEvent, MouseEventKind,
+    Event, KeyCode, KeyEvent, KeyEventKind, KeyEventState, KeyModifiers, MouseButton, MouseEvent,
+    MouseEventKind,
 };
 use ratatui::layout::Rect;
 use raudbjorn_tui::browser::{BrowserControl, GalleryState};
+use raudbjorn_tui::{
+    profile::{ColorProfile, GlyphProfile},
+    theme::DARK,
+};
 
 fn key(code: KeyCode) -> Event {
     Event::Key(KeyEvent::new(code, KeyModifiers::NONE))
@@ -25,6 +32,20 @@ fn modified_click(column: u16, row: u16, modifiers: KeyModifiers) -> Event {
     })
 }
 
+fn rendered_state(state: &GalleryState, size: (u16, u16)) -> String {
+    support::render_context_with_palette(
+        state.selected_story(),
+        state.context(),
+        support::profile(ColorProfile::TrueColor, GlyphProfile::Unicode),
+        size,
+        DARK,
+    )
+    .content
+    .iter()
+    .map(|cell| cell.symbol())
+    .collect()
+}
+
 #[test]
 fn tab_round_trip_consumes_return_focus_target() {
     let mut state = GalleryState::with_story("text/default").unwrap();
@@ -45,6 +66,97 @@ fn shift_tab_traverses_the_two_browser_focus_stops() {
     assert_eq!(state.focus_id(), "preview");
 
     state.handle_event(&shift_tab);
+    assert_eq!(state.focus_id(), "story-list");
+    assert_eq!(state.return_focus_id(), None);
+}
+
+#[test]
+fn checkbox_toggle_changes_rendered_marker() {
+    let mut state = GalleryState::with_story("checkbox/unchecked").unwrap();
+    let before = rendered_state(&state, (32, 1));
+    state.handle_event(&key(KeyCode::Tab));
+    state.handle_event(&key(KeyCode::Char(' ')));
+
+    let after = rendered_state(&state, (32, 1));
+    assert!(before.contains("[ ]"));
+    assert!(
+        after.contains("[x]"),
+        "checkbox did not reflect checked: {after}"
+    );
+}
+
+#[test]
+fn radio_navigation_changes_rendered_option() {
+    let mut state = GalleryState::with_story("radio/group").unwrap();
+    state.handle_event(&key(KeyCode::Tab));
+    let before = rendered_state(&state, (32, 5));
+    state.handle_event(&key(KeyCode::Right));
+
+    let after = rendered_state(&state, (32, 5));
+    assert_ne!(before, after, "radio did not reflect selected_index");
+    assert!(
+        after.contains("(*)") && after.contains("Beta"),
+        "radio did not reflect selected_index: {after}"
+    );
+}
+
+#[test]
+fn tab_navigation_changes_rendered_active_tab() {
+    let mut state = GalleryState::with_story("tabs/first-active").unwrap();
+    state.handle_event(&key(KeyCode::Tab));
+    state.handle_event(&key(KeyCode::Right));
+
+    let after = rendered_state(&state, (48, 3));
+    assert!(
+        after.contains("[Services]"),
+        "tabs did not reflect active_index: {after}"
+    );
+}
+
+#[test]
+fn select_navigation_changes_rendered_option() {
+    let mut state = GalleryState::with_story("select/open").unwrap();
+    let before = rendered_state(&state, (36, 9));
+    state.handle_event(&key(KeyCode::Tab));
+    state.handle_event(&key(KeyCode::Down));
+
+    let after = rendered_state(&state, (36, 9));
+    assert_ne!(before, after, "select did not reflect selected_index");
+    assert!(
+        after.contains("Selected: radarr"),
+        "select did not reflect selected_index: {after}"
+    );
+}
+
+#[test]
+fn table_navigation_changes_rendered_row() {
+    let mut state = GalleryState::with_story("table/default").unwrap();
+    let before = rendered_state(&state, (60, 10));
+    state.handle_event(&key(KeyCode::Tab));
+    state.handle_event(&key(KeyCode::Down));
+
+    let after = rendered_state(&state, (60, 10));
+    assert_ne!(before, after, "table did not reflect selected_row");
+    assert!(
+        after.contains("sonarr"),
+        "table did not render selected row: {after}"
+    );
+}
+
+#[test]
+fn back_tab_traverses_the_two_browser_focus_stops() {
+    let mut state = GalleryState::with_story("text/default").unwrap();
+    let back_tab = Event::Key(KeyEvent {
+        code: KeyCode::BackTab,
+        modifiers: KeyModifiers::NONE,
+        kind: KeyEventKind::Press,
+        state: KeyEventState::NONE,
+    });
+
+    state.handle_event(&back_tab);
+    assert_eq!(state.focus_id(), "preview");
+
+    state.handle_event(&back_tab);
     assert_eq!(state.focus_id(), "story-list");
     assert_eq!(state.return_focus_id(), None);
 }

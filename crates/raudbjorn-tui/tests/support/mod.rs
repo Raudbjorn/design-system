@@ -1,4 +1,8 @@
-use std::{fmt::Write as _, path::PathBuf, sync::Arc};
+use std::{
+    fmt::Write as _,
+    path::PathBuf,
+    sync::{Arc, LazyLock},
+};
 
 use crepuscularity_tui::TemplateContext;
 use ratatui::{Terminal, backend::TestBackend, buffer::Buffer, layout::Rect};
@@ -8,6 +12,10 @@ use raudbjorn_tui::{
     profile::{ColorProfile, GlyphProfile, TerminalProfile},
     theme::{DARK, TerminalPalette},
 };
+
+static TEMPLATE_STORE: LazyLock<Arc<TemplateStore>> = LazyLock::new(|| {
+    Arc::new(TemplateStore::load_embedded().expect("embedded templates must parse"))
+});
 
 #[allow(dead_code)]
 pub fn render_story(story: &StorySpec, profile: TerminalProfile, size: (u16, u16)) -> Buffer {
@@ -43,8 +51,8 @@ pub fn render_context_with_palette(
     size: (u16, u16),
     palette: TerminalPalette,
 ) -> Buffer {
-    let store = Arc::new(TemplateStore::load_embedded().expect("embedded templates must parse"));
-    let mut renderer = ComponentRenderer::new(store);
+    let store = Arc::clone(&TEMPLATE_STORE);
+    let renderer = ComponentRenderer::new(store);
     let mut terminal = Terminal::new(TestBackend::new(size.0, size.1))
         .expect("TestBackend construction is infallible");
 

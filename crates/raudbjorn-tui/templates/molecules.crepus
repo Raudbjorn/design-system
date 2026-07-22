@@ -142,15 +142,11 @@ div h-[1] flex-row gap-1 text-[#aa0005]
       span "{label}"
 
 --- Radio
-div h-[1] flex-row gap-1 text-[#aa0005]
+div h-[1] text-[#aa0005]
   if {disabled}
-    div h-[1]
-      span text-[#aa0007] "[DISABLED] {radio}"
-      span text-[#aa0007] "{label}"
+    span text-[#aa0007] "[DISABLED] {radio} {label}"
   else
-    div h-[1]
-      span "{radio}"
-      span "{label}"
+    span "{radio} {label}"
 
 --- Switch
 div h-[1] flex-row gap-1 text-[#aa0005]
@@ -189,7 +185,7 @@ div h-[1] italic text-[#aa0008]
     span "{help}"
 
 --- Table
-div w-full border text-[#aa0005]
+div w-full class:border={!embedded} text-[#aa0005]
   div h-[1] border-b text-[#aa0006] font-bold
     "{headers}"
   if {rich}

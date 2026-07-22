@@ -92,14 +92,18 @@ describe('crates/raudbjorn-tui/src/theme/generated.rs validation', () => {
     });
 
     for (const key of TUI_COLOR_FIELDS) {
-      const hex = theme.paletteHex[key];
       const rustField = key.replace(/-/g, '_');
-      const r = parseInt(hex.slice(1, 3), 16);
-      const g = parseInt(hex.slice(3, 5), 16);
-      const b = parseInt(hex.slice(5, 7), 16);
-      const expected = `Color::Rgb(${r}, ${g}, ${b})`;
 
-      it(`${name} field ${key} appears once and maps to ${expected}`, () => {
+      it(`${name} field ${key} appears once with a parseable RGB color`, () => {
+        // Lookup happens inside the test so a missing key fails ONLY that
+        // case instead of crashing the entire Vitest suite at discovery.
+        const hex = theme.paletteHex[key];
+        expect(typeof hex).toBe('string');
+        expect(hex).toMatch(/^#[0-9a-fA-F]{6}$/);
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        const expected = `Color::Rgb(${r}, ${g}, ${b})`;
         const occurrences = match[1].match(new RegExp(`\\b${rustField}:`, 'g')) ?? [];
         expect(occurrences).toHaveLength(1);
         expect(match[1]).toContain(`${rustField}: ${expected}`);

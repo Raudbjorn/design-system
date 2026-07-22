@@ -28,6 +28,8 @@ metadata:
 
 - **Crepuscularity TUI 0.4.22** — MPL-2.0
   (https://github.com/tschk/crepuscularity).
+- **Crepuscularity Core 0.4.25** — MPL-2.0
+  (https://github.com/tschk/crepuscularity).
 - **Ratatui 0.30.2** — MIT
   (https://github.com/ratatui/ratatui).
 - **Crossterm 0.29.0** — MIT

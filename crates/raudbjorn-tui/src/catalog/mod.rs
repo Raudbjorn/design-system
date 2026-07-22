@@ -2028,21 +2028,21 @@ pub fn validate_catalog() -> Result<(), CatalogError> {
 }
 
 fn is_interactive(comp: ComponentId) -> bool {
-    match comp {
+    matches!(
+        comp,
         ComponentId::Button
-        | ComponentId::Input
-        | ComponentId::Select
-        | ComponentId::Checkbox
-        | ComponentId::Radio
-        | ComponentId::Switch
-        | ComponentId::Tabs
-        | ComponentId::Link
-        | ComponentId::Table
-        | ComponentId::Tooltip
-        | ComponentId::Modal
-        | ComponentId::Sheet => true,
-        _ => false,
-    }
+            | ComponentId::Input
+            | ComponentId::Select
+            | ComponentId::Checkbox
+            | ComponentId::Radio
+            | ComponentId::Switch
+            | ComponentId::Tabs
+            | ComponentId::Link
+            | ComponentId::Table
+            | ComponentId::Tooltip
+            | ComponentId::Modal
+            | ComponentId::Sheet
+    )
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]

@@ -481,82 +481,82 @@ width=120 height=30
 119,3: |Reset|Reset|Reset|NONE
 0,4: |Reset|Reset|Reset|NONE
 1,4:│|Reset|Reset|Reset|NONE
-2,4:N|Reset|Reset|Reset|NONE
-3,4:o|Reset|Reset|Reset|NONE
-4,4: |Reset|Reset|Reset|NONE
-5,4:s|Reset|Reset|Reset|NONE
-6,4:e|Reset|Reset|Reset|NONE
-7,4:r|Reset|Reset|Reset|NONE
-8,4:v|Reset|Reset|Reset|NONE
-9,4:i|Reset|Reset|Reset|NONE
-10,4:c|Reset|Reset|Reset|NONE
-11,4:e|Reset|Reset|Reset|NONE
-12,4:s|Reset|Reset|Reset|NONE
-13,4: |Reset|Reset|Reset|NONE
-14,4:c|Reset|Reset|Reset|NONE
-15,4:o|Reset|Reset|Reset|NONE
-16,4:n|Reset|Reset|Reset|NONE
-17,4:f|Reset|Reset|Reset|NONE
-18,4:i|Reset|Reset|Reset|NONE
-19,4:g|Reset|Reset|Reset|NONE
-20,4:u|Reset|Reset|Reset|NONE
-21,4:r|Reset|Reset|Reset|NONE
-22,4:e|Reset|Reset|Reset|NONE
-23,4:d|Reset|Reset|Reset|NONE
-24,4: |Reset|Reset|Reset|NONE
-25,4: |Reset|Reset|Reset|NONE
-26,4: |Reset|Reset|Reset|NONE
-27,4: |Reset|Reset|Reset|NONE
-28,4: |Reset|Reset|Reset|NONE
-29,4: |Reset|Reset|Reset|NONE
-30,4: |Reset|Reset|Reset|NONE
-31,4: |Reset|Reset|Reset|NONE
-32,4: |Reset|Reset|Reset|NONE
-33,4: |Reset|Reset|Reset|NONE
-34,4: |Reset|Reset|Reset|NONE
-35,4: |Reset|Reset|Reset|NONE
-36,4: |Reset|Reset|Reset|NONE
-37,4: |Reset|Reset|Reset|NONE
-38,4: |Reset|Reset|Reset|NONE
-39,4: |Reset|Reset|Reset|NONE
-40,4: |Reset|Reset|Reset|NONE
-41,4: |Reset|Reset|Reset|NONE
-42,4: |Reset|Reset|Reset|NONE
-43,4: |Reset|Reset|Reset|NONE
-44,4: |Reset|Reset|Reset|NONE
-45,4: |Reset|Reset|Reset|NONE
-46,4: |Reset|Reset|Reset|NONE
-47,4: |Reset|Reset|Reset|NONE
-48,4: |Reset|Reset|Reset|NONE
-49,4: |Reset|Reset|Reset|NONE
-50,4: |Reset|Reset|Reset|NONE
-51,4: |Reset|Reset|Reset|NONE
-52,4: |Reset|Reset|Reset|NONE
-53,4: |Reset|Reset|Reset|NONE
-54,4: |Reset|Reset|Reset|NONE
-55,4: |Reset|Reset|Reset|NONE
-56,4: |Reset|Reset|Reset|NONE
-57,4: |Reset|Reset|Reset|NONE
-58,4: |Reset|Reset|Reset|NONE
-59,4: |Reset|Reset|Reset|NONE
-60,4: |Reset|Reset|Reset|NONE
-61,4: |Reset|Reset|Reset|NONE
-62,4: |Reset|Reset|Reset|NONE
-63,4: |Reset|Reset|Reset|NONE
-64,4: |Reset|Reset|Reset|NONE
-65,4: |Reset|Reset|Reset|NONE
-66,4: |Reset|Reset|Reset|NONE
-67,4: |Reset|Reset|Reset|NONE
-68,4: |Reset|Reset|Reset|NONE
-69,4: |Reset|Reset|Reset|NONE
-70,4: |Reset|Reset|Reset|NONE
-71,4: |Reset|Reset|Reset|NONE
-72,4: |Reset|Reset|Reset|NONE
-73,4: |Reset|Reset|Reset|NONE
-74,4: |Reset|Reset|Reset|NONE
-75,4: |Reset|Reset|Reset|NONE
-76,4: |Reset|Reset|Reset|NONE
-77,4: |Reset|Reset|Reset|NONE
+2,4:S|Reset|Reset|Reset|BOLD
+3,4:e|Reset|Reset|Reset|BOLD
+4,4:r|Reset|Reset|Reset|BOLD
+5,4:v|Reset|Reset|Reset|BOLD
+6,4:i|Reset|Reset|Reset|BOLD
+7,4:c|Reset|Reset|Reset|BOLD
+8,4:e|Reset|Reset|Reset|BOLD
+9,4:s|Reset|Reset|Reset|BOLD
+10,4: |Reset|Reset|Reset|BOLD
+11,4: |Reset|Reset|Reset|BOLD
+12,4: |Reset|Reset|Reset|BOLD
+13,4: |Reset|Reset|Reset|BOLD
+14,4: |Reset|Reset|Reset|BOLD
+15,4: |Reset|Reset|Reset|BOLD
+16,4: |Reset|Reset|Reset|BOLD
+17,4: |Reset|Reset|Reset|BOLD
+18,4: |Reset|Reset|Reset|BOLD
+19,4: |Reset|Reset|Reset|BOLD
+20,4: |Reset|Reset|Reset|BOLD
+21,4: |Reset|Reset|Reset|BOLD
+22,4: |Reset|Reset|Reset|BOLD
+23,4: |Reset|Reset|Reset|BOLD
+24,4: |Reset|Reset|Reset|BOLD
+25,4: |Reset|Reset|Reset|BOLD
+26,4: |Reset|Reset|Reset|BOLD
+27,4: |Reset|Reset|Reset|BOLD
+28,4: |Reset|Reset|Reset|BOLD
+29,4: |Reset|Reset|Reset|BOLD
+30,4: |Reset|Reset|Reset|BOLD
+31,4: |Reset|Reset|Reset|BOLD
+32,4: |Reset|Reset|Reset|BOLD
+33,4: |Reset|Reset|Reset|BOLD
+34,4: |Reset|Reset|Reset|BOLD
+35,4: |Reset|Reset|Reset|BOLD
+36,4: |Reset|Reset|Reset|BOLD
+37,4: |Reset|Reset|Reset|BOLD
+38,4: |Reset|Reset|Reset|BOLD
+39,4: |Reset|Reset|Reset|BOLD
+40,4: |Reset|Reset|Reset|BOLD
+41,4: |Reset|Reset|Reset|BOLD
+42,4: |Reset|Reset|Reset|BOLD
+43,4: |Reset|Reset|Reset|BOLD
+44,4: |Reset|Reset|Reset|BOLD
+45,4: |Reset|Reset|Reset|BOLD
+46,4: |Reset|Reset|Reset|BOLD
+47,4: |Reset|Reset|Reset|BOLD
+48,4: |Reset|Reset|Reset|BOLD
+49,4: |Reset|Reset|Reset|BOLD
+50,4: |Reset|Reset|Reset|BOLD
+51,4: |Reset|Reset|Reset|BOLD
+52,4: |Reset|Reset|Reset|BOLD
+53,4: |Reset|Reset|Reset|BOLD
+54,4: |Reset|Reset|Reset|BOLD
+55,4: |Reset|Reset|Reset|BOLD
+56,4: |Reset|Reset|Reset|BOLD
+57,4: |Reset|Reset|Reset|BOLD
+58,4: |Reset|Reset|Reset|BOLD
+59,4: |Reset|Reset|Reset|BOLD
+60,4: |Reset|Reset|Reset|BOLD
+61,4: |Reset|Reset|Reset|BOLD
+62,4: |Reset|Reset|Reset|BOLD
+63,4: |Reset|Reset|Reset|BOLD
+64,4: |Reset|Reset|Reset|BOLD
+65,4: |Reset|Reset|Reset|BOLD
+66,4: |Reset|Reset|Reset|BOLD
+67,4: |Reset|Reset|Reset|BOLD
+68,4: |Reset|Reset|Reset|BOLD
+69,4: |Reset|Reset|Reset|BOLD
+70,4: |Reset|Reset|Reset|BOLD
+71,4: |Reset|Reset|Reset|BOLD
+72,4: |Reset|Reset|Reset|BOLD
+73,4: |Reset|Reset|Reset|BOLD
+74,4: |Reset|Reset|Reset|BOLD
+75,4: |Reset|Reset|Reset|BOLD
+76,4: |Reset|Reset|Reset|BOLD
+77,4: |Reset|Reset|Reset|BOLD
 78,4:│|Reset|Reset|Reset|NONE
 79,4: |Reset|Reset|Reset|NONE
 80,4: |Reset|Reset|Reset|NONE
@@ -601,28 +601,28 @@ width=120 height=30
 119,4: |Reset|Reset|Reset|NONE
 0,5: |Reset|Reset|Reset|NONE
 1,5:│|Reset|Reset|Reset|NONE
-2,5: |Reset|Reset|Reset|NONE
-3,5: |Reset|Reset|Reset|NONE
+2,5:N|Reset|Reset|Reset|NONE
+3,5:o|Reset|Reset|Reset|NONE
 4,5: |Reset|Reset|Reset|NONE
-5,5: |Reset|Reset|Reset|NONE
-6,5: |Reset|Reset|Reset|NONE
-7,5: |Reset|Reset|Reset|NONE
-8,5: |Reset|Reset|Reset|NONE
-9,5: |Reset|Reset|Reset|NONE
-10,5: |Reset|Reset|Reset|NONE
-11,5: |Reset|Reset|Reset|NONE
-12,5: |Reset|Reset|Reset|NONE
+5,5:s|Reset|Reset|Reset|NONE
+6,5:e|Reset|Reset|Reset|NONE
+7,5:r|Reset|Reset|Reset|NONE
+8,5:v|Reset|Reset|Reset|NONE
+9,5:i|Reset|Reset|Reset|NONE
+10,5:c|Reset|Reset|Reset|NONE
+11,5:e|Reset|Reset|Reset|NONE
+12,5:s|Reset|Reset|Reset|NONE
 13,5: |Reset|Reset|Reset|NONE
-14,5: |Reset|Reset|Reset|NONE
-15,5: |Reset|Reset|Reset|NONE
-16,5: |Reset|Reset|Reset|NONE
-17,5: |Reset|Reset|Reset|NONE
-18,5: |Reset|Reset|Reset|NONE
-19,5: |Reset|Reset|Reset|NONE
-20,5: |Reset|Reset|Reset|NONE
-21,5: |Reset|Reset|Reset|NONE
-22,5: |Reset|Reset|Reset|NONE
-23,5: |Reset|Reset|Reset|NONE
+14,5:c|Reset|Reset|Reset|NONE
+15,5:o|Reset|Reset|Reset|NONE
+16,5:n|Reset|Reset|Reset|NONE
+17,5:f|Reset|Reset|Reset|NONE
+18,5:i|Reset|Reset|Reset|NONE
+19,5:g|Reset|Reset|Reset|NONE
+20,5:u|Reset|Reset|Reset|NONE
+21,5:r|Reset|Reset|Reset|NONE
+22,5:e|Reset|Reset|Reset|NONE
+23,5:d|Reset|Reset|Reset|NONE
 24,5: |Reset|Reset|Reset|NONE
 25,5: |Reset|Reset|Reset|NONE
 26,5: |Reset|Reset|Reset|NONE
