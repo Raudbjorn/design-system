@@ -502,7 +502,7 @@ fn render_story(
             let mut state = OverlayState::new();
             state.open();
             frame.render_stateful_widget(overlay, area, &mut state);
-            state.inner_area().unwrap_or(area)
+            overlay_render_area(&state, story.presentation, area)
         }
 
         Presentation::Sheet {
@@ -522,7 +522,7 @@ fn render_story(
             let mut state = OverlayState::new();
             state.open();
             frame.render_stateful_widget(overlay, area, &mut state);
-            state.inner_area().unwrap_or(area)
+            overlay_render_area(&state, story.presentation, area)
         }
     };
 
@@ -539,6 +539,12 @@ fn render_story(
 
 fn bounded_percentage(percent: u16) -> u16 {
     percent.min(100)
+}
+
+fn overlay_render_area(state: &OverlayState, presentation: Presentation, area: Rect) -> Rect {
+    state
+        .inner_area()
+        .unwrap_or_else(|| presentation_rect(presentation, area))
 }
 
 fn presentation_rect(presentation: Presentation, area: Rect) -> Rect {
@@ -632,6 +638,21 @@ mod tests {
     #[test]
     fn overlay_percentage_matches_hit_test_bound() {
         assert_eq!(bounded_percentage(u16::MAX), 100);
+    }
+
+    #[test]
+    fn zero_percentage_overlay_fallback_stays_empty() {
+        let area = Rect::new(7, 11, 40, 20);
+        let presentation = Presentation::Modal {
+            width_percent: 0,
+            height_percent: 60,
+        };
+        let state = OverlayState::new();
+
+        let render_area = overlay_render_area(&state, presentation, area);
+
+        assert!(render_area.is_empty());
+        assert_eq!(render_area, presentation_rect(presentation, area));
     }
 
     #[test]
