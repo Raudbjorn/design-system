@@ -495,8 +495,8 @@ fn render_story(
         } => {
             let overlay = Overlay::new()
                 .anchor(Anchor::Center)
-                .width(Constraint::Percentage(width_percent))
-                .height(Constraint::Percentage(height_percent))
+                .width(Constraint::Percentage(bounded_percentage(width_percent)))
+                .height(Constraint::Percentage(bounded_percentage(height_percent)))
                 .backdrop(Backdrop::new(palette.bg).fg(palette.text_faint))
                 .bg(palette.surface_1);
             let mut state = OverlayState::new();
@@ -515,7 +515,7 @@ fn render_story(
             };
             let overlay = Overlay::new()
                 .anchor(anchor)
-                .width(Constraint::Percentage(width_percent))
+                .width(Constraint::Percentage(bounded_percentage(width_percent)))
                 .height(Constraint::Percentage(100))
                 .backdrop(Backdrop::new(palette.bg).fg(palette.text_faint))
                 .bg(palette.surface_2);
@@ -537,6 +537,10 @@ fn render_story(
     apply_profile_area(frame.buffer_mut(), area, profile);
 }
 
+fn bounded_percentage(percent: u16) -> u16 {
+    percent.min(100)
+}
+
 fn presentation_rect(presentation: Presentation, area: Rect) -> Rect {
     match presentation {
         Presentation::Inline | Presentation::Fullscreen => area,
@@ -544,8 +548,10 @@ fn presentation_rect(presentation: Presentation, area: Rect) -> Rect {
             width_percent,
             height_percent,
         } => {
-            let width = (u32::from(area.width) * u32::from(width_percent.min(100)) / 100) as u16;
-            let height = (u32::from(area.height) * u32::from(height_percent.min(100)) / 100) as u16;
+            let width =
+                (u32::from(area.width) * u32::from(bounded_percentage(width_percent)) / 100) as u16;
+            let height = (u32::from(area.height) * u32::from(bounded_percentage(height_percent))
+                / 100) as u16;
             Rect::new(
                 area.x.saturating_add(area.width.saturating_sub(width) / 2),
                 area.y
@@ -558,7 +564,8 @@ fn presentation_rect(presentation: Presentation, area: Rect) -> Rect {
             side,
             width_percent,
         } => {
-            let width = (u32::from(area.width) * u32::from(width_percent.min(100)) / 100) as u16;
+            let width =
+                (u32::from(area.width) * u32::from(bounded_percentage(width_percent)) / 100) as u16;
             let x = match side {
                 SheetSide::Left => area.x,
                 SheetSide::Right => area.right().saturating_sub(width),
@@ -620,6 +627,11 @@ mod tests {
         assert!(text.contains("[Dashboard]") && text.contains("[Menu]"));
         assert!(!text.contains("Stories"));
         assert!(!text.contains("Tab focus preview"));
+    }
+
+    #[test]
+    fn overlay_percentage_matches_hit_test_bound() {
+        assert_eq!(bounded_percentage(u16::MAX), 100);
     }
 
     #[test]
