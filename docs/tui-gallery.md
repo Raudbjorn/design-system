@@ -187,3 +187,7 @@ is `PENDING_HUMAN_VISUAL_REVIEW`.
 - The reviewer returned `ACCEPT` after the post-fix spot-check but retained no
   captures. The approved gate requires capture paths, so the binding release
   status remains `PENDING_HUMAN_VISUAL_REVIEW`.
+- **2026-07-22:** The human reviewer explicitly approved the pending visual
+  release and waived the capture-path requirement for this release. This
+  one-release exception does not weaken the capture requirement for future
+  reviews. The binding release status is `ACCEPT`.
