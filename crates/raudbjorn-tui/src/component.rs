@@ -275,6 +275,15 @@ impl TemplateStore {
         self.virtual_files.clone()
     }
 
+    pub fn source_for_section_public(
+        &self,
+        file: TemplateFile,
+        section: &'static str,
+    ) -> Result<Arc<str>, ComponentError> {
+        let template = TemplateRef { file, section };
+        self.source_for_section(template)
+    }
+
     fn source_for_section(&self, template: TemplateRef) -> Result<Arc<str>, ComponentError> {
         self.files
             .get(&template.file)
@@ -311,19 +320,28 @@ impl ComponentRenderer {
             return Ok(());
         }
 
-        let content = self.store.source_for_section(template)?;
-
         let mut render_ctx = ctx.clone();
         normalize_render_context(template, &mut render_ctx);
-        if render_ctx.virtual_files.is_empty() {
-            render_ctx.virtual_files = self.store.virtual_files();
+        // Resolve the source through virtual_files first so a caller-supplied
+        // entry with the same key as the embedded template file shadows it.
+        let path = template.file.path();
+        let content: Arc<str> = if let Some(override_src) = render_ctx.virtual_files.get(path) {
+            Arc::from(override_src.as_str())
         } else {
-            let virtual_files = self.store.virtual_files();
-            let mut virtual_files_map = (*render_ctx.virtual_files).clone();
-            for (path, content) in virtual_files.iter() {
-                virtual_files_map.insert(path.clone(), content.clone());
+            self.store.source_for_section(template)?
+        };
+        // Merge caller-supplied entries on top of the store's virtual files.
+        // Caller wins for duplicate paths so callers can shadow template parts
+        // for tests and tools without conflicting with the embedded source.
+        let store_vf = self.store.virtual_files();
+        if render_ctx.virtual_files.is_empty() {
+            render_ctx.virtual_files = store_vf;
+        } else {
+            let mut merged: HashMap<String, String> = (*store_vf).clone();
+            for (path, content) in render_ctx.virtual_files.iter() {
+                merged.insert(path.clone(), content.clone());
             }
-            render_ctx.virtual_files = Arc::new(virtual_files_map);
+            render_ctx.virtual_files = Arc::new(merged);
         }
         render_ctx.base_dir = Some("templates".into());
 
@@ -355,7 +373,7 @@ impl ComponentRenderer {
     }
 }
 
-fn normalize_render_context(template: TemplateRef, ctx: &mut TemplateContext) {
+pub fn normalize_render_context(template: TemplateRef, ctx: &mut TemplateContext) {
     // Injection: force-set viewport dimensions before any other normalization
     // We use the area values from the component renderer if possible, but here
     // we rely on the context already having them set.
@@ -363,6 +381,7 @@ fn normalize_render_context(template: TemplateRef, ctx: &mut TemplateContext) {
     match template.section {
         "Progress" => normalize_progress(ctx),
         "Select" => normalize_select(ctx),
+        "Tabs" => normalize_tabs(ctx),
         _ => {}
     }
 }
@@ -392,7 +411,7 @@ fn normalize_progress(ctx: &mut TemplateContext) {
     ctx.set("bar", bar);
 }
 
-fn normalize_select(ctx: &mut TemplateContext) {
+pub fn normalize_select(ctx: &mut TemplateContext) {
     let has_options = !ctx.get_str("options").trim().is_empty();
     let count = match ctx.get("option_count") {
         Some(TemplateValue::Int(value)) if has_options => (*value).max(0),
@@ -405,11 +424,57 @@ fn normalize_select(ctx: &mut TemplateContext) {
         return;
     }
 
+    let options_raw = ctx.get_str("options");
+    let options: Vec<String> = if has_options {
+        options_raw
+            .split(|c: char| c == ',' || c == ';' || c == '\n')
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty())
+            .collect()
+    } else {
+        Vec::new()
+    };
     let selected = match ctx.get("selected_index") {
         Some(TemplateValue::Int(value)) => *value,
         _ => -1,
     };
     if !(0..count).contains(&selected) {
         ctx.set("selected", "None").set("selected_index", -1_i64);
+        return;
     }
+    let label = options
+        .get(selected as usize)
+        .cloned()
+        .unwrap_or_else(|| "None".to_string());
+    ctx.set("selected", label);
 }
+pub fn normalize_tabs(ctx: &mut TemplateContext) {
+    let has_tabs = !ctx.get_str("tabs").trim().is_empty();
+    let tabs_str = if has_tabs { ctx.get_str("tabs") } else { String::new() };
+    // Tabs come in as comma-separated labels per the fixture convention.
+    let tabs: Vec<String> = if has_tabs && !tabs_str.is_empty() {
+        tabs_str.split(',').map(|s| s.to_string()).collect()
+    } else {
+        Vec::new()
+    };
+    let count = match ctx.get("tab_count") {
+        Some(TemplateValue::Int(value)) if has_tabs && *value >= 0 => *value as usize,
+        _ => 0,
+    };
+    if count == 0 || tabs.is_empty() {
+        ctx.set("tab", "One").set("active_index", 0_i64);
+        let _ = tabs;
+        return;
+    }
+
+    let active = match ctx.get("active_index") {
+        Some(TemplateValue::Int(value)) => *value,
+        _ => 0,
+    };
+    let last = count - 1;
+    let bounded = active.clamp(0, last as i64);
+    let label = tabs.get(bounded as usize).cloned().unwrap_or_default();
+    ctx.set("active_index", bounded);
+    ctx.set("tab", label);
+}
+

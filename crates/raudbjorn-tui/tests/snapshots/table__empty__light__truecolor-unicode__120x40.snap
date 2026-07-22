@@ -128,8 +128,8 @@ width=120 height=40
 6,1:C|Rgb(42, 38, 23)|Reset|Reset|BOLD
 7,1:E|Rgb(42, 38, 23)|Reset|Reset|BOLD
 8,1: |Rgb(42, 38, 23)|Reset|Reset|BOLD
-9,1: |Rgb(42, 38, 23)|Reset|Reset|BOLD
-10,1: |Rgb(42, 38, 23)|Reset|Reset|BOLD
+9,1:[|Rgb(42, 38, 23)|Reset|Reset|BOLD
+10,1:]|Rgb(42, 38, 23)|Reset|Reset|BOLD
 11,1: |Rgb(42, 38, 23)|Reset|Reset|BOLD
 12,1: |Rgb(42, 38, 23)|Reset|Reset|BOLD
 13,1: |Rgb(42, 38, 23)|Reset|Reset|BOLD

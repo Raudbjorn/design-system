@@ -163,7 +163,9 @@ impl GalleryState {
             if key.kind != KeyEventKind::Press {
                 return BrowserControl::Continue;
             }
-            if !self.fullscreen && key.code == KeyCode::Tab && key.modifiers == KeyModifiers::SHIFT
+            if !self.fullscreen
+                && (key.code == KeyCode::Tab && key.modifiers == KeyModifiers::SHIFT
+                    || key.code == KeyCode::BackTab)
             {
                 self.toggle_preview_focus();
                 return BrowserControl::Continue;
@@ -543,8 +545,11 @@ fn presentation_rect(presentation: Presentation, area: Rect) -> Rect {
             width_percent,
             height_percent,
         } => {
-            let width = (u32::from(area.width) * u32::from(width_percent) / 100) as u16;
-            let height = (u32::from(area.height) * u32::from(height_percent) / 100) as u16;
+            // Clamp width/height to area so a > 100% percent cannot underflow.
+            let area_w = u32::from(area.width);
+            let area_h = u32::from(area.height);
+            let width = (area_w * u32::from(width_percent) / 100).min(area_w) as u16;
+            let height = (area_h * u32::from(height_percent) / 100).min(area_h) as u16;
             Rect::new(
                 area.x + (area.width - width) / 2,
                 area.y + (area.height - height) / 2,
@@ -556,10 +561,12 @@ fn presentation_rect(presentation: Presentation, area: Rect) -> Rect {
             side,
             width_percent,
         } => {
-            let width = (u32::from(area.width) * u32::from(width_percent) / 100) as u16;
+            // Clamp width to area to prevent underflow when width_percent > 100.
+            let area_w = u32::from(area.width);
+            let width = (area_w * u32::from(width_percent) / 100).min(area_w) as u16;
             let x = match side {
                 SheetSide::Left => area.x,
-                SheetSide::Right => area.right() - width,
+                SheetSide::Right => area.right().saturating_sub(width),
             };
             Rect::new(x, area.y, width, area.height)
         }

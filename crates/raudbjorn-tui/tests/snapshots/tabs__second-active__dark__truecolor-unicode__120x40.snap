@@ -23,9 +23,9 @@ width=120 height=40
 21,0:v|Rgb(212, 212, 212)|Reset|Reset|NONE
 22,0:e|Rgb(212, 212, 212)|Reset|Reset|NONE
 23,0: |Rgb(212, 212, 212)|Reset|Reset|NONE
-24,0: |Rgb(212, 212, 212)|Reset|Reset|NONE
-25,0: |Rgb(212, 212, 212)|Reset|Reset|NONE
-26,0: |Rgb(212, 212, 212)|Reset|Reset|NONE
+24,0:[|Rgb(212, 212, 212)|Reset|Reset|NONE
+25,0:1|Rgb(212, 212, 212)|Reset|Reset|NONE
+26,0:]|Rgb(212, 212, 212)|Reset|Reset|NONE
 27,0: |Rgb(212, 212, 212)|Reset|Reset|NONE
 28,0: |Rgb(212, 212, 212)|Reset|Reset|NONE
 29,0: |Rgb(212, 212, 212)|Reset|Reset|NONE

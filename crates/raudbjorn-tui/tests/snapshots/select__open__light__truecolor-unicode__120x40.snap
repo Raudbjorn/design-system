@@ -9,7 +9,7 @@ width=120 height=40
 7,0:d|Rgb(42, 38, 23)|Reset|Reset|NONE
 8,0::|Rgb(42, 38, 23)|Reset|Reset|NONE
 9,0: |Rgb(42, 38, 23)|Reset|Reset|NONE
-10,0:s|Rgb(42, 38, 23)|Reset|Reset|NONE
+10,0:S|Rgb(42, 38, 23)|Reset|Reset|NONE
 11,0:o|Rgb(42, 38, 23)|Reset|Reset|NONE
 12,0:n|Rgb(42, 38, 23)|Reset|Reset|NONE
 13,0:a|Rgb(42, 38, 23)|Reset|Reset|NONE

@@ -6,9 +6,9 @@ width=48 height=3
 4,0: |Reset|Reset|Reset|NONE
 5,0:…|Reset|Reset|Reset|NONE
 6,0: |Reset|Reset|Reset|NONE
-7,0: |Reset|Reset|Reset|NONE
-8,0: |Reset|Reset|Reset|NONE
-9,0: |Reset|Reset|Reset|NONE
+7,0:[|Reset|Reset|Reset|NONE
+8,0:0|Reset|Reset|Reset|NONE
+9,0:]|Reset|Reset|Reset|NONE
 10,0: |Reset|Reset|Reset|NONE
 11,0: |Reset|Reset|Reset|NONE
 12,0: |Reset|Reset|Reset|NONE

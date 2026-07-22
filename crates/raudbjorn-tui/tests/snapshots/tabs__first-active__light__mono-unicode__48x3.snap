@@ -21,9 +21,9 @@ width=48 height=3
 19,0:v|Reset|Reset|Reset|NONE
 20,0:e|Reset|Reset|Reset|NONE
 21,0: |Reset|Reset|Reset|NONE
-22,0: |Reset|Reset|Reset|NONE
-23,0: |Reset|Reset|Reset|NONE
-24,0: |Reset|Reset|Reset|NONE
+22,0:[|Reset|Reset|Reset|NONE
+23,0:0|Reset|Reset|Reset|NONE
+24,0:]|Reset|Reset|Reset|NONE
 25,0: |Reset|Reset|Reset|NONE
 26,0: |Reset|Reset|Reset|NONE
 27,0: |Reset|Reset|Reset|NONE

@@ -176,20 +176,20 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
             ctx.set("disabled", true);
         }
         "select/closed" => {
-            ctx.set("selected", "sonarr");
+            ctx.set("selected", "Sonarr");
             ctx.set("options", "Sonarr,Radarr,Lidarr");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 0_i64);
         }
         "select/open" => {
-            ctx.set("selected", "sonarr");
+            ctx.set("selected", "Sonarr");
             ctx.set("options", "Sonarr,Radarr,Lidarr");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 0_i64);
             ctx.set("open", true);
         }
         "select/selected" => {
-            ctx.set("selected", "radarr");
+            ctx.set("selected", "Radarr");
             ctx.set("options", "Sonarr,Radarr,Lidarr");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 1_i64);
@@ -202,7 +202,7 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
             ctx.set("focused", true);
         }
         "select/disabled" => {
-            ctx.set("selected", "sonarr");
+            ctx.set("selected", "Sonarr");
             ctx.set("options", "Sonarr");
             ctx.set("option_count", 1_i64);
             ctx.set("selected_index", 0_i64);
@@ -306,25 +306,30 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
         "table/default" => {
             ctx.set("headers", "SERVICE");
             ctx.set("rows", "jellyfin");
+            ctx.set("row_count", 1_i64);
         }
         "table/rich-cells" => {
             ctx.set("headers", "SERVICE");
             ctx.set("rows", "jellyfin");
             ctx.set("rich", true);
+            ctx.set("row_count", 1_i64);
         }
         "table/selected" => {
             ctx.set("headers", "SERVICE");
             ctx.set("rows", "online");
             ctx.set("selected", true);
+            ctx.set("row_count", 1_i64);
         }
         "table/empty" => {
             ctx.set("headers", "SERVICE");
             ctx.set("rows", "No rows");
             ctx.set("empty", true);
+            ctx.set("row_count", 1_i64);
         }
         "table/narrow" => {
             ctx.set("headers", "SVC");
             ctx.set("rows", "jellyfin");
+            ctx.set("row_count", 1_i64);
         }
         "timeline/basic" => {
             ctx.set("ts", "10:00");
@@ -371,12 +376,13 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
         "tabs/first-active" => {
             ctx.set("tabs", "Overview,Services");
             ctx.set("tab", "Overview");
-            ctx.set("tab_count", 2_i64);
             ctx.set("active_index", 0_i64);
+            ctx.set("tab_count", 2_i64);
         }
         "tabs/second-active" => {
             ctx.set("tabs", "Overview,Services");
             ctx.set("tab", "Services");
+            ctx.set("active_index", 1_i64);
             ctx.set("tab_count", 2_i64);
             ctx.set("active_index", 1_i64);
         }

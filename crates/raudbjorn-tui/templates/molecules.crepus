@@ -130,38 +130,38 @@ div h-full flex-col gap-1 text-[#aa0005]
 div h-[1] flex-row gap-1 text-[#aa0005]
   if {disabled}
     div h-[1]
-      span text-[#aa0007] "[DISABLED] {check}"
+      span text-[#aa0007] "[DISABLED] {check}{if checked} {checked}{/if}"
       span text-[#aa0007] "{label}"
   else if {focused}
     div h-[1]
-      span bg-[#aa0008] ">{check}<"
+      span bg-[#aa0008] ">{check}<{if checked} {checked}{/if}"
       span "{label}"
   else
     div h-[1]
-      span "{check}"
+      span "{check}{if checked} {checked}{/if}"
       span "{label}"
 
 --- Radio
 div h-[1] flex-row gap-1 text-[#aa0005]
   if {disabled}
     div h-[1]
-      span text-[#aa0007] "[DISABLED] {radio}"
+      span text-[#aa0007] "[DISABLED] {radio} [{selected_index}]"
       span text-[#aa0007] "{label}"
   else
     div h-[1]
-      span "{radio}"
+      span "{radio} [{selected_index}]"
       span "{label}"
 
 --- Switch
 div h-[1] flex-row gap-1 text-[#aa0005]
   if {focused}
-    span bg-[#aa0008] "[{state}]"
+    span bg-[#aa0008] "[{state}]{if on} {on}{/if}"
   else if {disabled}
-    span text-[#aa0007] "[DEPLD] {state}"
+    span text-[#aa0007] "[DEPLD] {state}]{if on} {on}{/if}"
   else if {on}
-    span text-[#aa0006] "[ON] {state}"
+    span text-[#aa0006] "[ON] {state}{if on} {on}{/if}"
   else
-    span "{state}"
+    span "{state}{if on} {on}{/if}"
   if {labeled}
     span text-[#aa0007] " {label}"
 
@@ -191,7 +191,7 @@ div h-[1] italic text-[#aa0008]
 --- Table
 div w-full border text-[#aa0005]
   div h-[1] border-b text-[#aa0006] font-bold
-    "{headers}"
+    "{headers}{if selected_row} [{selected_row}]{/if}"
   if {rich}
     span "● {rows} [RICH]"
   else if {selected}

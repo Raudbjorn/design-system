@@ -185,17 +185,16 @@ pub fn handle_table(ctx: &mut TemplateContext, event: &Event) -> bool {
     if count == 0 {
         return false;
     }
-    let current = normalize_index(get_i64(ctx, "selected_row"), count);
+    let current = normalize_index(get_i64(ctx, "selected_row"), count).min(count - 1);
     let next = match pressed_key(event) {
-        Some(KeyCode::Up) => current.saturating_sub(1),
+        Some(KeyCode::Up) => (current - 1).max(0),
         Some(KeyCode::Down) => (current + 1).min(count - 1),
         Some(KeyCode::Home) => 0,
         Some(KeyCode::End) => count - 1,
         _ => return false,
     };
-    if next == current {
-        return false;
-    }
+    // Always consume navigation keys; the boundary checks above stop the row
+    // from overflowing or going negative.
     ctx.set("selected_row", next);
     true
 }

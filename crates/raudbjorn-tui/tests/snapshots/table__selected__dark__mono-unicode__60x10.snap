@@ -68,8 +68,8 @@ width=60 height=10
 6,1:C|Reset|Reset|Reset|BOLD
 7,1:E|Reset|Reset|Reset|BOLD
 8,1: |Reset|Reset|Reset|BOLD
-9,1: |Reset|Reset|Reset|BOLD
-10,1: |Reset|Reset|Reset|BOLD
+9,1:[|Reset|Reset|Reset|BOLD
+10,1:]|Reset|Reset|Reset|BOLD
 11,1: |Reset|Reset|Reset|BOLD
 12,1: |Reset|Reset|Reset|BOLD
 13,1: |Reset|Reset|Reset|BOLD

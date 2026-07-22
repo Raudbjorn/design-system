@@ -63,8 +63,8 @@ div h-[1] text-[#aa0007]
 --- Tabs
 div h-[1] flex-row border-b text-[#aa0005]
   if {variant == "narrow"}
-    "[-{tab}] …"
+    "[-{tab}] … [{active_index}]"
   else if {variant == "first-active"}
-    "[{tab}] ┆ inactive"
+    "[{tab}] ┆ inactive [{active_index}]"
   else
-    "┆ [{tab}] ┆ inactive"
+    "┆ [{tab}] ┆ inactive [{active_index}]"

@@ -21,9 +21,9 @@ width=48 height=3
 19,0:v|Rgb(58, 53, 39)|Reset|Reset|NONE
 20,0:e|Rgb(58, 53, 39)|Reset|Reset|NONE
 21,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
-22,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
-23,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
-24,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
+22,0:[|Rgb(58, 53, 39)|Reset|Reset|NONE
+23,0:0|Rgb(58, 53, 39)|Reset|Reset|NONE
+24,0:]|Rgb(58, 53, 39)|Reset|Reset|NONE
 25,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
 26,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
 27,0: |Rgb(58, 53, 39)|Reset|Reset|NONE

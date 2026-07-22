@@ -189,7 +189,7 @@ fn test_input_disabled_differs() {
 fn test_select_closed_has_selected() {
     let buf = render_story("select/closed", (36, 9));
     assert_no_warn(&buf);
-    assert!(buffer_text(&buf).contains("sonarr"));
+    assert!(buffer_text(&buf).contains("Sonarr"));
 }
 
 #[test]
@@ -197,14 +197,14 @@ fn test_select_open_shows_list() {
     let buf = render_story("select/open", (36, 9));
     assert_no_warn(&buf);
     let t = buffer_text(&buf);
-    assert!(t.contains("sonarr"), "Open select: {}", t);
+    assert!(t.contains("Sonarr"), "Open select: {}", t);
 }
 
 #[test]
 fn test_select_selected_shows_radarr() {
     let buf = render_story("select/selected", (36, 9));
     assert_no_warn(&buf);
-    assert!(buffer_text(&buf).contains("radarr"));
+    assert!(buffer_text(&buf).contains("Radarr"));
 }
 
 #[test]

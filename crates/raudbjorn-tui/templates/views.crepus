@@ -41,7 +41,7 @@ div w-full h-full flex-col bg-[#aa0001] border-r p-2 text-[#aa0005]
     "{footer}"
 
 --- PaneServiceTable
-div w-full h-full text-[#aa0005]
+div w-full h-full border text-[#aa0005]
   if {empty}
     div h-full border text-[#aa0008] "No services configured"
   else
