@@ -1216,6 +1216,7 @@ dependencies = [
 name = "raudbjorn-tui"
 version = "0.1.0"
 dependencies = [
+ "crepuscularity-core",
  "crepuscularity-tui",
  "crossterm",
  "ratatui",

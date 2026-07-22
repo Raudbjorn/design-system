@@ -14,7 +14,7 @@ fn render_story(id: &str, size: (u16, u16)) -> Buffer {
         .find(|s| s.id == id)
         .expect("story not found");
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let ctx = story.context();
     let backend = TestBackend::new(size.0, size.1);
     let mut terminal = Terminal::new(backend).unwrap();

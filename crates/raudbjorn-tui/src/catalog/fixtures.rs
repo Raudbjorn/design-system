@@ -178,12 +178,14 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
         "select/closed" => {
             ctx.set("selected", "sonarr");
             ctx.set("options", "Sonarr,Radarr,Lidarr");
+            ctx.set("option_values", "sonarr,radarr,lidarr");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 0_i64);
         }
         "select/open" => {
             ctx.set("selected", "sonarr");
             ctx.set("options", "Sonarr,Radarr,Lidarr");
+            ctx.set("option_values", "sonarr,radarr,lidarr");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 0_i64);
             ctx.set("open", true);
@@ -191,6 +193,7 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
         "select/selected" => {
             ctx.set("selected", "radarr");
             ctx.set("options", "Sonarr,Radarr,Lidarr");
+            ctx.set("option_values", "sonarr,radarr,lidarr");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 1_i64);
         }
@@ -204,43 +207,47 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
         "select/disabled" => {
             ctx.set("selected", "sonarr");
             ctx.set("options", "Sonarr");
+            ctx.set("option_values", "sonarr");
             ctx.set("option_count", 1_i64);
             ctx.set("selected_index", 0_i64);
             ctx.set("disabled", true);
         }
         "checkbox/unchecked" => {
-            ctx.set("check", "[ ]");
             ctx.set("label", "Enable");
+            ctx.set("checked", false);
         }
         "checkbox/checked" => {
-            ctx.set("check", "[x]");
             ctx.set("label", "Enable");
+            ctx.set("checked", true);
         }
         "checkbox/focused" => {
-            ctx.set("check", "[ ]");
             ctx.set("label", "Enable");
+            ctx.set("checked", false);
             ctx.set("focused", true);
         }
         "checkbox/disabled-checked" => {
-            ctx.set("check", "[x]");
             ctx.set("label", "Enable");
+            ctx.set("checked", true);
             ctx.set("disabled", true);
         }
         "radio/group" => {
             ctx.set("radio", "( )");
             ctx.set("label", "Alpha");
+            ctx.set("options", "Alpha,Beta,Gamma");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 0_i64);
         }
         "radio/selected" => {
             ctx.set("radio", "(*)");
             ctx.set("label", "Beta");
+            ctx.set("options", "Alpha,Beta,Gamma");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 1_i64);
         }
         "radio/focused" => {
             ctx.set("radio", "( )");
             ctx.set("label", "Gamma");
+            ctx.set("options", "Alpha,Beta,Gamma");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 2_i64);
             ctx.set("focused", true);
@@ -248,6 +255,7 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
         "radio/disabled" => {
             ctx.set("radio", "( )");
             ctx.set("label", "Delta");
+            ctx.set("options", "Delta,Echo,Foxtrot");
             ctx.set("option_count", 3_i64);
             ctx.set("selected_index", 0_i64);
             ctx.set("disabled", true);
@@ -306,25 +314,40 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
         "table/default" => {
             ctx.set("headers", "SERVICE");
             ctx.set("rows", "jellyfin");
+            ctx.set("row_labels", "jellyfin,sonarr,radarr");
+            ctx.set("row_count", 3_i64);
+            ctx.set("selected_row", 0_i64);
         }
         "table/rich-cells" => {
             ctx.set("headers", "SERVICE");
             ctx.set("rows", "jellyfin");
+            ctx.set("row_labels", "jellyfin");
+            ctx.set("row_count", 1_i64);
+            ctx.set("selected_row", 0_i64);
             ctx.set("rich", true);
         }
         "table/selected" => {
             ctx.set("headers", "SERVICE");
             ctx.set("rows", "online");
+            ctx.set("row_labels", "offline,online,maintenance");
+            ctx.set("row_count", 3_i64);
+            ctx.set("selected_row", 1_i64);
             ctx.set("selected", true);
         }
         "table/empty" => {
             ctx.set("headers", "SERVICE");
             ctx.set("rows", "No rows");
+            ctx.set("row_labels", "");
+            ctx.set("row_count", 0_i64);
+            ctx.set("selected_row", -1_i64);
             ctx.set("empty", true);
         }
         "table/narrow" => {
             ctx.set("headers", "SVC");
             ctx.set("rows", "jellyfin");
+            ctx.set("row_labels", "jellyfin,sonarr");
+            ctx.set("row_count", 2_i64);
+            ctx.set("selected_row", 0_i64);
         }
         "timeline/basic" => {
             ctx.set("ts", "10:00");
@@ -590,14 +613,14 @@ pub fn select_fixture() -> TemplateContext {
 }
 pub fn checkbox_fixture() -> TemplateContext {
     let mut c = TemplateContext::default();
-    c.set("check", "[ ]");
-    c.set("label", "");
+    c.set("label", "").set("checked", false);
     c
 }
 pub fn radio_fixture() -> TemplateContext {
     let mut ctx = TemplateContext::default();
     ctx.set("radio", "( )")
         .set("label", "Option")
+        .set("options", "Option 1,Option 2,Option 3")
         .set("option_count", 3_i64)
         .set("selected_index", 0_i64);
     ctx
@@ -628,8 +651,11 @@ pub fn nav_bar_fixture() -> TemplateContext {
 }
 pub fn table_fixture() -> TemplateContext {
     let mut c = TemplateContext::default();
-    c.set("headers", "");
-    c.set("rows", "");
+    c.set("headers", "")
+        .set("rows", "")
+        .set("row_labels", "")
+        .set("row_count", 0_i64)
+        .set("selected_row", -1_i64);
     c
 }
 pub fn timeline_fixture() -> TemplateContext {

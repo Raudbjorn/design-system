@@ -3,10 +3,10 @@ width=32 height=5
 1,0:*|Rgb(58, 53, 39)|Reset|Reset|NONE
 2,0:)|Rgb(58, 53, 39)|Reset|Reset|NONE
 3,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
-4,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
-5,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
-6,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
-7,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
+4,0:B|Rgb(58, 53, 39)|Reset|Reset|NONE
+5,0:e|Rgb(58, 53, 39)|Reset|Reset|NONE
+6,0:t|Rgb(58, 53, 39)|Reset|Reset|NONE
+7,0:a|Rgb(58, 53, 39)|Reset|Reset|NONE
 8,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
 9,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
 10,0: |Rgb(58, 53, 39)|Reset|Reset|NONE
