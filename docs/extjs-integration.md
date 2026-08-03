@@ -52,7 +52,18 @@ ssh root@node
   `PMGThemeCookie` on Mail Gateway.
 - `--apt-hook` installs `/etc/apt/apt.conf.d/99-svnbjrn-design-theme`, which
   re-applies the registration after a `proxmox-widget-toolkit` upgrade
-  overwrites `proxmoxlib.js`.
+  overwrites `proxmoxlib.js`. APT has no per-package post-invoke, so the hook
+  runs after *every* `dpkg` invocation — it is a no-op when the registration is
+  already present. It calls the `register` verb, which re-registers every
+  installed sheet and touches nothing else; its output goes to the journal
+  (`journalctl -t svnbjrn-design`) rather than `/dev/null`, so a failure there
+  leaves a trail.
+
+The installer only ever writes or deletes files carrying its own header
+marker. Names like `crisp` and `proxmox-dark` satisfy Proxmox's rule too, so
+installing under one of those would otherwise silently replace a file the
+distribution owns and dpkg would restore on the next upgrade; that is refused
+instead.
 
 `proxmox-theme-install.sh status` reports what is installed, whether it is
 registered, and whether the file is actually reachable over HTTPS.
@@ -105,6 +116,14 @@ against `^[a-z]{1,10}(-[a-z]{1,10}){0,5}$` — lowercase letters and hyphens
 only, no digits, segments of at most ten characters. Sheets are emitted as
 `sv-<world>`, and a name that fails the pattern is rejected with exit code 2
 rather than producing a file that installs and can never be selected.
+
+**Values are validated, not trusted.** The sheet is built by string
+interpolation, so `emitExtJsCss` requires hex colors, kebab-case token names, a
+selectable theme name, and scale values free of `;`, `{`, `}` or comment
+delimiters — and throws otherwise, the same way it already refuses to emit a
+sheet with a missing token. A world theme is untrusted data here exactly as it
+is in `src/lib/vernacular` and `src/lib/theme`, and the output lands in an
+admin UI where injected CSS could overlay a confirmation dialog.
 
 To do the same in-process:
 

@@ -76,6 +76,56 @@ theme_name_from_file() {
   esac
 }
 
+# Our sheets only. Proxmox owns theme-crisp*.css and theme-proxmox-dark.css,
+# and their names pass check_name just fine — the header marker is the only
+# thing that distinguishes ours, so it gates every write and every delete.
+#
+# A nullglob loop rather than `grep -l ... | wc -l`: grep exits non-zero when
+# nothing matches, and under `set -euo pipefail` that status propagates through
+# the pipe and kills the script. That is a real bug this script shipped with.
+sv_theme_files() {
+  local file
+  shopt -s nullglob
+  for file in "$THEME_DIR"/theme-*.css; do
+    if grep -qF "$CSS_MARKER" "$file" 2>/dev/null; then
+      printf '%s\n' "$file"
+    fi
+  done
+  shopt -u nullglob
+}
+
+is_our_theme() {
+  local target=$1
+  [ -f "$target" ] || return 0 # absent: nothing to clobber
+  grep -qF "$CSS_MARKER" "$target" 2>/dev/null
+}
+
+# Keeps the newest few and drops the rest: register_theme backs up on every
+# APT-triggered re-registration, and proxmoxlib.js is ~1 MB in a directory dpkg
+# owns and will not clean up.
+prune_backups() {
+  local keep=3 backups=() drop
+  shopt -s nullglob
+  # The names are YYYYmmddHHMMSS-pid, so the glob's lexical order is
+  # chronological order — no need to stat or parse ls.
+  backups=("$LIB_JS".bak-*)
+  shopt -u nullglob
+  drop=$((${#backups[@]} - keep))
+  if [ "$drop" -gt 0 ]; then
+    rm -f "${backups[@]:0:$drop}"
+  fi
+}
+
+# Second granularity alone collides when install and uninstall land in the same
+# second, which silently overwrites the earlier backup the restore path trusts.
+backup_lib_js() {
+  local path
+  path="$LIB_JS.bak-$(date +%Y%m%d%H%M%S)-$$"
+  cp -a "$LIB_JS" "$path"
+  prune_backups
+  printf '%s' "$path"
+}
+
 detect_product() {
   if [ -d "$PREFIX/usr/share/pve-manager" ]; then
     printf 'PVE 8006'
@@ -114,9 +164,17 @@ cmd_install() {
   name=$(theme_name_from_file "$css")
   check_name "$name"
 
-  install -m 0644 "$css" "$THEME_DIR/theme-$name.css"
-  [ -f "$THEME_DIR/theme-$name.css" ] || die "copy to $THEME_DIR failed"
-  note "installed $THEME_DIR/theme-$name.css"
+  local dest="$THEME_DIR/theme-$name.css"
+  is_our_theme "$dest" ||
+    die "$dest exists and was not written by this script — refusing to overwrite a theme the distribution owns (crisp, proxmox-dark and friends pass the name check too); pick another name"
+
+  # install(1) errors on a same-file copy, which under set -e would abort the
+  # run before anything after it.
+  if ! [ "$css" -ef "$dest" ]; then
+    install -m 0644 "$css" "$dest"
+  fi
+  [ -f "$dest" ] || die "copy to $THEME_DIR failed"
+  note "installed $dest"
 
   # The sheet's @font-face rules point at sv-fonts/ next to it. Without the
   # files the theme still works, it just falls back to the system stack — so a
@@ -148,7 +206,7 @@ cmd_install() {
     register_theme "$name"
   fi
   if [ "$do_hook" -eq 1 ]; then
-    install_hook "$css" "$fonts_src"
+    install_hook
   fi
 
   local product port
@@ -178,17 +236,18 @@ register_theme() {
     die "no theme_map found in $LIB_JS — the widget toolkit layout changed; install without --register and use the cookie"
 
   local backup label
-  backup="$LIB_JS.bak-$(date +%Y%m%d%H%M%S)"
-  cp -a "$LIB_JS" "$backup"
+  backup=$(backup_lib_js)
   # sv-dark -> "SV Dark": the picker lists it beside Proxmox's own entries, so
   # it needs to read as a distinct theme rather than a bare word.
   label="SV $(printf '%s' "$name" | sed 's/^sv-//; s/-/ /g; s/\b\(.\)/\u\1/g')"
 
-  # Insert immediately after the opening brace of the theme_map literal,
-  # tolerating both "theme_map: {" and the whitespace-free form. The 0,/re/
+  # Insert immediately after the opening brace of the theme_map literal.
+  # Tolerates "theme_map: {", the whitespace-free form, and a quoted key
+  # ("theme_map": {) in case the bundle is ever emitted differently. The 0,/re/
   # range stops at the first match so a second mention of theme_map elsewhere
   # in the bundle cannot pick up a duplicate entry.
-  sed -i "0,/theme_map:[[:space:]]*{/s|theme_map:[[:space:]]*{|&'$name': '$label', /* $MARKER:$name */|" "$LIB_JS"
+  local pattern='["'"'"']\?theme_map["'"'"']\?:[[:space:]]*{'
+  sed -i "0,/$pattern/s|$pattern|&'$name': '$label', /* $MARKER:$name */|" "$LIB_JS"
 
   if ! grep -q "$MARKER:$name" "$LIB_JS"; then
     cp -a "$backup" "$LIB_JS"
@@ -203,8 +262,7 @@ unregister_theme() {
   grep -q "$MARKER:$name" "$LIB_JS" || return 0
 
   local backup
-  backup="$LIB_JS.bak-$(date +%Y%m%d%H%M%S)"
-  cp -a "$LIB_JS" "$backup"
+  backup=$(backup_lib_js)
   # Remove exactly the entry this script inserted, not the whole map.
   sed -i "s|'$name': '[^']*', /\* $MARKER:$name \*/||" "$LIB_JS"
 
@@ -218,23 +276,44 @@ unregister_theme() {
 # proxmox-widget-toolkit upgrades overwrite proxmoxlib.js, dropping the
 # registration. The hook re-runs this script after every dpkg invocation.
 install_hook() {
-  local css=$1 fonts_src=$2
-  install -m 0755 "${BASH_SOURCE[0]}" "$SELF_INSTALLED"
-  install -m 0644 "$css" "$PREFIX/usr/local/share/$(basename "$css")"
+  install -D -m 0755 "${BASH_SOURCE[0]}" "$SELF_INSTALLED"
 
-  local args
-  args="install $PREFIX/usr/local/share/$(basename "$css") --register"
-  if [ -n "$fonts_src" ]; then
-    args="$args --fonts $FONT_DIR"
-  fi
-
+  # The hook calls `register`, not `install`: re-registration is the only thing
+  # an upgrade undoes. Replaying the whole install path meant re-validating,
+  # re-copying the sheet and walking the font list, every step of which could
+  # abort under set -e before reaching the sed — which is exactly how the
+  # same-file install(1) bug hid here. `register` reads the themes directory
+  # itself, so it also covers every installed sheet rather than the one whose
+  # path happened to be baked in.
+  #
+  # Output goes to the journal instead of /dev/null: `|| true` keeps a failure
+  # from breaking apt, but a silent failure is how the last one survived.
+  # Read it with: journalctl -t $MARKER
   cat >"$HOOK_FILE" <<EOF
-// Installed by $MARKER — re-applies the ExtJS theme after package upgrades
-// overwrite proxmoxlib.js. Remove with: proxmox-theme-install.sh uninstall <name>
-DPkg::Post-Invoke { "test -x $SELF_INSTALLED && $SELF_INSTALLED $args >/dev/null 2>&1 || true"; };
+// Installed by $MARKER — re-registers the ExtJS theme(s) in the theme picker
+// after a package upgrade overwrites proxmoxlib.js. The theme itself keeps
+// working via the cookie regardless; this only restores the picker entry.
+// Remove with: proxmox-theme-install.sh uninstall <name>
+DPkg::Post-Invoke { "test -x $SELF_INSTALLED && $SELF_INSTALLED register 2>&1 | logger -t $MARKER || true"; };
 EOF
   [ -f "$HOOK_FILE" ] || die "failed to write $HOOK_FILE"
-  note "installed APT hook $HOOK_FILE"
+  note "installed APT hook $HOOK_FILE (logs to: journalctl -t $MARKER)"
+}
+
+# Re-register every sheet we own. Idempotent, and the verb the APT hook calls.
+cmd_register() {
+  require_root
+  local file name found=0
+  while IFS= read -r file; do
+    [ -n "$file" ] || continue
+    found=1
+    name=$(theme_name_from_file "$file")
+    register_theme "$name"
+  done <<<"$(sv_theme_files)"
+
+  if [ "$found" -eq 0 ]; then
+    note "no themes from this design system are installed in $THEME_DIR"
+  fi
 }
 
 cmd_uninstall() {
@@ -250,28 +329,38 @@ cmd_uninstall() {
   done
   check_name "$name"
 
+  local target="$THEME_DIR/theme-$name.css"
+  is_our_theme "$target" ||
+    die "$target was not written by this script — refusing to remove a file the distribution owns"
+
   unregister_theme "$name"
 
-  if [ -f "$THEME_DIR/theme-$name.css" ]; then
-    rm -f "$THEME_DIR/theme-$name.css"
-    note "removed $THEME_DIR/theme-$name.css"
+  if [ -f "$target" ]; then
+    rm -f "$target"
+    note "removed $target"
   fi
 
+  # The hook goes first. If anything below fails, a surviving hook would
+  # re-register the theme on the next dpkg run and the uninstall would appear
+  # to undo itself — which is precisely what happened when the font purge
+  # below aborted the script.
+  local remaining
+  remaining=$(sv_theme_files | wc -l)
+  if [ "$remaining" -eq 0 ] && [ -f "$HOOK_FILE" ]; then
+    rm -f "$HOOK_FILE" "$SELF_INSTALLED"
+    note "removed $HOOK_FILE"
+  elif [ -f "$HOOK_FILE" ]; then
+    note "kept $HOOK_FILE — $remaining other theme(s) from this design system remain"
+  fi
+  rm -f "$PREFIX/usr/local/share/theme-$name.css"
+
   if [ "$purge_fonts" -eq 1 ] && [ -d "$FONT_DIR" ]; then
-    # Another installed sheet may still reference sv-fonts/.
-    local remaining
-    remaining=$(grep -l "sv-fonts/" "$THEME_DIR"/theme-*.css 2>/dev/null | wc -l)
     if [ "$remaining" -eq 0 ]; then
       rm -rf "$FONT_DIR"
       note "removed $FONT_DIR"
     else
       note "kept $FONT_DIR — $remaining other theme(s) still reference it"
     fi
-  fi
-
-  if [ -f "$HOOK_FILE" ] && grep -q "theme-$name.css" "$HOOK_FILE"; then
-    rm -f "$HOOK_FILE" "$SELF_INSTALLED" "$PREFIX/usr/local/share/theme-$name.css"
-    note "removed $HOOK_FILE"
   fi
 
   note "the browser keeps the theme cookie — pick another theme in the UI to clear it"
@@ -285,20 +374,18 @@ cmd_status() {
 
   if [ -d "$THEME_DIR" ]; then
     local found=0 file name
-    for file in "$THEME_DIR"/theme-*.css; do
-      [ -e "$file" ] || continue
+    while IFS= read -r file; do
+      [ -n "$file" ] || continue
+      found=1
       name=$(theme_name_from_file "$file")
-      if grep -qF "$CSS_MARKER" "$file" 2>/dev/null; then
-        found=1
-        printf 'installed: %s' "$name"
-        if [ -f "$LIB_JS" ] && grep -q "$MARKER:$name" "$LIB_JS"; then
-          printf ' (registered)'
-        else
-          printf ' (cookie only)'
-        fi
-        printf '\n'
+      printf 'installed: %s' "$name"
+      if [ -f "$LIB_JS" ] && grep -q "$MARKER:$name" "$LIB_JS"; then
+        printf ' (registered)'
+      else
+        printf ' (cookie only)'
       fi
-    done
+      printf '\n'
+    done <<<"$(sv_theme_files)"
     if [ "$found" -eq 0 ]; then
       printf 'installed: none\n'
     fi
@@ -325,16 +412,15 @@ cmd_status() {
       path=/widgettoolkit/themes
     fi
     local file name
-    for file in "$THEME_DIR"/theme-*.css; do
-      [ -e "$file" ] || continue
-      grep -qF "$CSS_MARKER" "$file" 2>/dev/null || continue
+    while IFS= read -r file; do
+      [ -n "$file" ] || continue
       name=$(theme_name_from_file "$file")
       if curl -ksf -o /dev/null "https://localhost:$port$path/theme-$name.css"; then
         printf 'serving:   %s/theme-%s.css OK\n' "$path" "$name"
       else
         printf 'serving:   %s/theme-%s.css NOT reachable\n' "$path" "$name"
       fi
-    done
+    done <<<"$(sv_theme_files)"
   fi
 }
 
@@ -342,6 +428,7 @@ usage() {
   cat >&2 <<EOF
 usage: $(basename "$0") install <theme-<name>.css> [--fonts <dir>] [--register] [--apt-hook]
        $(basename "$0") uninstall <name> [--purge-fonts]
+       $(basename "$0") register          # re-register installed themes (used by the APT hook)
        $(basename "$0") status
 EOF
   exit 2
@@ -353,6 +440,7 @@ shift
 case "$verb" in
   install) [ $# -ge 1 ] || usage; cmd_install "$@" ;;
   uninstall) [ $# -ge 1 ] || usage; cmd_uninstall "$@" ;;
+  register) cmd_register ;;
   status) cmd_status ;;
   -h | --help | help) usage ;;
   *) die "unknown command \"$verb\"" ;;

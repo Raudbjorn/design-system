@@ -354,6 +354,59 @@ describe('ExtJS contract', () => {
     expect(result.error).toMatch(/not a selectable Proxmox theme name/);
   });
 
+  it('refuses hostile token values instead of interpolating them', () => {
+    // World themes are untrusted input everywhere else in this repo, and a
+    // sheet emitted from one lands in a Proxmox admin UI — injected CSS there
+    // can overlay a confirmation dialog, not just restyle it.
+    const scale = Object.fromEntries(themes[0].scaleFull.map((r) => [r.key, r.css]));
+    const emit = (palette, name = 'sv-evil') => () => emitExtJsCss({ name, palette, scale });
+
+    // A non-derived colour: never parsed by mixOklab or luminance, so nothing
+    // else in the pipeline would have caught it.
+    expect(
+      emit({ ...themes[0].paletteHex, warning: '#ff0000; } .x-window { display: none' })
+    ).toThrow(/must be a hex color/);
+    expect(emit({ ...themes[0].paletteHex, border: 'red' })).toThrow(/must be a hex color/);
+    expect(
+      emit({ ...themes[0].paletteHex, 'evil}key': '#ffffff' })
+    ).toThrow(/unsafe token name/);
+    expect(() =>
+      emitExtJsCss({
+        name: 'sv-ok',
+        palette: themes[0].paletteHex,
+        scale: { ...scale, 'radius-md': '4px } .x-btn { visibility: hidden' }
+      })
+    ).toThrow(/contains CSS structure/);
+    // The name reaches the header comment; */ would end it early.
+    expect(emit(themes[0].paletteHex, 'x */ body{display:none} /*')).toThrow(
+      /not a selectable Proxmox theme name/
+    );
+  });
+
+  it('keeps legitimate composite scale values that merely look structural', () => {
+    // Shadows carry `rgb(0 0 0 / 0.3)` and font stacks carry quotes and commas;
+    // a stricter value check would reject the real tokens.
+    const css = emitExtJs(themes[0]);
+    expect(css).toMatch(/--sv-shadow-md: [^;]*rgb\([^;]*\);/);
+    expect(css).toContain("--sv-font-sans: 'Inter'");
+  });
+
+  it('rejects a --pwt-* alias pointing at a token the palette lacks', () => {
+    // A dangling chart variable means canvas silently keeps the light palette.
+    const palette = { ...themes[0].paletteHex };
+    delete palette.warning; // only --pwt-gauge-warn references this
+    const scale = Object.fromEntries(themes[0].scaleFull.map((r) => [r.key, r.css]));
+    expect(() => emitExtJsCss({ name: 'sv-x', palette, scale })).toThrow(
+      /missing color token "warning"/
+    );
+  });
+
+  it('refuses to emit a built-in theme Proxmox could not select', () => {
+    expect(() => emitExtJs({ ...themes[0], name: 'high-contrast-2' })).toThrow(
+      /cannot ship to Proxmox/
+    );
+  });
+
   it('rejects theme names Proxmox cannot select', () => {
     // PVE/PMG validate ^[a-z]{1,10}(-[a-z]{1,10}){0,5}$ server-side: a name with
     // a digit installs fine and then can never be chosen.
