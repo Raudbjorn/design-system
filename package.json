@@ -29,6 +29,11 @@
     },
     "./tokens/*.json": "./dist/tokens/resolved/*.json",
     "./qss/*.qss": "./dist/qss/*.qss",
+    "./extjs": {
+      "types": "./dist/extjs/index.d.ts",
+      "default": "./dist/extjs/index.js"
+    },
+    "./extjs/*.css": "./dist/extjs/*.css",
     "./theme": {
       "types": "./dist/theme/index.d.ts",
       "default": "./dist/theme/index.js"

@@ -29,7 +29,7 @@ Gotchas: unit tests print harmless jsdom `Could not parse CSS stylesheet` noise 
 
 ## Architecture
 
-**Tokens are the source of truth, and generated outputs are committed.** DTCG sources live in `src/lib/tokens/*.tokens.json` + the `themes.ts` registry. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, and `src/lib/qss/*.qss`. **Never hand-edit generated outputs** — edit the DTCG source, run `pnpm run tokens`, commit every output. Drift is guarded by tests. Adding a built-in theme = one token file + one registry entry.
+**Tokens are the source of truth, and generated outputs are committed.** DTCG sources live in `src/lib/tokens/*.tokens.json` + the `themes.ts` registry. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, `src/lib/qss/*.qss`, and `src/lib/extjs/theme-sv-*.css`. **Never hand-edit generated outputs** — edit the DTCG source, run `pnpm run tokens`, commit every output. Drift is guarded by tests. Adding a built-in theme = one token file + one registry entry.
 
 **Cascade layers** order token precedence: `sv.base < sv.theme < sv.world < sv.user`. Consumer *unlayered* overrides beat all of them.
 

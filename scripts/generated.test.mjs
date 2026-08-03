@@ -5,11 +5,19 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { prepareBuild, TOKENS_DIR } from './emitters/prepare.mjs';
+import { HOVER_MIX, PRESSED_MIX, prepareBuild, TOKENS_DIR } from './emitters/prepare.mjs';
 import { emitColorsCss, emitScaleCss } from './emitters/emit-css.mjs';
 import { emitPaletteTs } from './emitters/emit-palette-ts.mjs';
 import { emitResolvedJson } from './emitters/emit-json.mjs';
 import { emitQss } from './emitters/emit-qss.mjs';
+import { emitExtJs } from './emitters/emit-extjs.mjs';
+import {
+  checkProxmoxThemeName,
+  emitExtJsCss,
+  extJsInputsFromWorldTheme,
+  HOVER_MIX as EXTJS_HOVER_MIX,
+  PRESSED_MIX as EXTJS_PRESSED_MIX
+} from '../src/lib/extjs/emit.ts';
 import { emitTuiRust } from './emitters/emit-tui-rust.mjs';
 
 const prepared = prepareBuild();
@@ -62,6 +70,9 @@ describe('committed outputs match the emitters (run `pnpm run tokens` after toke
     });
     it(`qss/${theme.name}.qss`, () => {
       expect(read('..', 'qss', `${theme.name}.qss`)).toBe(emitQss(theme));
+    });
+    it(`extjs/theme-sv-${theme.name}.css`, () => {
+      expect(read('..', 'extjs', `theme-sv-${theme.name}.css`)).toBe(emitExtJs(theme));
     });
   }
     it(`crates/raudbjorn-tui/src/theme/generated.rs`, () => {
@@ -183,6 +194,175 @@ describe('QSS contract', () => {
       }
     });
   }
+});
+
+describe('ExtJS contract', () => {
+  const REQUIRED_SELECTORS = [
+    '.x-body',
+    '.x-panel-header',
+    '.x-toolbar',
+    '.x-btn-default-small',
+    '.x-btn-over',
+    '.x-btn-pressed',
+    '.x-form-text',
+    '.x-form-checkbox',
+    '.x-boundlist-item',
+    '.x-column-header',
+    '.x-grid-item',
+    '.x-grid-item-alt',
+    '.x-grid-item-selected',
+    '.x-treelist-item-text',
+    '.x-tree-node-text',
+    '.x-tab-active',
+    '.x-window-default',
+    '.x-menu-item-active',
+    '.x-tip',
+    '.x-progress-bar',
+    '.x-splitter',
+    '.x-mask',
+    '.x-datepicker',
+    '.x-legend-item',
+    '::-webkit-scrollbar'
+  ];
+  // Read at runtime by RRDChart.js / GaugeWidget.js. Missing one means charts
+  // silently keep the light palette on a dark theme.
+  const REQUIRED_PWT_VARS = [
+    '--pwt-panel-background',
+    '--pwt-text-color',
+    '--pwt-gauge-default',
+    '--pwt-gauge-back',
+    '--pwt-gauge-warn',
+    '--pwt-gauge-crit',
+    '--pwt-chart-primary',
+    '--pwt-chart-grid-stroke'
+  ];
+
+  for (const theme of themes) {
+    const css = emitExtJs(theme);
+
+    it(`${theme.name}: no unresolved placeholders`, () => {
+      expect(css).not.toContain('${');
+      expect(css).not.toContain('undefined');
+      expect(css).not.toContain('NaN');
+      // A @layer wrapper would make the whole sheet lose to ExtJS's unlayered
+      // rules — the sheet must stay unlayered. (Matches the at-rule, not the
+      // word where the header comment explains this.)
+      expect(css).not.toMatch(/^\s*@layer\b/m);
+      // ExtJS measures widget geometry in JS; rem would tie it to the host
+      // page's root font size.
+      expect(css).not.toMatch(/\d(?:\.\d+)?rem\b/);
+    });
+
+    it(`${theme.name}: every var() reference is defined in the same file`, () => {
+      const defined = new Set([...css.matchAll(/^\s*(--[a-z0-9-]+):/gm)].map((m) => m[1]));
+      for (const match of css.matchAll(/var\((--[a-z0-9-]+)\)/g)) {
+        expect(defined.has(match[1]), `dangling variable ${match[1]}`).toBe(true);
+      }
+    });
+
+    it(`${theme.name}: covers the mandated widgets and chart hooks`, () => {
+      for (const selector of REQUIRED_SELECTORS) expect(css).toContain(selector);
+      for (const name of REQUIRED_PWT_VARS) expect(css).toContain(`${name}: var(--sv-`);
+    });
+
+    it(`${theme.name}: interaction states match the QSS/web oklab math`, () => {
+      for (const { key, css: value } of theme.derived) {
+        expect(css).toContain(`--sv-${key}: ${value};`);
+      }
+    });
+
+    it(`${theme.name}: parses as CSS with every rule intact`, () => {
+      // A dropped rule is the failure mode a string-matching test cannot see:
+      // one bad selector and the browser silently discards that block.
+      const style = document.createElement('style');
+      style.textContent = css;
+      document.head.appendChild(style);
+      try {
+        // Comments are stripped first: the header documents the cookie names
+        // as P{VE,BS,MG}ThemeCookie, and those braces are not a rule.
+        const blocks = (css.replace(/\/\*[\s\S]*?\*\//g, '').match(/\{/g) ?? []).length;
+        expect(style.sheet.cssRules.length).toBe(blocks);
+      } finally {
+        style.remove();
+      }
+    });
+
+    it(`${theme.name}: bundles the self-hosted fonts`, () => {
+      expect(css.match(/@font-face/g)).toHaveLength(4);
+      expect(css).toContain("url('sv-fonts/InterVariable.woff2')");
+      expect(css).toContain("url('sv-fonts/Iosevka-Regular.woff2')");
+    });
+
+    it(`${theme.name}: file stem is a selectable Proxmox theme name`, () => {
+      expect(checkProxmoxThemeName(`sv-${theme.name}`).ok).toBe(true);
+    });
+  }
+
+  it('inverts crisp icon sprites on dark themes only', () => {
+    const byName = Object.fromEntries(themes.map((t) => [t.name, emitExtJs(t)]));
+    expect(byName.dark).toMatch(/--sv-icon-filter: invert\(1\)/);
+    expect(byName.light).toContain('--sv-icon-filter: none;');
+  });
+
+  it('rejects a missing token instead of emitting a broken sheet', () => {
+    const palette = { ...themes[0].paletteHex };
+    delete palette['surface-3'];
+    const scale = Object.fromEntries(themes[0].scaleFull.map((r) => [r.key, r.css]));
+    expect(() => emitExtJsCss({ name: 'sv-broken', palette, scale })).toThrow(
+      /missing color token "surface-3"/
+    );
+    expect(() => emitExtJsCss({ name: 'sv-broken', palette: themes[0].paletteHex, scale: {} })).toThrow(
+      /missing scale token/
+    );
+  });
+
+  it('keeps its mix weights in lockstep with prepare.mjs', () => {
+    // The published emitter cannot import from scripts/, so the two constants
+    // are duplicated. This is the guard that they never diverge.
+    expect(EXTJS_HOVER_MIX).toBe(HOVER_MIX);
+    expect(EXTJS_PRESSED_MIX).toBe(PRESSED_MIX);
+  });
+
+  it('folds a world theme over the base it extends', () => {
+    const base = JSON.parse(read('resolved', 'dark.tokens.json'));
+    const world = {
+      name: 'mistwood',
+      tokens: {
+        accent: { $type: 'color', $value: '#c9a227' },
+        'radius-lg': { $type: 'dimension', $value: '2px' }
+      }
+    };
+    const inputs = extJsInputsFromWorldTheme(world, base);
+    expect(inputs.ok).toBe(true);
+    expect(inputs.value.name).toBe('sv-mistwood');
+    expect(inputs.value.palette.accent).toBe('#c9a227');
+    // untouched roles fall through from the base theme
+    expect(inputs.value.palette.bg).toBe(base.tokens.bg.css);
+    expect(inputs.value.scale['radius-lg']).toBe('2px');
+
+    const css = emitExtJsCss(inputs.value);
+    expect(css).toContain('--sv-accent: #c9a227;');
+    expect(css).toContain('--sv-radius-lg: 2px;');
+    // derived states are recomputed from the overridden accent, not inherited
+    expect(css).not.toContain(`--sv-accent-hover: ${base.derived['accent-hover']};`);
+  });
+
+  it('refuses to fold a world theme into an unselectable name', () => {
+    const base = JSON.parse(read('resolved', 'dark.tokens.json'));
+    const result = extJsInputsFromWorldTheme({ name: 'world2', tokens: {} }, base);
+    expect(result.ok).toBe(false);
+    expect(result.error).toMatch(/not a selectable Proxmox theme name/);
+  });
+
+  it('rejects theme names Proxmox cannot select', () => {
+    // PVE/PMG validate ^[a-z]{1,10}(-[a-z]{1,10}){0,5}$ server-side: a name with
+    // a digit installs fine and then can never be chosen.
+    expect(checkProxmoxThemeName('sv-mistwood').ok).toBe(true);
+    expect(checkProxmoxThemeName('sv-world2').ok).toBe(false);
+    expect(checkProxmoxThemeName('SvDark').ok).toBe(false);
+    expect(checkProxmoxThemeName('sv_dark').ok).toBe(false);
+    expect(checkProxmoxThemeName('sv-abcdefghijk').ok).toBe(false);
+  });
 });
 
 describe('emitters generalize to N themes', () => {

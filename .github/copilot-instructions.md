@@ -29,7 +29,7 @@ The visual project uploads to Argos whenever `CI` is truthy, so explicitly clear
 - `src/stories`: Storybook stories; each is a dark/light visual regression test.
 - `src/lib/theme`, `vernacular`, and `generate`: runtime theme handling, hostile-input string catalogs, and the seed-to-theme solver.
 - `src/lib/vermis` and `src/lib/carter`: isolated opt-in systems. Never leak their `--layform-*`/`--carter-*` tokens into core `--sv-*`.
-- `src/lib/tokens/*.tokens.json` plus `themes.ts`: DTCG source of truth. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, and `src/lib/qss/*.qss`. Never hand-edit outputs; after source edits run `pnpm run tokens` and commit every output. Preserve structured DTCG color/dimension/shadow values.
+- `src/lib/tokens/*.tokens.json` plus `themes.ts`: DTCG source of truth. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, `src/lib/qss/*.qss`, and `src/lib/extjs/theme-sv-*.css` (ExtJS/Proxmox adapter — the emitter lives in `src/lib/extjs/emit.ts` because `design-generate --extjs` ships it). Never hand-edit outputs; after source edits run `pnpm run tokens` and commit every output. Preserve structured DTCG color/dimension/shadow values.
 - `.storybook`, `vitest.config.ts`, and `docs/visual-testing.md`: visual-test contract.
 - `.design-sync/react-adapter` and `.design-sync/previews`: committed React bridge. Nothing regenerates its API automatically.
 - `README.md`, `docs/theme-packages.md`, and `docs/bones-integration.md`: public contracts.

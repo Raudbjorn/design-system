@@ -159,6 +159,14 @@ maps for non-web consumers: `@svnbjrn/design/qss/dark.qss` (apply via
 (css+qt values plus precomputed hover/pressed states). See
 `docs/bones-integration.md`.
 
+### ExtJS / Proxmox
+
+The same build emits ExtJS override sheets — `@svnbjrn/design/extjs/theme-sv-dark.css`
+and `…-light.css` — that restyle ExtJS 7's own widgets from the `--sv-*` tokens.
+They install into Proxmox VE / PBS / PMG with `bin/proxmox-theme-install.sh`, and
+`design-generate --extjs <file>` emits one for a generated world theme. No Svelte
+components are involved. See `docs/extjs-integration.md`.
+
 ### Vernacular (world-flavored UI strings)
 
 `@svnbjrn/design/vernacular` ingests an **untrusted** per-world string catalog
