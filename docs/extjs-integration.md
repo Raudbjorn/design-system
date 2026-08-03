@@ -131,9 +131,12 @@ To do the same in-process:
 import { extJsInputsFromWorldTheme, emitExtJsCss } from '@svnbjrn/design/extjs';
 import base from '@svnbjrn/design/tokens/dark.tokens.json' with { type: 'json' };
 
-const inputs = extJsInputsFromWorldTheme(worldThemePackage, base);
-if (!inputs.ok) return inputs; // errors are values, as everywhere else
-const css = emitExtJsCss(inputs.value);
+/** @returns {{ok: true, value: string} | {ok: false, error: string}} */
+export const sheetForWorld = (worldThemePackage) => {
+  const inputs = extJsInputsFromWorldTheme(worldThemePackage, base);
+  if (!inputs.ok) return inputs; // errors are values, as everywhere else
+  return { ok: true, value: emitExtJsCss(inputs.value) };
+};
 ```
 
 ## Deliberate divergences from the web components
@@ -158,9 +161,9 @@ The QSS adapter documents its own; these are the ExtJS ones.
   as `prepare.mjs` (`HOVER_MIX` 15%, `PRESSED_MIX` 25%), so the values match
   the Qt sheet byte for byte and the CSS stays readable by anything that
   parses it back.
-- **Icon sprites are inverted on dark themes.** Crisp ships dark-on-
-  transparent raster icons; `--sv-icon-filter` inverts them, the same trade
-  the official Proxmox dark theme makes. It is imperfect on colored icons.
+- **Icon sprites are inverted on dark themes.** Crisp ships raster icons that
+  are dark on transparent; `--sv-icon-filter` inverts them, the same trade the
+  official Proxmox dark theme makes. It is imperfect on colored icons.
   Font-glyph icons (FontAwesome) are colored instead, never filtered.
 - **Charts get eight `--pwt-*` variables.** RRD charts and gauges are drawn on
   canvas by JavaScript that reads `--pwt-panel-background`, `--pwt-text-color`,

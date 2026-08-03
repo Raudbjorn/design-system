@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { HOVER_MIX, PRESSED_MIX, prepareBuild, TOKENS_DIR } from './emitters/prepare.mjs';
+import { mixOklab } from '../src/lib/internal/color.ts';
 import { emitColorsCss, emitScaleCss } from './emitters/emit-css.mjs';
 import { emitPaletteTs } from './emitters/emit-palette-ts.mjs';
 import { emitResolvedJson } from './emitters/emit-json.mjs';
@@ -343,8 +344,12 @@ describe('ExtJS contract', () => {
     const css = emitExtJsCss(inputs.value);
     expect(css).toContain('--sv-accent: #c9a227;');
     expect(css).toContain('--sv-radius-lg: 2px;');
-    // derived states are recomputed from the overridden accent, not inherited
-    expect(css).not.toContain(`--sv-accent-hover: ${base.derived['accent-hover']};`);
+    // Derived states are recomputed from the OVERRIDDEN accent, not inherited.
+    // Asserted positively: the absence of the base value would also hold if the
+    // key were simply missing, or emitted as "undefined".
+    const expectedHover = mixOklab('#c9a227', inputs.value.palette['mix-target'], HOVER_MIX);
+    expect(css).toContain(`--sv-accent-hover: ${expectedHover};`);
+    expect(expectedHover).not.toBe(base.derived['accent-hover']);
   });
 
   it('refuses to fold a world theme into an unselectable name', () => {
@@ -381,6 +386,19 @@ describe('ExtJS contract', () => {
     expect(emit(themes[0].paletteHex, 'x */ body{display:none} /*')).toThrow(
       /not a selectable Proxmox theme name/
     );
+  });
+
+  it('accepts every hex form its own validator admits', () => {
+    // assertColor allows #rgb/#rgba/#rrggbb/#rrggbbaa, so the darkness check
+    // has to read all four — otherwise a colour this emitter calls valid blows
+    // up deeper in, with a misleading message.
+    const scale = Object.fromEntries(themes[0].scaleFull.map((r) => [r.key, r.css]));
+    const withBg = (bg) => emitExtJsCss({ name: 'sv-x', palette: { ...themes[0].paletteHex, bg }, scale });
+
+    expect(withBg('#fff')).toContain('--sv-icon-filter: none;');
+    expect(withBg('#ffff')).toContain('--sv-icon-filter: none;');
+    expect(withBg('#191919ff')).toMatch(/--sv-icon-filter: invert\(1\)/);
+    expect(() => withBg('#12345')).toThrow(/must be a hex color/);
   });
 
   it('keeps legitimate composite scale values that merely look structural', () => {

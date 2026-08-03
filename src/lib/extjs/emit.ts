@@ -107,9 +107,21 @@ const toPx = (value: string): string => {
 };
 
 const luminance = (hex: string): number => {
-  const match = /^#([0-9a-f]{6})$/i.exec(hex.trim());
-  if (match?.[1] === undefined) throw new Error(`emitExtJs: expected a #rrggbb color, got "${hex}"`);
-  const digits = match[1];
+  // Accepts every form assertColor admits: #rgb, #rgba, #rrggbb, #rrggbbaa.
+  // Alpha is dropped — this only decides whether the theme reads as dark, and
+  // the sheet's own surfaces are opaque.
+  const match = /^#([0-9a-f]{3,8})$/i.exec(hex.trim());
+  if (match?.[1] === undefined) throw new Error(`emitExtJs: expected a hex color, got "${hex}"`);
+  const raw = match[1];
+  const digits =
+    raw.length <= 4
+      ? raw
+          .slice(0, 3)
+          .split('')
+          .map((d) => d + d)
+          .join('')
+      : raw.slice(0, 6);
+  if (digits.length !== 6) throw new Error(`emitExtJs: expected a hex color, got "${hex}"`);
   const channel = (offset: number): number => {
     const srgb = Number.parseInt(digits.slice(offset, offset + 2), 16) / 255;
     return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
