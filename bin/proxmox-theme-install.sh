@@ -63,8 +63,13 @@ require_root() {
 # rather than leaving a file nobody can use.
 check_name() {
   local name=$1
-  printf '%s' "$name" | grep -Eq '^[a-z]{1,10}(-[a-z]{1,10}){0,5}$' ||
-    die "\"$name\" is not a selectable Proxmox theme name: PVE and PMG require ^[a-z]{1,10}(-[a-z]{1,10}){0,5}\$ (lowercase letters and hyphens, no digits)"
+  # Exit 2, not die()'s 1: this is a validation failure, and usage() already
+  # uses 2 for that. It also matches `design-generate --extjs`, so automation
+  # can tell "unusable name" from "install went wrong" on either entry point.
+  printf '%s' "$name" | grep -Eq '^[a-z]{1,10}(-[a-z]{1,10}){0,5}$' || {
+    printf 'error: "%s" is not a selectable Proxmox theme name: PVE and PMG require ^[a-z]{1,10}(-[a-z]{1,10}){0,5}$ (lowercase letters and hyphens, no digits)\n' "$name" >&2
+    exit 2
+  }
 }
 
 theme_name_from_file() {

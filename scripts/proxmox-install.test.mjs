@@ -153,7 +153,9 @@ describe('proxmox-theme-install.sh', () => {
     const bad = join(root, 'theme-sv-world2.css');
     writeFileSync(bad, readFileSync(SHEET));
     const result = run('install', bad);
-    expect(result.status).not.toBe(0);
+    // 2, matching usage() and `design-generate --extjs`, so automation can tell
+    // an unusable name from an install that went wrong.
+    expect(result.status).toBe(2);
     expect(result.stderr).toMatch(/not a selectable Proxmox theme name/);
   });
 
