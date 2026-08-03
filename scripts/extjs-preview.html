@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>@svnbjrn/design — ExtJS preview</title>
+
+    <!-- ExtJS 7.0.0 classic + crisp, the combination Proxmox ships. If the CDN
+         is unavailable, point these three tags at a local copy (on a Proxmox
+         node: /usr/share/javascript/extjs/ and .../proxmox-widget-toolkit/). -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.sencha.com/ext/gpl/7.0.0/classic/theme-crisp/resources/theme-crisp-all.css"
+    />
+    <script src="https://cdn.sencha.com/ext/gpl/7.0.0/build/ext-all.js"></script>
+
+    <!-- The artifact under test. Swap the stem to compare themes. -->
+    <link id="sv-theme" rel="stylesheet" href="../src/lib/extjs/theme-sv-dark.css" />
+
+    <script>
+      // Development aid, not a regression test: renders one of each widget the
+      // override sheet targets so a change can be eyeballed in both themes.
+      Ext.onReady(function () {
+        var store = Ext.create('Ext.data.Store', {
+          fields: ['node', 'status', 'cpu', 'mem'],
+          data: [
+            { node: 'pve-01', status: 'running', cpu: '4%', mem: '12.4 GiB' },
+            { node: 'pve-02', status: 'running', cpu: '31%', mem: '48.1 GiB' },
+            { node: 'pve-03', status: 'stopped', cpu: '0%', mem: '0 B' },
+            { node: 'pve-04', status: 'running', cpu: '77%', mem: '61.9 GiB' }
+          ]
+        });
+
+        Ext.create('Ext.container.Viewport', {
+          layout: 'border',
+          items: [
+            {
+              region: 'north',
+              xtype: 'toolbar',
+              items: [
+                { xtype: 'button', text: 'Create VM' },
+                { xtype: 'button', text: 'Menu', menu: [{ text: 'Start' }, { text: 'Shutdown' }, '-', { text: 'Remove', disabled: true }] },
+                { xtype: 'button', text: 'Disabled', disabled: true },
+                '->',
+                { xtype: 'textfield', emptyText: 'Search', width: 200 }
+              ]
+            },
+            {
+              region: 'west',
+              width: 240,
+              split: true,
+              xtype: 'treepanel',
+              title: 'Datacenter',
+              rootVisible: false,
+              store: Ext.create('Ext.data.TreeStore', {
+                root: {
+                  expanded: true,
+                  children: [
+                    { text: 'pve-01', expanded: true, children: [{ text: '100 (web)', leaf: true }, { text: '101 (db)', leaf: true }] },
+                    { text: 'pve-02', leaf: true },
+                    { text: 'local-lvm', leaf: true }
+                  ]
+                }
+              })
+            },
+            {
+              region: 'center',
+              xtype: 'tabpanel',
+              items: [
+                {
+                  title: 'Nodes',
+                  xtype: 'grid',
+                  store: store,
+                  columns: [
+                    { text: 'Node', dataIndex: 'node', flex: 1 },
+                    { text: 'Status', dataIndex: 'status', flex: 1 },
+                    { text: 'CPU', dataIndex: 'cpu', width: 100 },
+                    { text: 'Memory', dataIndex: 'mem', width: 140 }
+                  ]
+                },
+                {
+                  title: 'Form',
+                  bodyPadding: 16,
+                  items: [
+                    { xtype: 'textfield', fieldLabel: 'Name', value: 'pve-01' },
+                    { xtype: 'textfield', fieldLabel: 'Invalid', value: 'x', allowBlank: false, validator: function () { return 'must be a hostname'; } },
+                    { xtype: 'combobox', fieldLabel: 'Storage', store: ['local', 'local-lvm', 'ceph'], value: 'local-lvm' },
+                    { xtype: 'datefield', fieldLabel: 'Start' },
+                    { xtype: 'checkbox', boxLabel: 'Start at boot', checked: true },
+                    { xtype: 'progressbar', value: 0.62, text: '62%', width: 300, margin: '12 0 0 0' }
+                  ]
+                },
+                { title: 'Disabled tab', disabled: true }
+              ]
+            }
+          ]
+        });
+
+        Ext.create('Ext.window.Window', {
+          title: 'Bulk Action',
+          width: 380,
+          bodyPadding: 16,
+          html: 'Windows, menus and tooltips are the surfaces crisp styles most heavily.',
+          buttons: [{ text: 'Cancel' }, { text: 'Confirm' }]
+        }).show();
+
+        Ext.tip.QuickTipManager.init();
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

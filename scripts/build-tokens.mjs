@@ -4,6 +4,7 @@
 //   src/lib/tokens/palette.ts             generated TS view (compat exports)
 //   src/lib/tokens/resolved/<name>.tokens.json   flat map for non-JS consumers
 //   src/lib/qss/<name>.qss                Qt Style Sheet for PySide6
+//   src/lib/extjs/theme-sv-<name>.css     ExtJS override sheet for Proxmox
 //   crates/raudbjorn-tui/src/theme/generated.rs   ratatui::Color constants for raudbjorn-tui
 // Layer order (declared in index.css): sv.base < sv.theme < sv.world < sv.user.
 // Run via `pnpm run tokens`. Fails with a non-zero exit on any token error —
@@ -16,6 +17,7 @@ import { emitColorsCss, emitScaleCss } from './emitters/emit-css.mjs';
 import { emitPaletteTs } from './emitters/emit-palette-ts.mjs';
 import { emitResolvedJson } from './emitters/emit-json.mjs';
 import { emitQss } from './emitters/emit-qss.mjs';
+import { emitExtJs } from './emitters/emit-extjs.mjs';
 import { emitTuiRust } from './emitters/emit-tui-rust.mjs';
 
 const prepared = prepareBuild();
@@ -26,8 +28,10 @@ if (!prepared.ok) {
 const { base, themes } = prepared.value;
 
 const QSS_DIR = join(TOKENS_DIR, '../qss');
+const EXTJS_DIR = join(TOKENS_DIR, '../extjs');
 const RESOLVED_DIR = join(TOKENS_DIR, 'resolved');
 mkdirSync(QSS_DIR, { recursive: true });
+mkdirSync(EXTJS_DIR, { recursive: true });
 mkdirSync(join(TOKENS_DIR, '../../../crates/raudbjorn-tui/src/theme'), { recursive: true });
 mkdirSync(RESOLVED_DIR, { recursive: true });
 
@@ -37,6 +41,7 @@ const outputs = [
   [join(TOKENS_DIR, 'palette.ts'), emitPaletteTs(themes)],
   ...themes.map((t) => [join(RESOLVED_DIR, `${t.name}.tokens.json`), emitResolvedJson(t)]),
   ...themes.map((t) => [join(QSS_DIR, `${t.name}.qss`), emitQss(t)]),
+  ...themes.map((t) => [join(EXTJS_DIR, `theme-sv-${t.name}.css`), emitExtJs(t)]),
   [join(TOKENS_DIR, `../../../crates/raudbjorn-tui/src/theme/generated.rs`), emitTuiRust(themes)]
 ];
 
