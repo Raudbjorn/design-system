@@ -1,0 +1,62 @@
+---
+import type { StackProps } from './props.ts';
+
+type Props = StackProps;
+
+const {
+  as = 'div',
+  direction = 'column',
+  gap = 4,
+  align = 'stretch',
+  justify = 'start',
+  wrap = false,
+  style: userStyle,
+  ...rest
+} = Astro.props;
+
+const Tag = as;
+
+const map = {
+  start: 'flex-start',
+  center: 'center',
+  end: 'flex-end',
+  stretch: 'stretch',
+  between: 'space-between',
+  baseline: 'baseline'
+} as const;
+
+// Ours last: the layout contract always wins over a colliding consumer
+// `style`, matching the .svelte version where style: directives beat {...rest}.
+const style = [
+  userStyle,
+  'display: flex;',
+  `flex-direction: ${direction};`,
+  `gap: var(--sv-space-${gap});`,
+  `align-items: ${map[align]};`,
+  `justify-content: ${map[justify]};`,
+  `flex-wrap: ${wrap ? 'wrap' : 'nowrap'};`
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<!-- rest spreads first: the data-sv contract and the style below always win
+     over colliding consumer attributes. -->
+<Tag
+  {...rest}
+  data-sv="stack"
+  data-direction={direction}
+  style={style}
+><slot /></Tag>
+
+<style>
+  [data-sv='stack'] {
+    display: flex;
+  }
+  /* List semantics without list chrome. */
+  :where(ul, ol)[data-sv='stack'] {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>
