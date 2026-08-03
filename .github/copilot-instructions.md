@@ -32,6 +32,7 @@ The visual project uploads to Argos whenever `CI` is truthy, so explicitly clear
 - `src/lib/tokens/*.tokens.json` plus `themes.ts`: DTCG source of truth. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, `src/lib/qss/*.qss`, and `src/lib/extjs/theme-sv-*.css` (ExtJS/Proxmox adapter — the emitter lives in `src/lib/extjs/emit.ts` because `design-generate --extjs` ships it). Never hand-edit outputs; after source edits run `pnpm run tokens` and commit every output. Preserve structured DTCG color/dimension/shadow values.
 - `.storybook`, `vitest.config.ts`, and `docs/visual-testing.md`: visual-test contract.
 - `.design-sync/react-adapter` and `.design-sync/previews`: committed React bridge. Nothing regenerates its API automatically.
+- `src/lib/astro`: Astro integration plus hand-written `.astro` ports of the components with no state and no handlers. Nothing regenerates them either; `parity.test.ts` renders both implementations and compares, so drift fails the build rather than shipping.
 - `README.md`, `docs/theme-packages.md`, and `docs/bones-integration.md`: public contracts.
 
 Style with component props and tokens; use `Stack` for layout. Core cascade order is `sv.base < sv.theme < sv.world < sv.user`.
@@ -44,7 +45,7 @@ Style with component props and tokens; use `Stack` for layout. Core cascade orde
 - Forward appropriate native attributes and preserve native value types. Do not expose unsupported states such as `multiple` on a string-only Select. Normalize controlled values and non-finite numbers before rendering ARIA values or dimensions.
 - Toggle accessible names must remain stable with `aria-pressed`/`aria-checked`, while sighted users also get a visible state. Any accessible-name override must contain the visible label. Preserve selected/checked visuals when disabled.
 - Modal, Sheet, Tooltip, and focus-trap changes must affect only the topmost layer, close once on Escape/outside interaction, and retain stacked return-focus targets. Test nested overlays, unmounts, and transitions.
-- Public component/prop/event/snippet changes must update every affected surface: implementation/test, `src/lib/index.ts`, story, `.design-sync/react-adapter/{index.js,index.d.ts,wrap.js}`, and owned React preview. Scalar props still need declarations; React camelCase event aliases must match Svelte props.
+- Public component/prop/event/snippet changes must update every affected surface: implementation/test, `src/lib/index.ts`, story, `.design-sync/react-adapter/{index.js,index.d.ts,wrap.js}`, owned React preview, and — for a component ported to Astro — `src/lib/astro/components/<Name>.astro` plus its interface in `props.ts`. Scalar props still need declarations; React camelCase event aliases must match Svelte props. A prop that genuinely cannot cross into `.astro` goes in `unsupported.ts`, never silently missing.
 - Key stateful lists by stable domain identity, never array index.
 
 ### Async behavior and tests
