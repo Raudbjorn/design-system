@@ -83,9 +83,9 @@ Expected noise: font subsetting may print `PfEd NOT subset`; publint must still 
 
 ## Testing & QA
 
-- Vitest has two projects in `vitest.config.ts`: `unit` uses jsdom and Testing Library; `storybook` uses Playwright Chromium, Storybook, axe checks, light/dark modes, and Argos.
+- Vitest has two projects in `vitest.config.ts`: `unit` uses jsdom and Testing Library; `storybook` uses Playwright Chromium, Storybook, axe checks, dark/light/amber modes, and Argos.
 - Keep `vitest-setup.ts` polyfills intact: the Map-backed `localStorage` and `Element.animate` stub are required for persistence and transition tests.
 - Test observable behavior and failure paths: missing browser APIs, rejected promises, rapid repeats, pending unmount, invalid controlled values, stale async completion, accessibility relationships, and native element behavior.
 - `scripts/generated.test.mjs` guards committed generated artifacts. Token-source changes are incomplete until regeneration and drift tests pass.
-- User-visible component/token changes require deterministic stories in both themes; avoid time, locale, and randomness. Clear inherited `CI` locally to prevent Argos uploads.
+- User-visible component/token changes require deterministic stories in all three themes (dark, light, amber); avoid time, locale, and randomness. Clear inherited `CI` locally to prevent Argos uploads.
 - Before finishing a permanent change, run focused tests, then `pnpm run check`, `pnpm test`, and the relevant build/visual gates. Type-check or execute documentation examples; keep README claims and plan checkboxes synchronized with behavior.

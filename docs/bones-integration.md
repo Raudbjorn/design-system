@@ -49,27 +49,40 @@ Python backend) consumes `@svnbjrn/design` for per-campaign world theming.
 
 ## PySide6 (`apps/desktop_pyside`)
 
-Whole-app QSS swap from the packaged sheets:
+Vendor the Qt artifacts and apply them through the runtime helper — the full
+contract (what ships, application setup, variants, OS scheme watching, fonts)
+is in [docs/qt-integration.md](./qt-integration.md):
 
-```python
-from pathlib import Path
-
-design = Path("node_modules/@svnbjrn/design")
-app.setStyleSheet((design / "dist/qss/dark.qss").read_text())
+```bash
+# into an importable Python package directory, from a checkout or
+# node_modules/@svnbjrn/design after `pnpm run build`
+bash bin/qt-theme-install.sh --theme dark --dest apps/desktop_pyside/theme --from . --fonts
 ```
 
-- Variant widgets use dynamic properties + re-polish (Qt does not restyle on
-  property changes):
+```python
+import importlib.util
+from pathlib import Path
 
-  ```python
-  button.setProperty("class", "primary")
-  button.style().unpolish(button); button.style().polish(button); button.update()
-  ```
+from PySide6.QtWidgets import QApplication
 
+theme_dir = Path("apps/desktop_pyside/theme")
+spec = importlib.util.spec_from_file_location("sv_design_qt", theme_dir / "sv_design_qt.py")
+sv = importlib.util.module_from_spec(spec)
+assert spec.loader is not None
+spec.loader.exec_module(sv)
+
+app = QApplication([])
+sv.load_fonts(theme_dir / "sv-fonts")            # best-effort, may return []
+sv.apply(app, theme_dir / "dark.qss", theme_dir / "dark.palette.json")
+```
+
+- Variant widgets use the helper's re-polish idiom instead of duplicated
+  `setProperty`/unpolish/polish/update calls: `sv.set_variant(button, "primary")`.
 - Custom chrome templates from the flat resolved map
   (`dist/tokens/resolved/dark.tokens.json`): `tokens[name].qt` values plus
   `derived["accent-hover"]`/`…-pressed` (precomputed with the same oklab math
-  as the web hover convention).
+  as the web hover convention). Use the resolved JSON for this advanced
+  scale/derived-token work only — theme application goes through the helper.
 - Per-campaign QSS: generate the theme package (below), then run the token
   values through your Jinja2 QSS template, or regenerate the sheet by adding
   the world to `themes.ts` at build time for compiled-in worlds.

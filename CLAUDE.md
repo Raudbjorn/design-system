@@ -41,7 +41,7 @@ Key `src/lib/` areas:
 - `internal/` — shared `color`/`contrast` math, `focus-trap`, and **`invariants.ts`** (versioned world-theme rules — never tighten a published threshold without versioning + updating docs/fixtures/tests/adapter together).
 - `vermis/` and `carter/` — isolated opt-in systems with their own component barrels + required stylesheets. Never leak their `--layform-*` / `--carter-*` tokens into core `--sv-*`, and never let opting in silently restyle core.
 
-**Stories are browser visual regression tests.** `src/stories/*` covers both themes through Storybook and Argos. The workflow's visual/Argos job is currently disabled, so run `CI= pnpm run test:visual` and verify both themes locally until it is re-enabled. User-visible component/token changes need deterministic stories with no time, locale, or randomness. See `docs/visual-testing.md`.
+**Stories are browser visual regression tests.** `src/stories/*` covers dark, light, and amber through Storybook and Argos. The workflow's visual/Argos job is currently disabled, so run `CI= pnpm run test:visual` and verify all three themes locally until it is re-enabled. User-visible component/token changes need deterministic stories with no time, locale, or randomness. See `docs/visual-testing.md`.
 
 **React bridge.** `.design-sync/react-adapter` + `.design-sync/previews` are a *committed*, hand-maintained bridge — nothing regenerates them. Public component/prop/event/snippet changes must update the adapter (`index.js`, `index.d.ts`, `wrap.js`) and the owned preview; React camelCase event aliases must match Svelte lowercase props (`onclick`).
 

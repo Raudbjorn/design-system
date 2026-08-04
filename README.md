@@ -66,6 +66,8 @@ components:
 | `@svnbjrn/design/vermis` + `/vermis/styles.css` | Opt-in occult-ornate Vermis component and token system |
 | `@svnbjrn/design/carter` + `/carter/styles.css` | Opt-in modern-mystery Carter component and token system |
 | `@svnbjrn/design/qss/*.qss` | Generated dark, light, and explicit amber Qt Style Sheets |
+| `@svnbjrn/design/qt` | QPalette JSON emitter (`emitQtPalette`, `QT_ROLES`) |
+| `@svnbjrn/design/qt/*.json` | Generated QPalette role maps per theme (dark, light, amber) |
 | `@svnbjrn/design/tokens/*.json` | Resolved cross-platform token maps |
 
 ### Theming
@@ -153,11 +155,14 @@ The same API runs in the browser (see the Storybook **Theme Lab** story).
 
 ### Qt / QSS
 
-The token build also emits per-theme Qt Style Sheets and flat resolved token
-maps for non-web consumers: `@svnbjrn/design/qss/dark.qss` (apply via
-`QApplication.setStyleSheet`; light and explicit amber ship alongside it) and
-`@svnbjrn/design/tokens/dark.tokens.json` (css+qt values plus precomputed
-hover/pressed states). See `docs/bones-integration.md`.
+The token build also emits per-theme Qt artifacts for PySide6/Qt consumers:
+`@svnbjrn/design/qss/{dark,light,amber}.qss` style sheets,
+`@svnbjrn/design/qt/{dark,light,amber}.palette.json` QPalette role maps (from
+the `@svnbjrn/design/qt` emitter), plus `bin/sv_design_qt.py` — a stdlib-only
+runtime helper that validates the palette and applies Fusion → palette → QSS —
+and `bin/qt-theme-install.sh`, a copy-only vendoring installer for Python
+projects. See `docs/qt-integration.md` (and `docs/bones-integration.md` for
+the resolved-token-map use).
 
 ### ExtJS / Proxmox
 
