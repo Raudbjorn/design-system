@@ -3,7 +3,7 @@ import type { BreadcrumbProps } from './props.ts';
 
 type Props = BreadcrumbProps;
 
-const { items, 'aria-label': ariaLabel = 'Breadcrumb' } = Astro.props;
+const { items = [], 'aria-label': ariaLabel = 'Breadcrumb' } = Astro.props;
 ---
 
 <nav data-sv="breadcrumb" aria-label={ariaLabel}>

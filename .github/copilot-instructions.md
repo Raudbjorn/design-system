@@ -32,7 +32,7 @@ The visual project uploads to Argos whenever `CI` is truthy, so explicitly clear
 - `src/lib/tokens/*.tokens.json` plus `themes.ts`: DTCG source of truth. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, `src/lib/qss/*.qss`, and `src/lib/extjs/theme-sv-*.css` (ExtJS/Proxmox adapter — the emitter lives in `src/lib/extjs/emit.ts` because `design-generate --extjs` ships it). Never hand-edit outputs; after source edits run `pnpm run tokens` and commit every output. Preserve structured DTCG color/dimension/shadow values.
 - `.storybook`, `vitest.config.ts`, and `docs/visual-testing.md`: visual-test contract.
 - `.design-sync/react-adapter` and `.design-sync/previews`: committed React bridge. Nothing regenerates its API automatically.
-- `src/lib/astro`: Astro integration plus hand-written `.astro` ports of the components with no state and no handlers. Nothing regenerates them either; `parity.test.ts` renders both implementations and compares, so drift fails the build rather than shipping.
+- `src/lib/astro`: Astro integration plus hand-written `.astro` ports of the components with no state and no handlers, plus `Button` as a documented exception (ported without its Svelte `onclick` prop). Nothing regenerates them either; `parity.test.ts` renders both implementations and compares, so drift fails the build rather than shipping.
 - `README.md`, `docs/theme-packages.md`, and `docs/bones-integration.md`: public contracts.
 
 Style with component props and tokens; use `Stack` for layout. Core cascade order is `sv.base < sv.theme < sv.world < sv.user`.

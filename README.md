@@ -173,13 +173,14 @@ components are involved. See `docs/extjs-integration.md`.
 
 `@svnbjrn/design/astro` is an integration: one entry in `astro.config.mjs` wires
 the token stylesheet, the pre-paint boot script (Astro has no `app.html`, so
-otherwise every layout hand-wires it), and — the part only a static-output
-framework can do — a **build-time** world theme, parsed and contrast-gated at
-config time instead of applied after hydration. `@svnbjrn/design/astro/components`
+otherwise every layout hand-wires it), and a **build-time** world theme —
+parsed, contrast-gated, and turned into CSS during Astro's `astro:config:setup`
+hook, instead of applied after hydration. `@svnbjrn/design/astro/components`
 carries native `.astro` ports of the 17 components that have no state and no
-handlers, so they ship zero JS; the 11 interactive ones stay Svelte and take a
-`client:` directive. A parity test renders both implementations and compares
-them. See `docs/astro-integration.md`.
+handlers, plus `Button` as a documented exception (ported without its Svelte
+`onclick` prop), so they ship zero JS; the 11 interactive ones stay Svelte and
+take a `client:` directive. A parity test renders both implementations and
+compares them. See `docs/astro-integration.md`.
 
 ### Vernacular (world-flavored UI strings)
 

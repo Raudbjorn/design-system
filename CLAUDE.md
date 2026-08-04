@@ -45,7 +45,7 @@ Key `src/lib/` areas:
 
 **React bridge.** `.design-sync/react-adapter` + `.design-sync/previews` are a *committed*, hand-maintained bridge — nothing regenerates them. Public component/prop/event/snippet changes must update the adapter (`index.js`, `index.d.ts`, `wrap.js`) and the owned preview; React camelCase event aliases must match Svelte lowercase props (`onclick`).
 
-**Astro adapter.** `src/lib/astro/` is an integration (`@svnbjrn/design/astro`) plus native `.astro` ports of the 17 components that have no state and no handlers (`@svnbjrn/design/astro/components`). The ports duplicate markup *and* styles, so a prop/markup/style change to a ported component must update `src/lib/astro/components/<Name>.astro` in the same commit — `parity.test.ts` renders both and compares, `barrel.test.ts` derives the portable set from the sources. Tests run in their own Vitest project (`vitest.astro.config.ts`) because the Container API needs Astro's Vite plugin. See `docs/astro-integration.md`.
+**Astro adapter.** `src/lib/astro/` is an integration (`@svnbjrn/design/astro`) plus native `.astro` ports of the 17 components that have no state and no handlers, plus `Button` as a documented exception (ported without its Svelte `onclick` prop) (`@svnbjrn/design/astro/components`). The ports duplicate markup *and* styles, so a prop/markup/style change to a ported component must update `src/lib/astro/components/<Name>.astro` in the same commit — `parity.test.ts` renders both and compares, `barrel.test.ts` derives the portable set from the sources. Tests run in their own Vitest project (`vitest.astro.config.ts`) because the Container API needs Astro's Vite plugin. See `docs/astro-integration.md`.
 
 ## Conventions
 

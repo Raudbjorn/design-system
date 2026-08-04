@@ -27,8 +27,12 @@ const map = {
 
 // Ours last: the layout contract always wins over a colliding consumer
 // `style`, matching the .svelte version where style: directives beat {...rest}.
+// A trailing `;` is enforced so a caller's unterminated declaration doesn't
+// fuse with the next one (`color: red display: flex;`).
+const normalizedUserStyle =
+  userStyle && !userStyle.trim().endsWith(';') ? `${userStyle};` : userStyle;
 const style = [
-  userStyle,
+  normalizedUserStyle,
   'display: flex;',
   `flex-direction: ${direction};`,
   `gap: var(--sv-space-${gap});`,

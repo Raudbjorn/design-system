@@ -19,6 +19,7 @@ const { variant = 'primary', size = 'md', href, type = 'button', disabled = fals
     data-size={size}
     aria-disabled={disabled || undefined}
     aria-busy={loading || undefined}
+    tabindex={disabled ? -1 : undefined}
   >
     <slot />
   </a>

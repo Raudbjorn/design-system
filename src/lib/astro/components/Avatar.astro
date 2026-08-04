@@ -5,9 +5,10 @@ type Props = AvatarProps;
 
 const { src, alt, size = 'md' } = Astro.props;
 
-const initials = alt
+const initials = (alt ?? '')
   .trim()
   .split(/\s+/)
+  .filter(Boolean)
   .slice(0, 2)
   .map((w) => w[0]?.toUpperCase() ?? '')
   .join('');
