@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-`@svnbjrn/design` is a dark-first Svelte 5 component and design-token library. It ships 28 core components, dark/light and runtime world themes, hostile-input vernacular catalogs, deterministic seed-to-theme generation, CSS/JSON/QSS token outputs, self-hosted fonts, and opt-in Vermis and Carter visual languages. Use Svelte 5 runes/snippets, TypeScript, component props, and CSS custom properties; there is no utility-class framework.
+`@svnbjrn/design` is a dark-first Svelte 5 component and design-token library. It ships 28 core components, dark, light, and explicit amber built-in themes plus runtime world themes, hostile-input vernacular catalogs, deterministic seed-to-theme generation, CSS/JSON/QSS token outputs, self-hosted fonts, and opt-in Vermis and Carter visual languages. Use Svelte 5 runes/snippets, TypeScript, component props, and CSS custom properties; there is no utility-class framework.
 
 Read `CLAUDE.md` for fast orientation and `.github/copilot-instructions.md` before non-trivial component or theme work; the latter is the detailed, review-derived change contract.
 

@@ -303,6 +303,7 @@ describe('ExtJS contract', () => {
   it('inverts crisp icon sprites on dark themes only', () => {
     const byName = Object.fromEntries(themes.map((t) => [t.name, emitExtJs(t)]));
     expect(byName.dark).toMatch(/--sv-icon-filter: invert\(1\)/);
+    expect(byName.amber).toMatch(/--sv-icon-filter: invert\(1\)/);
     expect(byName.light).toContain('--sv-icon-filter: none;');
   });
 

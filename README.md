@@ -56,7 +56,7 @@ components:
 | Import | Purpose |
 | --- | --- |
 | `@svnbjrn/design` | 28 core Svelte components, palettes, `defineTheme`, and common vernacular helpers |
-| `@svnbjrn/design/styles.css` | Core tokens, bundled fonts, cascade layers, and dark/light themes |
+| `@svnbjrn/design/styles.css` | Core tokens, bundled fonts, cascade layers, and dark, light, and explicit amber themes |
 | `@svnbjrn/design/tokens` | Typed core palettes and token names |
 | `@svnbjrn/design/theme` | Framework-agnostic world-theme parser, CSS emitter, runtime appliers, mode persistence, and boot script |
 | `@svnbjrn/design/theme/svelte` | Svelte world-theme wrapper |
@@ -65,7 +65,7 @@ components:
 | `@svnbjrn/design/vernacular/svelte` | Svelte vernacular context |
 | `@svnbjrn/design/vermis` + `/vermis/styles.css` | Opt-in occult-ornate Vermis component and token system |
 | `@svnbjrn/design/carter` + `/carter/styles.css` | Opt-in modern-mystery Carter component and token system |
-| `@svnbjrn/design/qss/*.qss` | Generated dark/light Qt Style Sheets |
+| `@svnbjrn/design/qss/*.qss` | Generated dark, light, and explicit amber Qt Style Sheets |
 | `@svnbjrn/design/tokens/*.json` | Resolved cross-platform token maps |
 
 ### Theming
@@ -155,14 +155,14 @@ The same API runs in the browser (see the Storybook **Theme Lab** story).
 
 The token build also emits per-theme Qt Style Sheets and flat resolved token
 maps for non-web consumers: `@svnbjrn/design/qss/dark.qss` (apply via
-`QApplication.setStyleSheet`) and `@svnbjrn/design/tokens/dark.tokens.json`
-(css+qt values plus precomputed hover/pressed states). See
-`docs/bones-integration.md`.
+`QApplication.setStyleSheet`; light and explicit amber ship alongside it) and
+`@svnbjrn/design/tokens/dark.tokens.json` (css+qt values plus precomputed
+hover/pressed states). See `docs/bones-integration.md`.
 
 ### ExtJS / Proxmox
 
-The same build emits ExtJS override sheets — `@svnbjrn/design/extjs/theme-sv-dark.css`
-and `…-light.css` — that restyle ExtJS 7's own widgets from the `--sv-*` tokens.
+The same build emits ExtJS override sheets — `@svnbjrn/design/extjs/theme-sv-dark.css`,
+`…-light.css`, and `…-amber.css` — that restyle ExtJS 7's own widgets from the `--sv-*` tokens.
 They install into Proxmox VE / PBS / PMG with `bin/proxmox-theme-install.sh`, and
 `design-generate --extjs <file>` emits one for a generated world theme. No Svelte
 components are involved. See `docs/extjs-integration.md`.
@@ -260,13 +260,14 @@ pnpm build        # regenerate tokens + fonts, then svelte-package -> dist/
 ```
 
 Visual testing is documented in [docs/visual-testing.md](docs/visual-testing.md):
-every story is screenshotted in both themes and diffed on each PR via
-[Argos](https://app.argos-ci.com/argos-ci-2/design-system).
+every story is screenshotted in dark, light, and amber and diffed on each PR
+via [Argos](https://app.argos-ci.com/argos-ci-2/design-system).
 
 Design tokens are generated from a single DTCG source
 (`src/lib/tokens/*.tokens.json` + the `themes.ts` registry) via
 `pnpm run tokens` — outputs (`colors.css`, `scale.css`, `palette.ts`,
-`resolved/*.tokens.json`, `qss/*.qss`) are committed and drift-guarded by
+`resolved/*.tokens.json`, `qss/*.qss`, `extjs/theme-sv-*.css`) are committed
+and drift-guarded by
 tests. Adding a built-in theme is one token file plus one registry entry.
 Fonts are subset from `assets/fonts-src/` via `pnpm run fonts`.
 

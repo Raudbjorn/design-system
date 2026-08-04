@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-`@svnbjrn/design` is a dark-first **Svelte 5** (runes + snippets) component / design-token library: 28 core components, dark/light + runtime world themes, hostile-input vernacular parsing, deterministic seed-to-theme generation, cross-platform token output (CSS/JSON/QSS), self-hosted subset fonts, and two opt-in visual languages (Vermis, Carter). No utility-class framework — style with component props and `--sv-*` tokens.
+`@svnbjrn/design` is a dark-first **Svelte 5** (runes + snippets) component / design-token library: 28 core components, dark, light, and explicit amber built-in themes + runtime world themes, hostile-input vernacular parsing, deterministic seed-to-theme generation, cross-platform token output (CSS/JSON/QSS), self-hosted subset fonts, and two opt-in visual languages (Vermis, Carter). No utility-class framework — style with component props and `--sv-*` tokens.
 
 `.github/copilot-instructions.md` is the detailed, review-derived source of truth for change rules (accessibility, async cleanup, theme/untrusted-data gating, cross-surface update requirements). Read it before non-trivial component/theme edits. This file is the fast orientation.
 

@@ -10,7 +10,7 @@ const preview: Preview = {
     // Theme switching goes through the library's real contract: data-theme on
     // the root element, exactly as a consumer would set it. No backgrounds addon.
     withThemeByDataAttribute({
-      themes: { dark: 'dark', light: 'light' },
+      themes: { dark: 'dark', light: 'light', amber: 'amber' },
       defaultTheme: 'dark',
       attributeName: 'data-theme',
       parentSelector: 'html'
@@ -21,7 +21,8 @@ const preview: Preview = {
     argos: {
       modes: {
         dark: allModes.dark,
-        light: allModes.light
+        light: allModes.light,
+        amber: allModes.amber
       }
     },
     docs: { theme },

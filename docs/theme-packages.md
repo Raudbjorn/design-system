@@ -43,6 +43,10 @@ representation — a package string can never reach a stylesheet.
 contrast gate evaluates against; the document-scope applier sets `data-theme`
 to match, so the two can never disagree.
 
+`amber` is a third static built-in theme (selected explicitly via
+`data-theme="amber"`), but it is not a world-package base: `extends` remains
+`'dark' | 'light'`, and world packages continue to fold onto one of those two.
+
 ## Value grammars (per `$type`)
 
 | `$type` | accepted | rejected (examples) |

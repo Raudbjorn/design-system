@@ -63,7 +63,7 @@ export type {
   TerminologyReport
 } from './vernacular/index.js';
 export { contrastRatio } from './internal/contrast.js';
-export { dark, light } from './tokens/palette.js';
+export { amber, dark, light } from './tokens/palette.js';
 export type { Palette, TokenName } from './tokens/palette.js';
 
 // Vermis alternative design language — occult-ornate component set from the
