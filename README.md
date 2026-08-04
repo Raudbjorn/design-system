@@ -266,7 +266,7 @@ via [Argos](https://app.argos-ci.com/argos-ci-2/design-system).
 Design tokens are generated from a single DTCG source
 (`src/lib/tokens/*.tokens.json` + the `themes.ts` registry) via
 `pnpm run tokens` — outputs (`colors.css`, `scale.css`, `palette.ts`,
-`resolved/*.tokens.json`, `qss/*.qss`, `extjs/theme-sv-*.css`) are committed
+`resolved/*.tokens.json`, `qss/*.qss`, `qt/*.palette.json`, `extjs/theme-sv-*.css`) are committed
 and drift-guarded by
 tests. Adding a built-in theme is one token file plus one registry entry.
 Fonts are subset from `assets/fonts-src/` via `pnpm run fonts`.

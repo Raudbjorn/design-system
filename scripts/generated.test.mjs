@@ -20,6 +20,8 @@ import {
   PRESSED_MIX as EXTJS_PRESSED_MIX
 } from '../src/lib/extjs/emit.ts';
 import { emitTuiRust } from './emitters/emit-tui-rust.mjs';
+import { emitQtPalette, QT_ROLES } from '../src/lib/qt/emit.ts';
+import { emitQt } from './emitters/emit-qt.mjs';
 
 const prepared = prepareBuild();
 if (!prepared.ok) throw new Error(prepared.error.join('\n'));
@@ -76,10 +78,108 @@ describe('committed outputs match the emitters (run `pnpm run tokens` after toke
     it(`extjs/theme-sv-${theme.name}.css`, () => {
       expect(read('..', 'extjs', `theme-sv-${theme.name}.css`)).toBe(emitExtJs(theme));
     });
+    it(`qt/${theme.name}.palette.json`, () => {
+      expect(read('..', 'qt', `${theme.name}.palette.json`)).toBe(emitQt(theme));
+    });
   }
     it(`crates/raudbjorn-tui/src/theme/generated.rs`, () => {
       expect(readFileSync(join(TOKENS_DIR, '../../../crates/raudbjorn-tui/src/theme/generated.rs'), 'utf8')).toBe(emitTuiRust(themes));
     });
+});
+
+const QT_STATUS_KEYS = [
+  'success',
+  'error',
+  'warning',
+  'info',
+  'success-bg',
+  'error-bg',
+  'warning-bg',
+  'info-bg'
+];
+const QT_HEX_RE = /^#[0-9a-f]{6}$/;
+const QT_MARKER = 'by scripts/build-tokens.mjs — do not edit';
+
+describe('QPalette JSON contract', () => {
+  for (const theme of themes) {
+    const doc = JSON.parse(emitQt(theme));
+
+    it(`${theme.name}: top-level keys and marker are exact`, () => {
+      expect(Object.keys(doc)).toEqual(['$generated', 'name', 'meta', 'groups', 'status']);
+      expect(doc.$generated).toBe(QT_MARKER);
+      expect(doc.name).toBe(theme.name);
+    });
+
+    it(`${theme.name}: groups are exactly active/inactive/disabled`, () => {
+      expect(Object.keys(doc.groups)).toEqual(['active', 'inactive', 'disabled']);
+    });
+
+    it(`${theme.name}: every group has exactly all 14 roles`, () => {
+      for (const group of Object.values(doc.groups)) {
+        expect(Object.keys(group).sort()).toEqual([...QT_ROLES].sort());
+      }
+    });
+
+    it(`${theme.name}: status has exactly the eight keys`, () => {
+      expect(Object.keys(doc.status).sort()).toEqual([...QT_STATUS_KEYS].sort());
+    });
+
+    it(`${theme.name}: every color is lowercase six-digit hex with no leaks`, () => {
+      const colors = [];
+      for (const group of Object.values(doc.groups)) colors.push(...Object.values(group));
+      colors.push(...Object.values(doc.status));
+      for (const value of colors) {
+        expect(value).toMatch(QT_HEX_RE);
+        expect(value).not.toContain('${');
+        expect(value).not.toContain('undefined');
+        expect(value).not.toContain('NaN');
+      }
+    });
+
+    it(`${theme.name}: policy mappings are pinned`, () => {
+      const p = theme.paletteHex;
+      expect(doc.groups.active.Window).toBe(p.bg);
+      expect(doc.groups.active.Base).toBe(p['surface-1']);
+      expect(doc.groups.active.Highlight).toBe(p.accent);
+      expect(doc.groups.disabled.WindowText).toBe(p['text-faint']);
+      expect(doc.groups.disabled.Text).toBe(p['text-faint']);
+      expect(doc.groups.disabled.ButtonText).toBe(p['text-faint']);
+      expect(doc.groups.inactive.Highlight).toBe(mixOklab(p.accent, p['surface-3'], 0.5));
+      expect(doc.status.info).toBe(p.info);
+    });
+
+    it(`${theme.name}: meta.isDark matches the theme`, () => {
+      expect(doc.meta.isDark).toBe(theme.name !== 'light');
+    });
+  }
+
+  it('throws on a missing required mapped token, naming it', () => {
+    const palette = { ...themes[0].paletteHex };
+    delete palette.bg;
+    expect(() => emitQtPalette({ name: 'test', palette })).toThrow(
+      /missing color token "bg"/
+    );
+  });
+
+  it('throws on an uppercase or non-hex mapped token, naming it', () => {
+    const palette = { ...themes[0].paletteHex, bg: '#ABCDEF' };
+    expect(() => emitQtPalette({ name: 'test', palette })).toThrow(
+      /token "bg" is not #rrggbb/
+    );
+    palette.bg = 'rebeccapurple';
+    expect(() => emitQtPalette({ name: 'test', palette })).toThrow(
+      /token "bg" is not #rrggbb/
+    );
+  });
+
+  it('throws on an unsafe theme name, naming it', () => {
+    expect(() => emitQtPalette({ name: 'Dark', palette: themes[0].paletteHex })).toThrow(
+      /invalid theme name "Dark"/
+    );
+    expect(() => emitQtPalette({ name: 'dark/../etc', palette: themes[0].paletteHex })).toThrow(
+      /invalid theme name/
+    );
+  });
 });
 
 describe('crates/raudbjorn-tui/src/theme/generated.rs validation', () => {
