@@ -18,7 +18,11 @@ const QSS_DIR = join(ROOT, 'src/lib/qss');
 const PALETTE_NAMES = ['dark', 'light', 'amber'];
 
 const runPython = (code) =>
-  spawnSync('python3', ['-c', code], { encoding: 'utf8', timeout: 30_000 });
+  spawnSync('python3', ['-c', code], {
+    encoding: 'utf8',
+    timeout: 30_000,
+    env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' }
+  });
 
 // Loads the helper the documented way (importlib from a path) and binds it to
 // `m`. Placed first in every probe so a load failure surfaces as a traceback.
