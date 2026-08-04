@@ -21,6 +21,7 @@ export type TokenName =
   | 'success'
   | 'error'
   | 'warning'
+  | 'info'
   | 'syn-keyword'
   | 'syn-string'
   | 'syn-var'
@@ -47,6 +48,7 @@ const darkTokens: Record<TokenName, string> = {
   success: '#74a55e',
   error: '#ff5b48',
   warning: '#ffa500',
+  info: '#6fa8c7',
   'syn-keyword': '#569cd6',
   'syn-string': '#ce9178',
   'syn-var': '#9cdcfe',
@@ -74,6 +76,7 @@ const lightTokens: Record<TokenName, string> = {
   success: '#086326',
   error: '#9d2b20',
   warning: '#7d4800',
+  info: '#205d7d',
   'syn-keyword': '#274a86',
   'syn-string': '#8a4326',
   'syn-var': '#2f3f6e',

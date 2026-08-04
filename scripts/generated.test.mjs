@@ -49,7 +49,8 @@ const TUI_COLOR_FIELDS = [
   'syn-var',
   'syn-func',
   'syn-comment',
-  'syn-number'
+  'syn-number',
+  'info'
 ];
 
 describe('committed outputs match the emitters (run `pnpm run tokens` after token edits)', () => {

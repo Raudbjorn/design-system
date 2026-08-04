@@ -194,7 +194,7 @@ export type TokenName =
   | 'bg' | 'surface-1' | 'surface-2' | 'surface-3' | 'border'
   | 'text' | 'text-strong' | 'text-muted' | 'text-faint'
   | 'accent' | 'accent-2' | 'accent-rust' | 'mix-target'
-  | 'success' | 'error' | 'warning'
+  | 'success' | 'error' | 'warning' | 'info'
   | 'syn-keyword' | 'syn-string' | 'syn-var' | 'syn-func' | 'syn-comment' | 'syn-number';
 
 /** The built-in palettes — the data behind ThemeRoot's dark/light. */

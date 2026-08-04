@@ -26,6 +26,7 @@ pub const DARK: TerminalPalette = TerminalPalette {
     syn_func: Color::Rgb(220, 220, 170),
     syn_comment: Color::Rgb(116, 165, 94),
     syn_number: Color::Rgb(181, 206, 168),
+    info: Color::Rgb(111, 168, 199),
 };
 
 pub const LIGHT: TerminalPalette = TerminalPalette {
@@ -51,4 +52,5 @@ pub const LIGHT: TerminalPalette = TerminalPalette {
     syn_func: Color::Rgb(106, 83, 31),
     syn_comment: Color::Rgb(82, 95, 54),
     syn_number: Color::Rgb(47, 95, 69),
+    info: Color::Rgb(32, 93, 125),
 };

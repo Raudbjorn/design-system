@@ -44,6 +44,8 @@ export const contrastGates: ReadonlyArray<{ fg: TokenName; bg: TokenName; min: n
   { fg: 'error', bg: 'surface-2', min: 4.5 },
   { fg: 'warning', bg: 'bg', min: 4.5 },
   { fg: 'warning', bg: 'surface-2', min: 4.5 },
+  { fg: 'info', bg: 'bg', min: 4.5 },
+  { fg: 'info', bg: 'surface-2', min: 4.5 },
   { fg: 'syn-keyword', bg: 'surface-3', min: 4.5 },
   { fg: 'syn-string', bg: 'surface-3', min: 4.5 },
   { fg: 'syn-var', bg: 'surface-3', min: 4.5 },

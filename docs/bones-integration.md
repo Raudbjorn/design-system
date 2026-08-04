@@ -32,7 +32,7 @@ Python backend) consumes `@svnbjrn/design` for per-campaign world theming.
 
    const world = createWorldTheme();
    await world.load(campaign.themePackage, {
-     lockedTokens: ['success', 'error', 'warning'] // handoff: status never themes
+     lockedTokens: ['success', 'error', 'warning', 'info'] // handoff: status never themes
    });
    // world.issues → surface "N extracted tones were adjusted for readability"
    ```
@@ -106,7 +106,7 @@ ramps, assignment, and the AA guarantee.
 
 ## Contract locks (from the design handoff)
 
-- Status colors never theme: pass `lockedTokens: ['success','error','warning']`.
+- Status colors never theme: pass `lockedTokens: ['success','error','warning','info']`.
 - `z-*` / `bp-*` are hard-locked in the registry — worlds cannot move
   stacking contexts or breakpoints.
 - Vernacular/i18n and behavioral adaptation are BONES-side concerns; this

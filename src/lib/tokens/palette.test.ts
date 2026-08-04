@@ -15,7 +15,8 @@ const SEMANTIC_TEXT_TOKENS = [
   'accent-rust',
   'success',
   'error',
-  'warning'
+  'warning',
+  'info',
 ] as const;
 const LIGHT_TEXT_SURFACES = ['bg', 'surface-1', 'surface-2', 'surface-3'] as const;
 

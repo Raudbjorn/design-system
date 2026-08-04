@@ -15,7 +15,7 @@
     Text
   } from './lib/index';
 
-  const colorChips = ['accent', 'accent-2', 'success', 'warning', 'error'];
+  const colorChips = ['accent', 'accent-2', 'success', 'warning', 'info', 'error'];
   const neutralChips = ['bg', 'surface-1', 'surface-2', 'surface-3', 'border'];
 
   let theme = $state<'dark' | 'light'>('dark');
@@ -40,9 +40,10 @@
   --sv-text: #d4d4d4;
   --sv-accent: #4ec9b0;   /* teal — everything interactive */
   --sv-accent-2: #e06c75; /* coral — one emphasis per view */
-  --sv-success: #0c9138;
+  --sv-success: #74a55e;
   --sv-warning: #ffa500;
-  --sv-error: #f44430;
+  --sv-info: #6fa8c7;
+  --sv-error: #ff5b48;
 }`;
   const paletteHtml = `<span class="tok-func">:root</span> {
   <span class="tok-var">--sv-bg</span>: <span class="tok-string">#191919</span>;
@@ -51,9 +52,10 @@
   <span class="tok-var">--sv-text</span>: <span class="tok-string">#d4d4d4</span>;
   <span class="tok-var">--sv-accent</span>: <span class="tok-string">#4ec9b0</span>;   <span class="tok-comment">/* teal — everything interactive */</span>
   <span class="tok-var">--sv-accent-2</span>: <span class="tok-string">#e06c75</span>; <span class="tok-comment">/* coral — one emphasis per view */</span>
-  <span class="tok-var">--sv-success</span>: <span class="tok-string">#0c9138</span>;
+  <span class="tok-var">--sv-success</span>: <span class="tok-string">#74a55e</span>;
   <span class="tok-var">--sv-warning</span>: <span class="tok-string">#ffa500</span>;
-  <span class="tok-var">--sv-error</span>: <span class="tok-string">#f44430</span>;
+  <span class="tok-var">--sv-info</span>: <span class="tok-string">#6fa8c7</span>;
+  <span class="tok-var">--sv-error</span>: <span class="tok-string">#ff5b48</span>;
 }`;
 
   const headingRamp = [

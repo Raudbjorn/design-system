@@ -59,7 +59,9 @@
         "$description": "AA (>=4.5:1) on paper-400, the CodeBlock bg; #5a6a3d only hit 4.00"
       },
       "sage-300": { "$value": "#b5cea8" },
-      "pine-700": { "$value": "#2f5f45" }
+      "pine-700": { "$value": "#2f5f45" },
+      "steel-300": { "$value": "#6fa8c7" },
+      "steel-700": { "$value": "#205d7d" }
     }
   }
 }

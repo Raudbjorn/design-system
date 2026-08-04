@@ -403,6 +403,7 @@ QHeaderView::section {
 QLabel[class="success"] { color: #74a55e; }
 QLabel[class="error"] { color: #ff5b48; }
 QLabel[class="warning"] { color: #ffa500; }
+QLabel[class="info"] { color: #6fa8c7; }
 QLabel[class="muted"] { color: #9a9a9a; }
 QLabel[class="code"] {
   font-family: "Iosevka", ui-monospace, "Courier New", monospace;

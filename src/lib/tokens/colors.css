@@ -17,6 +17,7 @@
     --sv-success: #74a55e;
     --sv-error: #ff5b48;
     --sv-warning: #ffa500;
+    --sv-info: #6fa8c7;
     --sv-syn-keyword: #569cd6;
     --sv-syn-string: #ce9178;
     --sv-syn-var: #9cdcfe;
@@ -42,6 +43,7 @@
       --sv-success: #086326;
       --sv-error: #9d2b20;
       --sv-warning: #7d4800;
+      --sv-info: #205d7d;
       --sv-syn-keyword: #274a86;
       --sv-syn-string: #8a4326;
       --sv-syn-var: #2f3f6e;
@@ -67,6 +69,7 @@
     --sv-success: #74a55e;
     --sv-error: #ff5b48;
     --sv-warning: #ffa500;
+    --sv-info: #6fa8c7;
     --sv-syn-keyword: #569cd6;
     --sv-syn-string: #ce9178;
     --sv-syn-var: #9cdcfe;
@@ -91,6 +94,7 @@
     --sv-success: #086326;
     --sv-error: #9d2b20;
     --sv-warning: #7d4800;
+    --sv-info: #205d7d;
     --sv-syn-keyword: #274a86;
     --sv-syn-string: #8a4326;
     --sv-syn-var: #2f3f6e;
