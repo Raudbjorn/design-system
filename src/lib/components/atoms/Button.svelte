@@ -32,6 +32,7 @@
     data-size={size}
     aria-disabled={disabled || undefined}
     aria-busy={loading || undefined}
+    tabindex={disabled ? -1 : undefined}
     {onclick}
   >
     {@render children()}

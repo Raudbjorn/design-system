@@ -92,6 +92,8 @@ export interface StackProps {
   align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
   justify?: 'start' | 'center' | 'end' | 'between';
   wrap?: boolean;
+  /** Merged before the computed layout rules below, so those always win on collisions. */
+  style?: string;
   [attribute: string]: unknown;
 }
 

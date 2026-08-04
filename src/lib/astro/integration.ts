@@ -71,6 +71,12 @@ export default function svDesign(options: SvDesignOptions = {}): AstroIntegratio
       'astro:config:setup': async ({ config, updateConfig, injectScript, logger }) => {
         if (styles) injectScript('page-ssr', `import '${STYLES_SPECIFIER}';`);
 
+        if (mode && !boot) {
+          logger.warn(
+            '`@svnbjrn/design`: `mode` has no effect when `boot` is false — the seed ships inside the boot script.'
+          );
+        }
+
         if (world !== undefined) {
           const parsed = parseWorldTheme(world, worldOptions);
           if (!parsed.ok) {

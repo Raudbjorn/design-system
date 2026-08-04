@@ -5,7 +5,7 @@ type Props = TimelineProps;
 
 const KNOWN_COLORS = new Set(['accent', 'success', 'warning', 'error', 'accent-2']);
 
-const { items, mode = 'alternate', variant = 'outlined', reverse = false } = Astro.props;
+const { items = [], mode = 'alternate', variant = 'outlined', reverse = false } = Astro.props;
 
 const dotColor = (c?: string) =>
   c ? (KNOWN_COLORS.has(c) ? `var(--sv-${c})` : c) : 'var(--sv-accent)';
