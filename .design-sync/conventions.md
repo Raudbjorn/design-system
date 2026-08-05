@@ -13,7 +13,7 @@ Without it, components render on the host page's background and the theme
 follows the viewer's OS preference instead of your design's intent.
 
 ```jsx
-<ThemeRoot theme="dark">   {/* "dark" (default, the system's home turf) or "light" (pale paper) */}
+<ThemeRoot theme="dark">   {/* "dark" (default, the system's home turf), "light" (pale paper), or "amber" (warm dark) */}
   …your design…
 </ThemeRoot>
 ```

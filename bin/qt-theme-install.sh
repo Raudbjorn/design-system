@@ -138,6 +138,12 @@ if [[ $FONTS -eq 1 ]]; then
   for font in "${FONT_SRCS[@]}"; do
     [[ -r "$font" ]] || die "unreadable font: $font"
   done
+  # The font destination is created during install; anything already squatting
+  # on the path must be a writable directory or preflight fails before any copy.
+  if [[ -e "$DEST/sv-fonts" ]]; then
+    [[ -d "$DEST/sv-fonts" ]] || die "font destination is not a directory: $DEST/sv-fonts"
+    [[ -w "$DEST/sv-fonts" ]] || die "font destination is not writable: $DEST/sv-fonts"
+  fi
 fi
 
 # ── Install: overwrite semantics with a same-file guard, delete nothing ────

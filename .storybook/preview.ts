@@ -17,7 +17,7 @@ const preview: Preview = {
     })
   ],
   parameters: {
-    // Argos captures every story in both themes — each mode is its own baseline.
+    // Argos captures every story in all three themes — each mode is its own baseline.
     argos: {
       modes: {
         dark: allModes.dark,

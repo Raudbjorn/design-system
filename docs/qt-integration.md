@@ -115,17 +115,21 @@ if sv.watch_color_scheme(app, on_scheme_change):
     ...  # wired
 ```
 
-`amber` is never auto-selected — it stays explicit via `data-theme="amber"`
-semantics: install it when the user chooses it, not when the OS flips.
+`amber` is never auto-selected — like `data-theme="amber"` on the web, it is
+an explicit user choice. In Qt terms: point `apply()` at the amber artifacts
+only when the user picks that theme, never from the OS scheme callback.
 
 ## Fonts
 
 `load_fonts()` scans one directory level for `.ttf`/`.otf`/`.woff2` in sorted
 order, registers what Qt accepts, skips the `-1` ids Qt rejects, and returns
-the registered family names. It is deliberately best-effort: Qt frequently
-rejects WOFF2 (it wants TrueType/OpenType), so an empty list is expected on
-some platforms — the QSS font stack falls back to the system fonts and theme
-application continues either way.
+the registered family names. It is deliberately best-effort: Qt only
+guarantees TrueType/OpenType, and WOFF2 registers where the platform font
+engine decodes it (FreeType with brotli — standard on Linux). Elsewhere the
+rejected files are skipped and an empty list is normal — the QSS font stack
+falls back to the system fonts and theme application continues either way.
+The same applies when `sv-fonts/` was never vendored (`--fonts` omitted):
+`load_fonts()` returns `[]` without raising.
 
 ## Pure emitter
 

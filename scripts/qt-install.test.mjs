@@ -9,7 +9,7 @@
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { basename, join } from 'node:path';
+import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 
 const ROOT = process.cwd();
@@ -248,6 +248,23 @@ describe('preflight failures leave the destination untouched', () => {
     const ls = spawnSync('ls', [dest], { encoding: 'utf8' }).stdout;
     expect(ls).toContain('keep.txt');
     expect(ls.split('\n').filter(Boolean)).toHaveLength(1);
+  });
+
+  it('exits 1 before any copy when a file squats on the sv-fonts path', () => {
+    const root = mkTmp('font-squat');
+    seedFlat(root, 'dark');
+    seedFonts(root, ['Iosevka-Regular.woff2']);
+    const dest = seedDest('dest-font-squat');
+    writeFileSync(join(dest, 'sv-fonts'), 'not a directory');
+
+    const result = run(SCRIPT, '--theme', 'dark', '--dest', dest, '--from', root, '--fonts');
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('sv-fonts');
+    // Nothing was installed: only the user's file and the blocking path remain.
+    expect(read(join(dest, 'keep.txt'))).toBe('unrelated user file');
+    expect(read(join(dest, 'sv-fonts'))).toBe('not a directory');
+    const ls = spawnSync('ls', [dest], { encoding: 'utf8' }).stdout;
+    expect(ls.split('\n').filter(Boolean).sort()).toEqual(['keep.txt', 'sv-fonts']);
   });
 
   it('exits 1 for an incomplete layout (QSS without palette)', () => {

@@ -121,7 +121,7 @@ Depends on step 1’s 23-key contract. Amber is explicit through `data-theme="am
   - `.storybook/preview.ts`: add `amber: 'amber'` to the theme decorator and `amber: allModes.amber` to Argos modes.
   - `.storybook/modes.ts`: add `amber: { theme: 'amber' }`.
   - Update dark/light-only comments in `vitest.config.ts` and `.github/workflows/ci.yml` without enabling the currently disabled Argos job.
-  - `docs/visual-testing.md`: document the verified 72 explicit Svelte stories × 3 modes = **216 screenshots**, about 23 complete builds under a 5,000-screenshot quota, ` mode-[amber]` suffixes, and that `CI= pnpm run test:visual` is the active local gate while the workflow job remains disabled.
+  - `docs/visual-testing.md`: document the verified 72 explicit Svelte stories × 3 modes = **216 screenshots**, about 23 complete builds under a 5,000-screenshot quota, `mode-[amber]` suffixes, and that `CI= pnpm run test:visual` is the active local gate while the workflow job remains disabled.
 
 - [ ] **Regenerate and synchronize public inventories.** Run `pnpm run tokens`. Expect new `src/lib/tokens/resolved/amber.tokens.json`, `src/lib/qss/amber.qss`, `src/lib/extjs/theme-sv-amber.css`, an `AMBER` constant in `crates/raudbjorn-tui/src/theme/generated.rs`, and amber blocks in `src/lib/tokens/colors.css` and `src/lib/tokens/palette.ts`.
   - Update `README.md`, `AGENTS.md`, `CLAUDE.md`, and `.github/copilot-instructions.md` from blanket dark/light output wording to “dark, light, and explicit amber,” while preserving dark/light/system mode wording.

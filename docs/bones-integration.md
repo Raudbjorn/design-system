@@ -56,6 +56,7 @@ is in [docs/qt-integration.md](./qt-integration.md):
 ```bash
 # into an importable Python package directory, from a checkout or
 # node_modules/@svnbjrn/design after `pnpm run build`
+mkdir -p apps/desktop_pyside/theme   # --dest must already exist
 bash bin/qt-theme-install.sh --theme dark --dest apps/desktop_pyside/theme --from . --fonts
 ```
 

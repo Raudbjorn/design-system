@@ -4,9 +4,12 @@ Every story doubles as a visual regression test. The `storybook` Vitest project
 renders each story in headless Chromium (via `@storybook/addon-vitest`), and
 [Argos](https://argos-ci.com/docs/storybook) captures one screenshot per story
 per mode — dark, light, and explicit amber, driven through the same `data-theme`
-contract the library ships. CI uploads them to
+contract the library ships. When the workflow's visual job is enabled, CI
+uploads them to
 [app.argos-ci.com/argos-ci-2/design-system](https://app.argos-ci.com/argos-ci-2/design-system),
-where each PR's diffs are reviewed against the `main` baseline.
+where each PR's diffs are reviewed against the `main` baseline. That job is
+**currently disabled** — `CI= pnpm run test:visual` is the active gate (see
+below).
 
 **What runs:** 72 explicit Svelte stories × {dark, light, amber} = 216
 screenshots per build. The Hobby plan allows 5,000 screenshots/month (about
@@ -19,16 +22,17 @@ pnpm exec playwright install chromium   # once
 pnpm run test:visual                    # renders stories, writes ./screenshots
 ```
 
-PNGs land in `./screenshots` (gitignored), suffixed ` mode-[dark]` /
-` mode-[light]` / ` mode-[amber]`. Nothing uploads without `CI` in the
-environment. The workflow job is currently disabled, so `CI= pnpm run
+PNGs land in `./screenshots` (gitignored), suffixed with a space plus
+`mode-[dark]` / `mode-[light]` / `mode-[amber]`. Nothing uploads without `CI`
+in the environment. The workflow job is currently disabled, so `CI= pnpm run
 test:visual` is the active local gate; `pnpm test` and `pnpm test:watch` stay
 unit-only (jsdom).
 
 ## Review workflow
 
-- Each PR gets an **argos** status check; click through to approve or reject
-  diffs per screenshot. Builds on `main` become the auto-approved baseline.
+- While the visual job is enabled, each PR gets an **argos** status check;
+  click through to approve or reject diffs per screenshot. Builds on `main`
+  become the auto-approved baseline.
 - A PR build shows as **orphan** until `main` has run the workflow once.
 - `argos deploy` publishes the built Storybook at a per-build preview URL,
   linked from the build page.

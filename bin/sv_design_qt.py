@@ -232,13 +232,19 @@ def load_fonts(directory: str | Path) -> list[str]:
     """Best-effort registration of the fonts in one directory level.
 
     Scans sorted *.ttf / *.otf / *.woff2, ignores other suffixes, skips ids Qt
-    rejected (-1), and returns the registered family names. Returns [] when Qt
-    accepts nothing (the QSS system-font stack remains the fallback).
+    rejected (-1), and returns the registered family names. Qt only guarantees
+    TrueType/OpenType; WOFF2 registers where the platform font engine decodes
+    it (FreeType with brotli — standard on Linux) and takes the -1 path
+    elsewhere. Returns [] when the directory is absent (fonts were not
+    vendored) or Qt accepts nothing — the QSS system-font stack remains the
+    fallback either way.
     """
     QtGui = _qt_gui()
     db = QtGui.QFontDatabase
     families: list[str] = []
     root = Path(directory)
+    if not root.is_dir():
+        return families
     for entry in sorted(root.iterdir(), key=lambda p: p.name):
         if not entry.is_file() or entry.suffix.lower() not in _FONT_SUFFIXES:
             continue
