@@ -19,5 +19,6 @@ export interface ThemeSpec {
 
 export const themes: readonly ThemeSpec[] = [
   { name: 'dark', files: ['dark.tokens.json'], default: true },
-  { name: 'light', files: ['light.tokens.json'], prefersColorScheme: 'light' }
+  { name: 'light', files: ['light.tokens.json'], prefersColorScheme: 'light' },
+  { name: 'amber', files: ['amber.tokens.json'] }
 ];

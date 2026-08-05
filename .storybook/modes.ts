@@ -2,5 +2,6 @@
 // The `theme` global drives the withThemeByDataAttribute decorator in preview.ts.
 export const allModes = {
   dark: { theme: 'dark' },
-  light: { theme: 'light' }
+  light: { theme: 'light' },
+  amber: { theme: 'amber' }
 } as const;

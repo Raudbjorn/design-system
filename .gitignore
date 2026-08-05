@@ -19,3 +19,4 @@ screenshots/
 .design-sync/react-dist/
 .ds-sync/
 ds-bundle/
+__pycache__/

@@ -2,13 +2,13 @@
 
 ## Project Overview
 
-`@svnbjrn/design` is a dark-first Svelte 5 component and design-token library. It ships 28 core components, dark/light and runtime world themes, hostile-input vernacular catalogs, deterministic seed-to-theme generation, CSS/JSON/QSS token outputs, self-hosted fonts, and opt-in Vermis and Carter visual languages. Use Svelte 5 runes/snippets, TypeScript, component props, and CSS custom properties; there is no utility-class framework.
+`@svnbjrn/design` is a dark-first Svelte 5 component and design-token library. It ships 28 core components, dark, light, and explicit amber built-in themes plus runtime world themes, hostile-input vernacular catalogs, deterministic seed-to-theme generation, CSS/JSON/QSS token outputs, self-hosted fonts, and opt-in Vermis and Carter visual languages. Use Svelte 5 runes/snippets, TypeScript, component props, and CSS custom properties; there is no utility-class framework.
 
 Read `CLAUDE.md` for fast orientation and `.github/copilot-instructions.md` before non-trivial component or theme work; the latter is the detailed, review-derived change contract.
 
 ## Architecture & Data Flow
 
-- **Token build:** DTCG sources in `src/lib/tokens/*.tokens.json` plus `themes.ts` flow through `scripts/build-tokens.mjs` and its emitters into committed `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, `src/lib/qss/*.qss`, and `src/lib/extjs/theme-sv-*.css`. Edit sources, run `pnpm run tokens`, and commit every generated change. Never hand-edit outputs.
+- **Token build:** DTCG sources in `src/lib/tokens/*.tokens.json` plus `themes.ts` flow through `scripts/build-tokens.mjs` and its emitters into committed `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, `src/lib/qss/*.qss`, `src/lib/qt/*.palette.json`, and `src/lib/extjs/theme-sv-*.css`. Edit sources, run `pnpm run tokens`, and commit every generated change. Never hand-edit outputs.
 - **Runtime themes:** untrusted JSON enters `src/lib/theme/parse.ts`, resolves DTCG aliases, passes the closed token registry and per-type grammar, then the WCAG rules in `src/lib/internal/invariants.ts`. Successful themes become layered CSS through `theme/css.ts` and `theme/apply.ts`; failures return typed issue arrays. `theme/boot.ts` prevents pre-paint FOUC, while `theme/svelte.svelte.ts` provides reactive state with stale-async protection.
 - **Generation:** seeds and optional atmosphere hints flow through `src/lib/generate/{assign,solve,generate}.ts`; OKLCH color solving produces a world-theme package that must pass the same runtime gates. The pipeline backs `bin/design-generate.mjs` and Storybook Theme Lab.
 - **Vernacular:** catalogs pass through Unicode normalization, control/bidi rejection, placeholder validation, and `VERNACULAR_REGISTRY`; `vernacular/resolve.ts` returns spread-safe component props with world-to-English/default fallback. Treat all catalog input as hostile.
@@ -84,9 +84,9 @@ Expected noise: font subsetting may print `PfEd NOT subset`; publint must still 
 
 ## Testing & QA
 
-- Vitest has two projects in `vitest.config.ts`: `unit` uses jsdom and Testing Library; `storybook` uses Playwright Chromium, Storybook, axe checks, light/dark modes, and Argos.
+- Vitest has two projects in `vitest.config.ts`: `unit` uses jsdom and Testing Library; `storybook` uses Playwright Chromium, Storybook, axe checks, dark/light/amber modes, and Argos.
 - Keep `vitest-setup.ts` polyfills intact: the Map-backed `localStorage` and `Element.animate` stub are required for persistence and transition tests.
 - Test observable behavior and failure paths: missing browser APIs, rejected promises, rapid repeats, pending unmount, invalid controlled values, stale async completion, accessibility relationships, and native element behavior.
 - `scripts/generated.test.mjs` guards committed generated artifacts. Token-source changes are incomplete until regeneration and drift tests pass.
-- User-visible component/token changes require deterministic stories in both themes; avoid time, locale, and randomness. Clear inherited `CI` locally to prevent Argos uploads.
+- User-visible component/token changes require deterministic stories in all three themes (dark, light, amber); avoid time, locale, and randomness. Clear inherited `CI` locally to prevent Argos uploads.
 - Before finishing a permanent change, run focused tests, then `pnpm run check`, `pnpm test`, and the relevant build/visual gates. Type-check or execute documentation examples; keep README claims and plan checkboxes synchronized with behavior.

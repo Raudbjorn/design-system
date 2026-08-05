@@ -445,6 +445,7 @@ QHeaderView::section {
 QLabel[class="success"] { color: ${c('success')}; }
 QLabel[class="error"] { color: ${c('error')}; }
 QLabel[class="warning"] { color: ${c('warning')}; }
+QLabel[class="info"] { color: ${c('info')}; }
 QLabel[class="muted"] { color: ${c('text-muted')}; }
 QLabel[class="code"] {
   font-family: ${s('font-mono')};

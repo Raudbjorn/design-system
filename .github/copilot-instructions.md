@@ -4,7 +4,7 @@ Trust this file for the repository map and validated commands. Search only when 
 
 ## Repository and toolchain
 
-`@svnbjrn/design` is a dark-first Svelte 5 component/design-token library: 28 core components, dark/light and runtime world themes, vernacular parsing, deterministic theme generation, generated CSS/JSON/QSS, self-hosted fonts, and opt-in Vermis/Carter visual languages. It uses Svelte 5 runes/snippets, TypeScript, CSS custom properties, and no utility-class framework.
+`@svnbjrn/design` is a dark-first Svelte 5 component/design-token library: 28 core components, dark, light, and explicit amber built-in themes plus runtime world themes, vernacular parsing, deterministic theme generation, generated CSS/JSON/QSS, self-hosted fonts, and opt-in Vermis/Carter visual languages. It uses Svelte 5 runes/snippets, TypeScript, CSS custom properties, and no utility-class framework.
 
 - Node.js `>=22` is required; CI uses Node 24. Use pinned `pnpm@11.3.0`.
 - Always bootstrap with `pnpm install --frozen-lockfile`.
@@ -26,10 +26,10 @@ The visual project uploads to Argos whenever `CI` is truthy, so explicitly clear
 ## Project map and sources of truth
 
 - `src/lib/components/{atoms,layout,molecules}`: core components with colocated tests; `src/lib/index.ts` is the public barrel.
-- `src/stories`: Storybook stories; each is a dark/light visual regression test.
+- `src/stories`: Storybook stories; each is a dark/light/amber visual regression test.
 - `src/lib/theme`, `vernacular`, and `generate`: runtime theme handling, hostile-input string catalogs, and the seed-to-theme solver.
 - `src/lib/vermis` and `src/lib/carter`: isolated opt-in systems. Never leak their `--layform-*`/`--carter-*` tokens into core `--sv-*`.
-- `src/lib/tokens/*.tokens.json` plus `themes.ts`: DTCG source of truth. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, `src/lib/qss/*.qss`, and `src/lib/extjs/theme-sv-*.css` (ExtJS/Proxmox adapter — the emitter lives in `src/lib/extjs/emit.ts` because `design-generate --extjs` ships it). Never hand-edit outputs; after source edits run `pnpm run tokens` and commit every output. Preserve structured DTCG color/dimension/shadow values.
+- `src/lib/tokens/*.tokens.json` plus `themes.ts`: DTCG source of truth. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, `src/lib/qss/*.qss`, `src/lib/qt/*.palette.json`, and `src/lib/extjs/theme-sv-*.css` (ExtJS/Proxmox adapter — the emitter lives in `src/lib/extjs/emit.ts` because `design-generate --extjs` ships it). Never hand-edit outputs; after source edits run `pnpm run tokens` and commit every output. Preserve structured DTCG color/dimension/shadow values.
 - `.storybook`, `vitest.config.ts`, and `docs/visual-testing.md`: visual-test contract.
 - `.design-sync/react-adapter` and `.design-sync/previews`: committed React bridge. Nothing regenerates its API automatically.
 - `src/lib/astro`: Astro integration plus hand-written `.astro` ports of the components with no state and no handlers, plus `Button` as a documented exception (ported without its Svelte `onclick` prop). Nothing regenerates them either; `parity.test.ts` renders both implementations and compares, so drift fails the build rather than shipping.

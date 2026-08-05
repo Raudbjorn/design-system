@@ -21,6 +21,7 @@ export type TokenName =
   | 'success'
   | 'error'
   | 'warning'
+  | 'info'
   | 'syn-keyword'
   | 'syn-string'
   | 'syn-var'
@@ -28,7 +29,7 @@ export type TokenName =
   | 'syn-comment'
   | 'syn-number';
 
-export type ThemeName = 'dark' | 'light';
+export type ThemeName = 'dark' | 'light' | 'amber';
 
 const darkTokens: Record<TokenName, string> = {
   bg: '#191919',
@@ -47,6 +48,7 @@ const darkTokens: Record<TokenName, string> = {
   success: '#74a55e',
   error: '#ff5b48',
   warning: '#ffa500',
+  info: '#6fa8c7',
   'syn-keyword': '#569cd6',
   'syn-string': '#ce9178',
   'syn-var': '#9cdcfe',
@@ -74,6 +76,7 @@ const lightTokens: Record<TokenName, string> = {
   success: '#086326',
   error: '#9d2b20',
   warning: '#7d4800',
+  info: '#205d7d',
   'syn-keyword': '#274a86',
   'syn-string': '#8a4326',
   'syn-var': '#2f3f6e',
@@ -84,7 +87,36 @@ const lightTokens: Record<TokenName, string> = {
 
 export const light: Palette = lightTokens;
 
+const amberTokens: Record<TokenName, string> = {
+  bg: '#0f0e0d',
+  'surface-1': '#1a1815',
+  'surface-2': '#221f1a',
+  'surface-3': '#2b271f',
+  border: '#332e26',
+  text: '#e2d9c8',
+  'text-strong': '#f1e7c4',
+  'text-muted': '#a89c86',
+  'text-faint': '#948a76',
+  accent: '#d4a017',
+  'accent-2': '#e06c75',
+  'accent-rust': '#ce9178',
+  'mix-target': '#ffffff', // hover lightens in dark
+  success: '#86b86b',
+  error: '#e4635a',
+  warning: '#e08a2b',
+  info: '#6fa8c7',
+  'syn-keyword': '#6ea7dd',
+  'syn-string': '#d29a6a',
+  'syn-var': '#9ec7e8',
+  'syn-func': '#d9c78a',
+  'syn-comment': '#8faf72',
+  'syn-number': '#b3c99a'
+};
+
+export const amber: Palette = amberTokens;
+
 export const palettes: Record<ThemeName, Readonly<Record<TokenName, string>>> = {
   dark: darkTokens,
-  light: lightTokens
+  light: lightTokens,
+  amber: amberTokens
 };

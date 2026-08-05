@@ -45,6 +45,7 @@ export const CONTRAST_RULES: readonly ContrastRule[] = [
   { fg: 'success', bg: 'bg', floor: 3, tier: 'extension' },
   { fg: 'error', bg: 'bg', floor: 3, tier: 'extension' },
   { fg: 'warning', bg: 'bg', floor: 3, tier: 'extension' },
+  { fg: 'info', bg: 'bg', floor: 3, tier: 'extension' },
   { fg: 'accent-rust', bg: 'bg', floor: 3, tier: 'extension' },
   { fg: 'text-strong', bg: 'surface-3', floor: 4.5, tier: 'extension' },
   { fg: 'text', bg: 'surface-3', floor: 4.5, tier: 'extension' },

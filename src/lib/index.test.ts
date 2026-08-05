@@ -12,4 +12,10 @@ describe('barrel', () => {
     ];
     for (const n of names) expect(ds[n as keyof typeof ds]).toBeTruthy();
   });
+
+  it('exports the built-in palettes including amber', () => {
+    expect(ds.dark).toBeTruthy();
+    expect(ds.light).toBeTruthy();
+    expect(ds.amber).toBeTruthy();
+  });
 });

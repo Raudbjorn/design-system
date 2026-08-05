@@ -34,6 +34,11 @@
       "default": "./dist/extjs/index.js"
     },
     "./extjs/*.css": "./dist/extjs/*.css",
+    "./qt": {
+      "types": "./dist/qt/index.d.ts",
+      "default": "./dist/qt/index.js"
+    },
+    "./qt/*.json": "./dist/qt/*.json",
     "./astro": {
       "types": "./dist/astro/index.d.ts",
       "default": "./dist/astro/index.js"

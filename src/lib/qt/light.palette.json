@@ -1,0 +1,67 @@
+{
+  "$generated": "by scripts/build-tokens.mjs — do not edit",
+  "name": "light",
+  "meta": {
+    "isDark": false
+  },
+  "groups": {
+    "active": {
+      "Window": "#f1e7c4",
+      "WindowText": "#3a3527",
+      "Base": "#ece1b8",
+      "AlternateBase": "#e6dcb2",
+      "Text": "#3a3527",
+      "Button": "#e6dcb2",
+      "ButtonText": "#3a3527",
+      "ToolTipBase": "#e0d5a8",
+      "ToolTipText": "#2a2617",
+      "Highlight": "#1f6659",
+      "HighlightedText": "#f1e7c4",
+      "PlaceholderText": "#65604b",
+      "Link": "#1f6659",
+      "BrightText": "#ffffff"
+    },
+    "inactive": {
+      "Window": "#f1e7c4",
+      "WindowText": "#3a3527",
+      "Base": "#ece1b8",
+      "AlternateBase": "#e6dcb2",
+      "Text": "#3a3527",
+      "Button": "#e6dcb2",
+      "ButtonText": "#3a3527",
+      "ToolTipBase": "#e0d5a8",
+      "ToolTipText": "#2a2617",
+      "Highlight": "#839c80",
+      "HighlightedText": "#f1e7c4",
+      "PlaceholderText": "#65604b",
+      "Link": "#1f6659",
+      "BrightText": "#ffffff"
+    },
+    "disabled": {
+      "Window": "#f1e7c4",
+      "WindowText": "#65604b",
+      "Base": "#f1e7c4",
+      "AlternateBase": "#e6dcb2",
+      "Text": "#65604b",
+      "Button": "#ece1b8",
+      "ButtonText": "#65604b",
+      "ToolTipBase": "#e0d5a8",
+      "ToolTipText": "#2a2617",
+      "Highlight": "#e0d5a8",
+      "HighlightedText": "#605b47",
+      "PlaceholderText": "#65604b",
+      "Link": "#605b47",
+      "BrightText": "#ffffff"
+    }
+  },
+  "status": {
+    "success": "#086326",
+    "error": "#9d2b20",
+    "warning": "#7d4800",
+    "info": "#205d7d",
+    "success-bg": "#d0d3ab",
+    "error-bg": "#e7cbaa",
+    "warning-bg": "#e0cea8",
+    "info-bg": "#d1d2ba"
+  }
+}

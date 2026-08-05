@@ -178,8 +178,8 @@ export declare const StatCard: React.FC<StatCardProps>;
  * <ThemeRoot theme="dark"> for the system's dark-first look.
  */
 export interface ThemeRootProps {
-  /** dark (default) or the pale-paper light theme. */
-  theme?: 'dark' | 'light';
+  /** dark (default), the pale-paper light theme, or the explicit warm-dark amber theme. */
+  theme?: 'dark' | 'light' | 'amber';
   children?: React.ReactNode;
 }
 export declare const ThemeRoot: React.FC<ThemeRootProps>;
@@ -194,12 +194,13 @@ export type TokenName =
   | 'bg' | 'surface-1' | 'surface-2' | 'surface-3' | 'border'
   | 'text' | 'text-strong' | 'text-muted' | 'text-faint'
   | 'accent' | 'accent-2' | 'accent-rust' | 'mix-target'
-  | 'success' | 'error' | 'warning'
+  | 'success' | 'error' | 'warning' | 'info'
   | 'syn-keyword' | 'syn-string' | 'syn-var' | 'syn-func' | 'syn-comment' | 'syn-number';
 
-/** The built-in palettes — the data behind ThemeRoot's dark/light. */
+/** The built-in palettes — the data behind ThemeRoot's dark/light/amber. */
 export declare const dark: Palette;
 export declare const light: Palette;
+export declare const amber: Palette;
 
 export type ThemeIssue =
   | { kind: 'unknown-token'; token: string }

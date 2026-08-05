@@ -43,6 +43,10 @@ representation — a package string can never reach a stylesheet.
 contrast gate evaluates against; the document-scope applier sets `data-theme`
 to match, so the two can never disagree.
 
+`amber` is a third static built-in theme (selected explicitly via
+`data-theme="amber"`), but it is not a world-package base: `extends` remains
+`'dark' | 'light'`, and world packages continue to fold onto one of those two.
+
 ## Value grammars (per `$type`)
 
 | `$type` | accepted | rejected (examples) |
@@ -57,7 +61,7 @@ to match, so the two can never disagree.
 Token names must exist in the contract registry (`SV_TOKEN_REGISTRY`).
 `z-*` and `bp-*` are hard-locked (worlds restyle color/type/shape, never
 stacking contexts or layout thresholds); applications may lock more via
-`lockedTokens` (BONES locks `success`/`error`/`warning`).
+`lockedTokens` (BONES locks `success`/`error`/`warning`/`info`).
 
 ## The contrast gate
 
@@ -67,12 +71,13 @@ Rules (one source of truth, `CONTRAST_RULES` — the same table
 - `text`, `text-strong`, `text-muted`, `text-faint` ≥ 4.5:1 on `bg`
 - `accent`, `accent-2` ≥ 3:1 on `bg`
 - all six `syn-*` ≥ 4.5:1 on `surface-3` (the CodeBlock background)
-- `success`, `error`, `warning`, `accent-rust` ≥ 3:1 on `bg`
+- `success`, `error`, `warning`, `info`, `accent-rust` ≥ 3:1 on `bg`
 - `text-strong`, `text`, `text-muted` ≥ 4.5:1 on `surface-3`
 
 Evaluated on the **effective palette** (`override ?? base[extends]`), so a
 package overriding only `bg` still has the inherited text checked against the
-new background. Policy via `onContrastFailure`:
+new background — including `info`, which an override of `bg` can now revert
+exactly like `success`/`error`/`warning`. Policy via `onContrastFailure`:
 
 - `'revert'` (default) — drop the offending override(s), fall back to the
   built-in value, report `W_CONTRAST_REVERTED` with ratios. A world theme is

@@ -13,7 +13,7 @@ Without it, components render on the host page's background and the theme
 follows the viewer's OS preference instead of your design's intent.
 
 ```jsx
-<ThemeRoot theme="dark">   {/* "dark" (default, the system's home turf) or "light" (pale paper) */}
+<ThemeRoot theme="dark">   {/* "dark" (default, the system's home turf), "light" (pale paper), or "amber" (warm dark) */}
   …your design…
 </ThemeRoot>
 ```
@@ -49,7 +49,7 @@ layout glue use inline styles with the `--sv-*` tokens, and prefer `Stack`
 |---|---|
 | Background/surfaces | `--sv-bg`, `--sv-surface-1`, `--sv-surface-2`, `--sv-surface-3`, `--sv-border` |
 | Ink | `--sv-text`, `--sv-text-strong`, `--sv-text-muted`, `--sv-text-faint` |
-| Accent & semantic | `--sv-accent` (teal), `--sv-accent-2` (coral, ≤1 emphasis/view), `--sv-accent-rust`, `--sv-success`, `--sv-error`, `--sv-warning` |
+| Accent & semantic | `--sv-accent` (teal), `--sv-accent-2` (coral, ≤1 emphasis/view), `--sv-accent-rust`, `--sv-success`, `--sv-error`, `--sv-warning`, `--sv-info` |
 | Space (Stack gap steps) | `--sv-space-0/1/2/3/4/6/8/12` |
 | Radius / shadow | `--sv-radius-sm/md/lg`, `--sv-shadow-sm/md` |
 | Type | `--sv-font-sans`, `--sv-font-mono`, `--sv-fs-xs/sm/base/lg/xl/2xl/3xl`, `--sv-lh-tight/normal/relaxed`, `--sv-font-weight-normal/medium/semibold/bold` |

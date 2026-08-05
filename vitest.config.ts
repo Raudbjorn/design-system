@@ -47,7 +47,7 @@ export default defineConfig({
         }
       },
       // Storybook visual tests: every story renders in real Chromium; Argos
-      // captures one screenshot per story per mode (dark/light) into
+      // captures one screenshot per story per mode (dark/light/amber) into
       // ./screenshots and uploads them from CI. Auth: ARGOS_TOKEN env when
       // present; on fork PRs (where GitHub withholds secrets) the SDK falls
       // back to tokenless GitHub Actions auth automatically — public repo, so
