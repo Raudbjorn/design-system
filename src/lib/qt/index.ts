@@ -6,4 +6,4 @@
 // outside the token build.
 
 export { emitQtPalette, QT_ROLES } from './emit.ts';
-export type { QtPaletteInput } from './emit.ts';
+export type { QtPaletteInput, QtPaletteIssue, QtPaletteResult } from './emit.ts';

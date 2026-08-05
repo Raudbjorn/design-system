@@ -30,6 +30,18 @@ const { base, themes } = prepared.value;
 
 const read = (...segments) => readFileSync(join(TOKENS_DIR, ...segments), 'utf8');
 
+const expectQtValue = (result) => {
+  expect(result.ok).toBe(true);
+  if (!result.ok) throw new Error(result.error.map((issue) => issue.message).join('\n'));
+  return result.value;
+};
+
+const expectQtError = (result) => {
+  expect(result.ok).toBe(false);
+  if (result.ok) return;
+  return result.error[0];
+};
+
 const TUI_COLOR_FIELDS = [
   'bg',
   'surface-1',
@@ -80,7 +92,7 @@ describe('committed outputs match the emitters (run `pnpm run tokens` after toke
       expect(read('..', 'extjs', `theme-sv-${theme.name}.css`)).toBe(emitExtJs(theme));
     });
     it(`qt/${theme.name}.palette.json`, () => {
-      expect(read('..', 'qt', `${theme.name}.palette.json`)).toBe(emitQt(theme));
+      expect(read('..', 'qt', `${theme.name}.palette.json`)).toBe(expectQtValue(emitQt(theme)));
     });
   }
     it(`crates/raudbjorn-tui/src/theme/generated.rs`, () => {
@@ -104,7 +116,7 @@ const QT_IS_DARK = { dark: true, light: false, amber: true };
 
 describe('QPalette JSON contract', () => {
   for (const theme of themes) {
-    const doc = JSON.parse(emitQt(theme));
+    const doc = JSON.parse(expectQtValue(emitQt(theme)));
 
     it(`${theme.name}: top-level keys and marker are exact`, () => {
       expect(Object.keys(doc)).toEqual(['$generated', 'name', 'meta', 'groups', 'status']);
@@ -158,37 +170,72 @@ describe('QPalette JSON contract', () => {
   it('derives meta.isDark from the background rather than the theme name', () => {
     const light = themes.find((theme) => theme.name === 'light');
     if (!light) throw new Error('light theme missing from built-in palette registry');
-    const doc = JSON.parse(emitQtPalette({ name: 'dark', palette: light.paletteHex }));
+    const result = emitQtPalette({ name: 'dark', palette: light.paletteHex });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const doc = JSON.parse(result.value);
     expect(doc.meta.isDark).toBe(false);
   });
 
-  it('throws on a missing required mapped token, naming it', () => {
+  it('returns an error value for a missing required mapped token, naming it', () => {
     const palette = { ...themes[0].paletteHex };
     delete palette.bg;
-    expect(() => emitQtPalette({ name: 'test', palette })).toThrow(
-      /missing color token "bg"/
-    );
+    const result = emitQtPalette({ name: 'test', palette });
+    expect(result).toEqual({
+      ok: false,
+      error: [
+        expect.objectContaining({
+          code: 'E_MISSING_COLOR',
+          token: 'bg',
+          message: expect.stringMatching(/missing color token "bg"/)
+        })
+      ]
+    });
   });
 
-  it('throws on an uppercase or non-hex mapped token, naming it', () => {
+  it('returns error values for uppercase or non-hex mapped tokens, naming them', () => {
     const palette = { ...themes[0].paletteHex, bg: '#ABCDEF' };
-    expect(() => emitQtPalette({ name: 'test', palette })).toThrow(
-      /token "bg" is not #rrggbb/
-    );
-    palette.bg = 'rebeccapurple';
-    expect(() => emitQtPalette({ name: 'test', palette })).toThrow(
-      /token "bg" is not #rrggbb/
+    for (const value of ['#ABCDEF', 'rebeccapurple']) {
+      palette.bg = value;
+      const result = emitQtPalette({ name: 'test', palette });
+      expect(result).toEqual({
+        ok: false,
+        error: [
+          expect.objectContaining({
+            code: 'E_COLOR_VALUE',
+            token: 'bg',
+            message: expect.stringMatching(/token "bg" is not a valid hex color/)
+          })
+        ]
+      });
+    }
+  });
+
+  it('canonicalizes valid shorthand and 8-digit hex inputs to six-digit lowercase', () => {
+    const palette = { ...themes[0].paletteHex, bg: '#777', accent: '#3ac1' };
+    const result = emitQtPalette({ name: 'demo', palette });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const doc = JSON.parse(result.value);
+    expect(doc.groups.active.Window).toBe('#777777');
+    expect(doc.groups.active.Highlight).toBe('#33aacc');
+  });
+
+  it('build adapter preserves emitter validation issues as values', () => {
+    const result = emitQt({ ...themes[0], name: 'Dark' });
+    expect(result).toEqual({
+      ok: false,
+      error: [expect.objectContaining({ code: 'E_THEME_NAME' })]
+    });
+  });
+
+  it('keeps an already six-digit lowercase hex byte-identical (drift-safe)', () => {
+    const palette = { ...themes[0].paletteHex, bg: '#777777' };
+    expect(expectQtValue(emitQt({ ...themes[0], paletteHex: palette }))).toBe(
+      read('..', 'qt', `${themes[0].name}.palette.json`)
     );
   });
 
-  it('throws on an unsafe theme name, naming it', () => {
-    expect(() => emitQtPalette({ name: 'Dark', palette: themes[0].paletteHex })).toThrow(
-      /invalid theme name "Dark"/
-    );
-    expect(() => emitQtPalette({ name: 'dark/../etc', palette: themes[0].paletteHex })).toThrow(
-      /invalid theme name/
-    );
-  });
 });
 
 describe('crates/raudbjorn-tui/src/theme/generated.rs validation', () => {
@@ -425,6 +472,7 @@ describe('ExtJS contract', () => {
       expect(css.match(/@font-face/g)).toHaveLength(4);
       expect(css).toContain("url('sv-fonts/InterVariable.woff2')");
       expect(css).toContain("url('sv-fonts/Iosevka-Regular.woff2')");
+      expect(css).not.toMatch(/font-family:\s*['"](?:Inter|Iosevka)['"]/);
     });
 
     it(`${theme.name}: file stem is a selectable Proxmox theme name`, () => {

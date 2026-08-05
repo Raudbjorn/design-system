@@ -143,16 +143,22 @@ generate custom palettes:
 import { emitQtPalette, QT_ROLES } from '@svnbjrn/design/qt';
 import { dark } from '@svnbjrn/design';
 
-const json = emitQtPalette({
+const result = emitQtPalette({
   name: 'dark',        // ^[a-z][a-z0-9-]{0,63}$ — doubles as the filename stem
   palette: dark        // Record<TokenName, '#rrggbb'> — any prepared 23-key palette
 });
-```
+if (!result.ok) {
+  console.error(result.error);
+} else {
+  const json = result.value;
+  // persist or send json to a Qt consumer
+}
 
 It is deterministic (same input, same bytes), validates the theme name before
-reading colors, and throws on a missing or non-hex token rather than emitting
-a document with holes. There is intentionally no `design-generate --qt`: the
-emitter is the prepared extension point.
+reading colors, and returns `{ ok: false, error: QtPaletteIssue[] }` for unsafe
+names, missing tokens, or non-hex values rather than emitting a document with
+holes. There is intentionally no `design-generate --qt`: the emitter is the
+prepared extension point.
 
 ## QPalette JSON vs `tokens/resolved/*.tokens.json`
 

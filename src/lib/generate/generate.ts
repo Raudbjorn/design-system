@@ -14,6 +14,7 @@
 import { hexToOklch, oklchToHex } from '../internal/color.ts';
 import { contrastRatio } from '../internal/contrast.ts';
 import { checkThemeAA } from '../internal/invariants.ts';
+import { WORLD_THEME_SCHEMA_V2 } from '../theme/types.ts';
 import { analyzeSeeds, assignTriad, HOUSE_TRIAD, hueDistance, shortestArc } from './assign.ts';
 import type { TriadSlot } from './assign.ts';
 import { foldHints } from './hints.ts';
@@ -390,6 +391,7 @@ export const generateTheme = (
   if (folded.fontStance) meta.fontStance = folded.fontStance;
 
   const theme: WorldThemePackage = {
+    $schema: WORLD_THEME_SCHEMA_V2,
     name: opts.name,
     version: '1.0.0',
     extends: mode,

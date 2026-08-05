@@ -13,28 +13,28 @@
  */
 
 @font-face {
-  font-family: 'Inter';
+  font-family: Inter;
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
   src: url('sv-fonts/InterVariable.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Inter';
+  font-family: Inter;
   font-style: italic;
   font-weight: 100 900;
   font-display: swap;
   src: url('sv-fonts/InterVariable-Italic.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Iosevka';
+  font-family: Iosevka;
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: url('sv-fonts/Iosevka-Regular.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Iosevka';
+  font-family: Iosevka;
   font-style: normal;
   font-weight: 700;
   font-display: swap;

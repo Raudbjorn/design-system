@@ -39,6 +39,21 @@ mkdirSync(QT_DIR, { recursive: true });
 mkdirSync(join(TOKENS_DIR, '../../../crates/raudbjorn-tui/src/theme'), { recursive: true });
 mkdirSync(RESOLVED_DIR, { recursive: true });
 
+const qtOutputs = [];
+let qtFailed = false;
+for (const theme of themes) {
+  const result = emitQt(theme);
+  if (!result.ok) {
+    qtFailed = true;
+    for (const issue of result.error) {
+      console.error(`[tokens] Qt theme "${theme.name}": ${issue.message}`);
+    }
+    continue;
+  }
+  qtOutputs.push([join(QT_DIR, `${theme.name}.palette.json`), result.value]);
+}
+if (qtFailed) process.exit(1);
+
 const outputs = [
   [join(TOKENS_DIR, 'scale.css'), emitScaleCss(base)],
   [join(TOKENS_DIR, 'colors.css'), emitColorsCss(themes)],
@@ -46,7 +61,7 @@ const outputs = [
   ...themes.map((t) => [join(RESOLVED_DIR, `${t.name}.tokens.json`), emitResolvedJson(t)]),
   ...themes.map((t) => [join(QSS_DIR, `${t.name}.qss`), emitQss(t)]),
   ...themes.map((t) => [join(EXTJS_DIR, `theme-sv-${t.name}.css`), emitExtJs(t)]),
-  ...themes.map((t) => [join(QT_DIR, `${t.name}.palette.json`), emitQt(t)]),
+  ...qtOutputs,
   [join(TOKENS_DIR, `../../../crates/raudbjorn-tui/src/theme/generated.rs`), emitTuiRust(themes)]
 ];
 
