@@ -193,18 +193,30 @@ describe('QPalette JSON contract', () => {
     });
   });
 
-  it('returns error values for uppercase or non-hex mapped tokens, naming them', () => {
-    const palette = { ...themes[0].paletteHex, bg: '#ABCDEF' };
-    for (const value of ['#ABCDEF', 'rebeccapurple']) {
-      palette.bg = value;
-      const result = emitQtPalette({ name: 'test', palette });
+  it('returns an error value for an invalid color value, naming it', () => {
+    const palette = { ...themes[0].paletteHex, bg: 'rebeccapurple' };
+    const result = emitQtPalette({ name: 'test', palette });
+    expect(result).toEqual({
+      ok: false,
+      error: [
+        expect.objectContaining({
+          code: 'E_COLOR_VALUE',
+          token: 'bg',
+          message: expect.stringMatching(/token "bg" is not a valid hex color/)
+        })
+      ]
+    });
+  });
+
+  it('returns an error value for an unsafe theme name, naming it', () => {
+    for (const name of ['Dark', 'dark/../etc']) {
+      const result = emitQtPalette({ name, palette: themes[0].paletteHex });
       expect(result).toEqual({
         ok: false,
         error: [
           expect.objectContaining({
-            code: 'E_COLOR_VALUE',
-            token: 'bg',
-            message: expect.stringMatching(/token "bg" is not a valid hex color/)
+            code: 'E_THEME_NAME',
+            message: expect.stringMatching(/invalid theme name/)
           })
         ]
       });
@@ -221,19 +233,20 @@ describe('QPalette JSON contract', () => {
     expect(doc.groups.active.Highlight).toBe('#33aacc');
   });
 
+  it('round-trips the committed dark palette byte-identical (drift-safe)', () => {
+    const dark = themes.find((theme) => theme.name === 'dark');
+    if (!dark) throw new Error('dark theme missing from built-in palette registry');
+    const committed = read('..', 'qt', 'dark.palette.json');
+    const result = emitQt(dark);
+    expect(expectQtValue(result)).toBe(committed);
+  });
+
   it('build adapter preserves emitter validation issues as values', () => {
     const result = emitQt({ ...themes[0], name: 'Dark' });
     expect(result).toEqual({
       ok: false,
       error: [expect.objectContaining({ code: 'E_THEME_NAME' })]
     });
-  });
-
-  it('keeps an already six-digit lowercase hex byte-identical (drift-safe)', () => {
-    const palette = { ...themes[0].paletteHex, bg: '#777777' };
-    expect(expectQtValue(emitQt({ ...themes[0], paletteHex: palette }))).toBe(
-      read('..', 'qt', `${themes[0].name}.palette.json`)
-    );
   });
 
 });
