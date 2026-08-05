@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { HOVER_MIX, PRESSED_MIX, prepareBuild, TOKENS_DIR } from './emitters/prepare.mjs';
 import { mixOklab } from '../src/lib/internal/color.ts';
+import { contrastRatio } from '../src/lib/internal/contrast.ts';
 import { emitColorsCss, emitScaleCss } from './emitters/emit-css.mjs';
 import { emitPaletteTs } from './emitters/emit-palette-ts.mjs';
 import { emitResolvedJson } from './emitters/emit-json.mjs';
@@ -99,6 +100,7 @@ const QT_STATUS_KEYS = [
 ];
 const QT_HEX_RE = /^#[0-9a-f]{6}$/;
 const QT_MARKER = 'by scripts/build-tokens.mjs — do not edit';
+const QT_IS_DARK = { dark: true, light: false, amber: true };
 
 describe('QPalette JSON contract', () => {
   for (const theme of themes) {
@@ -148,10 +150,17 @@ describe('QPalette JSON contract', () => {
       expect(doc.status.info).toBe(p.info);
     });
 
-    it(`${theme.name}: meta.isDark matches the theme`, () => {
-      expect(doc.meta.isDark).toBe(theme.name !== 'light');
+    it(`${theme.name}: meta.isDark matches the built-in palette`, () => {
+      expect(doc.meta.isDark).toBe(QT_IS_DARK[theme.name]);
     });
   }
+
+  it('derives meta.isDark from the background rather than the theme name', () => {
+    const light = themes.find((theme) => theme.name === 'light');
+    if (!light) throw new Error('light theme missing from built-in palette registry');
+    const doc = JSON.parse(emitQtPalette({ name: 'dark', palette: light.paletteHex }));
+    expect(doc.meta.isDark).toBe(false);
+  });
 
   it('throws on a missing required mapped token, naming it', () => {
     const palette = { ...themes[0].paletteHex };
@@ -288,11 +297,34 @@ describe('QSS contract', () => {
     it(`${theme.name}: every color literal is a resolved or derived token`, () => {
       const allowed = new Set([
         ...Object.values(theme.paletteHex),
-        ...theme.derived.map((d) => d.css),
-        '#ffffff' // danger button text, hardcoded to mirror the web Button
+        ...theme.derived.map((d) => d.css)
       ]);
       for (const match of qss.matchAll(/#[0-9a-f]{6,8}\b/g)) {
         expect(allowed.has(match[0]), `unexpected color ${match[0]}`).toBe(true);
+      }
+    });
+
+    it(`${theme.name}: danger button text meets 4.5:1 in every interaction state`, () => {
+      const foreground = theme.paletteHex.bg;
+      const states = [
+        ['QPushButton\\[class="danger"\\] \\{', theme.paletteHex.error],
+        [
+          'QPushButton\\[class="danger"\\]:hover \\{',
+          theme.derived.find((entry) => entry.key === 'error-hover')?.css
+        ],
+        [
+          'QPushButton\\[class="danger"\\]:pressed \\{',
+          theme.derived.find((entry) => entry.key === 'error-pressed')?.css
+        ]
+      ];
+
+      expect(qss).toMatch(
+        new RegExp(`QPushButton\\[class="danger"\\] \\{[^}]*color: ${foreground};`, 's')
+      );
+      for (const [selector, background] of states) {
+        expect(background).toBeDefined();
+        expect(qss).toMatch(new RegExp(`${selector}[^}]*background: ${background};`, 's'));
+        expect(contrastRatio(foreground, background)).toBeGreaterThanOrEqual(4.5);
       }
     });
   }

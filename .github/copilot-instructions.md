@@ -6,7 +6,7 @@ Trust this file for the repository map and validated commands. Search only when 
 
 `@svnbjrn/design` is a dark-first Svelte 5 component/design-token library: 28 core components, dark, light, and explicit amber built-in themes plus runtime world themes, vernacular parsing, deterministic theme generation, generated CSS/JSON/QSS, self-hosted fonts, and opt-in Vermis/Carter visual languages. It uses Svelte 5 runes/snippets, TypeScript, CSS custom properties, and no utility-class framework.
 
-- Node.js `>=22` is required; CI uses Node 24. Use pinned `pnpm@11.3.0`.
+- Node.js `>=22.18.0` is required; CI uses Node 24. Use pinned `pnpm@11.3.0`.
 - Always bootstrap with `pnpm install --frozen-lockfile`.
 - Run focused tests while iterating, then relevant full gates:
 

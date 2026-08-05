@@ -7,7 +7,7 @@
 // any write; syntax errors exit 2, preflight/filesystem errors exit 1.
 
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -61,6 +61,11 @@ const seedDest = (name = 'dest') => {
 };
 
 const read = (path) => readFileSync(path, 'utf8');
+const entries = (path) =>
+  spawnSync('ls', ['-1', path], { encoding: 'utf8' })
+    .stdout.split('\n')
+    .filter(Boolean)
+    .sort();
 
 describe('flat --from success', () => {
   it('copies helper, QSS, and palette into an existing destination', () => {
@@ -265,6 +270,86 @@ describe('preflight failures leave the destination untouched', () => {
     expect(read(join(dest, 'sv-fonts'))).toBe('not a directory');
     const ls = spawnSync('ls', [dest], { encoding: 'utf8' }).stdout;
     expect(ls.split('\n').filter(Boolean).sort()).toEqual(['keep.txt', 'sv-fonts']);
+  });
+
+  it('exits 1 before any copy when sv-fonts is a symlink', () => {
+    const root = mkTmp('font-parent-symlink');
+    seedFlat(root, 'dark');
+    seedFonts(root, ['Iosevka-Regular.woff2']);
+    const dest = seedDest('dest-font-parent-symlink');
+    const external = mkTmp('external-font-parent');
+    const externalFont = join(external, 'Iosevka-Regular.woff2');
+    writeFileSync(externalFont, 'external font bytes');
+    symlinkSync(external, join(dest, 'sv-fonts'), 'dir');
+
+    const result = run(SCRIPT, '--theme', 'dark', '--dest', dest, '--from', root, '--fonts');
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('symbolic link');
+    expect(entries(dest)).toEqual(['keep.txt', 'sv-fonts']);
+    expect(entries(external)).toEqual(['Iosevka-Regular.woff2']);
+    expect(read(externalFont)).toBe('external font bytes');
+  });
+
+  for (const target of ['sv_design_qt.py', 'dark.qss', 'dark.palette.json']) {
+    it(`exits 1 before any copy when a directory squats on ${target}`, () => {
+      const root = mkTmp(`target-squat-${target.replaceAll('.', '-')}`);
+      seedFlat(root, 'dark');
+      const dest = seedDest(`dest-target-squat-${target.replaceAll('.', '-')}`);
+      const blocker = join(dest, target);
+      mkdirSync(blocker);
+
+      const result = run(SCRIPT, '--theme', 'dark', '--dest', dest, '--from', root);
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain(target);
+      expect(entries(dest)).toEqual(['keep.txt', target].sort());
+      expect(entries(blocker)).toEqual([]);
+    });
+  }
+
+  it('rejects an existing-file symlink target before any copy', () => {
+    const root = mkTmp('target-symlink');
+    seedFlat(root, 'dark');
+    const dest = seedDest('dest-target-symlink');
+    const external = join(mkTmp('external-target'), 'outside.qss');
+    writeFileSync(external, 'external bytes');
+    symlinkSync(external, join(dest, 'dark.qss'));
+
+    const result = run(SCRIPT, '--theme', 'dark', '--dest', dest, '--from', root);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('symbolic link');
+    expect(read(external)).toBe('external bytes');
+    expect(entries(dest)).toEqual(['dark.qss', 'keep.txt']);
+  });
+
+  it('rejects a dangling symlink target before any copy', () => {
+    const root = mkTmp('dangling-target-symlink');
+    seedFlat(root, 'dark');
+    const dest = seedDest('dest-dangling-target-symlink');
+    const missing = join(dest, 'missing.qss');
+    symlinkSync(missing, join(dest, 'dark.qss'));
+
+    const result = run(SCRIPT, '--theme', 'dark', '--dest', dest, '--from', root);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('symbolic link');
+    expect(entries(dest)).toEqual(['dark.qss', 'keep.txt']);
+    expect(spawnSync('test', ['-e', missing]).status).not.toBe(0);
+  });
+
+  it('checks every font target before copying any artifact', () => {
+    const root = mkTmp('font-target-squat');
+    seedFlat(root, 'dark');
+    seedFonts(root, ['a-font.woff2', 'b-font.woff2']);
+    const dest = seedDest('dest-font-target-squat');
+    const fontsDest = join(dest, 'sv-fonts');
+    const blocker = join(fontsDest, 'b-font.woff2');
+    mkdirSync(blocker, { recursive: true });
+
+    const result = run(SCRIPT, '--theme', 'dark', '--dest', dest, '--from', root, '--fonts');
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('b-font.woff2');
+    expect(entries(dest)).toEqual(['keep.txt', 'sv-fonts']);
+    expect(entries(fontsDest)).toEqual(['b-font.woff2']);
+    expect(entries(blocker)).toEqual([]);
   });
 
   it('exits 1 for an incomplete layout (QSS without palette)', () => {

@@ -2,8 +2,8 @@
 //
 // The artifact is a pure data description of the application palette Qt should
 // install: three QPalette color groups (active/inactive/disabled) mapped onto
-// the semantic tokens, plus the status foreground/background pairs the QSS
-// adapter uses. The Qt runtime helper (bin/sv_design_qt.py) applies it after
+// the semantic tokens, plus status foreground/background pairs exposed for
+// consumers. The Qt runtime helper (bin/sv_design_qt.py) applies it after
 // the Fusion style and before the generated QSS sheet, so Qt-owned widgets
 // without an explicit QSS rule still read the theme's colors.
 //

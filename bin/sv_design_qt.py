@@ -60,7 +60,7 @@ def _check_hex(issues: list[str], label: str, value: object) -> None:
     if not isinstance(value, str):
         issues.append(f"{label} is not a string: {value!r}")
         return
-    if not _HEX_RE.match(value):
+    if not _HEX_RE.fullmatch(value):
         issues.append(f"{label} is not a lowercase #rrggbb color: {value!r}")
 
 
@@ -82,14 +82,14 @@ def parse_palette(text: str) -> dict:
     issues: list[str] = []
 
     keys = tuple(doc.keys())
-    if keys != _TOP_KEYS:
+    if set(keys) != set(_TOP_KEYS):
         issues.append(f"top-level keys must be exactly {list(_TOP_KEYS)}, got {list(keys)}")
 
     if doc.get("$generated") != _MARKER:
         issues.append(f"$generated marker mismatch: {doc.get('$generated')!r}")
 
     name = doc.get("name")
-    if not isinstance(name, str) or not _NAME_RE.match(name):
+    if not isinstance(name, str) or not _NAME_RE.fullmatch(name):
         issues.append(f"name must be lowercase kebab-case, got {name!r}")
 
     meta = doc.get("meta")
@@ -187,10 +187,10 @@ def palette_from_json(path: str | Path):
 def apply(app, qss_path: str | Path, palette_path: str | Path) -> None:
     """Apply Fusion, the generated palette, then the generated QSS.
 
-    Both files are read and validated before the first app mutation, so a bad
-    document leaves the application untouched. QSS still wins where it defines
-    a widget; the palette is the deliberate best-effort underlay for
-    Qt-owned widgets the sheet does not reach.
+    Both files are read and the palette is validated before the first app
+    mutation, so a missing QSS or bad palette leaves the application untouched.
+    QSS still wins where it defines a widget; the palette is the deliberate
+    best-effort underlay for Qt-owned widgets the sheet does not reach.
     """
     qss_text = Path(qss_path).read_text(encoding="utf-8")
     palette = palette_from_json(palette_path)

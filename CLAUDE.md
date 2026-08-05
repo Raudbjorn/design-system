@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-Requires Node `>=22` (CI uses 24) and pinned `pnpm@11.3.0`. Bootstrap: `pnpm install --frozen-lockfile`.
+Requires Node `>=22.18.0` (CI uses 24) and pinned `pnpm@11.3.0`. Bootstrap: `pnpm install --frozen-lockfile`.
 
 ```bash
 pnpm run check                   # svelte-check (strict) — the type gate
