@@ -3,6 +3,9 @@ import { parseWorldTheme } from './parse';
 import type { ThemeIssueCode } from './types';
 import grimdark from './fixtures/grimdark.json';
 import vermis from './fixtures/vermis.json';
+import legacyBgOnly from './fixtures/legacy-bg-only.json';
+import versionedInfoBgBase from './fixtures/versioned-info-bg-base.json';
+import versionedInfoBgV2 from './fixtures/versioned-info-bg-v2.json';
 
 const pkg = (tokens: Record<string, unknown>, extra: Record<string, unknown> = {}) => ({
   name: 'test-world',
@@ -174,6 +177,47 @@ describe('gate integration', () => {
     if (!result.ok) return;
     expect(codes(result.value.issues)).toContain('W_CONTRAST_FAILED');
     expect(result.value.tokens.get('text')).toBe('#333333');
+  });
+
+  it('keeps a v1 bg-only override that passed the original contract', () => {
+    const result = parseWorldTheme(legacyBgOnly);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.tokens.get('bg')).toBe('#050505');
+    expect(codes(result.value.issues)).not.toContain('W_CONTRAST_REVERTED');
+  });
+
+  it('adds the inherited info/bg pairing only for packages that explicitly declare schema v2', () => {
+    const v1 = parseWorldTheme(versionedInfoBgBase);
+    const omitted = parseWorldTheme({ ...versionedInfoBgBase, $schema: undefined });
+    const v2 = parseWorldTheme(versionedInfoBgV2);
+    const unknown = parseWorldTheme({
+      ...versionedInfoBgBase,
+      $schema: 'https://svnbjrn.dev/schemas/world-theme.future.json'
+    });
+
+    expect(v1.ok).toBe(true);
+    expect(omitted.ok).toBe(true);
+    expect(v2.ok).toBe(true);
+    expect(unknown.ok).toBe(true);
+    if (!v1.ok || !omitted.ok || !v2.ok || !unknown.ok) return;
+
+    expect(v1.value.tokens.get('bg')).toBe('#777777');
+    expect(omitted.value.tokens.get('bg')).toBe('#777777');
+    expect(unknown.value.tokens.get('bg')).toBe('#777777');
+    for (const parsed of [v1, omitted, unknown]) {
+      expect(parsed.value.issues).not.toContainEqual(
+        expect.objectContaining({ code: 'W_CONTRAST_REVERTED' })
+      );
+    }
+    expect(v2.value.tokens.has('bg')).toBe(false);
+    expect(v2.value.issues).toContainEqual(
+      expect.objectContaining({
+        code: 'W_CONTRAST_REVERTED',
+        token: 'bg',
+        detail: expect.objectContaining({ fg: 'info', bg: 'bg' })
+      })
+    );
   });
 });
 
