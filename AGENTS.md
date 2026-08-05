@@ -78,7 +78,7 @@ pnpm exec vitest run --project=unit -t "prevents clicks when disabled"
 
 ## Runtime/Tooling Preferences
 
-Use Node.js `>=22` (CI uses 24) and pinned `pnpm@11.3.0`. The package is ESM-only and requires Svelte `^5` as a peer dependency. Do not substitute Bun, npm, or yarn for repository scripts. TypeScript targets ES2022 with `verbatimModuleSyntax`, `rewriteRelativeImportExtensions`, and `noEmit`. `pnpm run build` requires Python FontTools' `pyftsubset`; browser QA requires Playwright Chromium.
+Use Node.js `>=22.18.0` (CI uses 24) and pinned `pnpm@11.3.0`. The package is ESM-only and requires Svelte `^5` as a peer dependency. Do not substitute Bun, npm, or yarn for repository scripts. TypeScript targets ES2022 with `verbatimModuleSyntax`, `rewriteRelativeImportExtensions`, and `noEmit`. `pnpm run build` requires Python FontTools' `pyftsubset`; browser QA requires Playwright Chromium.
 
 Expected noise: font subsetting may print `PfEd NOT subset`; publint must still finish with `All good`. Unit tests can print jsdom `Could not parse CSS stylesheet`; judge the final Vitest summary. Three known Svelte warnings exist in Tooltip, Modal, and Sheet—do not add more.
 

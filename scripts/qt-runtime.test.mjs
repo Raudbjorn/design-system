@@ -142,7 +142,21 @@ print("ok")
       expect(result.stdout.trim()).toBe('ok');
     });
   }
+  it('accepts top-level keys in any JSON object order', () => {
+    const path = join(QT_DIR, 'dark.palette.json');
+    const code = `${LOAD}import json
+doc = json.loads(open(${JSON.stringify(path)}, encoding="utf-8").read())
+reordered = {key: doc[key] for key in reversed(doc)}
+parsed = m.parse_palette(json.dumps(reordered))
+assert set(parsed) == set(doc)
+print("ok")
+`;
+    const result = runPython(code);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.stdout.trim()).toBe('ok');
+  });
 });
+
 
 // Mutations run inside the child against the real dark document so each
 // failure is isolated to exactly one corrupted field.
@@ -198,6 +212,7 @@ else:
     ['a bad marker', `doc["$generated"] = "edited by hand"`],
     ['a bad name', `doc["name"] = "Dark"`],
     ['an unsafe name', `doc["name"] = "../escape"`],
+    ['a name with a trailing newline', `doc["name"] = "dark" + chr(10)`],
     ['a non-bool meta.isDark', `doc["meta"]["isDark"] = "yes"`],
     ['an extra meta key', `doc["meta"]["extra"] = True`],
     ['a missing group', `del doc["groups"]["disabled"]`],
@@ -207,7 +222,11 @@ else:
     ['a missing status key', `del doc["status"]["info-bg"]`],
     ['an extra status key', `doc["status"]["accent"] = "#123456"`],
     ['a non-hex color', `doc["groups"]["active"]["Window"] = "#GGGGGG"`],
-    ['an uppercase hex color', `doc["groups"]["active"]["Window"] = "#1A2B3C"`]
+    ['an uppercase hex color', `doc["groups"]["active"]["Window"] = "#1A2B3C"`],
+    [
+      'a hex color with a trailing newline',
+      `doc["groups"]["active"]["Window"] = "#123456" + chr(10)`
+    ]
   ];
 
   for (const [label, expr] of cases) {

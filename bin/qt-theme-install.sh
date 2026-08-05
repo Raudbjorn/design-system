@@ -53,6 +53,12 @@ die() {
   exit 1
 }
 
+require_file_target() {
+  local target="$1"
+  [[ ! -L "$target" ]] || die "destination path must not be a symbolic link: $target"
+  [[ ! -e "$target" || -f "$target" ]] || die "destination path is not a regular file: $target"
+}
+
 THEME=""
 DEST=""
 FROM=""
@@ -129,6 +135,10 @@ PALETTE_SRC="$CANDIDATE/qt/$THEME.palette.json"
 [[ -r "$QSS_SRC" ]] || die "unreadable QSS: $QSS_SRC"
 [[ -r "$PALETTE_SRC" ]] || die "unreadable palette: $PALETTE_SRC"
 
+for target in "$DEST/sv_design_qt.py" "$DEST/$THEME.qss" "$DEST/$THEME.palette.json"; do
+  require_file_target "$target"
+done
+
 FONT_SRCS=()
 if [[ $FONTS -eq 1 ]]; then
   shopt -s nullglob
@@ -139,17 +149,22 @@ if [[ $FONTS -eq 1 ]]; then
     [[ -r "$font" ]] || die "unreadable font: $font"
   done
   # The font destination is created during install; anything already squatting
-  # on the path must be a writable directory or preflight fails before any copy.
+  # on the path must be a real writable directory or preflight fails before any copy.
+  [[ ! -L "$DEST/sv-fonts" ]] || die "font destination must not be a symbolic link: $DEST/sv-fonts"
   if [[ -e "$DEST/sv-fonts" ]]; then
     [[ -d "$DEST/sv-fonts" ]] || die "font destination is not a directory: $DEST/sv-fonts"
     [[ -w "$DEST/sv-fonts" ]] || die "font destination is not writable: $DEST/sv-fonts"
   fi
+  for font in "${FONT_SRCS[@]}"; do
+    require_file_target "$DEST/sv-fonts/$(basename "$font")"
+  done
 fi
 
 # ── Install: overwrite semantics with a same-file guard, delete nothing ────
 
 install_file() {
   local src="$1" dst="$2"
+  require_file_target "$dst"
   if [[ "$src" -ef "$dst" ]]; then
     return 0
   fi

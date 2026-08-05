@@ -21,7 +21,7 @@ Not published to npm. Consume from source:
 pnpm add github:Raudbjorn/design-system
 ```
 
-The package requires Node.js 22 or newer and has Svelte 5 as a peer dependency.
+The package requires Node.js 22.18.0 or newer and has Svelte 5 as a peer dependency.
 
 ### Native TUI
 
@@ -274,14 +274,14 @@ must include the visible `copyLabel` to preserve label-in-name.
 pnpm install
 pnpm dev          # standalone Vite preview page (all components, dark/light)
 pnpm test         # Vitest + @testing-library/svelte (unit, jsdom)
-pnpm test:visual  # Storybook visual tests (Chromium screenshots, Argos)
+CI= pnpm test:visual # Storybook visual tests (Chromium, no Argos upload)
 pnpm check        # svelte-check (strict)
 pnpm build        # regenerate tokens + fonts, then svelte-package -> dist/
 ```
 
 Visual testing is documented in [docs/visual-testing.md](docs/visual-testing.md):
-every story is screenshotted in dark, light, and amber and diffed on each PR
-via [Argos](https://app.argos-ci.com/argos-ci-2/design-system).
+every story runs in dark, light, and amber. The Argos CI job is currently
+disabled, so run the Chromium story suite and Storybook build locally.
 
 Design tokens are generated from a single DTCG source
 (`src/lib/tokens/*.tokens.json` + the `themes.ts` registry) via

@@ -5,4 +5,5 @@
 
 import { emitQtPalette } from '../../src/lib/qt/emit.ts';
 
-export const emitQt = (theme) => emitQtPalette({ name: theme.name, palette: theme.paletteHex });
+export const emitQt = (theme) =>
+  emitQtPalette({ name: theme.name, palette: theme.paletteHex });

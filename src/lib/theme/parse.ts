@@ -6,10 +6,12 @@
 // (parse-don't-validate) → contrast gate on the effective palette.
 
 import { resolveDtcgTree } from '../tokens/resolver.ts';
+import { CONTRAST_RULES_V1, CONTRAST_RULES_V2 } from '../internal/invariants.ts';
 import { palettes } from '../tokens/palette.ts';
 import { SV_TOKEN_REGISTRY } from './registry.ts';
 import { validateTokenValue } from './validate.ts';
 import { applyContrastGate } from './gate.ts';
+import { WORLD_THEME_SCHEMA_V2 } from './types.ts';
 import type {
   ParseWorldThemeOptions,
   Result,
@@ -261,7 +263,9 @@ export const parseWorldTheme = (
   for (const [key, value] of validated) {
     if (value.type === 'color') colorOverrides.set(key, value.css);
   }
-  const gate = applyContrastGate(colorOverrides, palettes[extendsName], policy);
+  const contrastRules =
+    raw.$schema === WORLD_THEME_SCHEMA_V2 ? CONTRAST_RULES_V2 : CONTRAST_RULES_V1;
+  const gate = applyContrastGate(colorOverrides, palettes[extendsName], policy, contrastRules);
   issues.push(...gate.issues);
   if (gate.fatal) return fail();
 

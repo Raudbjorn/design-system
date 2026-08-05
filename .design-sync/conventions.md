@@ -20,7 +20,7 @@ follows the viewer's OS preference instead of your design's intent.
 
 ## Custom themes — themes are data
 
-Beyond ThemeRoot's dark/light, the theme API ships on the same global:
+Beyond ThemeRoot's built-in themes, the theme API ships on the same global:
 `defineTheme(overrides)` validates a partial palette (keys are the token
 names from the table below minus the `--sv-` prefix, e.g. `accent`, `bg`,
 `surface-1`; values 6-digit hex only) against the WCAG contrast gates and returns
@@ -29,7 +29,7 @@ takes an ordered array of override layers (later wins: base → world →
 activity → user-override). Render an accepted theme with
 `themeCss(theme, '.scope')` in a `<style>` tag, or `applyTheme(theme)`
 document-wide (returns a disposer; call client-side). `swapTheme` is
-`applyTheme` with a View Transitions crossfade. `dark`/`light` export the
+`applyTheme` with a View Transitions crossfade. `dark`/`light`/`amber` export the
 built-in palettes as data; `contrastGates`/`contrastRatio` expose the checker.
 
 ```jsx

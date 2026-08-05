@@ -1,0 +1,9 @@
+{
+  "$schema": "https://svnbjrn.dev/schemas/world-theme.v1.json",
+  "name": "legacy-bg-only",
+  "version": "1.0.0",
+  "extends": "dark",
+  "tokens": {
+    "bg": { "$value": "#050505" }
+  }
+}

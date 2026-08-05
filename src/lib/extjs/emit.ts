@@ -240,7 +240,7 @@ export const emitExtJsCss = ({ name, palette, scale }: ExtJsThemeInput): string 
   }).join('\n');
   const fontFaces = FONT_FILES.map(
     ([family, style, weight, file]) => `@font-face {
-  font-family: '${family}';
+  font-family: ${family};
   font-style: ${style};
   font-weight: ${weight};
   font-display: swap;

@@ -72,7 +72,7 @@ QPushButton[class="primary"]:disabled {
 
 QPushButton[class="danger"] {
   background: #ff5b48;
-  color: #ffffff;
+  color: #191919;
   border: none;
   padding: 9px 17px;
 }

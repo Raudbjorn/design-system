@@ -8,7 +8,11 @@
 import { palettes } from '../tokens/palette.ts';
 import type { TokenType } from '../tokens/resolver.ts';
 
-export { CONTRAST_RULES } from '../internal/invariants.ts';
+export {
+  CONTRAST_RULES,
+  CONTRAST_RULES_V1,
+  CONTRAST_RULES_V2
+} from '../internal/invariants.ts';
 export type { ContrastRule, ContrastCheck } from '../internal/invariants.ts';
 
 export interface TokenSpec {

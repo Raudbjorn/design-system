@@ -3,7 +3,7 @@ import { generateTheme, GENERATOR_VERSION } from './index';
 import { checkThemeAA } from '../internal/invariants';
 import { hexToOklch, toHex6 } from '../internal/color';
 import { palettes } from '../tokens/palette';
-import { parseWorldTheme } from '../theme/index';
+import { parseWorldTheme, WORLD_THEME_SCHEMA_V2 } from '../theme/index';
 
 const SEMANTIC_KEYS = Object.keys(palettes.dark).sort();
 
@@ -42,11 +42,16 @@ describe('property corpus', () => {
     return { seeds, mode, hints, name: `world-${i}` };
   });
 
+  it('declares the v2 world-theme schema contract', () => {
+    expect(WORLD_THEME_SCHEMA_V2).toBe('https://svnbjrn.dev/schemas/world-theme.v2.json');
+  });
+
   it('every case yields a valid, complete, AA-passing theme', () => {
     for (const options of cases) {
       const result = generateTheme(options);
       expect(result.ok, JSON.stringify(options)).toBe(true);
       if (!result.ok) continue;
+      expect(result.value.theme.$schema).toBe(WORLD_THEME_SCHEMA_V2);
       const palette = paletteOf(result.value.theme);
       expect(Object.keys(palette).sort(), JSON.stringify(options)).toEqual(SEMANTIC_KEYS);
       for (const value of Object.values(palette)) {

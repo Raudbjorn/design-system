@@ -2,21 +2,21 @@
 //
 // The artifact is a pure data description of the application palette Qt should
 // install: three QPalette color groups (active/inactive/disabled) mapped onto
-// the semantic tokens, plus the status foreground/background pairs the QSS
-// adapter uses. The Qt runtime helper (bin/sv_design_qt.py) applies it after
+// the semantic tokens, plus status foreground/background pairs exposed for
+// consumers. The Qt runtime helper (bin/sv_design_qt.py) applies it after
 // the Fusion style and before the generated QSS sheet, so Qt-owned widgets
 // without an explicit QSS rule still read the theme's colors.
 //
 // Pure and deterministic: the same inputs always produce the same bytes.
-// Throws on a missing or malformed token rather than emitting a palette with
-// holes in it — the Python side validates the same closed schema, so an
-// emitted document is always accepted by bin/sv_design_qt.py, and the theme
-// name is always a safe filename stem.
+// Invalid names, missing tokens, and malformed colors are returned as typed
+// issues rather than producing a palette with holes. The Python side validates
+// the same closed schema, so a successful document is always accepted by
+// bin/sv_design_qt.py and its theme name is always a safe filename stem.
 //
 // This module is published (`@svnbjrn/design/qt`); it reuses the shared color
 // math from internal/ rather than duplicating it.
 
-import { mixOklab } from '../internal/color.ts';
+import { mixOklab, parseColor, toHex6 } from '../internal/color.ts';
 import { contrastRatio } from '../internal/contrast.ts';
 
 /** The QPalette roles the emitted groups carry. Keep in sync with the
@@ -42,31 +42,85 @@ export const QT_ROLES = [
 const STATUS_BG_MIX = 0.85;
 
 const THEME_NAME_RE = /^[a-z][a-z0-9-]{0,63}$/;
-const HEX_COLOR_RE = /^#[0-9a-f]{6}$/;
+
+const REQUIRED_COLOR_TOKENS = [
+  'bg',
+  'text',
+  'surface-1',
+  'surface-2',
+  'surface-3',
+  'text-strong',
+  'text-muted',
+  'text-faint',
+  'accent',
+  'success',
+  'error',
+  'warning',
+  'info'
+] as const;
 
 export interface QtPaletteInput {
   name: string;
   palette: Readonly<Record<string, string>>;
 }
 
-/** Pure: the same inputs always produce the same bytes. Throws on an invalid
- * theme name, a missing token, or a non-hex token value. */
-export const emitQtPalette: (input: QtPaletteInput) => string = ({ name, palette }) => {
+export type QtPaletteIssue =
+  | { code: 'E_THEME_NAME'; message: string; name: string }
+  | { code: 'E_MISSING_COLOR'; message: string; token: string }
+  | { code: 'E_COLOR_VALUE'; message: string; token: string; value: string };
+
+export type QtPaletteResult =
+  | { ok: true; value: string }
+  | { ok: false; error: QtPaletteIssue[] };
+
+/** Pure: the same inputs always produce the same bytes. Invalid input returns
+ * structured issues and never emits a partial document. */
+export const emitQtPalette = ({ name, palette }: QtPaletteInput): QtPaletteResult => {
   if (!THEME_NAME_RE.test(name)) {
-    throw new Error(`emitQtPalette: invalid theme name "${name}"`);
+    return {
+      ok: false,
+      error: [
+        {
+          code: 'E_THEME_NAME',
+          name,
+          message: `emitQtPalette: invalid theme name "${name}"`
+        }
+      ]
+    };
   }
 
-  const c = (key: string): string => {
+  const issues: QtPaletteIssue[] = [];
+  const canonicalHex = (value: unknown): string | null => {
+    const parsed = parseColor(typeof value === 'string' ? value : '');
+    return parsed ? toHex6(parsed) : null;
+  };
+  const colors = new Map<string, string>();
+  for (const key of REQUIRED_COLOR_TOKENS) {
     const value = palette[key];
     if (value === undefined) {
-      throw new Error(`emitQtPalette: missing color token "${key}"`);
+      issues.push({
+        code: 'E_MISSING_COLOR',
+        token: key,
+        message: `emitQtPalette: missing color token "${key}"`
+      });
+      continue;
     }
-    if (!HEX_COLOR_RE.test(value)) {
-      throw new Error(`emitQtPalette: token "${key}" is not #rrggbb: "${value}"`);
+    const normalized = canonicalHex(value);
+    if (normalized === null) {
+      issues.push({
+        code: 'E_COLOR_VALUE',
+        token: key,
+        value: String(value),
+        message: `emitQtPalette: token "${key}" is not a valid hex color: "${value}"`
+      });
+      continue;
     }
-    return value;
-  };
+    colors.set(key, normalized);
+  }
+  if (issues.length > 0) return { ok: false, error: issues };
 
+  // Every required key reached this point with a validated six-digit lowercase hex.
+  const c = (key: (typeof REQUIRED_COLOR_TOKENS)[number]): string => colors.get(key)!;
   const bg = c('bg');
   const text = c('text');
   const surface1 = c('surface-1');
@@ -134,5 +188,6 @@ export const emitQtPalette: (input: QtPaletteInput) => string = ({ name, palette
     }
   };
 
-  return `${JSON.stringify(doc, null, 2)}\n`;
+  return { ok: true, value: `${JSON.stringify(doc, null, 2)}\n` };
 };
+

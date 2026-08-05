@@ -51,8 +51,8 @@ bash bin/qt-theme-install.sh --theme amber --dest your_package/theme --from . --
 ## Application setup
 
 Load the helper the documented way (importlib from a path), then apply a
-theme. `apply()` reads and validates **both** artifacts before mutating the
-application, then calls Fusion → palette → QSS exactly once each:
+theme. `apply()` reads both artifacts and validates the palette before mutating
+the application, then calls Fusion → palette → QSS exactly once each:
 
 ```python
 import importlib.util
@@ -96,6 +96,10 @@ through the helper instead of duplicating the four calls everywhere:
 sv.set_variant(label, "info")   # setProperty → unpolish → polish → update
 ```
 
+The palette JSON also carries `success-bg`, `error-bg`, `warning-bg`, and
+`info-bg` for consumers that render filled status surfaces. The bundled helper
+and QSS currently use the status foreground colors only.
+
 ## Following the OS color scheme
 
 `watch_color_scheme()` connects your callback to
@@ -134,20 +138,27 @@ The same applies when `sv-fonts/` was never vendored (`--fonts` omitted):
 ## Pure emitter
 
 The committed JSON is produced by a public, pure emitter — use it directly to
+generate custom palettes:
 ```js
 import { emitQtPalette, QT_ROLES } from '@svnbjrn/design/qt';
 import { dark } from '@svnbjrn/design';
 
-const json = emitQtPalette({
+const result = emitQtPalette({
   name: 'dark',        // ^[a-z][a-z0-9-]{0,63}$ — doubles as the filename stem
   palette: dark        // Record<TokenName, '#rrggbb'> — any prepared 23-key palette
 });
-```
+if (!result.ok) {
+  console.error(result.error);
+} else {
+  const json = result.value;
+  // persist or send json to a Qt consumer
+}
 
 It is deterministic (same input, same bytes), validates the theme name before
-reading colors, and throws on a missing or non-hex token rather than emitting
-a document with holes. There is intentionally no `design-generate --qt`: the
-emitter is the prepared extension point.
+reading colors, and returns `{ ok: false, error: QtPaletteIssue[] }` for unsafe
+names, missing tokens, or non-hex values rather than emitting a document with
+holes. There is intentionally no `design-generate --qt`: the emitter is the
+prepared extension point.
 
 ## QPalette JSON vs `tokens/resolved/*.tokens.json`
 

@@ -6,7 +6,7 @@
 
 **Architecture:** DTCG color files remain the single source of truth. The existing preparation pipeline feeds pure emitters; `scripts/build-tokens.mjs` alone writes committed outputs; byte-equality tests prevent drift. Qt applies a Fusion style, then a generated QPalette underlay, then generated app-wide QSS; the Python helper preflights artifacts before mutating the application and imports PySide6 only inside Qt-dependent functions.
 
-**Tech stack:** Node.js `>=22` (CI 24), pinned `pnpm@11.3.0`, TypeScript with native type stripping, Vitest, Rust/ratatui, Bash, Python `>=3.10` with stdlib-only helper imports, and PySide6 `>=6.5` only at runtime.
+**Tech stack:** Node.js `>=22.18.0` (CI 24), pinned `pnpm@11.3.0`, TypeScript with native type stripping, Vitest, Rust/ratatui, Bash, Python `>=3.10` with stdlib-only helper imports, and PySide6 `>=6.5` only at runtime.
 
 ## Context
 
@@ -159,23 +159,32 @@ Depends on dark/light/amber all carrying the same 23-key palette.
       palette: Readonly<Record<string, string>>;
     }
 
+    export type QtPaletteIssue =
+      | { code: 'E_THEME_NAME'; message: string; name: string }
+      | { code: 'E_MISSING_COLOR'; message: string; token: string }
+      | { code: 'E_COLOR_VALUE'; message: string; token: string; value: string };
+
+    export type QtPaletteResult =
+      | { ok: true; value: string }
+      | { ok: false; error: QtPaletteIssue[] };
+
     ```
-  - Implement `emitQtPalette` as an exported const with public type `(input: QtPaletteInput) => string`; destructure `{ name, palette }` inside the implementation.
+  - Implement `emitQtPalette` as an exported const returning `QtPaletteResult`; destructure `{ name, palette }` inside the implementation.
   - Reuse `mixOklab(hexA, hexB, weightB)` from `src/lib/internal/color.ts` and `contrastRatio(a, b)` from `src/lib/internal/contrast.ts`; do not duplicate color math or import private `prepareBuild` shapes.
-  - Validate `name` with `^[a-z][a-z0-9-]{0,63}$` before reading colors; throw `emitQtPalette: invalid theme name "<name>"` so every public-emitter output is accepted by the Python schema and safe for the build’s filename stem.
-  - A local `c(key)` must throw `emitQtPalette: missing color token "<key>"` or `emitQtPalette: token "<key>" is not #rrggbb: "<value>"` before color math. The regex is strict lowercase `^#[0-9a-f]{6}$`.
+  - Validate `name` with `^[a-z][a-z0-9-]{0,63}$` before reading colors; return `E_THEME_NAME` so every successful public-emitter output is accepted by the Python schema and safe for the build’s filename stem.
+  - Validate every required color before color math and return `E_MISSING_COLOR` / `E_COLOR_VALUE` issues. The regex is strict lowercase `^#[0-9a-f]{6}$`.
   - Compute `isDark` as white having higher contrast against `bg` than black; describe that rule accurately rather than claiming it compares `bg` with `text`.
   - Build the role maps in this exact policy order:
     - active: `Window=bg`, `WindowText=text`, `Base=surface-1`, `AlternateBase=surface-2`, `Text=text`, `Button=surface-2`, `ButtonText=text`, `ToolTipBase=surface-3`, `ToolTipText=text-strong`, `Highlight=accent`, `HighlightedText=bg`, `PlaceholderText=text-faint`, `Link=accent`, `BrightText=#ffffff`;
     - inactive: active plus `Highlight=mixOklab(accent, surface-3, 0.5)`;
     - disabled: active plus `WindowText/Text/ButtonText=text-faint`, `Base=bg`, `Button=surface-1`, `Highlight=surface-3`, `HighlightedText/Link=text-muted`.
-  - Emit status foregrounds directly and `*-bg = mixOklab(status, bg, 0.85)` (85% toward `bg`). Return two-space `JSON.stringify` with one trailing newline and this fixed top-level order:
+  - Emit status foregrounds directly and `*-bg = mixOklab(status, bg, 0.85)` (85% toward `bg`). Return a successful result containing two-space `JSON.stringify` with one trailing newline and this fixed top-level order:
     `$generated: 'by scripts/build-tokens.mjs — do not edit'`, `name`, `meta: { isDark }`, `groups`, `status`.
-  - `src/lib/qt/index.ts` re-exports `emitQtPalette`, `QT_ROLES`, and `QtPaletteInput`; it is the `@svnbjrn/design/qt` barrel. Do not add a root-barrel emitter export and do not add `design-generate --qt`.
+  - `src/lib/qt/index.ts` re-exports `emitQtPalette`, `QT_ROLES`, `QtPaletteInput`, `QtPaletteIssue`, and `QtPaletteResult`; it is the `@svnbjrn/design/qt` barrel. Do not add a root-barrel emitter export and do not add `design-generate --qt`.
 
 - [ ] **Add the thin adapter and I/O wiring.**
-  - `scripts/emitters/emit-qt.mjs` contains only `emitQt(theme) => emitQtPalette({ name: theme.name, palette: theme.paletteHex })`, matching `emit-extjs.mjs`, not the private QSS emitter.
-  - In `scripts/build-tokens.mjs`, import `emitQt`, create `QT_DIR = join(TOKENS_DIR, '../qt')`, `mkdirSync` it, add the Qt output to the header list, and append one `${theme.name}.palette.json` output per prepared theme. `scripts/build-tokens.mjs` remains the only writer.
+  - `scripts/emitters/emit-qt.mjs` returns `emitQtPalette({ name: theme.name, palette: theme.paletteHex })` unchanged, matching the public Result contract.
+  - In `scripts/build-tokens.mjs`, import `emitQt`, create `QT_DIR = join(TOKENS_DIR, '../qt')`, `mkdirSync` it, collect and print any Qt issues before the write loop, and append each successful `${theme.name}.palette.json` output. `scripts/build-tokens.mjs` remains the only writer.
   - Run `pnpm run tokens`; expect committed `src/lib/qt/dark.palette.json`, `light.palette.json`, and `amber.palette.json`.
 
 - [ ] **Publish the module/assets.** Add to `package.json`:

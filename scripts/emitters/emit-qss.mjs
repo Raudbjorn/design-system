@@ -114,7 +114,7 @@ QPushButton[class="primary"]:disabled {
 
 QPushButton[class="danger"] {
   background: ${c('error')};
-  color: #ffffff;
+  color: ${c('bg')};
   border: none;
   padding: ${padV + 1}px ${padH + 1}px;
 }
