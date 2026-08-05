@@ -21,7 +21,7 @@ Not published to npm. Consume from source:
 pnpm add github:Raudbjorn/design-system
 ```
 
-The package requires Node.js 22 or newer and has Svelte 5 as a peer dependency.
+The package requires Node.js 22.18.0 or newer and has Svelte 5 as a peer dependency.
 
 ### Native TUI
 

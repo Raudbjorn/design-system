@@ -21,7 +21,7 @@ package. It is a development and verification surface, not an npm export.
 
 ## Launch and inspect
 
-Node.js 22 or newer, pinned `pnpm@11.3.0`, and Rust 1.96.1 are required.
+Node.js 22.18.0 or newer, pinned `pnpm@11.3.0`, and Rust 1.96.1 are required.
 
 ```bash
 pnpm install --frozen-lockfile
