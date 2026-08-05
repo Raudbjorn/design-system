@@ -27,6 +27,7 @@ Read `CLAUDE.md` for fast orientation and `.github/copilot-instructions.md` befo
 | `src/lib/vermis`, `src/lib/carter` | Isolated opt-in component/token systems |
 | `src/stories`, `.storybook` | Storybook documentation and Chromium visual-test setup |
 | `scripts`, `scripts/emitters` | Token/font generation and artifact drift guards |
+| `src/lib/astro` | Astro integration plus native `.astro` ports of the zero-JS components |
 | `.design-sync` | Committed React bridge, previews, and converter configuration |
 | `docs` | Theme-package, integration, and visual-testing contracts |
 
@@ -62,7 +63,7 @@ pnpm exec vitest run --project=unit -t "prevents clicks when disabled"
 - Return `Result`-style values or issue arrays from theme, vernacular, and generation APIs; do not throw for expected invalid input. Bound size before traversal, reject unsupported prototypes/accessors, avoid invoking getters/proxies, normalize Unicode, and validate selectors before CSS interpolation.
 - Cancel prior timers/tasks before replacement. Guard code after `await` with destruction or generation state so late completions cannot mutate unmounted state or overwrite newer work. Svelte wrappers use local runes/context rather than global mutable stores.
 - Accessibility is part of the component API: preserve label/description/control relationships, stable accessible names, native value types, disabled/selected visuals, and topmost-only overlay handling. Key stateful lists by stable domain identity.
-- Public component, prop, event, or snippet changes must stay synchronized across implementation/tests, `src/lib/index.ts`, stories, `.design-sync/react-adapter/{index.js,index.d.ts,wrap.js}`, and the owned React preview.
+- Public component, prop, event, or snippet changes must stay synchronized across implementation/tests, `src/lib/index.ts`, stories, `.design-sync/react-adapter/{index.js,index.d.ts,wrap.js}`, the owned React preview, and — for a ported component — `src/lib/astro/components/<Name>.astro` and its prop type in `props.ts`.
 
 ## Important Files
 

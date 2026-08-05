@@ -19,8 +19,10 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.svelte",
+    "types/**/*.d.ts",
     "vite.config.ts",
     "vitest.config.ts",
+    "vitest.astro.config.ts",
     "vitest-setup.ts"
   ]
 }

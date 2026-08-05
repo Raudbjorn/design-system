@@ -13,6 +13,9 @@ const dirname =
 export default defineConfig({
   test: {
     projects: [
+      // Astro adapter (integration + .astro parity). Its own file because it
+      // is built from Astro's getViteConfig, not from the plugins used here.
+      './vitest.astro.config.ts',
       // Co-located component/token unit tests (jsdom), as before.
       {
         plugins: [svelte(), svelteTesting()],
@@ -28,6 +31,9 @@ export default defineConfig({
           exclude: [
             '**/node_modules/**',
             '**/dist/**',
+            // The Astro adapter's tests compile .astro, which needs Astro's
+            // Vite plugin — they run in the `astro` project below instead.
+            'src/lib/astro/**',
             // Session worktrees are full repo checkouts; without this a stale
             // (possibly red) copy of the whole suite runs alongside this tree's.
             // The anchored includes above don't reach them today — this guards

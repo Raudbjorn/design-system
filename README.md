@@ -65,6 +65,8 @@ components:
 | `@svnbjrn/design/vernacular/svelte` | Svelte vernacular context |
 | `@svnbjrn/design/vermis` + `/vermis/styles.css` | Opt-in occult-ornate Vermis component and token system |
 | `@svnbjrn/design/carter` + `/carter/styles.css` | Opt-in modern-mystery Carter component and token system |
+| `@svnbjrn/design/astro` | Astro integration: token CSS, pre-paint boot script, build-time world themes |
+| `@svnbjrn/design/astro/components` | Native `.astro` ports of the 17 zero-JS components |
 | `@svnbjrn/design/qss/*.qss` | Generated dark, light, and explicit amber Qt Style Sheets |
 | `@svnbjrn/design/qt` | QPalette JSON emitter (`emitQtPalette`, `QT_ROLES`) |
 | `@svnbjrn/design/qt/*.json` | Generated QPalette role maps per theme (dark, light, amber) |
@@ -171,6 +173,19 @@ The same build emits ExtJS override sheets — `@svnbjrn/design/extjs/theme-sv-d
 They install into Proxmox VE / PBS / PMG with `bin/proxmox-theme-install.sh`, and
 `design-generate --extjs <file>` emits one for a generated world theme. No Svelte
 components are involved. See `docs/extjs-integration.md`.
+
+### Astro
+
+`@svnbjrn/design/astro` is an integration: one entry in `astro.config.mjs` wires
+the token stylesheet, the pre-paint boot script (Astro has no `app.html`, so
+otherwise every layout hand-wires it), and a **build-time** world theme —
+parsed, contrast-gated, and turned into CSS during Astro's `astro:config:setup`
+hook, instead of applied after hydration. `@svnbjrn/design/astro/components`
+carries native `.astro` ports of the 17 components that have no state and no
+handlers, plus `Button` as a documented exception (ported without its Svelte
+`onclick` prop), so they ship zero JS; the 11 interactive ones stay Svelte and
+take a `client:` directive. A parity test renders both implementations and
+compares them. See `docs/astro-integration.md`.
 
 ### Vernacular (world-flavored UI strings)
 

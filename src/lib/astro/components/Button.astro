@@ -1,55 +1,40 @@
-<script lang="ts">
-  import type { Snippet } from 'svelte';
+---
+// No `onclick`: an .astro component has no client runtime to hand a function
+// to. The two uses that need no JS — <a href> and <button type="submit"> —
+// work here; anything interactive is the Svelte Button with a client:
+// directive. Tracked in ./unsupported.ts, which the parity test reads.
+import type { ButtonProps } from './props.ts';
 
-  interface Props {
-    variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
-    size?: 'sm' | 'md' | 'lg';
-    href?: string;
-    type?: 'button' | 'submit';
-    disabled?: boolean;
-    loading?: boolean;
-    onclick?: (e: MouseEvent) => void;
-    children: Snippet;
-  }
+type Props = ButtonProps;
 
-  let {
-    variant = 'primary',
-    size = 'md',
-    href,
-    type = 'button',
-    disabled = false,
-    loading = false,
-    onclick,
-    children
-  }: Props = $props();
-</script>
+const { variant = 'primary', size = 'md', href, type = 'button', disabled = false, loading = false } =
+  Astro.props;
+---
 
-{#if href}
+{href ? (
   <a
-    {href}
+    href={href}
     data-sv="button"
     data-variant={variant}
     data-size={size}
     aria-disabled={disabled || undefined}
     aria-busy={loading || undefined}
     tabindex={disabled ? -1 : undefined}
-    {onclick}
   >
-    {@render children()}
+    <slot />
   </a>
-{:else}
+) : (
   <button
-    {type}
+    type={type}
     data-sv="button"
     data-variant={variant}
     data-size={size}
     disabled={disabled || loading}
     aria-busy={loading || undefined}
-    {onclick}
   >
-    {@render children()}
+    <slot />
   </button>
-{/if}
+)}
 
 <style>
   [data-sv='button'] {
