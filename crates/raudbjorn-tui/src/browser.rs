@@ -551,8 +551,8 @@ fn presentation_rect(presentation: Presentation, area: Rect) -> Rect {
             let width = (area_w * u32::from(width_percent) / 100).min(area_w) as u16;
             let height = (area_h * u32::from(height_percent) / 100).min(area_h) as u16;
             Rect::new(
-                area.x + (area.width - width) / 2,
-                area.y + (area.height - height) / 2,
+                area.x.saturating_add(area.width.saturating_sub(width) / 2),
+                area.y.saturating_add(area.height.saturating_sub(height) / 2),
                 width,
                 height,
             )
