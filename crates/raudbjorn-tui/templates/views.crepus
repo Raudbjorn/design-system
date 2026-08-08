@@ -24,21 +24,38 @@ div w-full h-full flex-col bg-[#aa0001] border rounded p-1 text-[#aa0005]
     "{footer}"
 
 --- Sheet
-div w-full h-full flex-col bg-[#aa0001] border-r p-2 text-[#aa0005]
-  if {title}
-    div h-[1] font-bold text-[#aa0009]
-      "{title}"
-  if {side}
-    div h-[1] text-[#aa0007]
-      "{side}"
-  if {body}
-    div flex-1 text-[#aa0005]
-      "{body}"
-  if {minimum_size}
-    div h-[1] text-[#aa000f]
-      "minimum size 60x16"
-  div h-[1] border-t text-[#aa0007]
-    "{footer}"
+if {side == "LEFT"}
+  div w-full h-full flex-col bg-[#aa0001] border-r p-2 text-[#aa0005]
+    if {title}
+      div h-[1] font-bold text-[#aa0009]
+        "{title}"
+    if {side}
+      div h-[1] text-[#aa0007]
+        "{side}"
+    if {body}
+      div flex-1 text-[#aa0005]
+        "{body}"
+    if {minimum_size}
+      div h-[1] text-[#aa000f]
+        "minimum size 60x16"
+    div h-[1] border-t text-[#aa0007]
+      "{footer}"
+else
+  div w-full h-full flex-col bg-[#aa0001] border-l p-2 text-[#aa0005]
+    if {title}
+      div h-[1] font-bold text-[#aa0009]
+        "{title}"
+    if {side}
+      div h-[1] text-[#aa0007]
+        "{side}"
+    if {body}
+      div flex-1 text-[#aa0005]
+        "{body}"
+    if {minimum_size}
+      div h-[1] text-[#aa000f]
+        "minimum size 60x16"
+    div h-[1] border-t text-[#aa0007]
+      "{footer}"
 
 --- PaneServiceTable
 div w-full h-full border text-[#aa0005]
@@ -274,4 +291,4 @@ div w-full h-full flex-col bg-[#aa0000] text-[#aa0005]
 --- ViewMinimumSize
 div w-full h-full flex-col bg-[#aa0000] text-[#aa0005] justify-center items-center
   div h-[1] text-[#aa0009] "Terminal too small"
-  div h-[1] text-[#aa0008] "requires 80×24, current {viewport_width}×{viewport_height}"
+  div h-[1] text-[#aa0008] "requires 80x24, current {viewport_width}x{viewport_height}"

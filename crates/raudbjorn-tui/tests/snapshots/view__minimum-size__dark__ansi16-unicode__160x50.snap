@@ -170,7 +170,7 @@ width=160 height=50
 8,1: |DarkGray|Black|Reset|NONE
 9,1:8|DarkGray|Black|Reset|NONE
 10,1:0|DarkGray|Black|Reset|NONE
-11,1:×|DarkGray|Black|Reset|NONE
+11,1:x|DarkGray|Black|Reset|NONE
 12,1:2|DarkGray|Black|Reset|NONE
 13,1:4|DarkGray|Black|Reset|NONE
 14,1:,|DarkGray|Black|Reset|NONE
@@ -186,7 +186,7 @@ width=160 height=50
 24,1:1|DarkGray|Black|Reset|NONE
 25,1:6|DarkGray|Black|Reset|NONE
 26,1:0|DarkGray|Black|Reset|NONE
-27,1:×|DarkGray|Black|Reset|NONE
+27,1:x|DarkGray|Black|Reset|NONE
 28,1:5|DarkGray|Black|Reset|NONE
 29,1:0|DarkGray|Black|Reset|NONE
 30,1: |DarkGray|Black|Reset|NONE

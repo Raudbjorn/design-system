@@ -84,10 +84,10 @@ fn test_button_focused_has_brackets() {
 }
 
 #[test]
-fn test_button_disabled_has_depld() {
+fn test_button_disabled_is_disabled() {
     let buf = render_story("button/disabled", (24, 3));
     assert_no_warn(&buf);
-    assert!(buffer_text(&buf).contains("[DEPLD] Deploy"));
+    assert!(buffer_text(&buf).contains("[DISABLED] Deploy"));
 }
 
 #[test]
@@ -116,7 +116,7 @@ fn test_link_internal_shows_href() {
     let buf = render_story("link/internal", (32, 1));
     assert_no_warn(&buf);
     let t = buffer_text(&buf);
-    assert!(t.contains("jellyfin.s8n.is"), "Internal link: {}", t);
+    assert!(t.contains("/service"), "Internal link: {}", t);
 }
 
 #[test]
@@ -208,10 +208,10 @@ fn test_select_selected_shows_radarr() {
 }
 
 #[test]
-fn test_select_disabled_is_depld() {
+fn test_select_disabled_is_disabled() {
     let buf = render_story("select/disabled", (36, 9));
     assert_no_warn(&buf);
-    assert!(buffer_text(&buf).contains("DEPLD"));
+    assert!(buffer_text(&buf).contains("DISABLED"));
 }
 
 #[test]
@@ -238,7 +238,7 @@ fn test_checkbox_unchecked_has_blank() {
 }
 
 #[test]
-fn test_checkbox_disabled_checked_is_depld() {
+fn test_checkbox_disabled_checked_is_disabled() {
     let buf = render_story("checkbox/disabled-checked", (32, 1));
     assert_no_warn(&buf);
     assert!(buffer_text(&buf).contains("DISABLED"));
@@ -279,7 +279,7 @@ fn test_radio_selected_shows_star() {
 }
 
 #[test]
-fn test_radio_disabled_is_depld() {
+fn test_radio_disabled_is_disabled() {
     let buf = render_story("radio/disabled", (32, 5));
     assert_no_warn(&buf);
     assert!(buffer_text(&buf).contains("DISABLED"));
@@ -316,10 +316,10 @@ fn test_switch_focused_differs() {
 }
 
 #[test]
-fn test_switch_disabled_is_depld() {
+fn test_switch_disabled_is_disabled() {
     let buf = render_story("switch/disabled", (32, 1));
     assert_no_warn(&buf);
-    assert!(buffer_text(&buf).contains("DEPLD"));
+    assert!(buffer_text(&buf).contains("DISABLED"));
 }
 
 #[test]

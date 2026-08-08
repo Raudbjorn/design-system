@@ -29,10 +29,10 @@ pnpm run tui:gallery
 pnpm run tui:list
 
 # Open one story directly in the interactive terminal.
-cargo run -p raudbjorn-tui --example gallery -- --story view/homelab-healthy
+cargo run --locked -p raudbjorn-tui --example gallery -- --story view/homelab-healthy
 
 # Produce a deterministic plain-text dump without taking over the terminal.
-cargo run -q -p raudbjorn-tui --example gallery -- \
+cargo run --locked -q -p raudbjorn-tui --example gallery -- \
   --dump button/primary --width 40 --height 5
 ```
 
@@ -77,7 +77,7 @@ test.
 - **160×50** caps content at 120 columns rather than stretching it without
   bound.
 - **40×12** is the binding fallback: full Views render only
-  `Terminal too small — requires 80×24, current 40×12`.
+  `Terminal too small — requires 80x24, current 40x12`.
 - The gallery browser itself requires at least 40×12.
 
 ## Color and glyph profiles
@@ -105,7 +105,7 @@ Run the focused and release gates from the repository root:
 pnpm run tui:check
 pnpm run tui:test
 pnpm run tui:smoke
-cargo test -p raudbjorn-tui snapshot_release_matrix -- --nocapture
+cargo test --locked -p raudbjorn-tui snapshot_release_matrix -- --nocapture
 ```
 
 Snapshots live under `crates/raudbjorn-tui/tests/snapshots`. Each file begins
@@ -121,8 +121,8 @@ stories use an injected fixed tick; snapshots never read wall-clock time.
 Missing snapshots fail. Regeneration is always explicit:
 
 ```bash
-UPDATE_SNAPSHOTS=1 cargo test -p raudbjorn-tui --test snapshots -- --nocapture
-cargo test -p raudbjorn-tui --test snapshots -- --nocapture
+UPDATE_SNAPSHOTS=1 cargo test --locked -p raudbjorn-tui --test snapshots -- --nocapture
+cargo test --locked -p raudbjorn-tui --test snapshots -- --nocapture
 ```
 
 Review the resulting snapshot diff before accepting it. The second command,
@@ -146,20 +146,24 @@ plus tmux at 80×24. Review 80×24, 120×30, and 160×50 in truecolor Unicode,
 then ANSI 16, mono/no-color, and ASCII for Button, Input error, Select open,
 Alert tones, Table rich cells, Modal, Sheet, and every Homelab View.
 
-Use these installed-emulator launch commands for the first 80×24 pass:
+Use these installed-emulator launch commands for the first 80×24 pass. Run
+them from the repository root — `repo` captures that directory so the spawned
+emulator's shell lands back in the checkout regardless of its own default cwd:
 
 ```bash
+repo="$PWD"
+
 # Kitty, truecolor Unicode, 80×24.
 /usr/bin/kitty -o initial_window_width=80c -o initial_window_height=24c \
-  sh -lc 'cd /home/svnbjrn/projects/design-system && exec env RAUDBJORN_TUI_COLOR=truecolor RAUDBJORN_TUI_GLYPHS=unicode cargo run -p raudbjorn-tui --example gallery'
+  sh -lc "cd '$repo' && exec env RAUDBJORN_TUI_COLOR=truecolor RAUDBJORN_TUI_GLYPHS=unicode cargo run --locked -p raudbjorn-tui --example gallery"
 
 # XTerm, ANSI 16 Unicode, 80×24.
 /usr/bin/xterm -geometry 80x24 -e sh -lc \
-  'cd /home/svnbjrn/projects/design-system && exec env RAUDBJORN_TUI_COLOR=ansi16 RAUDBJORN_TUI_GLYPHS=unicode cargo run -p raudbjorn-tui --example gallery'
+  "cd '$repo' && exec env RAUDBJORN_TUI_COLOR=ansi16 RAUDBJORN_TUI_GLYPHS=unicode cargo run --locked -p raudbjorn-tui --example gallery"
 
 # tmux inside XTerm, mono ASCII, 80×24.
 /usr/bin/xterm -geometry 80x24 -e sh -lc \
-  'cd /home/svnbjrn/projects/design-system && exec /usr/bin/tmux -f /dev/null new-session "env RAUDBJORN_TUI_COLOR=mono RAUDBJORN_TUI_GLYPHS=ascii cargo run -p raudbjorn-tui --example gallery"'
+  "cd '$repo' && exec /usr/bin/tmux -f /dev/null new-session \"env RAUDBJORN_TUI_COLOR=mono RAUDBJORN_TUI_GLYPHS=ascii cargo run --locked -p raudbjorn-tui --example gallery\""
 ```
 
 Repeat the Kitty and XTerm commands at 120×30 and 160×50 by changing the

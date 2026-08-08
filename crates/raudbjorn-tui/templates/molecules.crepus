@@ -31,7 +31,7 @@ div h-[1] flex-row px-1 text-[#aa0006]
   if {focused}
     span bg-[#aa0008] ">[{label}]<"
   else if {disabled}
-    span text-[#aa0007] "[DEPLD] {label}"
+    span text-[#aa0007] "[DISABLED] {label}"
   else if {loading}
     span text-[#aa0009] "⟳ LOADING {label}"
   else
@@ -116,7 +116,7 @@ div h-full flex-col gap-1 text-[#aa0005]
   else if {disabled}
     div h-full flex-col
       div h-[1] text-[#aa0007]
-        "[DEPLD] {selected}"
+        "[DISABLED] {selected}"
   else if {focused}
     div h-full flex-col
       div h-[1] text-[#aa0006]
@@ -153,7 +153,7 @@ div h-[1] flex-row gap-1 text-[#aa0005]
   if {focused}
     span bg-[#aa0008] "[{state}]"
   else if {disabled}
-    span text-[#aa0007] "[DEPLD] {state}"
+    span text-[#aa0007] "[DISABLED] {state}"
   else if {on}
     span text-[#aa0006] "[ON] {state}"
   else

@@ -294,7 +294,15 @@ impl ComponentRenderer {
         frame: &mut Frame,
         area: Rect,
     ) -> Result<(), ComponentError> {
-        let component = self.store.parsed_component(template)?;
+        let overridden = ctx
+            .virtual_files
+            .get(template.file.path())
+            .and_then(|content| parse_component_file(content).ok())
+            .and_then(|file| file.components.get(template.section).cloned());
+        let component = match &overridden {
+            Some(component) => component,
+            None => self.store.parsed_component(template)?,
+        };
         if area.is_empty() {
             return Ok(());
         }
@@ -355,7 +363,7 @@ pub fn normalize_render_context(template: TemplateRef, ctx: &mut TemplateContext
         "Radio" => normalize_indexed_label(ctx, "options", "selected_index", "label"),
         "Select" => normalize_select(ctx),
         "Table" => normalize_table(ctx),
-        "Tabs" => normalize_indexed_label(ctx, "tabs", "active_index", "tab"),
+        "Tabs" => normalize_tabs(ctx),
         _ => {}
     }
 }
@@ -415,6 +423,30 @@ pub fn normalize_select(ctx: &mut TemplateContext) {
         ctx.set("selected", option);
     } else {
         ctx.set("selected", "None").set("selected_index", -1_i64);
+    }
+}
+
+pub fn normalize_tabs(ctx: &mut TemplateContext) {
+    let declared = match ctx.get("tab_count") {
+        Some(TemplateValue::Int(value)) => (*value).max(0),
+        _ => 0,
+    };
+    if declared == 0 {
+        return;
+    }
+    // `tab_count` is caller-supplied and can drift from the actual number of
+    // comma-separated labels in `tabs`; bound against the parsed length too
+    // so `active` never indexes past what `indexed_label` can resolve.
+    let parsed = ctx.get_str("tabs").split(',').count() as i64;
+    let count = declared.min(parsed.max(1));
+
+    let active = match ctx.get("active_index") {
+        Some(TemplateValue::Int(value)) => (*value).clamp(0, count - 1),
+        _ => 0,
+    };
+    ctx.set("active_index", active);
+    if let Some(label) = indexed_label(ctx, "tabs", active) {
+        ctx.set("tab", label);
     }
 }
 

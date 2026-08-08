@@ -1,5 +1,5 @@
 width=120 height=40
-0,0: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,0:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,0: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,0: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,0: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -118,8 +118,8 @@ width=120 height=40
 116,0: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,0: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,0: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,0:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,1: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,0: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,1:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,1: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,1: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,1: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -238,23 +238,23 @@ width=120 height=40
 116,1: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,1: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,1: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,1:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,2: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,1: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,2:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,2: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-2,2:C|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-3,2:o|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-4,2:m|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-5,2:p|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-6,2:a|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-7,2:c|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-8,2:t|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-9,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-10,2:s|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-11,2:h|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-12,2:e|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+2,2: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+3,2:C|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+4,2:o|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+5,2:m|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+6,2:p|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+7,2:a|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+8,2:c|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+9,2:t|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+10,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+11,2:s|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+12,2:h|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
 13,2:e|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-14,2:t|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-15,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+14,2:e|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
+15,2:t|Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
 16,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
 17,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
 18,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
@@ -356,17 +356,17 @@ width=120 height=40
 114,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
 115,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
 116,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
-117,2: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+117,2: |Rgb(78, 201, 176)|Rgb(30, 30, 30)|Reset|BOLD
 118,2: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,2:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,3: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,2: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,3:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,3: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-2,3:R|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-3,3:I|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-4,3:G|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-5,3:H|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-6,3:T|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-7,3: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+2,3: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+3,3:R|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+4,3:I|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+5,3:G|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+6,3:H|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+7,3:T|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 8,3: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 9,3: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 10,3: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
@@ -476,27 +476,27 @@ width=120 height=40
 114,3: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 115,3: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 116,3: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-117,3: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+117,3: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 118,3: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,3:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,3: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,4:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-2,4:R|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-3,4:e|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-4,4:s|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-5,4:i|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-6,4:z|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-7,4:e|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-8,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-9,4:t|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-10,4:e|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-11,4:r|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-12,4:m|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-13,4:i|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-14,4:n|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-15,4:a|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-16,4:l|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-17,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+2,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+3,4:R|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+4,4:e|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+5,4:s|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+6,4:i|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+7,4:z|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+8,4:e|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+9,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+10,4:t|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+11,4:e|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+12,4:r|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+13,4:m|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+14,4:i|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+15,4:n|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+16,4:a|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+17,4:l|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 18,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 19,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 20,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -598,8 +598,8 @@ width=120 height=40
 116,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,4:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,5: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,4: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,5:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,5: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,5: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,5: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -718,8 +718,8 @@ width=120 height=40
 116,5: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,5: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,5: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,5:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,6: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,5: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,6:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,6: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,6: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,6: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -838,8 +838,8 @@ width=120 height=40
 116,6: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,6: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,6: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,6:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,7: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,6: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,7:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,7: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,7: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,7: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -958,8 +958,8 @@ width=120 height=40
 116,7: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,7: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,7: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,7:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,8: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,7: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,8:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,8: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,8: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,8: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -1078,8 +1078,8 @@ width=120 height=40
 116,8: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,8: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,8: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,8:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,9: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,8: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,9:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,9: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,9: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,9: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -1198,8 +1198,8 @@ width=120 height=40
 116,9: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,9: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,9: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,9:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,10: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,9: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,10:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,10: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,10: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,10: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -1318,8 +1318,8 @@ width=120 height=40
 116,10: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,10: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,10: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,10:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,11: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,10: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,11:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,11: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,11: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,11: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -1438,8 +1438,8 @@ width=120 height=40
 116,11: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,11: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,11: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,11:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,12: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,11: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,12:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,12: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,12: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,12: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -1558,8 +1558,8 @@ width=120 height=40
 116,12: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,12: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,12: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,12:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,13: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,12: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,13:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,13: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,13: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,13: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -1678,8 +1678,8 @@ width=120 height=40
 116,13: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,13: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,13: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,13:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,14: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,13: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,14:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,14: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,14: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,14: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -1798,8 +1798,8 @@ width=120 height=40
 116,14: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,14: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,14: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,14:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,15: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,14: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,15:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,15: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,15: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,15: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -1918,8 +1918,8 @@ width=120 height=40
 116,15: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,15: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,15: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,15:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,16: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,15: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,16:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,16: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,16: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,16: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -2038,8 +2038,8 @@ width=120 height=40
 116,16: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,16: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,16: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,16:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,17: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,16: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,17:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,17: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,17: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,17: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -2158,8 +2158,8 @@ width=120 height=40
 116,17: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,17: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,17: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,17:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,18: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,17: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,18:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,18: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,18: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,18: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -2278,8 +2278,8 @@ width=120 height=40
 116,18: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,18: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,18: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,18:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,19: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,18: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,19:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,19: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,19: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,19: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -2398,8 +2398,8 @@ width=120 height=40
 116,19: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,19: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,19: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,19:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,20: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,19: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,20:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,20: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,20: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,20: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -2518,8 +2518,8 @@ width=120 height=40
 116,20: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,20: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,20: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,20:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,21: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,20: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,21:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,21: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,21: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,21: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -2638,8 +2638,8 @@ width=120 height=40
 116,21: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,21: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,21: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,21:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,22: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,21: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,22:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,22: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,22: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,22: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -2758,8 +2758,8 @@ width=120 height=40
 116,22: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,22: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,22: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,22:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,23: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,22: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,23:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,23: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,23: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,23: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -2878,8 +2878,8 @@ width=120 height=40
 116,23: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,23: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,23: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,23:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,24: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,23: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,24:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,24: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,24: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,24: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -2998,8 +2998,8 @@ width=120 height=40
 116,24: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,24: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,24: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,24:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,25: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,24: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,25:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,25: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,25: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,25: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -3118,8 +3118,8 @@ width=120 height=40
 116,25: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,25: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,25: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,25:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,26: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,25: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,26:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,26: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,26: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,26: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -3238,8 +3238,8 @@ width=120 height=40
 116,26: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,26: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,26: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,26:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,27: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,26: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,27:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,27: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,27: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,27: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -3358,8 +3358,8 @@ width=120 height=40
 116,27: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,27: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,27: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,27:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,28: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,27: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,28:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,28: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,28: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,28: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -3478,8 +3478,8 @@ width=120 height=40
 116,28: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,28: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,28: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,28:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,29: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,28: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,29:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,29: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,29: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,29: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -3598,8 +3598,8 @@ width=120 height=40
 116,29: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,29: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,29: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,29:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,30: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,29: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,30:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,30: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,30: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,30: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -3718,8 +3718,8 @@ width=120 height=40
 116,30: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,30: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,30: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,30:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,31: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,30: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,31:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,31: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,31: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,31: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -3838,8 +3838,8 @@ width=120 height=40
 116,31: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,31: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,31: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,31:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,32: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,31: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,32:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,32: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,32: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,32: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -3958,8 +3958,8 @@ width=120 height=40
 116,32: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,32: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,32: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,32:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,33: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,32: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,33:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,33: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,33: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,33: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -4078,8 +4078,8 @@ width=120 height=40
 116,33: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,33: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,33: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,33:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,34: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,33: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,34:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,34: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,34: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,34: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -4198,28 +4198,28 @@ width=120 height=40
 116,34: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,34: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,34: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,34:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,35: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,34: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,35:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,35: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-2,35:m|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-3,35:i|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-4,35:n|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-5,35:i|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-6,35:m|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-7,35:u|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-8,35:m|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-9,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-10,35:s|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-11,35:i|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-12,35:z|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-13,35:e|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-14,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-15,35:6|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-16,35:0|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-17,35:x|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-18,35:1|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-19,35:6|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-20,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+2,35: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+3,35:m|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+4,35:i|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+5,35:n|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+6,35:i|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+7,35:m|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+8,35:u|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+9,35:m|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+10,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+11,35:s|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+12,35:i|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+13,35:z|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+14,35:e|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+15,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+16,35:6|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+17,35:0|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+18,35:x|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+19,35:1|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
+20,35:6|Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
 21,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
 22,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
 23,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
@@ -4316,12 +4316,12 @@ width=120 height=40
 114,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
 115,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
 116,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
-117,35: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+117,35: |Rgb(255, 165, 0)|Rgb(30, 30, 30)|Reset|NONE
 118,35: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,35:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,36: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,35: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,36:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,36: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-2,36:─|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+2,36: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,36:─|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 4,36:─|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 5,36:─|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
@@ -4436,21 +4436,21 @@ width=120 height=40
 114,36:─|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 115,36:─|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 116,36:─|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-117,36: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+117,36:─|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 118,36: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,36:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,37: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,36: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,37:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,37: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-2,37:E|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-3,37:s|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-4,37:c|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-5,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-6,37:c|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-7,37:l|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-8,37:o|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-9,37:s|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-10,37:e|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-11,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+2,37: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+3,37:E|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+4,37:s|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+5,37:c|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+6,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+7,37:c|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+8,37:l|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+9,37:o|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+10,37:s|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
+11,37:e|Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 12,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 13,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 14,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
@@ -4556,10 +4556,10 @@ width=120 height=40
 114,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 115,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 116,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
-117,37: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+117,37: |Rgb(154, 154, 154)|Rgb(30, 30, 30)|Reset|NONE
 118,37: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,37:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,38: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,37: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,38:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,38: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,38: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,38: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -4678,8 +4678,8 @@ width=120 height=40
 116,38: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,38: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,38: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,38:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-0,39: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,38: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+0,39:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 1,39: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 2,39: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 3,39: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
@@ -4798,4 +4798,4 @@ width=120 height=40
 116,39: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 117,39: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
 118,39: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
-119,39:│|Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
+119,39: |Rgb(212, 212, 212)|Rgb(30, 30, 30)|Reset|NONE
