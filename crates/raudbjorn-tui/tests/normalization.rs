@@ -11,7 +11,7 @@ use raudbjorn_tui::{
 
 fn render(story_id: &str, ctx: &TemplateContext, size: (u16, u16)) -> String {
     let story = STORIES.iter().find(|story| story.id == story_id).unwrap();
-    let mut renderer = ComponentRenderer::new(Arc::new(TemplateStore::load_embedded().unwrap()));
+    let renderer = ComponentRenderer::new(Arc::new(TemplateStore::load_embedded().unwrap()));
     let mut terminal = Terminal::new(TestBackend::new(size.0, size.1)).unwrap();
     terminal
         .draw(|frame| {

@@ -14,6 +14,7 @@
 import { hexToOklch, oklchToHex } from '../internal/color.ts';
 import { contrastRatio } from '../internal/contrast.ts';
 import { checkThemeAA } from '../internal/invariants.ts';
+import { WORLD_THEME_SCHEMA_V2 } from '../theme/types.ts';
 import { analyzeSeeds, assignTriad, HOUSE_TRIAD, hueDistance, shortestArc } from './assign.ts';
 import type { TriadSlot } from './assign.ts';
 import { foldHints } from './hints.ts';
@@ -66,7 +67,8 @@ const ACCENT_FLOOR = 3.0;
 const STATUS_ANCHORS = {
   success: { h: 147, c: 0.165, cFloor: 0.1 },
   error: { h: 29, c: 0.19, cFloor: 0.13 },
-  warning: { h: 68, c: 0.15, cFloor: 0.1 }
+  warning: { h: 68, c: 0.15, cFloor: 0.1 },
+  info: { h: 235, c: 0.12, cFloor: 0.08 }
 } as const;
 const STATUS_L_START: Record<Mode, number> = { dark: 0.6, light: 0.575 };
 
@@ -389,6 +391,7 @@ export const generateTheme = (
   if (folded.fontStance) meta.fontStance = folded.fontStance;
 
   const theme: WorldThemePackage = {
+    $schema: WORLD_THEME_SCHEMA_V2,
     name: opts.name,
     version: '1.0.0',
     extends: mode,

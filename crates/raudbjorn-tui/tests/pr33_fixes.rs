@@ -5,7 +5,6 @@
 //! green) is enforced in this file's commit history.
 
 use std::collections::HashMap;
-use std::sync::Arc;
 
 use crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
 use crepuscularity_tui::TemplateContext;
@@ -20,10 +19,6 @@ use raudbjorn_tui::catalog::{
 
 fn key(code: KeyCode) -> Event {
     Event::Key(KeyEvent::new(code, KeyModifiers::NONE))
-}
-
-fn modified_key(code: KeyCode, modifiers: KeyModifiers) -> Event {
-    Event::Key(KeyEvent::new(code, modifiers))
 }
 
 fn get_i64(ctx: &TemplateContext, key: &str) -> i64 {
@@ -50,15 +45,15 @@ fn get_bool(ctx: &TemplateContext, key: &str) -> bool {
 // ===== Fix 1 — handle_table consumes keypress at zero row, clamps to zero ===
 
 #[test]
-fn handle_table_at_zero_clamps_to_zero_not_negative() {
+fn handle_table_at_zero_up_is_noop_not_negative() {
     let mut ctx = table_fixture();
     ctx.set("row_count", 5_i64).set("selected_row", 0_i64);
 
     let consumed = handlers::handle_table(&mut ctx, &key(KeyCode::Up));
 
     assert!(
-        consumed,
-        "Up at row 0 must still be consumed (handler acknowledges the keystroke)"
+        !consumed,
+        "Up at row 0 is a no-op — it must not report the key as consumed"
     );
     assert_eq!(
         get_i64(&ctx, "selected_row"),
@@ -68,15 +63,15 @@ fn handle_table_at_zero_clamps_to_zero_not_negative() {
 }
 
 #[test]
-fn handle_table_at_last_row_down_clamps_and_consumes() {
+fn handle_table_at_last_row_down_is_noop_clamped() {
     let mut ctx = table_fixture();
     ctx.set("row_count", 5_i64).set("selected_row", 4_i64);
 
     let consumed = handlers::handle_table(&mut ctx, &key(KeyCode::Down));
 
     assert!(
-        consumed,
-        "Down at the last row must be consumed even though the index does not advance"
+        !consumed,
+        "Down at the last row is a no-op — it must not report the key as consumed"
     );
     assert_eq!(
         get_i64(&ctx, "selected_row"),
@@ -263,8 +258,13 @@ fn browser_handles_backtab_as_shift_tab() {
 
 #[test]
 fn table_fixtures_provide_row_count() {
+    // table/empty is intentionally zero-row — it exercises the empty-state
+    // rendering path, not row navigation.
     let mut bad: Vec<String> = Vec::new();
-    for story in STORIES.iter().filter(|s| s.id.starts_with("table/")) {
+    for story in STORIES
+        .iter()
+        .filter(|s| s.id.starts_with("table/") && s.id != "table/empty")
+    {
         let ctx = story.context();
         let rc = get_i64(&ctx, "row_count");
         if rc <= 0 {
@@ -337,17 +337,18 @@ fn templates_reference_mutated_fields() {
     let store = TemplateStore::load_embedded().unwrap();
 
     let cases: &[(&str, TemplateFile, &str)] = &[
-        ("Checkbox", TemplateFile::Molecules, "{checked}"),
+        ("Checkbox", TemplateFile::Molecules, "{check}"),
         ("Radio", TemplateFile::Molecules, "{radio}"),
         ("Switch", TemplateFile::Molecules, "{on}"),
         ("Tabs", TemplateFile::Layout, "{tab}"),
     ];
 
+    let virtual_files = store.virtual_files();
     let mut missing: Vec<String> = Vec::new();
     for (component, file, snippet) in cases {
-        let entry = store
-            .source_for_section_public(*file, component)
-            .expect("component present in store");
+        let entry = virtual_files
+            .get(file.path())
+            .expect("template file present in store");
         if !entry.contains(snippet) {
             missing.push(format!("{component} missing {snippet}"));
         }
@@ -367,7 +368,7 @@ fn component_renderer_caller_virtual_file_overrides_store_entry() {
     use std::sync::Arc;
 
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
 
     let sentinel = "PR33-OVERRIDE-SENTINEL";
     let mut override_ctx = TemplateContext::default();

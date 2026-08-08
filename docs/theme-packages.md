@@ -16,9 +16,9 @@ representation — a package string can never reach a stylesheet.
 
 ```jsonc
 {
-  "$schema": "https://svnbjrn.dev/schemas/world-theme.v1.json", // optional
+  "$schema": "https://svnbjrn.dev/schemas/world-theme.v2.json", // current contrast contract
   "name": "grimdark-hive",      // ^[a-z0-9][a-z0-9-]{0,63}$
-  "version": "1.0.0",           // semver-ish (\d+.\d+.\d+)
+  "version": "1.0.0",           // package revision; does not select the schema
   "extends": "dark",            // 'dark' | 'light' (default 'dark')
   "meta": {                     // optional, display only, never emitted as CSS
     "title": "Hive Primus",     // string values ≤256 chars, ≤32 entries
@@ -39,9 +39,19 @@ representation — a package string can never reach a stylesheet.
 }
 ```
 
+`$schema` versions the library behavior independently of the package's own
+`version`. Omitted `$schema` and the exact `world-theme.v1.json` identifier use
+the legacy v1 contrast rules. New producers must emit the exact
+`world-theme.v2.json` identifier to opt into the current rules. Other schema
+strings remain v1-compatible rather than silently opting into a newer contract.
+
 `extends` selects **both** the cascade fallthrough base and the palette the
 contrast gate evaluates against; the document-scope applier sets `data-theme`
 to match, so the two can never disagree.
+
+`amber` is a third static built-in theme (selected explicitly via
+`data-theme="amber"`), but it is not a world-package base: `extends` remains
+`'dark' | 'light'`, and world packages continue to fold onto one of those two.
 
 ## Value grammars (per `$type`)
 
@@ -57,22 +67,27 @@ to match, so the two can never disagree.
 Token names must exist in the contract registry (`SV_TOKEN_REGISTRY`).
 `z-*` and `bp-*` are hard-locked (worlds restyle color/type/shape, never
 stacking contexts or layout thresholds); applications may lock more via
-`lockedTokens` (BONES locks `success`/`error`/`warning`).
+`lockedTokens` (BONES locks `success`/`error`/`warning`/`info`).
 
 ## The contrast gate
 
-Rules (one source of truth, `CONTRAST_RULES` — the same table
-`palette.test.ts` holds the built-in themes to):
+The rules are versioned from the same source of truth:
 
-- `text`, `text-strong`, `text-muted`, `text-faint` ≥ 4.5:1 on `bg`
-- `accent`, `accent-2` ≥ 3:1 on `bg`
-- all six `syn-*` ≥ 4.5:1 on `surface-3` (the CodeBlock background)
-- `success`, `error`, `warning`, `accent-rust` ≥ 3:1 on `bg`
-- `text-strong`, `text`, `text-muted` ≥ 4.5:1 on `surface-3`
+- v1 (`CONTRAST_RULES_V1`; omitted or `world-theme.v1.json`):
+  - `text`, `text-strong`, `text-muted`, `text-faint` ≥ 4.5:1 on `bg`
+  - `accent`, `accent-2` ≥ 3:1 on `bg`
+  - all six `syn-*` ≥ 4.5:1 on `surface-3` (the CodeBlock background)
+  - `success`, `error`, `warning`, `accent-rust` ≥ 3:1 on `bg`
+  - `text-strong`, `text`, `text-muted` ≥ 4.5:1 on `surface-3`
+- v2 (`CONTRAST_RULES_V2`, also exported as current `CONTRAST_RULES`): all v1
+  rules plus `info` ≥ 3:1 on `bg`.
 
-Evaluated on the **effective palette** (`override ?? base[extends]`), so a
-package overriding only `bg` still has the inherited text checked against the
-new background. Policy via `onContrastFailure`:
+`palette.test.ts` holds built-in themes to the current v2 table. Runtime
+packages are evaluated on the **effective palette**
+(`override ?? base[extends]`) using their declared schema contract. A v1
+package overriding only `bg` therefore keeps the same gate behavior after a
+library upgrade; v2 packages explicitly add the inherited `info` pairing.
+Policy via `onContrastFailure`:
 
 - `'revert'` (default) — drop the offending override(s), fall back to the
   built-in value, report `W_CONTRAST_REVERTED` with ratios. A world theme is

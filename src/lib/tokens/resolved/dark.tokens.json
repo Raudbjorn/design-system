@@ -83,6 +83,11 @@
       "css": "#ffa500",
       "qt": "#ffa500"
     },
+    "info": {
+      "type": "color",
+      "css": "#6fa8c7",
+      "qt": "#6fa8c7"
+    },
     "syn-keyword": {
       "type": "color",
       "css": "#569cd6",

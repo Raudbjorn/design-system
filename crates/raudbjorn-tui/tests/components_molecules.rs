@@ -13,7 +13,7 @@ fn render_story(id: &str, size: (u16, u16)) -> Buffer {
         .find(|s| s.id == id)
         .expect("story not found");
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let backend = TestBackend::new(size.0, size.1);
     let mut terminal = Terminal::new(backend).unwrap();
     let ctx = story.context();
@@ -189,7 +189,7 @@ fn test_input_disabled_differs() {
 fn test_select_closed_has_selected() {
     let buf = render_story("select/closed", (36, 9));
     assert_no_warn(&buf);
-    assert!(buffer_text(&buf).contains("Sonarr"));
+    assert!(buffer_text(&buf).contains("sonarr"));
 }
 
 #[test]
@@ -197,14 +197,14 @@ fn test_select_open_shows_list() {
     let buf = render_story("select/open", (36, 9));
     assert_no_warn(&buf);
     let t = buffer_text(&buf);
-    assert!(t.contains("Sonarr"), "Open select: {}", t);
+    assert!(t.contains("sonarr"), "Open select: {}", t);
 }
 
 #[test]
 fn test_select_selected_shows_radarr() {
     let buf = render_story("select/selected", (36, 9));
     assert_no_warn(&buf);
-    assert!(buffer_text(&buf).contains("Radarr"));
+    assert!(buffer_text(&buf).contains("radarr"));
 }
 
 #[test]

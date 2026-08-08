@@ -1,0 +1,850 @@
+/* GENERATED — do not edit by hand.
+ * Theme: sv-amber — ExtJS override sheet for @svnbjrn/design.
+ *
+ * Proxmox VE / PBS / PMG:
+ *   install to /usr/share/javascript/proxmox-widget-toolkit/themes/theme-sv-amber.css
+ *   with the woff2 files in a sibling sv-fonts/ directory, then select the
+ *   theme in the UI (or set the P{VE,BS,MG}ThemeCookie to "sv-amber").
+ *   bin/proxmox-theme-install.sh does all of that.
+ *
+ * Own ExtJS apps: load after ext-all.css / theme-crisp-all.css. Nothing here is
+ * wrapped in a cascade layer, because layered rules lose to ExtJS's unlayered
+ * ones.
+ */
+
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('sv-fonts/InterVariable.woff2') format('woff2');
+}
+@font-face {
+  font-family: Inter;
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('sv-fonts/InterVariable-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: Iosevka;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('sv-fonts/Iosevka-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: Iosevka;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('sv-fonts/Iosevka-Bold.woff2') format('woff2');
+}
+
+:root {
+  --sv-bg: #0f0e0d;
+  --sv-surface-1: #1a1815;
+  --sv-surface-2: #221f1a;
+  --sv-surface-3: #2b271f;
+  --sv-border: #332e26;
+  --sv-text: #e2d9c8;
+  --sv-text-strong: #f1e7c4;
+  --sv-text-muted: #a89c86;
+  --sv-text-faint: #948a76;
+  --sv-accent: #d4a017;
+  --sv-accent-2: #e06c75;
+  --sv-accent-rust: #ce9178;
+  --sv-mix-target: #ffffff;
+  --sv-success: #86b86b;
+  --sv-error: #e4635a;
+  --sv-warning: #e08a2b;
+  --sv-info: #6fa8c7;
+  --sv-syn-keyword: #6ea7dd;
+  --sv-syn-string: #d29a6a;
+  --sv-syn-var: #9ec7e8;
+  --sv-syn-func: #d9c78a;
+  --sv-syn-comment: #8faf72;
+  --sv-syn-number: #b3c99a;
+
+  --sv-accent-hover: #dbaf4f;
+  --sv-accent-pressed: #dfb867;
+  --sv-accent-2-hover: #e78389;
+  --sv-accent-2-pressed: #ec9296;
+  --sv-error-hover: #eb7c72;
+  --sv-error-pressed: #ef8c83;
+  --sv-surface-1-hover: #373532;
+  --sv-surface-1-pressed: #4b4947;
+  --sv-surface-2-hover: #3e3b37;
+  --sv-surface-2-pressed: #52504b;
+  --sv-surface-3-hover: #46433b;
+  --sv-surface-3-pressed: #5a5650;
+
+  --sv-font-sans: 'Inter', system-ui, sans-serif;
+  --sv-font-mono: 'Iosevka', ui-monospace, 'Courier New', monospace;
+  --sv-font-weight-normal: 400;
+  --sv-font-weight-medium: 550;
+  --sv-font-weight-semibold: 600;
+  --sv-font-weight-bold: 650;
+  --sv-fs-xs: 12px;
+  --sv-fs-sm: 14px;
+  --sv-fs-base: 16px;
+  --sv-fs-lg: 19.2px;
+  --sv-lh-tight: 1.2;
+  --sv-lh-normal: 1.5;
+  --sv-space-1: 4px;
+  --sv-space-2: 8px;
+  --sv-space-3: 12px;
+  --sv-space-4: 16px;
+  --sv-radius-sm: 4px;
+  --sv-radius-md: 6px;
+  --sv-radius-lg: 10px;
+  --sv-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+  --sv-shadow-md: 0 4px 12px rgb(0 0 0 / 0.35);
+
+  --sv-icon-filter: invert(1) hue-rotate(180deg) brightness(1.15) saturate(0.85);
+
+  /* Read at runtime by RRDChart.js / GaugeWidget.js — canvas cannot be styled
+   * by CSS, so these are the only hook charts have. */
+  --pwt-panel-background: var(--sv-surface-1);
+  --pwt-text-color: var(--sv-text);
+  --pwt-gauge-default: var(--sv-accent);
+  --pwt-gauge-back: var(--sv-surface-3);
+  --pwt-gauge-warn: var(--sv-warning);
+  --pwt-gauge-crit: var(--sv-error);
+  --pwt-chart-primary: var(--sv-accent);
+  --pwt-chart-grid-stroke: var(--sv-border);
+}
+
+/* ── Base ────────────────────────────────────────────────────────────── */
+
+body, .x-body {
+  background: var(--sv-bg);
+  color: var(--sv-text);
+  font-family: var(--sv-font-sans);
+}
+
+.x-content, .x-autocontainer-outerCt, .x-autocontainer-innerCt {
+  background: transparent;
+}
+
+::selection {
+  background: var(--sv-surface-3);
+  color: var(--sv-text-strong);
+}
+
+/* ── Panels ──────────────────────────────────────────────────────────── */
+
+.x-panel, .x-panel-body, .x-panel-body-default {
+  background: var(--sv-surface-1);
+  color: var(--sv-text);
+  border-color: var(--sv-border);
+}
+
+.x-panel-default-outer-border-l,
+.x-panel-default-outer-border-r,
+.x-panel-default-outer-border-t,
+.x-panel-default-outer-border-b,
+.x-panel-default-outer-border-rbl,
+.x-panel-default-outer-border-trbl {
+  border-color: var(--sv-border) !important;
+}
+
+.x-panel-header, .x-panel-header-default {
+  background: var(--sv-surface-2);
+  background-image: none;
+  border-color: var(--sv-border);
+  color: var(--sv-text-strong);
+}
+
+.x-panel-header-title, .x-panel-header-title-default,
+.x-panel-header-title-default > .x-title-text-default {
+  color: var(--sv-text-strong);
+  font-weight: var(--sv-font-weight-semibold);
+}
+
+.x-panel-header-default .x-tool-tool-el {
+  background-color: transparent;
+}
+
+.x-fieldset {
+  border-color: var(--sv-border);
+  color: var(--sv-text);
+}
+
+.x-fieldset-header, .x-fieldset-header-text {
+  color: var(--sv-text-muted);
+  font-weight: var(--sv-font-weight-semibold);
+}
+
+/* ── Toolbars ────────────────────────────────────────────────────────── */
+
+.x-toolbar, .x-toolbar-default, .x-toolbar-footer {
+  background: var(--sv-surface-2);
+  background-image: none;
+  border-color: var(--sv-border);
+}
+
+.x-toolbar-text, .x-toolbar-text-default {
+  color: var(--sv-text-muted);
+}
+
+.x-toolbar-separator, .x-toolbar-separator-horizontal {
+  border-color: var(--sv-border);
+  background-color: var(--sv-border);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+
+.x-btn-default-small,
+.x-btn-default-medium,
+.x-btn-default-large,
+.x-btn-default-toolbar-small,
+.x-btn-default-toolbar-medium,
+.x-btn-default-toolbar-large {
+  background: var(--sv-surface-2);
+  background-image: none;
+  border: 1px solid var(--sv-border);
+  border-radius: var(--sv-radius-md);
+  color: var(--sv-text);
+}
+
+.x-btn-inner, .x-btn-inner-default-small, .x-btn-inner-default-toolbar-small {
+  color: var(--sv-text);
+  font-family: var(--sv-font-sans);
+  font-weight: var(--sv-font-weight-medium);
+}
+
+.x-btn-over, .x-btn-default-small-over, .x-btn-default-toolbar-small-over {
+  background: var(--sv-surface-2-hover);
+  background-image: none;
+  border-color: var(--sv-border);
+}
+
+.x-btn-pressed, .x-btn-default-small-pressed, .x-btn-default-toolbar-small-pressed,
+.x-btn-menu-active, .x-btn-default-small-menu-active,
+.x-btn-default-toolbar-small-menu-active {
+  background: var(--sv-surface-2-pressed);
+  background-image: none;
+  border-color: var(--sv-accent);
+}
+
+.x-btn-focus, .x-btn-default-small-focus, .x-btn-default-toolbar-small-focus {
+  box-shadow: 0 0 0 2px var(--sv-accent);
+  border-color: var(--sv-accent);
+}
+
+.x-btn-disabled, .x-btn-default-small-disabled,
+.x-btn-default-toolbar-small-disabled {
+  background: var(--sv-surface-1);
+  background-image: none;
+  border-color: var(--sv-border);
+  opacity: 1;
+}
+
+.x-btn-disabled .x-btn-inner, .x-btn-disabled .x-btn-icon-el {
+  color: var(--sv-text-faint);
+}
+
+.x-btn-icon-el, .x-btn-icon-el-default-small, .x-btn-icon-el-default-toolbar-small {
+  color: var(--sv-text-muted);
+}
+
+.x-btn-over .x-btn-icon-el, .x-btn-pressed .x-btn-icon-el {
+  color: var(--sv-accent);
+}
+
+.x-btn-arrow-right:after, .x-btn-split-right:after {
+  color: var(--sv-text-muted);
+}
+
+/* ── Form fields ─────────────────────────────────────────────────────── */
+
+.x-form-item-label, .x-form-item-label-default,
+.x-form-item-label-inner, .x-form-cb-label {
+  color: var(--sv-text-muted);
+  font-family: var(--sv-font-sans);
+}
+
+.x-form-text, .x-form-text-default, .x-form-field, .x-form-textarea {
+  background: var(--sv-surface-2);
+  background-image: none;
+  color: var(--sv-text);
+  border: 1px solid var(--sv-border);
+  border-radius: var(--sv-radius-sm);
+  font-family: var(--sv-font-sans);
+}
+
+.x-form-text::placeholder, .x-form-empty-field, .x-form-empty-field-default {
+  color: var(--sv-text-faint);
+}
+
+.x-form-focus, .x-form-text-focus, .x-form-field-focus,
+.x-form-trigger-wrap-focus {
+  border-color: var(--sv-accent);
+  box-shadow: 0 0 0 2px var(--sv-accent);
+}
+
+.x-form-invalid-field, .x-form-invalid-field-default,
+.x-form-trigger-wrap-invalid {
+  background-image: none;
+  border-color: var(--sv-error);
+}
+
+.x-form-invalid-under, .x-form-error-msg {
+  color: var(--sv-error);
+  background-image: none;
+}
+
+.x-form-item-body .x-form-display-field {
+  color: var(--sv-text);
+}
+
+.x-form-readonly, .x-form-text[readonly], .x-item-disabled .x-form-text {
+  background: var(--sv-surface-1);
+  color: var(--sv-text-faint);
+}
+
+.x-item-disabled, .x-item-disabled .x-form-item-label {
+  color: var(--sv-text-faint);
+  opacity: 1;
+}
+
+.x-form-trigger, .x-form-trigger-default {
+  background: transparent;
+  background-image: none;
+  border-color: var(--sv-border);
+  color: var(--sv-text-muted);
+}
+
+.x-form-trigger-over {
+  color: var(--sv-accent);
+}
+
+.x-form-checkbox, .x-form-radio, .x-form-checkbox-default {
+  background: var(--sv-surface-2);
+  background-image: none;
+  border: 1px solid var(--sv-border);
+}
+
+.x-form-checkbox {
+  border-radius: var(--sv-radius-sm);
+}
+
+.x-form-cb-checked .x-form-checkbox, .x-form-cb-checked .x-form-radio {
+  background: var(--sv-accent);
+  border-color: var(--sv-accent);
+  color: var(--sv-bg);
+}
+
+.x-form-checkbox-focus, .x-form-radio-focus {
+  box-shadow: 0 0 0 2px var(--sv-accent);
+}
+
+/* ── Combo / picker lists ────────────────────────────────────────────── */
+
+.x-boundlist, .x-boundlist-default {
+  background: var(--sv-surface-2);
+  border: 1px solid var(--sv-border);
+  border-radius: var(--sv-radius-md);
+  box-shadow: var(--sv-shadow-md);
+}
+
+.x-boundlist-item {
+  color: var(--sv-text);
+  border-color: transparent;
+}
+
+.x-boundlist-item-over {
+  background: var(--sv-surface-3);
+  border-color: transparent;
+  color: var(--sv-text-strong);
+}
+
+.x-boundlist-selected {
+  background: var(--sv-surface-3);
+  border-color: transparent;
+  color: var(--sv-accent);
+}
+
+/* ── Grids ───────────────────────────────────────────────────────────── */
+
+.x-grid-body, .x-grid-view, .x-grid-item-container {
+  background: var(--sv-surface-1);
+  border-color: var(--sv-border);
+}
+
+.x-grid-header-ct, .x-grid-header-ct-default {
+  background: var(--sv-surface-2);
+  background-image: none;
+  border-color: var(--sv-border);
+}
+
+.x-column-header, .x-column-header-default {
+  background: var(--sv-surface-2);
+  background-image: none;
+  border-color: var(--sv-border);
+  color: var(--sv-text-muted);
+}
+
+.x-column-header-text, .x-column-header-text-inner {
+  color: var(--sv-text-muted);
+  font-weight: var(--sv-font-weight-semibold);
+}
+
+.x-column-header-over, .x-column-header-open,
+.x-column-header-sort-ASC, .x-column-header-sort-DESC {
+  background: var(--sv-surface-3);
+  background-image: none;
+  color: var(--sv-text-strong);
+}
+
+.x-column-header-trigger {
+  background-color: transparent;
+}
+
+.x-grid-item, .x-grid-row {
+  background: var(--sv-surface-1);
+  color: var(--sv-text);
+  border-color: var(--sv-border);
+}
+
+.x-grid-item-alt {
+  background: var(--sv-surface-2);
+}
+
+.x-grid-with-row-lines .x-grid-item {
+  border-color: var(--sv-border);
+}
+
+.x-grid-row-over, .x-grid-item-over,
+.x-grid-with-row-lines .x-grid-item.x-grid-item-over {
+  background: var(--sv-surface-3);
+  border-color: var(--sv-border);
+}
+
+.x-grid-item-selected, .x-grid-row-selected,
+.x-grid-with-row-lines .x-grid-item.x-grid-item-selected {
+  background: var(--sv-surface-3);
+  color: var(--sv-text-strong);
+  border-color: var(--sv-accent);
+}
+
+.x-grid-cell, .x-grid-cell-inner {
+  color: inherit;
+  font-family: var(--sv-font-sans);
+}
+
+.x-grid-cell-special, .x-grid-cell-row-checker {
+  background: var(--sv-surface-2);
+  border-color: var(--sv-border);
+}
+
+.x-grid-cell-focus, .x-grid-item-focused .x-grid-cell-inner {
+  outline: 1px solid var(--sv-accent);
+  outline-offset: -1px;
+}
+
+.x-grid-group-hd, .x-group-header {
+  background: var(--sv-surface-2);
+  border-color: var(--sv-border);
+  color: var(--sv-text-strong);
+}
+
+.x-grid-empty {
+  background: var(--sv-surface-1);
+  color: var(--sv-text-faint);
+}
+
+.x-grid-resize-marker {
+  background: var(--sv-accent);
+}
+
+/* ── Trees & navigation lists ────────────────────────────────────────── */
+
+.x-tree-panel, .x-tree-view {
+  background: var(--sv-surface-1);
+}
+
+.x-tree-node-text, .x-tree-node-text-default {
+  color: var(--sv-text);
+  font-family: var(--sv-font-sans);
+}
+
+.x-tree-icon, .x-tree-elbow-img, .x-tree-expander {
+  filter: var(--sv-icon-filter);
+}
+
+.x-grid-tree-node-expanded .x-tree-icon-parent,
+.x-tree-node-text.x-tree-node-text-over {
+  color: var(--sv-text-strong);
+}
+
+.x-treelist, .x-treelist-nav {
+  background: var(--sv-surface-1);
+}
+
+.x-treelist-item-text, .x-treelist-item-icon {
+  color: var(--sv-text-muted);
+}
+
+.x-treelist-row-over .x-treelist-item-text,
+.x-treelist-row-over .x-treelist-item-icon {
+  color: var(--sv-text-strong);
+}
+
+.x-treelist-row-over {
+  background: var(--sv-surface-2);
+}
+
+.x-treelist-item-selected > .x-treelist-row,
+.x-treelist-row-selected {
+  background: var(--sv-surface-3);
+}
+
+.x-treelist-item-selected > .x-treelist-row .x-treelist-item-text,
+.x-treelist-item-selected > .x-treelist-row .x-treelist-item-icon {
+  color: var(--sv-accent);
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────────── */
+
+.x-tab-bar, .x-tab-bar-default, .x-tab-bar-default-top,
+.x-tab-bar-strip, .x-tab-bar-strip-default {
+  background: var(--sv-surface-1);
+  background-image: none;
+  border-color: var(--sv-border);
+}
+
+.x-tab, .x-tab-default, .x-tab-default-top {
+  background: transparent;
+  background-image: none;
+  border-color: transparent;
+  border-radius: 0;
+}
+
+.x-tab-inner, .x-tab-inner-default {
+  color: var(--sv-text-muted);
+  font-family: var(--sv-font-sans);
+  font-weight: var(--sv-font-weight-medium);
+}
+
+.x-tab-over .x-tab-inner {
+  color: var(--sv-text);
+}
+
+.x-tab-active, .x-tab-default-top-active {
+  background: var(--sv-surface-2);
+  background-image: none;
+  border-bottom: 2px solid var(--sv-accent);
+}
+
+.x-tab-active .x-tab-inner, .x-tab-default-top-active .x-tab-inner {
+  color: var(--sv-accent);
+}
+
+.x-tab-focus, .x-tab-default-top-focus {
+  box-shadow: inset 0 0 0 2px var(--sv-accent);
+}
+
+.x-tab-disabled .x-tab-inner {
+  color: var(--sv-text-faint);
+}
+
+.x-tab .x-tab-close-btn {
+  color: var(--sv-text-muted);
+}
+
+/* ── Windows & dialogs ───────────────────────────────────────────────── */
+
+.x-window, .x-window-default {
+  background: var(--sv-surface-1);
+  border: 1px solid var(--sv-border);
+  border-radius: var(--sv-radius-lg);
+  box-shadow: var(--sv-shadow-md);
+}
+
+.x-window-body, .x-window-body-default {
+  background: var(--sv-surface-1);
+  border-color: var(--sv-border);
+  color: var(--sv-text);
+}
+
+.x-window-header, .x-window-header-default {
+  background: var(--sv-surface-2);
+  background-image: none;
+  border-color: var(--sv-border);
+}
+
+.x-window-header-title, .x-window-header-title-default,
+.x-window-header-title-default > .x-title-text-default {
+  color: var(--sv-text-strong);
+  font-weight: var(--sv-font-weight-semibold);
+}
+
+.x-message-box .x-window-body {
+  background: var(--sv-surface-1);
+}
+
+.x-message-box .x-form-display-field {
+  color: var(--sv-text);
+}
+
+/* ── Menus ───────────────────────────────────────────────────────────── */
+
+.x-menu, .x-menu-default, .x-menu-body, .x-menu-body-default {
+  background: var(--sv-surface-2);
+  border: 1px solid var(--sv-border);
+  border-radius: var(--sv-radius-md);
+  box-shadow: var(--sv-shadow-md);
+}
+
+.x-menu-item-link, .x-menu-item-text, .x-menu-item-text-default {
+  color: var(--sv-text);
+  font-family: var(--sv-font-sans);
+}
+
+.x-menu-item-active, .x-menu-item-active .x-menu-item-link {
+  background: var(--sv-surface-3);
+  background-image: none;
+  border-color: transparent;
+  border-radius: var(--sv-radius-sm);
+}
+
+.x-menu-item-active .x-menu-item-text {
+  color: var(--sv-text-strong);
+}
+
+.x-menu-item-disabled .x-menu-item-text {
+  color: var(--sv-text-faint);
+}
+
+.x-menu-item-separator, .x-menu-item-separator-default {
+  background: var(--sv-border);
+  border-color: var(--sv-border);
+}
+
+.x-menu-item-icon, .x-menu-item-icon-default {
+  filter: var(--sv-icon-filter);
+}
+
+/* ── Tooltips ────────────────────────────────────────────────────────── */
+
+.x-tip, .x-tip-default {
+  background: var(--sv-surface-3);
+  background-image: none;
+  border: 1px solid var(--sv-border);
+  border-radius: var(--sv-radius-sm);
+  box-shadow: var(--sv-shadow-sm);
+}
+
+.x-tip-body, .x-tip-body-default, .x-tip-body-default .x-tip-body-inner {
+  background: transparent;
+  color: var(--sv-text-strong);
+  font-family: var(--sv-font-sans);
+  font-size: var(--sv-fs-xs);
+}
+
+.x-tip-header, .x-tip-header-default,
+.x-tip-header-title, .x-tip-header-title-default {
+  background: transparent;
+  color: var(--sv-text-strong);
+  font-weight: var(--sv-font-weight-semibold);
+}
+
+/* ── Progress bars ───────────────────────────────────────────────────── */
+
+.x-progress, .x-progress-default {
+  background: var(--sv-surface-3);
+  background-image: none;
+  border: none;
+  border-radius: var(--sv-radius-sm);
+}
+
+.x-progress-bar, .x-progress-bar-default {
+  background: var(--sv-accent);
+  background-image: none;
+  border: none;
+  border-radius: var(--sv-radius-sm);
+}
+
+.x-progress-text, .x-progress-text-default {
+  color: var(--sv-text-strong);
+  font-weight: var(--sv-font-weight-medium);
+}
+
+.x-progress-default .x-progress-bar-default .x-progress-text {
+  color: var(--sv-bg);
+}
+
+/* ── Splitters, masks, loading ───────────────────────────────────────── */
+
+.x-splitter, .x-splitter-default {
+  background: var(--sv-bg);
+}
+
+.x-splitter-active, .x-splitter-default-over {
+  background: var(--sv-accent);
+}
+
+.x-mask {
+  background: var(--sv-bg);
+  opacity: 0.6;
+}
+
+.x-mask-msg, .x-mask-msg-default {
+  background: var(--sv-surface-2);
+  background-image: none;
+  border: 1px solid var(--sv-border);
+  border-radius: var(--sv-radius-md);
+}
+
+.x-mask-msg-text, .x-mask-msg-inner {
+  background: transparent;
+  color: var(--sv-text);
+}
+
+/* ── Date picker ─────────────────────────────────────────────────────── */
+
+.x-datepicker, .x-datepicker-inner {
+  background: var(--sv-surface-2);
+  border-color: var(--sv-border);
+  color: var(--sv-text);
+}
+
+.x-datepicker-header {
+  background: var(--sv-surface-3);
+  background-image: none;
+  color: var(--sv-text-strong);
+}
+
+.x-datepicker-column-header, .x-datepicker-column-header-inner {
+  background: var(--sv-surface-2);
+  color: var(--sv-text-muted);
+}
+
+.x-datepicker-date {
+  color: var(--sv-text);
+}
+
+.x-datepicker-cell.x-datepicker-active .x-datepicker-date {
+  color: var(--sv-text);
+}
+
+.x-datepicker-prevday .x-datepicker-date,
+.x-datepicker-nextday .x-datepicker-date {
+  color: var(--sv-text-faint);
+}
+
+.x-datepicker-today .x-datepicker-date {
+  border-color: var(--sv-accent);
+}
+
+.x-datepicker-selected .x-datepicker-date {
+  background: var(--sv-surface-3);
+  color: var(--sv-accent);
+  border-color: var(--sv-accent);
+}
+
+.x-datepicker-footer, .x-monthpicker-buttons {
+  background: var(--sv-surface-2);
+  border-color: var(--sv-border);
+}
+
+.x-monthpicker, .x-monthpicker-item-inner {
+  background: var(--sv-surface-2);
+  color: var(--sv-text);
+  border-color: var(--sv-border);
+}
+
+.x-monthpicker-selected {
+  background: var(--sv-surface-3);
+  color: var(--sv-accent);
+}
+
+/* ── Charts & legends (see also the --pwt-* vars, read by JS) ────────── */
+
+.x-legend-item, .x-legend-item-default {
+  color: var(--sv-text-muted);
+  font-family: var(--sv-font-sans);
+}
+
+.x-legend-inactive .x-legend-item-marker {
+  background: var(--sv-surface-3);
+  border-color: var(--sv-border);
+}
+
+/* ── Scrollbars ──────────────────────────────────────────────────────── */
+
+* {
+  scrollbar-color: var(--sv-border) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sv-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sv-text-faint);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ── Icons ───────────────────────────────────────────────────────────── */
+/* Crisp ships dark-on-transparent raster sprites. On dark themes they are
+ * inverted wholesale (the same trade the official Proxmox dark theme makes);
+ * --sv-icon-filter is "none" on light themes, so these rules are inert there.
+ * Font-glyph icons (FontAwesome) are coloured, never filtered. */
+
+.x-tool-img, .x-tool-tool-el,
+.x-grid-checkcolumn, .x-grid-checkcolumn-checked,
+.x-column-header-trigger, .x-form-arrow-trigger,
+.x-form-date-trigger, .x-form-search-trigger, .x-form-clear-trigger,
+.x-tbar-page-first, .x-tbar-page-prev, .x-tbar-page-next, .x-tbar-page-last,
+.x-tbar-loading, .x-datepicker-arrow {
+  filter: var(--sv-icon-filter);
+}
+
+.x-fa, .fa, .x-btn .x-fa, .x-menu-item .x-fa {
+  filter: none;
+}
+
+/* ── Proxmox product surfaces ────────────────────────────────────────── */
+
+.x-grid-row .pmx-tag, .proxmox-tag-light, .proxmox-tag-dark {
+  border-radius: var(--sv-radius-sm);
+  font-family: var(--sv-font-sans);
+}
+
+.pmx-hint, .pve-hint {
+  background: var(--sv-surface-2);
+  border-color: var(--sv-border);
+  color: var(--sv-text-muted);
+}
+
+.pmx-log-panel, .x-monospaced, .proxmox-monospaced,
+.pve-journal, .x-form-textarea.x-monospaced {
+  font-family: var(--sv-font-mono);
+  background: var(--sv-bg);
+  color: var(--sv-text);
+}
+
+.pmx-panel-inline-warning, .x-form-invalid-icon {
+  color: var(--sv-warning);
+}
+
+.critical, .pmx-crit {
+  color: var(--sv-error);
+}
+
+.good, .pmx-good {
+  color: var(--sv-success);
+}

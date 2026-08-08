@@ -410,6 +410,18 @@ fn test_table_row_selection_bounded() {
 }
 
 #[test]
+fn table_up_at_first_row_stays_bounded() {
+    let mut ctx = raudbjorn_tui::catalog::fixtures::table_fixture();
+    ctx.set("row_count", 10_i64).set("selected_row", 0_i64);
+
+    let up = Event::Key(KeyEvent::new(KeyCode::Up, KeyModifiers::NONE));
+    let changed = raudbjorn_tui::catalog::handlers::handle_table(&mut ctx, &up);
+
+    assert!(!changed, "Up at the first row must be a no-op");
+    assert_eq!(get_i64(&ctx, "selected_row"), 0);
+}
+
+#[test]
 fn stories_count_matches_approved_inventory() {
     assert_eq!(
         STORIES.len(),

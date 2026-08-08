@@ -22,7 +22,7 @@ use ratatui::style::Color;
     'bg', 'surface-1', 'surface-2', 'surface-3', 'border', 'text', 'text-strong',
     'text-muted', 'text-faint', 'accent', 'accent-2', 'accent-rust', 'mix-target',
     'success', 'error', 'warning', 'syn-keyword', 'syn-string', 'syn-var',
-    'syn-func', 'syn-comment', 'syn-number'
+    'syn-func', 'syn-comment', 'syn-number', 'info'
   ];
 
   for (const theme of themes) {

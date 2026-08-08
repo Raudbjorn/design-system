@@ -30,7 +30,7 @@ const SYN_TOKENS = [
   'syn-number'
 ] as const;
 
-export const CONTRAST_RULES: readonly ContrastRule[] = [
+const WORLD_RULES_BEFORE_INFO: readonly ContrastRule[] = [
   // Frozen v1 contract. Accent tokens retain the published 3:1 theme-package
   // floor for backwards compatibility; built-in palettes separately guarantee
   // 4.5:1 because shipped links and buttons render them as normal-size text.
@@ -44,12 +44,31 @@ export const CONTRAST_RULES: readonly ContrastRule[] = [
   // Border stays ungated: ~1.6:1 hairline by design.
   { fg: 'success', bg: 'bg', floor: 3, tier: 'extension' },
   { fg: 'error', bg: 'bg', floor: 3, tier: 'extension' },
-  { fg: 'warning', bg: 'bg', floor: 3, tier: 'extension' },
+  { fg: 'warning', bg: 'bg', floor: 3, tier: 'extension' }
+];
+
+const WORLD_RULES_AFTER_INFO: readonly ContrastRule[] = [
   { fg: 'accent-rust', bg: 'bg', floor: 3, tier: 'extension' },
   { fg: 'text-strong', bg: 'surface-3', floor: 4.5, tier: 'extension' },
   { fg: 'text', bg: 'surface-3', floor: 4.5, tier: 'extension' },
   { fg: 'text-muted', bg: 'surface-3', floor: 4.5, tier: 'extension' }
 ];
+
+/** Contrast contract for omitted and world-theme.v1 package schemas. */
+export const CONTRAST_RULES_V1: readonly ContrastRule[] = [
+  ...WORLD_RULES_BEFORE_INFO,
+  ...WORLD_RULES_AFTER_INFO
+];
+
+/** Current contract for packages that explicitly declare world-theme.v2. */
+export const CONTRAST_RULES_V2: readonly ContrastRule[] = [
+  ...WORLD_RULES_BEFORE_INFO,
+  { fg: 'info', bg: 'bg', floor: 3, tier: 'extension' },
+  ...WORLD_RULES_AFTER_INFO
+];
+
+/** Latest contract used for built-in and generated palette verification. */
+export const CONTRAST_RULES: readonly ContrastRule[] = CONTRAST_RULES_V2;
 
 export interface ContrastCheck extends ContrastRule {
   fgHex: string;

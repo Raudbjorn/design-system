@@ -2,13 +2,13 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-`@svnbjrn/design` is a dark-first **Svelte 5** (runes + snippets) component / design-token library: 28 core components, dark/light + runtime world themes, hostile-input vernacular parsing, deterministic seed-to-theme generation, cross-platform token output (CSS/JSON/QSS), self-hosted subset fonts, and two opt-in visual languages (Vermis, Carter). No utility-class framework — style with component props and `--sv-*` tokens.
+`@svnbjrn/design` is a dark-first **Svelte 5** (runes + snippets) component / design-token library: 28 core components, dark, light, and explicit amber built-in themes + runtime world themes, hostile-input vernacular parsing, deterministic seed-to-theme generation, cross-platform token output (CSS/JSON/QSS), self-hosted subset fonts, and two opt-in visual languages (Vermis, Carter). No utility-class framework — style with component props and `--sv-*` tokens.
 
 `.github/copilot-instructions.md` is the detailed, review-derived source of truth for change rules (accessibility, async cleanup, theme/untrusted-data gating, cross-surface update requirements). Read it before non-trivial component/theme edits. This file is the fast orientation.
 
 ## Commands
 
-Requires Node `>=22` (CI uses 24) and pinned `pnpm@11.3.0`. Bootstrap: `pnpm install --frozen-lockfile`.
+Requires Node `>=22.18.0` (CI uses 24) and pinned `pnpm@11.3.0`. Bootstrap: `pnpm install --frozen-lockfile`.
 
 ```bash
 pnpm run check                   # svelte-check (strict) — the type gate
@@ -29,7 +29,7 @@ Gotchas: unit tests print harmless jsdom `Could not parse CSS stylesheet` noise 
 
 ## Architecture
 
-**Tokens are the source of truth, and generated outputs are committed.** DTCG sources live in `src/lib/tokens/*.tokens.json` + the `themes.ts` registry. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, and `src/lib/qss/*.qss`. **Never hand-edit generated outputs** — edit the DTCG source, run `pnpm run tokens`, commit every output. Drift is guarded by tests. Adding a built-in theme = one token file + one registry entry.
+**Tokens are the source of truth, and generated outputs are committed.** DTCG sources live in `src/lib/tokens/*.tokens.json` + the `themes.ts` registry. `scripts/build-tokens.mjs` emits `src/lib/tokens/scale.css`, `src/lib/tokens/colors.css`, `src/lib/tokens/palette.ts`, `src/lib/tokens/resolved/*.tokens.json`, `src/lib/qss/*.qss`, `src/lib/qt/*.palette.json`, and `src/lib/extjs/theme-sv-*.css`. **Never hand-edit generated outputs** — edit the DTCG source, run `pnpm run tokens`, commit every output. Drift is guarded by tests. Adding a built-in theme = one token file + one registry entry.
 
 **Cascade layers** order token precedence: `sv.base < sv.theme < sv.world < sv.user`. Consumer *unlayered* overrides beat all of them.
 
@@ -41,9 +41,11 @@ Key `src/lib/` areas:
 - `internal/` — shared `color`/`contrast` math, `focus-trap`, and **`invariants.ts`** (versioned world-theme rules — never tighten a published threshold without versioning + updating docs/fixtures/tests/adapter together).
 - `vermis/` and `carter/` — isolated opt-in systems with their own component barrels + required stylesheets. Never leak their `--layform-*` / `--carter-*` tokens into core `--sv-*`, and never let opting in silently restyle core.
 
-**Stories are browser visual regression tests.** `src/stories/*` covers both themes through Storybook and Argos. The workflow's visual/Argos job is currently disabled, so run `CI= pnpm run test:visual` and verify both themes locally until it is re-enabled. User-visible component/token changes need deterministic stories with no time, locale, or randomness. See `docs/visual-testing.md`.
+**Stories are browser visual regression tests.** `src/stories/*` covers dark, light, and amber through Storybook and Argos. The workflow's visual/Argos job is currently disabled, so run `CI= pnpm run test:visual` and verify all three themes locally until it is re-enabled. User-visible component/token changes need deterministic stories with no time, locale, or randomness. See `docs/visual-testing.md`.
 
 **React bridge.** `.design-sync/react-adapter` + `.design-sync/previews` are a *committed*, hand-maintained bridge — nothing regenerates them. Public component/prop/event/snippet changes must update the adapter (`index.js`, `index.d.ts`, `wrap.js`) and the owned preview; React camelCase event aliases must match Svelte lowercase props (`onclick`).
+
+**Astro adapter.** `src/lib/astro/` is an integration (`@svnbjrn/design/astro`) plus native `.astro` ports of the 17 components that have no state and no handlers, plus `Button` as a documented exception (ported without its Svelte `onclick` prop) (`@svnbjrn/design/astro/components`). The ports duplicate markup *and* styles, so a prop/markup/style change to a ported component must update `src/lib/astro/components/<Name>.astro` in the same commit — `parity.test.ts` renders both and compares, `barrel.test.ts` derives the portable set from the sources. Tests run in their own Vitest project (`vitest.astro.config.ts`) because the Container API needs Astro's Vite plugin. See `docs/astro-integration.md`.
 
 ## Conventions
 

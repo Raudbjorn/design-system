@@ -1,0 +1,26 @@
+{
+  "$schema": "https://svnbjrn.dev/schemas/world-theme.v1.json",
+  "name": "versioned-info-bg",
+  "version": "1.0.0",
+  "extends": "dark",
+  "tokens": {
+    "bg": { "$value": "#777777" },
+    "surface-3": { "$value": "#ffffff" },
+    "text": { "$value": "#000000" },
+    "text-strong": { "$value": "#000000" },
+    "text-muted": { "$value": "#000000" },
+    "text-faint": { "$value": "#000000" },
+    "accent": { "$value": "#000000" },
+    "accent-2": { "$value": "#000000" },
+    "accent-rust": { "$value": "#000000" },
+    "success": { "$value": "#000000" },
+    "error": { "$value": "#000000" },
+    "warning": { "$value": "#000000" },
+    "syn-keyword": { "$value": "#000000" },
+    "syn-string": { "$value": "#000000" },
+    "syn-var": { "$value": "#000000" },
+    "syn-func": { "$value": "#000000" },
+    "syn-comment": { "$value": "#000000" },
+    "syn-number": { "$value": "#000000" }
+  }
+}

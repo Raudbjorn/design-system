@@ -72,7 +72,7 @@ QPushButton[class="primary"]:disabled {
 
 QPushButton[class="danger"] {
   background: #9d2b20;
-  color: #ffffff;
+  color: #f1e7c4;
   border: none;
   padding: 9px 17px;
 }
@@ -403,6 +403,7 @@ QHeaderView::section {
 QLabel[class="success"] { color: #086326; }
 QLabel[class="error"] { color: #9d2b20; }
 QLabel[class="warning"] { color: #7d4800; }
+QLabel[class="info"] { color: #205d7d; }
 QLabel[class="muted"] { color: #605b47; }
 QLabel[class="code"] {
   font-family: "Iosevka", ui-monospace, "Courier New", monospace;

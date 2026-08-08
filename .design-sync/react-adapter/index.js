@@ -70,4 +70,4 @@ export const Sheet = wrap('Sheet', SvSheet, ['children', 'footer']);
 // theme API (plain functions and palette data; nothing to wrap).
 export { applyTheme, contrastGates, defineTheme, swapTheme, themeCss } from '../../dist/theme/theme.js';
 export { contrastRatio } from '../../dist/internal/contrast.js';
-export { dark, light } from '../../dist/tokens/palette.js';
+export { amber, dark, light } from '../../dist/tokens/palette.js';

@@ -150,8 +150,11 @@ pub fn handle_radio(ctx: &mut TemplateContext, event: &Event) -> bool {
         Some(KeyCode::Right | KeyCode::Down) => (current + 1) % count,
         _ => return false,
     };
-    ctx.set("selected_index", next);
-    next != current
+    if next == current {
+        return false;
+    }
+    ctx.set("selected_index", next).set("radio", "(*)");
+    true
 }
 
 pub fn handle_tabs(ctx: &mut TemplateContext, event: &Event) -> bool {
@@ -185,7 +188,7 @@ pub fn handle_table(ctx: &mut TemplateContext, event: &Event) -> bool {
     if count == 0 {
         return false;
     }
-    let current = normalize_index(get_i64(ctx, "selected_row"), count).min(count - 1);
+    let current = normalize_index(get_i64(ctx, "selected_row"), count);
     let next = match pressed_key(event) {
         Some(KeyCode::Up) => (current - 1).max(0),
         Some(KeyCode::Down) => (current + 1).min(count - 1),
@@ -193,8 +196,9 @@ pub fn handle_table(ctx: &mut TemplateContext, event: &Event) -> bool {
         Some(KeyCode::End) => count - 1,
         _ => return false,
     };
-    // Always consume navigation keys; the boundary checks above stop the row
-    // from overflowing or going negative.
+    if next == current {
+        return false;
+    }
     ctx.set("selected_row", next);
     true
 }

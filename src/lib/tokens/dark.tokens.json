@@ -21,6 +21,7 @@
     "success": { "$value": "{primitive.color.green-350}" },
     "error": { "$value": "{primitive.color.red-400}" },
     "warning": { "$value": "{primitive.color.orange-400}" },
+    "info": { "$value": "{primitive.color.steel-300}" },
     "syn-keyword": { "$value": "{primitive.color.blue-300}" },
     "syn-string": { "$value": "{primitive.color.rust-300}" },
     "syn-var": { "$value": "{primitive.color.lightblue-200}" },

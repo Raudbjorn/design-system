@@ -16,6 +16,7 @@ pub struct TerminalPalette {
     pub success: Color,
     pub error: Color,
     pub warning: Color,
+    pub info: Color,
     pub syn_keyword: Color,
     pub syn_string: Color,
     pub syn_var: Color,
@@ -51,6 +52,7 @@ impl TerminalPalette {
             (170, 0, 19) => Some(self.syn_func),
             (170, 0, 20) => Some(self.syn_comment),
             (170, 0, 21) => Some(self.syn_number),
+            (170, 0, 22) => Some(self.info),
             _ => None,
         }
     }

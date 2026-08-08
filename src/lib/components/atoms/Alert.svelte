@@ -41,7 +41,7 @@
     border: 1px solid color-mix(in oklab, var(--tone), transparent 60%);
     border-left: 3px solid var(--tone);
   }
-  [data-tone='info'] { --tone: var(--sv-accent); }
+  [data-tone='info'] { --tone: var(--sv-info); }
   [data-tone='success'] { --tone: var(--sv-success); }
   [data-tone='warning'] { --tone: var(--sv-warning); }
   [data-tone='error'] { --tone: var(--sv-error); }

@@ -13,7 +13,7 @@ use raudbjorn_tui::theme::DARK;
 use std::sync::Arc;
 
 fn render_story_with_extras(
-    renderer: &mut ComponentRenderer,
+    renderer: &ComponentRenderer,
     story: &raudbjorn_tui::catalog::StorySpec,
     w: u16,
     h: u16,
@@ -37,7 +37,7 @@ fn render_story_with_extras(
 }
 
 fn render_story(
-    renderer: &mut ComponentRenderer,
+    renderer: &ComponentRenderer,
     story: &raudbjorn_tui::catalog::StorySpec,
     w: u16,
     h: u16,
@@ -71,10 +71,10 @@ fn catalog_ids_match_12_composite() {
 #[test]
 fn panes_render_without_warn_at_min_size() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let panes = STORIES.iter().filter(|s| s.id.starts_with("pane/"));
     for story in panes {
-        let buf = render_story(&mut renderer, story, story.min_width, story.min_height);
+        let buf = render_story(&renderer, story, story.min_width, story.min_height);
         assert!(
             !buffer_text(&buf).contains("[WARN]"),
             "Pane {} rendered with [WARN] at {}x{}",
@@ -86,14 +86,62 @@ fn panes_render_without_warn_at_min_size() {
 }
 
 #[test]
+fn service_table_pane_owns_one_border_and_keeps_its_title_when_empty() {
+    let store = Arc::new(TemplateStore::load_embedded().unwrap());
+    let renderer = ComponentRenderer::new(store);
+    let story = STORIES
+        .iter()
+        .find(|story| story.id == "pane/service-table")
+        .unwrap();
+
+    for buffer in [
+        render_story(&renderer, story, 60, 8),
+        render_story_with_extras(
+            &renderer,
+            story,
+            60,
+            8,
+            &[("empty", TemplateValue::Bool(true))],
+        ),
+    ] {
+        let text = normalized_text(&buffer);
+        assert!(text.contains("Services"), "pane title is missing: {text}");
+
+        let area = buffer.area;
+        let corners = ["┌", "┐", "└", "┘", "╭", "╮", "╰", "╯"];
+        for (x, y) in [
+            (area.left(), area.top()),
+            (area.right() - 1, area.top()),
+            (area.left(), area.bottom() - 1),
+            (area.right() - 1, area.bottom() - 1),
+        ] {
+            assert!(
+                corners.contains(&buffer[(x, y)].symbol()),
+                "missing pane border corner at ({x},{y})"
+            );
+        }
+        for y in area.top()..area.bottom() {
+            for x in area.left()..area.right() {
+                let is_outer_corner = (x == area.left() || x == area.right() - 1)
+                    && (y == area.top() || y == area.bottom() - 1);
+                assert!(
+                    is_outer_corner || !corners.contains(&buffer[(x, y)].symbol()),
+                    "nested border corner at ({x},{y})"
+                );
+            }
+        }
+    }
+}
+
+#[test]
 fn view_minimum_size_renders_exact_fallback() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let story = STORIES
         .iter()
         .find(|s| s.id == "view/minimum-size")
         .unwrap();
-    let buf = render_story(&mut renderer, story, 40, 12);
+    let buf = render_story(&renderer, story, 40, 12);
     let normalized = normalized_text(&buf);
     assert!(
         normalized.contains("Terminal too small requires 80×24, current 40×12"),
@@ -105,12 +153,12 @@ fn view_minimum_size_renders_exact_fallback() {
 #[test]
 fn full_view_subthreshold_inherits_viewport_dimensions() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let story = STORIES
         .iter()
         .find(|story| story.id == "view/homelab-healthy")
         .unwrap();
-    let buffer = render_story(&mut renderer, story, 40, 12);
+    let buffer = render_story(&renderer, story, 40, 12);
 
     assert!(normalized_text(&buffer).contains("Terminal too small requires 80×24, current 40×12"));
 }
@@ -118,7 +166,7 @@ fn full_view_subthreshold_inherits_viewport_dimensions() {
 #[test]
 fn view_states_no_warn_at_every_viewport() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let view_ids = [
         "view/homelab-healthy",
         "view/homelab-degraded",
@@ -132,7 +180,7 @@ fn view_states_no_warn_at_every_viewport() {
     for id in view_ids {
         let story = STORIES.iter().find(|s| s.id == id).unwrap();
         for (w, h) in viewports {
-            let buf = render_story(&mut renderer, story, w, h);
+            let buf = render_story(&renderer, story, w, h);
             let text = buffer_text(&buf);
             assert!(
                 !text.contains("[WARN]"),
@@ -211,7 +259,7 @@ fn view_states_no_warn_at_every_viewport() {
 #[test]
 fn view_states_pairwise_distinct() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let view_ids = [
         "view/homelab-healthy",
         "view/homelab-degraded",
@@ -223,7 +271,7 @@ fn view_states_pairwise_distinct() {
 
     for id in view_ids {
         let story = STORIES.iter().find(|s| s.id == id).unwrap();
-        let buf = render_story(&mut renderer, story, 120, 30);
+        let buf = render_story(&renderer, story, 120, 30);
         distinct_texts.insert(normalized_text(&buf));
     }
     assert_eq!(
@@ -236,12 +284,12 @@ fn view_states_pairwise_distinct() {
 #[test]
 fn view_at_160_keeps_content_inside_w_120() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let story = STORIES
         .iter()
         .find(|s| s.id == "view/homelab-healthy")
         .unwrap();
-    let buf = render_story(&mut renderer, story, 160, 50);
+    let buf = render_story(&renderer, story, 160, 50);
     let text = buffer_text(&buf);
     let width = 160usize;
     for (i, cell) in buf.content().iter().enumerate() {
@@ -299,7 +347,7 @@ fn border_cells(buf: &Buffer, w: u16, h: u16) -> Vec<(u16, u16)> {
 #[test]
 fn view_states_share_fixed_geometry() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let view_ids = [
         "view/homelab-healthy",
         "view/homelab-degraded",
@@ -311,7 +359,7 @@ fn view_states_share_fixed_geometry() {
 
     for id in view_ids {
         let story = STORIES.iter().find(|s| s.id == id).unwrap();
-        let buf = render_story(&mut renderer, story, 120, 30);
+        let buf = render_story(&renderer, story, 120, 30);
         geometries.push(border_cells(&buf, 120, 30));
     }
 
@@ -327,13 +375,13 @@ fn view_states_share_fixed_geometry() {
 #[test]
 fn pane_journal_pinned_displays_unseen() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let story = STORIES
         .iter()
         .find(|s| s.id == "pane/journal-pinned")
         .unwrap();
     let buf = render_story_with_extras(
-        &mut renderer,
+        &renderer,
         story,
         40,
         5,

@@ -2,7 +2,7 @@ use crepuscularity_tui::TemplateContext;
 use ratatui::{layout::Rect, style::Color};
 use raudbjorn_tui::component::{ComponentId, ComponentRenderer, TemplateStore};
 use raudbjorn_tui::profile::{ColorProfile, GlyphProfile, TerminalProfile};
-use std::{path::PathBuf, sync::Arc};
+use std::{collections::HashMap, path::PathBuf, sync::Arc};
 
 #[test]
 fn component_renderer_aggregates_template_parsing() {
@@ -38,7 +38,7 @@ fn component_renderer_reports_missing_section() {
 #[test]
 fn component_renderer_deterministic_render() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let mut ctx = TemplateContext::default();
     let area = Rect::new(3, 2, 40, 5);
 
@@ -77,7 +77,7 @@ fn component_renderer_deterministic_render() {
 #[test]
 fn component_renderer_virtual_files_resolve() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let area = Rect::new(0, 0, 40, 8);
     let palette = raudbjorn_tui::theme::DARK;
     let profile = TerminalProfile::new(ColorProfile::TrueColor, GlyphProfile::Unicode);
@@ -114,9 +114,52 @@ fn component_renderer_virtual_files_resolve() {
 }
 
 #[test]
+fn component_renderer_preserves_caller_virtual_file_overrides() {
+    let store = Arc::new(TemplateStore::load_embedded().unwrap());
+    let renderer = ComponentRenderer::new(store);
+    let area = Rect::new(0, 0, 40, 8);
+    let mut ctx = TemplateContext::default();
+    ctx.set("heading", "Custom heading");
+    ctx.set("body", "Modal body");
+    ctx.virtual_files = Arc::new(HashMap::from([(
+        "templates/atoms.crepus".to_string(),
+        "--- Heading\ndiv h-[1] \"OVERRIDDEN {title}\"\n".to_string(),
+    )]));
+
+    let backend = ratatui::backend::TestBackend::new(area.width, area.height);
+    let mut terminal = ratatui::Terminal::new(backend).unwrap();
+    terminal
+        .draw(|frame| {
+            renderer
+                .render(
+                    ComponentId::Modal.template_ref(),
+                    &ctx,
+                    raudbjorn_tui::theme::DARK,
+                    TerminalProfile::new(ColorProfile::TrueColor, GlyphProfile::Unicode),
+                    frame,
+                    area,
+                )
+                .unwrap();
+        })
+        .unwrap();
+
+    let rendered_text: String = terminal
+        .backend()
+        .buffer()
+        .content
+        .iter()
+        .map(|cell| cell.symbol())
+        .collect();
+    assert!(
+        rendered_text.contains("OVERRIDDEN Custom heading"),
+        "caller override was replaced by embedded template: {rendered_text}"
+    );
+}
+
+#[test]
 fn component_renderer_semantic_profile_mapping() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let area = Rect::new(0, 0, 40, 5);
 
     let mut ctx = TemplateContext::default();
@@ -173,7 +216,7 @@ fn component_renderer_semantic_profile_mapping() {
 #[test]
 fn component_renderer_profiles_only_its_area_and_preserves_context() {
     let store = Arc::new(TemplateStore::load_embedded().unwrap());
-    let mut renderer = ComponentRenderer::new(store);
+    let renderer = ComponentRenderer::new(store);
     let mut ctx = TemplateContext::default();
     ctx.set("label", "Scoped");
     ctx.base_dir = Some(PathBuf::from("caller-owned"));

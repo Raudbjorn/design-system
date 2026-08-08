@@ -4,6 +4,12 @@ import type { Result } from '../tokens/resolver.ts';
 
 export type { Result };
 
+export const WORLD_THEME_SCHEMA_V1 = 'https://svnbjrn.dev/schemas/world-theme.v1.json';
+export const WORLD_THEME_SCHEMA_V2 = 'https://svnbjrn.dev/schemas/world-theme.v2.json';
+export type WorldThemeSchema =
+  | typeof WORLD_THEME_SCHEMA_V1
+  | typeof WORLD_THEME_SCHEMA_V2;
+
 export type ThemeIssueCode =
   // fatal — the package is rejected
   | 'E_INPUT' // not an object / unparseable JSON string
@@ -81,6 +87,7 @@ export interface ParseWorldThemeOptions {
 
 /** The JSON shape producers emit (what parseWorldTheme ingests). */
 export interface WorldThemePackage {
+  /** Exact v2 opts into the current contrast contract; omitted/other values retain v1 behavior. */
   $schema?: string;
   name: string;
   version: string;

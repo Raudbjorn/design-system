@@ -5,18 +5,42 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { prepareBuild, TOKENS_DIR } from './emitters/prepare.mjs';
+import { HOVER_MIX, PRESSED_MIX, prepareBuild, TOKENS_DIR } from './emitters/prepare.mjs';
+import { mixOklab } from '../src/lib/internal/color.ts';
+import { contrastRatio } from '../src/lib/internal/contrast.ts';
 import { emitColorsCss, emitScaleCss } from './emitters/emit-css.mjs';
 import { emitPaletteTs } from './emitters/emit-palette-ts.mjs';
 import { emitResolvedJson } from './emitters/emit-json.mjs';
 import { emitQss } from './emitters/emit-qss.mjs';
+import { emitExtJs } from './emitters/emit-extjs.mjs';
+import {
+  checkProxmoxThemeName,
+  emitExtJsCss,
+  extJsInputsFromWorldTheme,
+  HOVER_MIX as EXTJS_HOVER_MIX,
+  PRESSED_MIX as EXTJS_PRESSED_MIX
+} from '../src/lib/extjs/emit.ts';
 import { emitTuiRust } from './emitters/emit-tui-rust.mjs';
+import { emitQtPalette, QT_ROLES } from '../src/lib/qt/emit.ts';
+import { emitQt } from './emitters/emit-qt.mjs';
 
 const prepared = prepareBuild();
 if (!prepared.ok) throw new Error(prepared.error.join('\n'));
 const { base, themes } = prepared.value;
 
 const read = (...segments) => readFileSync(join(TOKENS_DIR, ...segments), 'utf8');
+
+const expectQtValue = (result) => {
+  expect(result.ok).toBe(true);
+  if (!result.ok) throw new Error(result.error.map((issue) => issue.message).join('\n'));
+  return result.value;
+};
+
+const expectQtError = (result) => {
+  expect(result.ok).toBe(false);
+  if (result.ok) return;
+  return result.error[0];
+};
 
 const TUI_COLOR_FIELDS = [
   'bg',
@@ -40,7 +64,8 @@ const TUI_COLOR_FIELDS = [
   'syn-var',
   'syn-func',
   'syn-comment',
-  'syn-number'
+  'syn-number',
+  'info'
 ];
 
 describe('committed outputs match the emitters (run `pnpm run tokens` after token edits)', () => {
@@ -63,10 +88,167 @@ describe('committed outputs match the emitters (run `pnpm run tokens` after toke
     it(`qss/${theme.name}.qss`, () => {
       expect(read('..', 'qss', `${theme.name}.qss`)).toBe(emitQss(theme));
     });
+    it(`extjs/theme-sv-${theme.name}.css`, () => {
+      expect(read('..', 'extjs', `theme-sv-${theme.name}.css`)).toBe(emitExtJs(theme));
+    });
+    it(`qt/${theme.name}.palette.json`, () => {
+      expect(read('..', 'qt', `${theme.name}.palette.json`)).toBe(expectQtValue(emitQt(theme)));
+    });
   }
     it(`crates/raudbjorn-tui/src/theme/generated.rs`, () => {
       expect(readFileSync(join(TOKENS_DIR, '../../../crates/raudbjorn-tui/src/theme/generated.rs'), 'utf8')).toBe(emitTuiRust(themes));
     });
+});
+
+const QT_STATUS_KEYS = [
+  'success',
+  'error',
+  'warning',
+  'info',
+  'success-bg',
+  'error-bg',
+  'warning-bg',
+  'info-bg'
+];
+const QT_HEX_RE = /^#[0-9a-f]{6}$/;
+const QT_MARKER = 'by scripts/build-tokens.mjs — do not edit';
+const QT_IS_DARK = { dark: true, light: false, amber: true };
+
+describe('QPalette JSON contract', () => {
+  for (const theme of themes) {
+    const doc = JSON.parse(expectQtValue(emitQt(theme)));
+
+    it(`${theme.name}: top-level keys and marker are exact`, () => {
+      expect(Object.keys(doc)).toEqual(['$generated', 'name', 'meta', 'groups', 'status']);
+      expect(doc.$generated).toBe(QT_MARKER);
+      expect(doc.name).toBe(theme.name);
+    });
+
+    it(`${theme.name}: groups are exactly active/inactive/disabled`, () => {
+      expect(Object.keys(doc.groups)).toEqual(['active', 'inactive', 'disabled']);
+    });
+
+    it(`${theme.name}: every group has exactly all 14 roles`, () => {
+      for (const group of Object.values(doc.groups)) {
+        expect(Object.keys(group).sort()).toEqual([...QT_ROLES].sort());
+      }
+    });
+
+    it(`${theme.name}: status has exactly the eight keys`, () => {
+      expect(Object.keys(doc.status).sort()).toEqual([...QT_STATUS_KEYS].sort());
+    });
+
+    it(`${theme.name}: every color is lowercase six-digit hex with no leaks`, () => {
+      const colors = [];
+      for (const group of Object.values(doc.groups)) colors.push(...Object.values(group));
+      colors.push(...Object.values(doc.status));
+      for (const value of colors) {
+        expect(value).toMatch(QT_HEX_RE);
+        expect(value).not.toContain('${');
+        expect(value).not.toContain('undefined');
+        expect(value).not.toContain('NaN');
+      }
+    });
+
+    it(`${theme.name}: policy mappings are pinned`, () => {
+      const p = theme.paletteHex;
+      expect(doc.groups.active.Window).toBe(p.bg);
+      expect(doc.groups.active.Base).toBe(p['surface-1']);
+      expect(doc.groups.active.Highlight).toBe(p.accent);
+      expect(doc.groups.disabled.WindowText).toBe(p['text-faint']);
+      expect(doc.groups.disabled.Text).toBe(p['text-faint']);
+      expect(doc.groups.disabled.ButtonText).toBe(p['text-faint']);
+      expect(doc.groups.inactive.Highlight).toBe(mixOklab(p.accent, p['surface-3'], 0.5));
+      expect(doc.status.info).toBe(p.info);
+    });
+
+    it(`${theme.name}: meta.isDark matches the built-in palette`, () => {
+      expect(doc.meta.isDark).toBe(QT_IS_DARK[theme.name]);
+    });
+  }
+
+  it('derives meta.isDark from the background rather than the theme name', () => {
+    const light = themes.find((theme) => theme.name === 'light');
+    if (!light) throw new Error('light theme missing from built-in palette registry');
+    const result = emitQtPalette({ name: 'dark', palette: light.paletteHex });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const doc = JSON.parse(result.value);
+    expect(doc.meta.isDark).toBe(false);
+  });
+
+  it('returns an error value for a missing required mapped token, naming it', () => {
+    const palette = { ...themes[0].paletteHex };
+    delete palette.bg;
+    const result = emitQtPalette({ name: 'test', palette });
+    expect(result).toEqual({
+      ok: false,
+      error: [
+        expect.objectContaining({
+          code: 'E_MISSING_COLOR',
+          token: 'bg',
+          message: expect.stringMatching(/missing color token "bg"/)
+        })
+      ]
+    });
+  });
+
+  it('returns an error value for an invalid color value, naming it', () => {
+    const palette = { ...themes[0].paletteHex, bg: 'rebeccapurple' };
+    const result = emitQtPalette({ name: 'test', palette });
+    expect(result).toEqual({
+      ok: false,
+      error: [
+        expect.objectContaining({
+          code: 'E_COLOR_VALUE',
+          token: 'bg',
+          message: expect.stringMatching(/token "bg" is not a valid hex color/)
+        })
+      ]
+    });
+  });
+
+  it('returns an error value for an unsafe theme name, naming it', () => {
+    for (const name of ['Dark', 'dark/../etc']) {
+      const result = emitQtPalette({ name, palette: themes[0].paletteHex });
+      expect(result).toEqual({
+        ok: false,
+        error: [
+          expect.objectContaining({
+            code: 'E_THEME_NAME',
+            message: expect.stringMatching(/invalid theme name/)
+          })
+        ]
+      });
+    }
+  });
+
+  it('canonicalizes valid shorthand and 8-digit hex inputs to six-digit lowercase', () => {
+    const palette = { ...themes[0].paletteHex, bg: '#777', accent: '#3ac1' };
+    const result = emitQtPalette({ name: 'demo', palette });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const doc = JSON.parse(result.value);
+    expect(doc.groups.active.Window).toBe('#777777');
+    expect(doc.groups.active.Highlight).toBe('#33aacc');
+  });
+
+  it('round-trips the committed dark palette byte-identical (drift-safe)', () => {
+    const dark = themes.find((theme) => theme.name === 'dark');
+    if (!dark) throw new Error('dark theme missing from built-in palette registry');
+    const committed = read('..', 'qt', 'dark.palette.json');
+    const result = emitQt(dark);
+    expect(expectQtValue(result)).toBe(committed);
+  });
+
+  it('build adapter preserves emitter validation issues as values', () => {
+    const result = emitQt({ ...themes[0], name: 'Dark' });
+    expect(result).toEqual({
+      ok: false,
+      error: [expect.objectContaining({ code: 'E_THEME_NAME' })]
+    });
+  });
+
 });
 
 describe('crates/raudbjorn-tui/src/theme/generated.rs validation', () => {
@@ -92,13 +274,11 @@ describe('crates/raudbjorn-tui/src/theme/generated.rs validation', () => {
     });
 
     for (const key of TUI_COLOR_FIELDS) {
-      // Resolve the field name once OUTSIDE the it(); resolve the hex (and
-      // derived RGB) INSIDE the it() so a missing paletteHex key fails only
-      // that single test instead of crashing the entire Vitest suite at
-      // describe-discovery time.
       const rustField = key.replace(/-/g, '_');
 
       it(`${name} field ${key} appears once with a parseable RGB color`, () => {
+        // Lookup happens inside the test so a missing key fails ONLY that
+        // case instead of crashing the entire Vitest suite at discovery.
         const hex = theme.paletteHex[key];
         expect(typeof hex).toBe('string');
         expect(hex).toMatch(/^#[0-9a-fA-F]{6}$/);
@@ -177,14 +357,278 @@ describe('QSS contract', () => {
     it(`${theme.name}: every color literal is a resolved or derived token`, () => {
       const allowed = new Set([
         ...Object.values(theme.paletteHex),
-        ...theme.derived.map((d) => d.css),
-        '#ffffff' // danger button text, hardcoded to mirror the web Button
+        ...theme.derived.map((d) => d.css)
       ]);
       for (const match of qss.matchAll(/#[0-9a-f]{6,8}\b/g)) {
         expect(allowed.has(match[0]), `unexpected color ${match[0]}`).toBe(true);
       }
     });
+
+    it(`${theme.name}: danger button text meets 4.5:1 in every interaction state`, () => {
+      const foreground = theme.paletteHex.bg;
+      const states = [
+        ['QPushButton\\[class="danger"\\] \\{', theme.paletteHex.error],
+        [
+          'QPushButton\\[class="danger"\\]:hover \\{',
+          theme.derived.find((entry) => entry.key === 'error-hover')?.css
+        ],
+        [
+          'QPushButton\\[class="danger"\\]:pressed \\{',
+          theme.derived.find((entry) => entry.key === 'error-pressed')?.css
+        ]
+      ];
+
+      expect(qss).toMatch(
+        new RegExp(`QPushButton\\[class="danger"\\] \\{[^}]*color: ${foreground};`, 's')
+      );
+      for (const [selector, background] of states) {
+        expect(background).toBeDefined();
+        expect(qss).toMatch(new RegExp(`${selector}[^}]*background: ${background};`, 's'));
+        expect(contrastRatio(foreground, background)).toBeGreaterThanOrEqual(4.5);
+      }
+    });
   }
+});
+
+describe('ExtJS contract', () => {
+  const REQUIRED_SELECTORS = [
+    '.x-body',
+    '.x-panel-header',
+    '.x-toolbar',
+    '.x-btn-default-small',
+    '.x-btn-over',
+    '.x-btn-pressed',
+    '.x-form-text',
+    '.x-form-checkbox',
+    '.x-boundlist-item',
+    '.x-column-header',
+    '.x-grid-item',
+    '.x-grid-item-alt',
+    '.x-grid-item-selected',
+    '.x-treelist-item-text',
+    '.x-tree-node-text',
+    '.x-tab-active',
+    '.x-window-default',
+    '.x-menu-item-active',
+    '.x-tip',
+    '.x-progress-bar',
+    '.x-splitter',
+    '.x-mask',
+    '.x-datepicker',
+    '.x-legend-item',
+    '::-webkit-scrollbar'
+  ];
+  // Read at runtime by RRDChart.js / GaugeWidget.js. Missing one means charts
+  // silently keep the light palette on a dark theme.
+  const REQUIRED_PWT_VARS = [
+    '--pwt-panel-background',
+    '--pwt-text-color',
+    '--pwt-gauge-default',
+    '--pwt-gauge-back',
+    '--pwt-gauge-warn',
+    '--pwt-gauge-crit',
+    '--pwt-chart-primary',
+    '--pwt-chart-grid-stroke'
+  ];
+
+  for (const theme of themes) {
+    const css = emitExtJs(theme);
+
+    it(`${theme.name}: no unresolved placeholders`, () => {
+      expect(css).not.toContain('${');
+      expect(css).not.toContain('undefined');
+      expect(css).not.toContain('NaN');
+      // A @layer wrapper would make the whole sheet lose to ExtJS's unlayered
+      // rules — the sheet must stay unlayered. (Matches the at-rule, not the
+      // word where the header comment explains this.)
+      expect(css).not.toMatch(/^\s*@layer\b/m);
+      // ExtJS measures widget geometry in JS; rem would tie it to the host
+      // page's root font size.
+      expect(css).not.toMatch(/\d(?:\.\d+)?rem\b/);
+    });
+
+    it(`${theme.name}: every var() reference is defined in the same file`, () => {
+      const defined = new Set([...css.matchAll(/^\s*(--[a-z0-9-]+):/gm)].map((m) => m[1]));
+      for (const match of css.matchAll(/var\((--[a-z0-9-]+)\)/g)) {
+        expect(defined.has(match[1]), `dangling variable ${match[1]}`).toBe(true);
+      }
+    });
+
+    it(`${theme.name}: covers the mandated widgets and chart hooks`, () => {
+      for (const selector of REQUIRED_SELECTORS) expect(css).toContain(selector);
+      for (const name of REQUIRED_PWT_VARS) expect(css).toContain(`${name}: var(--sv-`);
+    });
+
+    it(`${theme.name}: interaction states match the QSS/web oklab math`, () => {
+      for (const { key, css: value } of theme.derived) {
+        expect(css).toContain(`--sv-${key}: ${value};`);
+      }
+    });
+
+    it(`${theme.name}: parses as CSS with every rule intact`, () => {
+      // A dropped rule is the failure mode a string-matching test cannot see:
+      // one bad selector and the browser silently discards that block.
+      const style = document.createElement('style');
+      style.textContent = css;
+      document.head.appendChild(style);
+      try {
+        // Comments are stripped first: the header documents the cookie names
+        // as P{VE,BS,MG}ThemeCookie, and those braces are not a rule.
+        const blocks = (css.replace(/\/\*[\s\S]*?\*\//g, '').match(/\{/g) ?? []).length;
+        expect(style.sheet.cssRules.length).toBe(blocks);
+      } finally {
+        style.remove();
+      }
+    });
+
+    it(`${theme.name}: bundles the self-hosted fonts`, () => {
+      expect(css.match(/@font-face/g)).toHaveLength(4);
+      expect(css).toContain("url('sv-fonts/InterVariable.woff2')");
+      expect(css).toContain("url('sv-fonts/Iosevka-Regular.woff2')");
+      expect(css).not.toMatch(/font-family:\s*['"](?:Inter|Iosevka)['"]/);
+    });
+
+    it(`${theme.name}: file stem is a selectable Proxmox theme name`, () => {
+      expect(checkProxmoxThemeName(`sv-${theme.name}`).ok).toBe(true);
+    });
+  }
+
+  it('inverts crisp icon sprites on dark themes only', () => {
+    const byName = Object.fromEntries(themes.map((t) => [t.name, emitExtJs(t)]));
+    expect(byName.dark).toMatch(/--sv-icon-filter: invert\(1\)/);
+    expect(byName.amber).toMatch(/--sv-icon-filter: invert\(1\)/);
+    expect(byName.light).toContain('--sv-icon-filter: none;');
+  });
+
+  it('rejects a missing token instead of emitting a broken sheet', () => {
+    const palette = { ...themes[0].paletteHex };
+    delete palette['surface-3'];
+    const scale = Object.fromEntries(themes[0].scaleFull.map((r) => [r.key, r.css]));
+    expect(() => emitExtJsCss({ name: 'sv-broken', palette, scale })).toThrow(
+      /missing color token "surface-3"/
+    );
+    expect(() => emitExtJsCss({ name: 'sv-broken', palette: themes[0].paletteHex, scale: {} })).toThrow(
+      /missing scale token/
+    );
+  });
+
+  it('keeps its mix weights in lockstep with prepare.mjs', () => {
+    // The published emitter cannot import from scripts/, so the two constants
+    // are duplicated. This is the guard that they never diverge.
+    expect(EXTJS_HOVER_MIX).toBe(HOVER_MIX);
+    expect(EXTJS_PRESSED_MIX).toBe(PRESSED_MIX);
+  });
+
+  it('folds a world theme over the base it extends', () => {
+    const base = JSON.parse(read('resolved', 'dark.tokens.json'));
+    const world = {
+      name: 'mistwood',
+      tokens: {
+        accent: { $type: 'color', $value: '#c9a227' },
+        'radius-lg': { $type: 'dimension', $value: '2px' }
+      }
+    };
+    const inputs = extJsInputsFromWorldTheme(world, base);
+    expect(inputs.ok).toBe(true);
+    expect(inputs.value.name).toBe('sv-mistwood');
+    expect(inputs.value.palette.accent).toBe('#c9a227');
+    // untouched roles fall through from the base theme
+    expect(inputs.value.palette.bg).toBe(base.tokens.bg.css);
+    expect(inputs.value.scale['radius-lg']).toBe('2px');
+
+    const css = emitExtJsCss(inputs.value);
+    expect(css).toContain('--sv-accent: #c9a227;');
+    expect(css).toContain('--sv-radius-lg: 2px;');
+    // Derived states are recomputed from the OVERRIDDEN accent, not inherited.
+    // Asserted positively: the absence of the base value would also hold if the
+    // key were simply missing, or emitted as "undefined".
+    const expectedHover = mixOklab('#c9a227', inputs.value.palette['mix-target'], HOVER_MIX);
+    expect(css).toContain(`--sv-accent-hover: ${expectedHover};`);
+    expect(expectedHover).not.toBe(base.derived['accent-hover']);
+  });
+
+  it('refuses to fold a world theme into an unselectable name', () => {
+    const base = JSON.parse(read('resolved', 'dark.tokens.json'));
+    const result = extJsInputsFromWorldTheme({ name: 'world2', tokens: {} }, base);
+    expect(result.ok).toBe(false);
+    expect(result.error).toMatch(/not a selectable Proxmox theme name/);
+  });
+
+  it('refuses hostile token values instead of interpolating them', () => {
+    // World themes are untrusted input everywhere else in this repo, and a
+    // sheet emitted from one lands in a Proxmox admin UI — injected CSS there
+    // can overlay a confirmation dialog, not just restyle it.
+    const scale = Object.fromEntries(themes[0].scaleFull.map((r) => [r.key, r.css]));
+    const emit = (palette, name = 'sv-evil') => () => emitExtJsCss({ name, palette, scale });
+
+    // A non-derived colour: never parsed by mixOklab or luminance, so nothing
+    // else in the pipeline would have caught it.
+    expect(
+      emit({ ...themes[0].paletteHex, warning: '#ff0000; } .x-window { display: none' })
+    ).toThrow(/must be a hex color/);
+    expect(emit({ ...themes[0].paletteHex, border: 'red' })).toThrow(/must be a hex color/);
+    expect(
+      emit({ ...themes[0].paletteHex, 'evil}key': '#ffffff' })
+    ).toThrow(/unsafe token name/);
+    expect(() =>
+      emitExtJsCss({
+        name: 'sv-ok',
+        palette: themes[0].paletteHex,
+        scale: { ...scale, 'radius-md': '4px } .x-btn { visibility: hidden' }
+      })
+    ).toThrow(/contains CSS structure/);
+    // The name reaches the header comment; */ would end it early.
+    expect(emit(themes[0].paletteHex, 'x */ body{display:none} /*')).toThrow(
+      /not a selectable Proxmox theme name/
+    );
+  });
+
+  it('accepts every hex form its own validator admits', () => {
+    // assertColor allows #rgb/#rgba/#rrggbb/#rrggbbaa, so the darkness check
+    // has to read all four — otherwise a colour this emitter calls valid blows
+    // up deeper in, with a misleading message.
+    const scale = Object.fromEntries(themes[0].scaleFull.map((r) => [r.key, r.css]));
+    const withBg = (bg) => emitExtJsCss({ name: 'sv-x', palette: { ...themes[0].paletteHex, bg }, scale });
+
+    expect(withBg('#fff')).toContain('--sv-icon-filter: none;');
+    expect(withBg('#ffff')).toContain('--sv-icon-filter: none;');
+    expect(withBg('#191919ff')).toMatch(/--sv-icon-filter: invert\(1\)/);
+    expect(() => withBg('#12345')).toThrow(/must be a hex color/);
+  });
+
+  it('keeps legitimate composite scale values that merely look structural', () => {
+    // Shadows carry `rgb(0 0 0 / 0.3)` and font stacks carry quotes and commas;
+    // a stricter value check would reject the real tokens.
+    const css = emitExtJs(themes[0]);
+    expect(css).toMatch(/--sv-shadow-md: [^;]*rgb\([^;]*\);/);
+    expect(css).toContain("--sv-font-sans: 'Inter'");
+  });
+
+  it('rejects a --pwt-* alias pointing at a token the palette lacks', () => {
+    // A dangling chart variable means canvas silently keeps the light palette.
+    const palette = { ...themes[0].paletteHex };
+    delete palette.warning; // only --pwt-gauge-warn references this
+    const scale = Object.fromEntries(themes[0].scaleFull.map((r) => [r.key, r.css]));
+    expect(() => emitExtJsCss({ name: 'sv-x', palette, scale })).toThrow(
+      /missing color token "warning"/
+    );
+  });
+
+  it('refuses to emit a built-in theme Proxmox could not select', () => {
+    expect(() => emitExtJs({ ...themes[0], name: 'high-contrast-2' })).toThrow(
+      /cannot ship to Proxmox/
+    );
+  });
+
+  it('rejects theme names Proxmox cannot select', () => {
+    // PVE/PMG validate ^[a-z]{1,10}(-[a-z]{1,10}){0,5}$ server-side: a name with
+    // a digit installs fine and then can never be chosen.
+    expect(checkProxmoxThemeName('sv-mistwood').ok).toBe(true);
+    expect(checkProxmoxThemeName('sv-world2').ok).toBe(false);
+    expect(checkProxmoxThemeName('SvDark').ok).toBe(false);
+    expect(checkProxmoxThemeName('sv_dark').ok).toBe(false);
+    expect(checkProxmoxThemeName('sv-abcdefghijk').ok).toBe(false);
+  });
 });
 
 describe('emitters generalize to N themes', () => {

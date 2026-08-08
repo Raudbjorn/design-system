@@ -15,7 +15,7 @@
   cfg.provider) reproduces the repo Storybook's frame: `data-theme="dark"` +
   token background/ink/font (.storybook/preview.css equivalent). Non-component
   exports (theme-as-data spine: applyTheme, contrastGates, defineTheme,
-  swapTheme, themeCss, contrastRatio, dark, light) pass through UNWRAPPED —
+  swapTheme, themeCss, contrastRatio, dark, light, amber) pass through UNWRAPPED —
   re-exported from dist in index.js, hand-typed in index.d.ts (2026-07-04).
 - **The adapter build is `cfg.buildCmd`'s second half** — `pnpm run build`
   (tokens, fonts, svelte-package) then `node .design-sync/react-adapter/build.mjs`

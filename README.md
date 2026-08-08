@@ -21,7 +21,17 @@ Not published to npm. Consume from source:
 pnpm add github:Raudbjorn/design-system
 ```
 
-The package requires Node.js 22 or newer and has Svelte 5 as a peer dependency.
+The package requires Node.js 22.18.0 or newer and has Svelte 5 as a peer dependency.
+
+### Native TUI
+
+The Crepus/Ratatui counterparts for all 28 components and the Homelab terminal
+gallery are documented in [docs/tui-gallery.md](docs/tui-gallery.md). Launch
+the real terminal renderer with:
+
+```bash
+pnpm run tui:gallery
+```
 
 ### Native TUI
 
@@ -56,7 +66,7 @@ components:
 | Import | Purpose |
 | --- | --- |
 | `@svnbjrn/design` | 28 core Svelte components, palettes, `defineTheme`, and common vernacular helpers |
-| `@svnbjrn/design/styles.css` | Core tokens, bundled fonts, cascade layers, and dark/light themes |
+| `@svnbjrn/design/styles.css` | Core tokens, bundled fonts, cascade layers, and dark, light, and explicit amber themes |
 | `@svnbjrn/design/tokens` | Typed core palettes and token names |
 | `@svnbjrn/design/theme` | Framework-agnostic world-theme parser, CSS emitter, runtime appliers, mode persistence, and boot script |
 | `@svnbjrn/design/theme/svelte` | Svelte world-theme wrapper |
@@ -65,7 +75,11 @@ components:
 | `@svnbjrn/design/vernacular/svelte` | Svelte vernacular context |
 | `@svnbjrn/design/vermis` + `/vermis/styles.css` | Opt-in occult-ornate Vermis component and token system |
 | `@svnbjrn/design/carter` + `/carter/styles.css` | Opt-in modern-mystery Carter component and token system |
-| `@svnbjrn/design/qss/*.qss` | Generated dark/light Qt Style Sheets |
+| `@svnbjrn/design/astro` | Astro integration: token CSS, pre-paint boot script, build-time world themes |
+| `@svnbjrn/design/astro/components` | Native `.astro` ports of the 17 zero-JS components |
+| `@svnbjrn/design/qss/*.qss` | Generated dark, light, and explicit amber Qt Style Sheets |
+| `@svnbjrn/design/qt` | QPalette JSON emitter (`emitQtPalette`, `QT_ROLES`) |
+| `@svnbjrn/design/qt/*.json` | Generated QPalette role maps per theme (dark, light, amber) |
 | `@svnbjrn/design/tokens/*.json` | Resolved cross-platform token maps |
 
 ### Theming
@@ -153,11 +167,35 @@ The same API runs in the browser (see the Storybook **Theme Lab** story).
 
 ### Qt / QSS
 
-The token build also emits per-theme Qt Style Sheets and flat resolved token
-maps for non-web consumers: `@svnbjrn/design/qss/dark.qss` (apply via
-`QApplication.setStyleSheet`) and `@svnbjrn/design/tokens/dark.tokens.json`
-(css+qt values plus precomputed hover/pressed states). See
-`docs/bones-integration.md`.
+The token build also emits per-theme Qt artifacts for PySide6/Qt consumers:
+`@svnbjrn/design/qss/{dark,light,amber}.qss` style sheets,
+`@svnbjrn/design/qt/{dark,light,amber}.palette.json` QPalette role maps (from
+the `@svnbjrn/design/qt` emitter), plus `bin/sv_design_qt.py` — a stdlib-only
+runtime helper that validates the palette and applies Fusion → palette → QSS —
+and `bin/qt-theme-install.sh`, a copy-only vendoring installer for Python
+projects. See `docs/qt-integration.md` (and `docs/bones-integration.md` for
+the resolved-token-map use).
+
+### ExtJS / Proxmox
+
+The same build emits ExtJS override sheets — `@svnbjrn/design/extjs/theme-sv-dark.css`,
+`…-light.css`, and `…-amber.css` — that restyle ExtJS 7's own widgets from the `--sv-*` tokens.
+They install into Proxmox VE / PBS / PMG with `bin/proxmox-theme-install.sh`, and
+`design-generate --extjs <file>` emits one for a generated world theme. No Svelte
+components are involved. See `docs/extjs-integration.md`.
+
+### Astro
+
+`@svnbjrn/design/astro` is an integration: one entry in `astro.config.mjs` wires
+the token stylesheet, the pre-paint boot script (Astro has no `app.html`, so
+otherwise every layout hand-wires it), and a **build-time** world theme —
+parsed, contrast-gated, and turned into CSS during Astro's `astro:config:setup`
+hook, instead of applied after hydration. `@svnbjrn/design/astro/components`
+carries native `.astro` ports of the 17 components that have no state and no
+handlers, plus `Button` as a documented exception (ported without its Svelte
+`onclick` prop), so they ship zero JS; the 11 interactive ones stay Svelte and
+take a `client:` directive. A parity test renders both implementations and
+compares them. See `docs/astro-integration.md`.
 
 ### Vernacular (world-flavored UI strings)
 
@@ -246,19 +284,20 @@ must include the visible `copyLabel` to preserve label-in-name.
 pnpm install
 pnpm dev          # standalone Vite preview page (all components, dark/light)
 pnpm test         # Vitest + @testing-library/svelte (unit, jsdom)
-pnpm test:visual  # Storybook visual tests (Chromium screenshots, Argos)
+CI= pnpm test:visual # Storybook visual tests (Chromium, no Argos upload)
 pnpm check        # svelte-check (strict)
 pnpm build        # regenerate tokens + fonts, then svelte-package -> dist/
 ```
 
 Visual testing is documented in [docs/visual-testing.md](docs/visual-testing.md):
-every story is screenshotted in both themes and diffed on each PR via
-[Argos](https://app.argos-ci.com/argos-ci-2/design-system).
+every story runs in dark, light, and amber. The Argos CI job is currently
+disabled, so run the Chromium story suite and Storybook build locally.
 
 Design tokens are generated from a single DTCG source
 (`src/lib/tokens/*.tokens.json` + the `themes.ts` registry) via
 `pnpm run tokens` — outputs (`colors.css`, `scale.css`, `palette.ts`,
-`resolved/*.tokens.json`, `qss/*.qss`) are committed and drift-guarded by
+`resolved/*.tokens.json`, `qss/*.qss`, `qt/*.palette.json`, `extjs/theme-sv-*.css`) are committed
+and drift-guarded by
 tests. Adding a built-in theme is one token file plus one registry entry.
 Fonts are subset from `assets/fonts-src/` via `pnpm run fonts`.
 

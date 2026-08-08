@@ -13,14 +13,14 @@ Without it, components render on the host page's background and the theme
 follows the viewer's OS preference instead of your design's intent.
 
 ```jsx
-<ThemeRoot theme="dark">   {/* "dark" (default, the system's home turf) or "light" (pale paper) */}
+<ThemeRoot theme="dark">   {/* "dark" (default, the system's home turf), "light" (pale paper), or "amber" (warm dark) */}
   …your design…
 </ThemeRoot>
 ```
 
 ## Custom themes — themes are data
 
-Beyond ThemeRoot's dark/light, the theme API ships on the same global:
+Beyond ThemeRoot's built-in themes, the theme API ships on the same global:
 `defineTheme(overrides)` validates a partial palette (keys are the token
 names from the table below minus the `--sv-` prefix, e.g. `accent`, `bg`,
 `surface-1`; values 6-digit hex only) against the WCAG contrast gates and returns
@@ -29,7 +29,7 @@ takes an ordered array of override layers (later wins: base → world →
 activity → user-override). Render an accepted theme with
 `themeCss(theme, '.scope')` in a `<style>` tag, or `applyTheme(theme)`
 document-wide (returns a disposer; call client-side). `swapTheme` is
-`applyTheme` with a View Transitions crossfade. `dark`/`light` export the
+`applyTheme` with a View Transitions crossfade. `dark`/`light`/`amber` export the
 built-in palettes as data; `contrastGates`/`contrastRatio` expose the checker.
 
 ```jsx
@@ -49,7 +49,7 @@ layout glue use inline styles with the `--sv-*` tokens, and prefer `Stack`
 |---|---|
 | Background/surfaces | `--sv-bg`, `--sv-surface-1`, `--sv-surface-2`, `--sv-surface-3`, `--sv-border` |
 | Ink | `--sv-text`, `--sv-text-strong`, `--sv-text-muted`, `--sv-text-faint` |
-| Accent & semantic | `--sv-accent` (teal), `--sv-accent-2` (coral, ≤1 emphasis/view), `--sv-accent-rust`, `--sv-success`, `--sv-error`, `--sv-warning` |
+| Accent & semantic | `--sv-accent` (teal), `--sv-accent-2` (coral, ≤1 emphasis/view), `--sv-accent-rust`, `--sv-success`, `--sv-error`, `--sv-warning`, `--sv-info` |
 | Space (Stack gap steps) | `--sv-space-0/1/2/3/4/6/8/12` |
 | Radius / shadow | `--sv-radius-sm/md/lg`, `--sv-shadow-sm/md` |
 | Type | `--sv-font-sans`, `--sv-font-mono`, `--sv-fs-xs/sm/base/lg/xl/2xl/3xl`, `--sv-lh-tight/normal/relaxed`, `--sv-font-weight-normal/medium/semibold/bold` |

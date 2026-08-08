@@ -1,0 +1,32 @@
+{
+  "$description": "Built-in warm-dark amber theme, selected explicitly via data-theme=\"amber\". Not a ThemeMode (dark/light/system stay the persisted modes) and not a world-package base — world packages still extend only dark or light.",
+  "color": {
+    "$type": "color",
+    "bg": { "$value": "#0f0e0d" },
+    "surface-1": { "$value": "#1a1815" },
+    "surface-2": { "$value": "#221f1a" },
+    "surface-3": { "$value": "#2b271f" },
+    "border": { "$value": "#332e26" },
+    "text": { "$value": "#e2d9c8" },
+    "text-strong": { "$value": "{primitive.color.paper-100}" },
+    "text-muted": { "$value": "#a89c86" },
+    "text-faint": { "$value": "#948a76" },
+    "accent": { "$value": "#d4a017" },
+    "accent-2": { "$value": "{primitive.color.coral-300}" },
+    "accent-rust": { "$value": "{primitive.color.rust-300}" },
+    "mix-target": {
+      "$value": "{primitive.color.white}",
+      "$description": "hover lightens in dark"
+    },
+    "success": { "$value": "#86b86b" },
+    "error": { "$value": "#e4635a" },
+    "warning": { "$value": "#e08a2b" },
+    "info": { "$value": "{primitive.color.steel-300}" },
+    "syn-keyword": { "$value": "#6ea7dd" },
+    "syn-string": { "$value": "#d29a6a" },
+    "syn-var": { "$value": "#9ec7e8" },
+    "syn-func": { "$value": "#d9c78a" },
+    "syn-comment": { "$value": "#8faf72" },
+    "syn-number": { "$value": "#b3c99a" }
+  }
+}

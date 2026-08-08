@@ -5,6 +5,7 @@
 
 import { contrastRatio } from '../internal/contrast.ts';
 import { CONTRAST_RULES } from '../internal/invariants.ts';
+import type { ContrastRule } from '../internal/invariants.ts';
 import type { ThemeIssue } from './types.ts';
 
 export interface GateResult {
@@ -28,7 +29,8 @@ const round2 = (n: number): number => Math.round(n * 100) / 100;
 export const applyContrastGate = (
   colorOverrides: ReadonlyMap<string, string>,
   base: Readonly<Record<string, string>>,
-  policy: 'revert' | 'reject' | 'keep'
+  policy: 'revert' | 'reject' | 'keep',
+  rules: readonly ContrastRule[] = CONTRAST_RULES
 ): GateResult => {
   const surviving = new Map(colorOverrides);
   const issues: ThemeIssue[] = [];
@@ -37,7 +39,7 @@ export const applyContrastGate = (
   // Bounded by construction; the +2 is headroom, not load-bearing.
   const maxPasses = surviving.size + 2;
   for (let pass = 0; pass < maxPasses; pass++) {
-    const failures = CONTRAST_RULES.map((rule) => ({
+    const failures = rules.map((rule) => ({
       rule,
       ratio: contrastRatio(effective(rule.fg), effective(rule.bg))
     })).filter(

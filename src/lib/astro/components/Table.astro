@@ -1,0 +1,66 @@
+---
+// No `cell` snippet: Astro slots take no parameters, so a per-cell render
+// callback cannot cross the boundary. Cells render their raw value. No
+// `rowKey` either: it exists to key Svelte's {#each} across updates, and there
+// are no updates here. Both tracked in ./unsupported.ts.
+import type { TableProps } from './props.ts';
+
+type Props = TableProps;
+
+const { columns = [], rows = [] } = Astro.props;
+---
+
+<div data-sv="table-wrap">
+  <table data-sv="table">
+    <thead>
+      <tr>
+        {columns.map((col) => (
+          <th scope="col" data-align={col.align ?? 'left'} style={col.width ? `width: ${col.width};` : undefined}>{col.header}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          {columns.map((col) => (
+            <td data-align={col.align ?? 'left'} data-mono={col.mono || undefined}>{row[col.key]}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  [data-sv='table-wrap'] {
+    border: 1px solid var(--sv-border);
+    border-radius: var(--sv-radius-md);
+    overflow-x: auto;
+  }
+  [data-sv='table'] {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sv-font-sans);
+  }
+  [data-sv='table'] th {
+    text-align: left;
+    padding: var(--sv-space-2) var(--sv-space-4);
+    font-size: var(--sv-fs-xs);
+    font-weight: var(--sv-font-weight-semibold);
+    color: var(--sv-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: var(--sv-surface-2);
+  }
+  [data-sv='table'] td {
+    padding: var(--sv-space-3) var(--sv-space-4);
+    font-size: var(--sv-fs-sm);
+    color: var(--sv-text);
+    border-top: 1px solid var(--sv-border);
+  }
+  [data-mono='true'] { font-family: var(--sv-font-mono); }
+  [data-sv='table'] th[data-align='right'],
+  [data-sv='table'] td[data-align='right'] { text-align: right; }
+  [data-sv='table'] th[data-align='center'],
+  [data-sv='table'] td[data-align='center'] { text-align: center; }
+</style>
