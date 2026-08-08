@@ -409,7 +409,7 @@ fn render_browser(
     if area.width < 40 || area.height < 12 {
         frame.render_widget(
             Paragraph::new(format!(
-                "Terminal too small — requires 40×12, current {}×{}",
+                "Terminal too small — requires 40x12, current {}x{}",
                 area.width, area.height
             )),
             area,
@@ -475,6 +475,7 @@ fn render_browser(
         vertical[1],
     );
     apply_profile_area(frame.buffer_mut(), columns[0], profile);
+    apply_profile_area(frame.buffer_mut(), columns[1], profile);
     apply_profile_area(frame.buffer_mut(), vertical[1], profile);
 }
 

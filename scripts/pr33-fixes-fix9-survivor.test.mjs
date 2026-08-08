@@ -1,8 +1,10 @@
-// Fix 9 regression: temporarily extend TUI_COLOR_FIELDS with an unknown
-// paletteHex key, exercise the produced it()-body, and assert the test produces
-// a localized failure rather than crashing the suite at describe-discovery
-// time. This file is standalone and removed after the brief's verification —
-// it complements (does not replace) the production `scripts/generated.test.mjs`.
+// Fix 9 regression: delete a real paletteHex key (not one that was never
+// present) and exercise the same "resolve inside it(), not at describe-time"
+// pattern generated.test.mjs uses for its TUI_COLOR_FIELDS loop, so a missing
+// key fails only the offending test instead of crashing discovery for the
+// whole suite. This file is standalone and removed after the brief's
+// verification — it complements (does not replace) the production
+// `scripts/generated.test.mjs`.
 
 import { describe, expect, it } from 'vitest';
 import { prepareBuild } from './emitters/prepare.mjs';
@@ -14,34 +16,27 @@ if (!prepared.ok) {
 }
 const { themes } = prepared.value;
 
+const MISSING_FIELD = 'accent';
+
 describe('Fix 9: missing paletteHex key fails only the offending test', () => {
   for (const theme of themes) {
     const name = theme.name.toUpperCase();
-    const sentinel_key = 'nonexistent_xyz';
     const partial = { ...theme.paletteHex };
-    delete partial[sentinel_key];
+    delete partial[MISSING_FIELD];
 
-    it(`${name} emits a Rust file even without the sentinel key in paletteHex`, () => {
-      // Pretend the sentinel key IS in TUI_COLOR_FIELDS — the production
-      // emitter must still produce output, and the resolve should be the
-      // caller's responsibility (it() inside the per-key test, not the
-      // describe block).
-      const emitted = emitTuiRust([{ ...theme, paletteHex: partial }]);
-      expect(typeof emitted).toBe('string');
+    it(`${name} emitTuiRust reports the missing field by name instead of a generic crash`, () => {
+      expect(() => emitTuiRust([{ ...theme, paletteHex: partial }])).toThrow(
+        new RegExp(`${theme.name}.*${MISSING_FIELD}`)
+      );
     });
 
-    it(`${name} per-key lookup against the missing sentinel reports a localized failure`, () => {
-      const hex = partial[sentinel_key];
-      // Pre-fix: hex would be undefined and parseInt(undefined.slice(...))
-      // would throw at describe-discovery time, killing every test in the
-      // suite. Post-fix: the lookup happens inside the it() and the test
-      // fails locally here.
+    it(`${name} per-key lookup against the missing field reports a localized failure`, () => {
+      // Field name resolved outside it() (as the production loop does);
+      // the paletteHex lookup and parseInt happen inside it() so a missing
+      // key throws here, in this one test, not at describe-discovery time.
+      const hex = partial[MISSING_FIELD];
       expect(hex).toBeUndefined();
-      expect(() => {
-        if (typeof hex === 'string') {
-          parseInt(hex.slice(1, 3), 16);
-        }
-      }).not.toThrow();
+      expect(() => parseInt(hex.slice(1, 3), 16)).toThrow(TypeError);
     });
   }
 });

@@ -6,7 +6,7 @@ tmp_dir=$(mktemp -d)
 trap 'rm -rf "$tmp_dir"' EXIT
 
 cd "$repo_root"
-cargo build --quiet -p raudbjorn-tui --example gallery --target-dir "$tmp_dir/target"
+cargo build --locked --quiet -p raudbjorn-tui --example gallery --target-dir "$tmp_dir/target"
 gallery="$tmp_dir/target/debug/examples/gallery"
 
 mapfile -t stories < <("$gallery" --list)
@@ -46,6 +46,11 @@ if [[ $no_color != *'ERROR: sonarr is unavailable'* ]]; then
   printf 'NO_COLOR dump lost the semantic error label or message\n' >&2
   exit 1
 fi
+# `--dump` serializes only glyphs, never ANSI, so the process check above
+# cannot observe whether NO_COLOR actually resolves to ColorProfile::NoColor.
+# That resolution is asserted directly in profile_env_defaults_and_empty_values;
+# run it here so this smoke pass fails if that guarantee ever regresses.
+cargo test --locked -p raudbjorn-tui --lib -- --exact --quiet profile::tests::profile_env_defaults_and_empty_values
 
 cases=(
   'text/default 24 1'

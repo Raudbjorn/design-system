@@ -22,7 +22,7 @@ fn render_story_with_extras(
     let profile = TerminalProfile::new(ColorProfile::TrueColor, GlyphProfile::Unicode);
     let area = Rect::new(0, 0, w, h);
     let mut terminal = Terminal::new(TestBackend::new(w, h)).unwrap();
-    let mut ctx = (story.fixture)();
+    let mut ctx = story.context();
     for (k, v) in extras {
         ctx.set(*k, v.clone());
     }
@@ -144,7 +144,7 @@ fn view_minimum_size_renders_exact_fallback() {
     let buf = render_story(&renderer, story, 40, 12);
     let normalized = normalized_text(&buf);
     assert!(
-        normalized.contains("Terminal too small requires 80×24, current 40×12"),
+        normalized.contains("Terminal too small requires 80x24, current 40x12"),
         "Fallback mismatch: '{}'",
         normalized
     );
@@ -160,7 +160,7 @@ fn full_view_subthreshold_inherits_viewport_dimensions() {
         .unwrap();
     let buffer = render_story(&renderer, story, 40, 12);
 
-    assert!(normalized_text(&buffer).contains("Terminal too small requires 80×24, current 40×12"));
+    assert!(normalized_text(&buffer).contains("Terminal too small requires 80x24, current 40x12"));
 }
 
 #[test]
@@ -243,7 +243,7 @@ fn view_states_no_warn_at_every_viewport() {
                 "view/minimum-size" => {
                     let normalized = normalized_text(&buf);
                     assert!(
-                        normalized.contains("Terminal too small requires 80×24, current"),
+                        normalized.contains("Terminal too small requires 80x24, current"),
                         "min {}x{} text: {}",
                         w,
                         h,

@@ -427,13 +427,18 @@ pub fn normalize_select(ctx: &mut TemplateContext) {
 }
 
 pub fn normalize_tabs(ctx: &mut TemplateContext) {
-    let count = match ctx.get("tab_count") {
+    let declared = match ctx.get("tab_count") {
         Some(TemplateValue::Int(value)) => (*value).max(0),
         _ => 0,
     };
-    if count == 0 {
+    if declared == 0 {
         return;
     }
+    // `tab_count` is caller-supplied and can drift from the actual number of
+    // comma-separated labels in `tabs`; bound against the parsed length too
+    // so `active` never indexes past what `indexed_label` can resolve.
+    let parsed = ctx.get_str("tabs").split(',').count() as i64;
+    let count = declared.min(parsed.max(1));
 
     let active = match ctx.get("active_index") {
         Some(TemplateValue::Int(value)) => (*value).clamp(0, count - 1),

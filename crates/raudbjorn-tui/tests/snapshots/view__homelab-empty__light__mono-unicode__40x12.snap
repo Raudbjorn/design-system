@@ -50,7 +50,7 @@ width=40 height=12
 8,1: |Reset|Reset|Reset|NONE
 9,1:8|Reset|Reset|Reset|NONE
 10,1:0|Reset|Reset|Reset|NONE
-11,1:×|Reset|Reset|Reset|NONE
+11,1:x|Reset|Reset|Reset|NONE
 12,1:2|Reset|Reset|Reset|NONE
 13,1:4|Reset|Reset|Reset|NONE
 14,1:,|Reset|Reset|Reset|NONE
@@ -65,7 +65,7 @@ width=40 height=12
 23,1: |Reset|Reset|Reset|NONE
 24,1:4|Reset|Reset|Reset|NONE
 25,1:0|Reset|Reset|Reset|NONE
-26,1:×|Reset|Reset|Reset|NONE
+26,1:x|Reset|Reset|Reset|NONE
 27,1:1|Reset|Reset|Reset|NONE
 28,1:2|Reset|Reset|Reset|NONE
 29,1: |Reset|Reset|Reset|NONE

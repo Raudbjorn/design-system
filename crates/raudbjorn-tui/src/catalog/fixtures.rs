@@ -122,10 +122,10 @@ pub fn apply_story_variant(ctx: &mut TemplateContext, id: &str) {
             ctx.set("loading", true);
         }
         "link/internal" => {
-            ctx.set("href", "jellyfin.s8n.is");
+            ctx.set("href", "/service");
         }
         "link/external" => {
-            ctx.set("href", "/service");
+            ctx.set("href", "jellyfin.s8n.is");
             ctx.set("external", true);
         }
         "link/focused" => {

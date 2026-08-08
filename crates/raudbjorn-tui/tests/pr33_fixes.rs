@@ -285,13 +285,20 @@ fn table_stories_handle_table_advances_selected_row() {
             ctx.set("row_count", 1_i64);
         }
         ctx.set("selected_row", 0_i64);
+        let row_count = get_i64(&ctx, "row_count");
         let consumed = handlers::handle_table(&mut ctx, &key(KeyCode::Down));
         let next = get_i64(&ctx, "selected_row");
-        assert!(
-            consumed || next == 0,
-            "table story {} must consume Down or stay at row 0 (got next={})",
-            story.id,
-            next
+        let expected = row_count.saturating_sub(1).min(1);
+        assert_eq!(
+            consumed,
+            expected != 0,
+            "table story {} must report consumed iff the row actually moved",
+            story.id
+        );
+        assert_eq!(
+            next, expected,
+            "table story {} selected the wrong row",
+            story.id
         );
     }
 }
