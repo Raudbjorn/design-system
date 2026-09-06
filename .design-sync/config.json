@@ -1,5 +1,5 @@
 {
-  "projectId": "83edcd31-b2b4-4965-97aa-fa6b58f1ffaa",
+  "projectId": "6eab3a00-46f5-4c29-805b-e09e4d0143c7",
   "pkg": "@svnbjrn/design",
   "globalName": "SvnbjrnDesign",
   "shape": "storybook",
@@ -12,7 +12,12 @@
   "tokensGlob": "dist/tokens/*.css",
   "extraFonts": ["../../dist/tokens/fonts.css"],
   "provider": { "component": "ThemeRoot", "props": { "theme": "dark" } },
-  "overrides": { "Text": { "cardMode": "column" } },
+  "overrides": {
+    "Text": { "cardMode": "column" },
+    "Stack": { "cardMode": "column" },
+    "Modal": { "cardMode": "single", "primaryStory": "Interactive", "skip": ["molecules-modal--open"] },
+    "Sheet": { "cardMode": "single", "primaryStory": "Left", "skip": ["molecules-sheet--right"] }
+  },
   "titleMap": { "Colors": null, "Typography": null, "Spacing&Radius": null, "Theming": null, "ThemeLab": null, "WorldTheme": null },
   "readmeHeader": ".design-sync/conventions.md"
 }
