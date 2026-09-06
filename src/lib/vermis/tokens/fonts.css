@@ -12,7 +12,17 @@
  * files from `IosevkaLayform-Regular/-Medium.woff2` to
  * `Iosevka-Regular/-Medium.woff2`, the exact files this package ships
  * (plain, non-Nerd-Font — this subsystem never renders Nerd-Font PUA icon
- * glyphs; all icons are SVG, per component-tier Pattern 62).
+ * glyphs; all icons are SVG, per component-tier Pattern 62); (c) the
+ * `@font-face` family is registered as `"Iosevka Vermis"`, not plain
+ * `"Iosevka"` — core's own `src/lib/tokens/fonts.css` registers the same
+ * real typeface under the plain name, and Storybook's long-lived preview
+ * iframe keeps both subsystems' stylesheets loaded in the same document
+ * once each has been visited, so an identical family/weight/style name
+ * would let whichever `@font-face` rule loaded later silently win for
+ * every subsequent render of the OTHER subsystem's stories too. This is
+ * scoped narrowly to the registration string: it's still the same,
+ * unmodified font (no variant implied), and the public token name below
+ * (`--layform-font-iosevka`) is unchanged, so no consumer-facing API moves.
  *
  * Recovered design-phase answer (layform's own, carried over unchanged):
  * "Flexible fidelity strictness: font-pair discipline, Iosevka/Inter
@@ -54,7 +64,7 @@
    are shipped, per element-tier Pattern 26's "one fixed small size" rule —
    no need to ship a full 9-weight family for a role that never varies. ---- */
 @font-face {
-  font-family: "Iosevka";
+  font-family: "Iosevka Vermis";
   src: url("../fonts/Iosevka-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
@@ -62,7 +72,7 @@
 }
 
 @font-face {
-  font-family: "Iosevka";
+  font-family: "Iosevka Vermis";
   src: url("../fonts/Iosevka-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
@@ -73,7 +83,7 @@
   /* ---- Base family stacks (webfont first, full system fallback last) ---- */
   --layform-font-inter: "Inter Variable", "Inter", -apple-system,
     "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --layform-font-iosevka: "Iosevka", "Iosevka Term",
+  --layform-font-iosevka: "Iosevka Vermis", "Iosevka Term",
     ui-monospace, "SFMono-Regular", "Cascadia Code", "JetBrains Mono",
     Consolas, "Liberation Mono", monospace;
 

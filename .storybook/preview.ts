@@ -40,7 +40,11 @@ const preview: Preview = {
           ['Overview', 'Colors', 'Typography', 'Spacing & Radius', 'Theming'],
           'Atoms',
           'Layout',
-          'Molecules'
+          'Molecules',
+          'Vermis',
+          ['Atoms', 'Layout', 'Molecules', 'Templates'],
+          'Carter',
+          ['Atoms', 'Layout', 'Molecules', 'Templates']
         ]
       }
     }
