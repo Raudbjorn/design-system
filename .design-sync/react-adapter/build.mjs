@@ -69,7 +69,7 @@ if (!existsSync(join(repo, 'dist', 'index.js'))) {
   console.error('! dist/index.js missing — run `pnpm run build` first');
   process.exit(1);
 }
-execSync('npx vite build --config .design-sync/react-adapter/vite.config.mjs', {
+execSync('pnpm exec vite build --config .design-sync/react-adapter/vite.config.mjs', {
   cwd: repo,
   stdio: 'inherit',
 });
