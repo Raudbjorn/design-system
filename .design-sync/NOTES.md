@@ -27,7 +27,7 @@
 - `[GENERAL]` **--node-modules must be `.ds-sync/node_modules`**, not the repo's:
   this Svelte repo has no react; react@18.3.1 + react-dom@18.3.1 are installed
   into `.ds-sync/` for `_vendor/` UMD vendoring. Fresh clone:
-  `(cd .ds-sync && npm i esbuild ts-morph @types/react playwright react@18.3.1 react-dom@18.3.1 && npx playwright install chromium)`.
+  `(cd .ds-sync && pnpm add esbuild ts-morph @types/react playwright react@18.3.1 react-dom@18.3.1 && pnpm exec playwright install chromium)`. 
 - `[GENERAL]` **Some machines have no `npm`/`npx` at all, only `pnpm`.** Use
   `pnpm add <pkgs>` (not `npm i`) to install the `.ds-sync/` converter deps,
   and `pnpm exec <bin>` (not `npx <bin>`) for playwright/storybook/vite. The
