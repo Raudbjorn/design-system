@@ -133,7 +133,7 @@
     "@types/jsdom": "^28.0.3",
     "@types/node": "^24.0.0",
     "@vitest/browser-playwright": "^4.1.9",
-    "astro": "^7.1.6",
+    "astro": "^7.2.8",
     "culori": "^4.0.2",
     "fontkit": "^2.0.4",
     "jsdom": "^25.0.0",
