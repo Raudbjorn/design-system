@@ -117,7 +117,7 @@
   "devDependencies": {
     "@argos-ci/cli": "^6.1.0",
     "@argos-ci/storybook": "^6.0.16",
-    "@astrojs/svelte": "^9.0.1",
+    "@astrojs/svelte": "^9.1.2",
     "@storybook/addon-a11y": "^10.4.6",
     "@storybook/addon-docs": "^10.4.6",
     "@storybook/addon-svelte-csf": "^5.1.2",
